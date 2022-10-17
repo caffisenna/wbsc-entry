@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'editor' => env('IGNITION_EDITOR', 'phpstorm'),
+    'editor' => env('IGNITION_EDITOR', 'vscode'),
 
     /*
     |--------------------------------------------------------------------------
