@@ -1,0 +1,65 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Auth::routes();
+
+
+
+Route::middleware('verified')->group(function () {
+    // 共通
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    // 一般ユーザ用
+    Route::prefix('user')->group(function () {
+        // Route::get('/', 'User\HomeController@index');
+        // Route::resource('entryForms', App\Http\Controllers\entryFormController::class);
+        // Route::resource('elearnings', App\Http\Controllers\elearningController::class);
+        // Route::resource('resultUploads', App\Http\Controllers\resultUploadController::class);
+        // Route::resource('planUploads', App\Http\Controllers\planUploadController::class, ['except' => ['edit','show','update']]);
+        // Route::resource('temps', App\Http\Controllers\tempsController::class);
+        // Route::resource('resultInputs', App\Http\Controllers\resultInputsController::class);
+        Route::resource('entryInfos', App\Http\Controllers\Entry_infoController::class);
+        Route::get('/pdf', [App\Http\Controllers\Entry_infoController::class, 'pdf'])->name('pdf');
+    });
+    // 管理ユーザ用
+    Route::prefix('admin')->middleware('can:admin')->group(function () {
+        // Route::get('/', 'Admin\HomeController@index');
+        // Route::resource('adminConfigs', App\Http\Controllers\AdminConfigController::class);
+        // Route::resource('adminentries', App\Http\Controllers\adminentryFormController::class, ['except' => 'create']);
+        // Route::get('non_tokyo', [App\Http\Controllers\adminentryFormController::class, 'non_tokyo'])->name('non_tokyo');
+        // Route::get('/deleted', [App\Http\Controllers\adminentryFormController::class, 'deleted'])->name('deleted');
+        // Route::resource('buddylists', App\Http\Controllers\BuddylistController::class);
+        // Route::get('fee_check', [App\Http\Controllers\adminentryFormController::class, 'fee_check'])->name('fee_check');
+        // Route::get('registration_check', [App\Http\Controllers\adminentryFormController::class, 'registration_check'])->name('registration_check');
+        // Route::resource('adminresultUploads', App\Http\Controllers\adminresultUploadController::class, ['except' => 'create']);
+        // Route::get('/result_lists', [App\Http\Controllers\adminresultUploadController::class, 'lists'])->name('resultlists');
+        // Route::get('/temp_lists', [App\Http\Controllers\tempsController::class, 'temp_list'])->name('templists');
+        // Route::resource('reach50100', App\Http\Controllers\reach50100Controller::class);
+        // Route::resource('adminplanUploads', App\Http\Controllers\adminplanUploadController::class, ['except' => ['create','edit','show','update']]);
+    });
+    // スタッフ用
+    // Route::prefix('staff')->middleware('can:staff')->group(function () {
+    //     Route::resource('staffplanUploads', App\Http\Controllers\staffplanUploadController::class, ['except' => ['create','edit','show','update']]);
+    // });
+    // 地区コミ用
+    // Route::prefix('commi')->middleware('can:commi')->group(function () {
+    //     Route::resource('entries', App\Http\Controllers\commiEntryFormController::class, ['only' => ['index', 'show']]);
+    //     Route::get('commi_check', [App\Http\Controllers\commiEntryFormController::class, 'commi_check'])->name('commi_check');
+    // });
+});
