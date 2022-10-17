@@ -5,22 +5,23 @@
         <div class="row justify-content-center">
             <div class="col-md-7" style="margin-top: 2%">
                 <div class="box">
-                    <h3 class="box-title" style="padding: 2%">Verify Your Email Address</h3>
+                    <h3 class="box-title" style="">メール認証</h3>
 
                     <div class="box-body">
                         @if (session('resent'))
                             <div class="alert alert-success" role="alert">
-                                A fresh verification link has been sent to your email address
+                                入力されたメールアドレスに確認メールを送信しました。メールをご確認ください。<br>
+                                認証が完了しないと申込書を作成できません。
                             </div>
                         @endif
                         <p>
-                            Before proceeding, please check your email for a verification link.If you did not receive
-                            the email,
+                            届いたメールに認証ボタンがありますので、それをクリックして登録を完了してください。<br>
+                            もしメールが届いていない場合は下記のリンクから認証メールを再送してください。
                         </p>
 
                         <a href="#"
-                           onclick="event.preventDefault(); document.getElementById('resend-form').submit();">
-                            click here to request another
+                            onclick="event.preventDefault(); document.getElementById('resend-form').submit();">
+                            認証メールを再送する
                         </a>
                         <form id="resend-form" action="{{ route('verification.resend') }}" method="POST" class="d-none">
                             @csrf
