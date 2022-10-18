@@ -14,9 +14,21 @@
                 <tr>
                     <td>{{ $entryInfo->sc_number }}</td>
                     <td>{{ $entryInfo->division_number }}</td>
-                    <td>{{ $entryInfo->commi_checked_at->format('Y-m-d') }}</td>
-                    <td>{{ $entryInfo->ais_checked_at->format('Y-m-d') }}</td>
-                    <td>{{ $entryInfo->gm_checked_at->format('Y-m-d') }}</td>
+                    <td>
+                        @if (isset($entryInfo->gm_checked_at))
+                            {{ $entryInfo->gm_checked_at->format('Y-m-d') }}
+                        @endif
+                    </td>
+                    <td>
+                        @if (isset($entryInfo->commi_checked_at))
+                            {{ $entryInfo->commi_checked_at->format('Y-m-d') }}
+                        @endif
+                    </td>
+                    <td>
+                        @if (isset($entryInfo->ais_checked_at))
+                            {{ $entryInfo->ais_checked_at->format('Y-m-d') }}
+                        @endif
+                    </td>
                     <td width="120">
                         {!! Form::open(['route' => ['entryInfos.destroy', $entryInfo->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>

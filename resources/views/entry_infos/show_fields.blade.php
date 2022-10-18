@@ -26,7 +26,8 @@
         </tr>
         <tr>
             <th>生年月日</th>
-            <td>{{ $entryInfo->birthday }}</td>
+            <td>{{ $entryInfo->birthday->format('Y年m月d日') }}
+                ({{ \Carbon\Carbon::parse($entryInfo->birthday)->age }}才)</td>
         </tr>
         <tr>
             <th>登録番号</th>
@@ -52,15 +53,19 @@
             <td>{{ $entryInfo->zip }}<br>{{ $entryInfo->address }}</td>
         </tr>
 
-        <tr>
-            <th>地区役務</th>
-            <td>{{ $entryInfo->district_role }}</td>
-        </tr>
+        @if (isset($entryInfo->district_role))
+            <tr>
+                <th>地区役務</th>
+                <td>{{ $entryInfo->district_role }}</td>
+            </tr>
+        @endif
 
-        <tr>
-            <th>県連役務</th>
-            <td>{{ $entryInfo->prefecture_role }}</td>
-        </tr>
+        @if (isset($entryInfo->prefecture_role))
+            <tr>
+                <th>県連役務</th>
+                <td>{{ $entryInfo->prefecture_role }}</td>
+            </tr>
+        @endif
 
         <tr>
             <th>スカウトキャンプ研修会</th>

@@ -13,6 +13,8 @@ use Response;
 use Auth;
 use Ramsey\Uuid\Uuid;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InputRegisterd;
 
 class Entry_infoController extends AppBaseController
 {
@@ -66,6 +68,10 @@ class Entry_infoController extends AppBaseController
         $entryInfo = $this->entryInfoRepository->create($input);
 
         Flash::success('申込データを登録しました');
+
+        // 確認メール送信
+        $sendto = User::where('id', $input['user_id'])->first();
+        Mail::to($sendto->email)->queue(new InputRegisterd($sendto->name)); // メールをqueueで送信
 
         return redirect(route('entryInfos.index'));
     }
