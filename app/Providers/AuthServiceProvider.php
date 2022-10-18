@@ -35,5 +35,19 @@ class AuthServiceProvider extends ServiceProvider
                 ->line('ボーイスカウト東京連盟AIS委員会です。以下のボタンをクリックしてメール認証を完了してください。')
                 ->action('認証する', $url);
         });
+
+        Gate::define('admin', function (\App\Models\User $user) {
+            return $user->is_admin;
+        });
+
+        // staff
+        Gate::define('staff', function (\App\Models\User $user) {
+            return $user->is_staff;
+        });
+
+        // 県連
+        Gate::define('pref', function (\App\Models\User $user) {
+            return $user->is_commi;
+        });
     }
 }

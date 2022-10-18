@@ -56,6 +56,8 @@ Route::middleware('verified')->group(function () {
     });
     // 管理ユーザ用
     Route::prefix('admin')->middleware('can:admin')->group(function () {
+        Route::resource('admin_entryInfos', App\Http\Controllers\AdminEntry_infoController::class);
+        Route::get('/pdf', [App\Http\Controllers\AdminEntry_infoController::class, 'pdf'])->name('pdf');
         // Route::get('/', 'Admin\HomeController@index');
         // Route::resource('adminConfigs', App\Http\Controllers\AdminConfigController::class);
         // Route::resource('adminentries', App\Http\Controllers\adminentryFormController::class, ['except' => 'create']);

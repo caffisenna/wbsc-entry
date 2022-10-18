@@ -79,15 +79,9 @@
             <tr>
                 <td>承認と確認</td>
                 <td>
-                    @if (isset($entryInfo->entry_info->gm_checked_at))
-                        団: {{ $entryInfo->entry_info->gm_checked_at->format('Y年m月d日') }}<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->commi_checked_at))
-                        地区コミ: {{ $entryInfo->entry_info->commi_checked_at->format('Y年m月d日') }}<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->ais_checked_at))
-                        AIS: {{ $entryInfo->entry_info->ais_checked_at->format('Y年m月d日') }}
-                    @endif
+                    団: {{ $entryInfo->entry_info->gm_checked_at->format('Y年m月d日') }}<br>
+                    地区コミ: {{ $entryInfo->entry_info->commi_checked_at->format('Y年m月d日') }}<br>
+                    AIS: {{ $entryInfo->entry_info->ais_checked_at->format('Y年m月d日') }}
                 </td>
             </tr>
             <tr>

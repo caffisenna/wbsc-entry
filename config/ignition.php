@@ -109,8 +109,8 @@ return [
     |
     */
 
-    'remote_sites_path' => env('IGNITION_REMOTE_SITES_PATH', ''),
-    'local_sites_path' => env('IGNITION_LOCAL_SITES_PATH', ''),
+    'remote_sites_path' => env('IGNITION_REMOTE_SITES_PATH', '/home/vagrant/code/wbsc-entry'),
+    'local_sites_path' => env('IGNITION_LOCAL_SITES_PATH', '/Users/caffi/code/wbsc-entry'),
 
     /*
     |--------------------------------------------------------------------------
