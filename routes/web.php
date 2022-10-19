@@ -78,8 +78,11 @@ Route::middleware('verified')->group(function () {
     //     Route::resource('staffplanUploads', App\Http\Controllers\staffplanUploadController::class, ['except' => ['create','edit','show','update']]);
     // });
     // 地区コミ用
-    // Route::prefix('commi')->middleware('can:commi')->group(function () {
-    //     Route::resource('entries', App\Http\Controllers\commiEntryFormController::class, ['only' => ['index', 'show']]);
-    //     Route::get('commi_check', [App\Http\Controllers\commiEntryFormController::class, 'commi_check'])->name('commi_check');
-    // });
+    Route::prefix('commi')->middleware('can:commi')->group(function () {
+        Route::resource('commi_entryInfos', App\Http\Controllers\CommiEntry_infoController::class);
+        Route::get('/pdf', [App\Http\Controllers\CommiEntry_infoController::class, 'pdf'])->name('pdf');
+        Route::get('/commi_check', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_check'])->name('commi_check');
+        // Route::resource('entries', App\Http\Controllers\commiEntryFormController::class, ['only' => ['index', 'show']]);
+        // Route::get('commi_check', [App\Http\Controllers\commiEntryFormController::class, 'commi_check'])->name('commi_check');
+    });
 });

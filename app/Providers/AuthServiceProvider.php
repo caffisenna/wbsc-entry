@@ -46,7 +46,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // 県連
-        Gate::define('pref', function (\App\Models\User $user) {
+        Gate::define('commi', function (\App\Models\User $user) {
             return $user->is_commi;
         });
     }

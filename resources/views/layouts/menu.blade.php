@@ -16,3 +16,14 @@
         </a>
     </li>
 @endif
+
+
+@if (Auth::user()->is_commi)
+    <h3 class="uk-text-warning">地区コミ</h3>
+    <li class="nav-item">
+        <a href="{{ route('commi_entryInfos.index') }}"
+            class="nav-link {{ Request::is('commi_entryInfos*') ? 'active' : '' }}">
+            <p>申込一覧</p>
+        </a>
+    </li>
+@endif
