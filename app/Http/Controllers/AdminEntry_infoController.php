@@ -13,6 +13,8 @@ use Response;
 use Auth;
 use Ramsey\Uuid\Uuid;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AisChecked;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -174,5 +176,27 @@ class AdminEntry_infoController extends AppBaseController
         $pdf->setPaper('A4');
         return $pdf->download();
         // return $pdf->stream();
+    }
+
+    public function ais_check(Request $request)
+    {
+        // AIS委員会のチェック機能
+        $id = $request['id'];
+        $entryInfo = Entry_info::where('id',$id)->first();
+        $entryInfo->ais_checked_at = now();
+        $entryInfo->save();
+
+        // 氏名取得
+        $user = User::where('id',$entryInfo->user_id)->first();
+
+        // 確認メール送信
+        $sendto = $user->email;
+        Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+
+
+        // 名前+flashメッセージを返して戻る
+        Flash::success($user->name.'さん AIS委員会のチェックをしました');
+
+        return back();
     }
 }

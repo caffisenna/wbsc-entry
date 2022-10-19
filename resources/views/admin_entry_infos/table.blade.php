@@ -37,7 +37,7 @@
                             @if (isset($entryInfo->entry_info->ais_checked_at))
                                 {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}
                             @else
-                                <a href="#" class=" uk-button uk-button-primary">承認する</a>
+                                <a href="{{ url('/admin/ais_check/?id=') }}{{ $entryInfo->entry_info->id }}" class=" uk-button uk-button-primary">承認する</a>
                             @endif
                         </td>
                         <td width="120">
