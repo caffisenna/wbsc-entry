@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Entry_info;
 use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Validator;
 
 class UploadController extends Controller
 {
@@ -25,6 +26,24 @@ class UploadController extends Controller
 
     public function store(Request $request)
     {
+
+        $rules = [
+            'file' => 'required|mimes:pdf',
+        ];
+
+        $messages = [
+            'file.required' => 'ファイルをアップロードしてください',
+            'file.mimes' => 'ファイルはPDF形式のみです',
+        ];
+
+        $validator = validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         // 申込書IDからUUIDを引っ張るのが必要!!
         $uuid = $request['uuid'];
         $q = $request['q'];
@@ -51,5 +70,10 @@ class UploadController extends Controller
 
         // リダイレクト
         return back();
+    }
+
+    public function messages()
+    {
+        return [];
     }
 }

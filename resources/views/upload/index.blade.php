@@ -40,6 +40,9 @@
                     <button type="submit" class="uk-button uk-button-primary">アップロード</button>
                 </form>
             </div>
+            @error('file')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
 
         </div>
     </div>

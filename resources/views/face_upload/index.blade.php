@@ -36,7 +36,9 @@
                 <img src="{{ url('/storage/picture/') }}{{ '/' . Auth::user()->face_picture }}" alt=""
                     width="200px" height="">
             @endif
-
         </div>
+        @error('file')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 @endsection
