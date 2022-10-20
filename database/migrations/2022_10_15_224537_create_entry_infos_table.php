@@ -79,6 +79,7 @@ class CreateEntryInfosTable extends Migration
             $table->string('health_memo')->nullable();          // 健康上の留意点
             $table->string('assignment_sc')->nullable();          // 課題研修SC
             $table->string('assignment_division')->nullable();    // 課題研修課程別
+            $table->string('face_picture')->nullable();    // 顔写真
             $table->uuid('uuid')->nullable();                   // UUID
             $table->date('gm_checked_at')->nullable();                      // 団委員長確認
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認

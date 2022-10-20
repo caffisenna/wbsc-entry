@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\FaceUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,8 @@ Route::middleware('verified')->group(function () {
         // Route::resource('resultInputs', App\Http\Controllers\resultInputsController::class);
         Route::resource('entryInfos', App\Http\Controllers\Entry_infoController::class);
         Route::get('/pdf', [App\Http\Controllers\Entry_infoController::class, 'pdf'])->name('pdf');
+        Route::resource('upload',UploadController::class);
+        Route::resource('face_upload',FaceUploadController::class);
     });
     // 管理ユーザ用
     Route::prefix('admin')->middleware('can:admin')->group(function () {

@@ -1,5 +1,6 @@
 {{-- 一般ユーザー --}}
 @unless(Auth::user()->is_admin || Auth::user()->is_staff || Auth::user()->is_commi)
+    <p class="uk-text-warning">参加申込</p>
     <li class="nav-item">
         <a href="{{ route('entryInfos.index') }}" class="nav-link {{ Request::is('entryInfos*') ? 'active' : '' }}">
             <p>申込情報</p>
