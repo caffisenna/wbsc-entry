@@ -4,9 +4,8 @@
                 <tr>
                     <th>SC期数</th>
                     <th>課程別期数</th>
-                    <th>団委員長確認</th>
-                    <th>地区コミ確認</th>
-                    <th>委員会確認</th>
+                    <th>確認</th>
+                    <th>課題提出</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -16,18 +15,40 @@
                     <td>{{ $entryInfo->division_number }}</td>
                     <td>
                         @if (isset($entryInfo->gm_checked_at))
-                            {{ $entryInfo->gm_checked_at->format('Y-m-d') }}
+                            団:{{ $entryInfo->gm_checked_at->format('Y-m-d') }}<br>
+                        @else
+                            団:未<br>
                         @endif
-                    </td>
-                    <td>
+
                         @if (isset($entryInfo->commi_checked_at))
-                            {{ $entryInfo->commi_checked_at->format('Y-m-d') }}
+                            地区:{{ $entryInfo->commi_checked_at->format('Y-m-d') }}<br>
+                        @else
+                            地区:未<br>
+                        @endif
+
+                        @if (isset($entryInfo->ais_checked_at))
+                            AIS:{{ $entryInfo->ais_checked_at->format('Y-m-d') }}
+                        @else
+                            AIS:未<br>
                         @endif
                     </td>
                     <td>
-                        @if (isset($entryInfo->ais_checked_at))
-                            {{ $entryInfo->ais_checked_at->format('Y-m-d') }}
-                        @endif
+                        <ul class="uk-list">
+                            @if ($entryInfo->assignment_sc == 'up')
+                                <li><a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf">SC課題表示</a></li>
+                            @else
+                                <li><a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
+                                        class="uk-button uk-button-default uk-button-small uk-width-1-1"
+                                        uk-icon="icon: upload">スカウトコース</a></li>
+                            @endif
+                            @if ($entryInfo->assignment_division == 'up')
+                                <li><a href="/storage/assignment/division/{{ $entryInfo->uuid }}.pdf">課程別研修表示</a></li>
+                            @else
+                                <li><a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=division"
+                                        class="uk-button uk-button-default uk-button-small uk-width-1-1"
+                                        uk-icon="icon: upload">課程別</a></li>
+                            @endif
+                        </ul>
                     </td>
                     <td width="120">
                         {!! Form::open(['route' => ['entryInfos.destroy', $entryInfo->id], 'method' => 'delete']) !!}
