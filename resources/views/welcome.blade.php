@@ -46,7 +46,7 @@
                 <img src="{{ url('/images/tokyo-logo.png') }}" alt="" width="200px" height="">
             </div>
 
-            <p class="uk-text-large uk-text-background">ボーイスカウト東京連盟 WB研修所申込サイト</p>
+            <p class="uk-text-large" style="color:white">ボーイスカウト東京連盟 WB研修所申込サイト</p>
 
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
