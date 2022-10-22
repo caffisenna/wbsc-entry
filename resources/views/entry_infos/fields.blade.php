@@ -483,7 +483,7 @@
         </tr>
 
         <tr>
-            <td>健康上で不安なことなど特記事項をご記入ください</td>
+            <td>健康上で不安なこと、食品アレルギーなど特記事項をご記入ください</td>
             <td>{!! Form::textarea('health_memo', null, ['class' => 'form-control']) !!}</td>
         </tr>
 
