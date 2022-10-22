@@ -63,10 +63,10 @@
                             <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
                                 class='uk-button uk-button-default uk-button-small'><span
                                     uk-icon="icon: file-edit"></span></a>
-                            {!! Form::button('<i class="far fa-trash-alt"></i>', [
+                            {!! Form::button('<span uk-icon="icon: ban"></span>', [
                                 'type' => 'submit',
-                                'class' => 'btn btn-danger btn-xs',
-                                'onclick' => "return confirm('本当に削除しますか?')",
+                                'class' => 'uk-button uk-button-danger uk-button-small',
+                                'onclick' => "return confirm('情報を削除して参加を取りやめますか?')",
                             ]) !!}
                         </div>
                         {!! Form::close() !!}

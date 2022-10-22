@@ -57,6 +57,7 @@ Route::middleware('verified')->group(function () {
         Route::get('/pdf', [App\Http\Controllers\Entry_infoController::class, 'pdf'])->name('pdf');
         Route::resource('upload',UploadController::class);
         Route::resource('face_upload',FaceUploadController::class);
+        Route::get('/delete_file', [App\Http\Controllers\Entry_infoController::class, 'delete_file'])->name('delete_file'); // ファイルの削除
     });
     // 管理ユーザ用
     Route::prefix('admin')->middleware('can:admin')->group(function () {

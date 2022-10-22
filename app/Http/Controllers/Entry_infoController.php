@@ -15,6 +15,7 @@ use Ramsey\Uuid\Uuid;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InputRegisterd;
+use Storage;
 
 class Entry_infoController extends AppBaseController
 {
@@ -169,13 +170,48 @@ class Entry_infoController extends AppBaseController
 
     public function pdf()
     {
-        $entryInfo = User::where('id',Auth::id())->with('entry_info')->first();
+        $entryInfo = User::where('id', Auth::id())->with('entry_info')->first();
         // $entryInfo = Entry_info::where('user_id',Auth::id())->with('user')->first();
         // dd($entryInfo);
 
-        $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo',$entryInfo));
+        $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo', $entryInfo));
         $pdf->setPaper('A4');
         return $pdf->download();
         // return $pdf->stream();
+    }
+
+    public function delete_file(Request $request)
+    // ファイルの削除
+    {
+        $q = $request['q'];
+        $id = $request['id'];
+
+        // 申込レコード取得
+        $entryinfo = Entry_info::where('uuid', $id)->first();
+        $user = User::where('id', Auth::id())->first();
+
+        // pathを取得して、課題カラムをNULL化
+        if ($q == 'sc') {
+            $path = "assignment/sc/$id.pdf";
+            $entryinfo->assignment_sc = NULL;
+            $entryinfo->save();
+        } elseif ($q == 'division') {
+            $path = "assignment/division/$id.pdf";
+            $entryinfo->assignment_division = NULL;
+            $entryinfo->save();
+        } elseif ($q == 'face') {
+            $path = "picture/$id";
+            $user->face_picture = NULL;
+            $user->save();
+        }
+
+        // ファイル削除
+        if ($path !== '') {
+            Storage::disk('public')->delete($path);
+        }
+
+        Flash::success('削除しました');
+
+        return redirect(route('entryInfos.index'));
     }
 }
