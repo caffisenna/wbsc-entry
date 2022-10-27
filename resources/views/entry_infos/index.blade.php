@@ -45,7 +45,7 @@
                 </ul>
 
             </div>
-        @endif
+
     </div>
     <div id="modal-delete-assignment-sc" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
@@ -82,4 +82,5 @@
             </p>
         </div>
     </div>
+    @endif
 @endsection
