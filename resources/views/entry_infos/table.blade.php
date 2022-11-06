@@ -51,7 +51,7 @@
                         </ul>
                     </td>
                     <td>
-                        {!! Form::open(['route' => ['entryInfos.destroy', $entryInfo->id], 'method' => 'delete']) !!}
+                        {{-- {!! Form::open(['route' => ['entryInfos.destroy', $entryInfo->id], 'method' => 'delete']) !!} --}}
                         <div class='btn-group'>
                             <a href="{{ url('/user/pdf') }}" class='btn btn-default'>
                                 <span uk-icon="download"></span>PDF
@@ -63,11 +63,11 @@
                             <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
                                 class='uk-button uk-button-default uk-button-small'><span
                                     uk-icon="icon: file-edit"></span></a>
-                            {!! Form::button('<span uk-icon="icon: ban"></span>', [
+                            {{-- {!! Form::button('<span uk-icon="icon: ban"></span>', [
                                 'type' => 'submit',
                                 'class' => 'uk-button uk-button-danger uk-button-small',
                                 'onclick' => "return confirm('情報を削除して参加を取りやめますか?')",
-                            ]) !!}
+                            ]) !!} --}}
                         </div>
                         {!! Form::close() !!}
                     </td>
