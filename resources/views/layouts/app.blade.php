@@ -23,6 +23,9 @@
 
     <link rel="stylesheet" href="{{ url('/css/bootstrap-datetimepicker.min.css') }}">
 
+    {{-- datatablesを有効にするにはこの位置でないとjqueryを呼んでくれない --}}
+    <script src="{{ url('js/jquery.min.js') }}"></script>
+
     @stack('third_party_stylesheets')
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="{{ url('/uikit/uikit.min.css') }}" />
@@ -92,7 +95,7 @@
         </footer>
     </div>
 
-    <script src="{{ url('/js/jquery.min.js') }}"></script>
+    {{-- <script src="{{ url('/js/jquery.min.js') }}"></script> --}}
 
     <script src="{{ url('/js/popper.min.js') }}"></script>
 
