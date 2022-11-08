@@ -5,7 +5,7 @@
             <td>{{ $entryInfo->entry_info->sc_number }}</td>
         </tr>
         <tr>
-            <th>課程別研修の期数</th>
+            <th>課程別研修の回数</th>
             <td>{{ $entryInfo->entry_info->division_number }}</td>
         </tr>
         <tr>

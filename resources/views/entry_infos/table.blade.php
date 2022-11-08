@@ -3,7 +3,7 @@
             <thead>
                 <tr>
                     <th>SC期数</th>
-                    <th>課程別期数</th>
+                    <th>課程別回数</th>
                     <th>確認</th>
                     <th>課題提出</th>
                     <th>操作</th>
