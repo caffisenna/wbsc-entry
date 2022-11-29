@@ -80,7 +80,7 @@ class CreateEntryInfosTable extends Migration
             $table->string('assignment_sc')->nullable();          // 課題研修SC
             $table->string('assignment_division')->nullable();    // 課題研修課程別
             $table->string('face_picture')->nullable();    // 顔写真
-            $table->uuid('uuid')->nullable();                   // UUID
+            $table->string('uuid')->unique();                   // UUID
             $table->date('gm_checked_at')->nullable();                      // 団委員長確認
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認
             $table->date('ais_checked_at')->nullable();                     // AIS委員会確認
