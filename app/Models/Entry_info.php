@@ -228,7 +228,7 @@ class Entry_info extends Model
         'bs_id.required' => '登録番号を入力してください',
         'bs_id.digits' => '登録番号を10桁の半角整数で入力してください',
         'birthday.required' => '生年月日を入力してください',
-        'birthday.date' => '生年月日は日付の形式で入力してください',
+        'birthday.date' => '正しい日付を選択して下さい(存在しない年月日)',
         'prefecture.required' => '所属県連盟を選択してください',
         'district.required' => '地区を選択してください',
         'dan.required' => '所属団を入力してください',

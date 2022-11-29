@@ -107,6 +107,10 @@ class Entry_infoController extends AppBaseController
     public function edit($id)
     {
         $entryInfo = $this->entryInfoRepository->find($id);
+        // 生年月日分離
+        $entryInfo->bd_year = $entryInfo->birthday->format('Y');
+        $entryInfo->bd_month = $entryInfo->birthday->format('m');
+        $entryInfo->bd_day = $entryInfo->birthday->format('d');
 
         if (empty($entryInfo)) {
             Flash::error('Entry Info not found');
@@ -128,6 +132,7 @@ class Entry_infoController extends AppBaseController
     public function update($id, UpdateEntry_infoRequest $request)
     {
         $entryInfo = $this->entryInfoRepository->find($id);
+        // dd($entryInfo);
 
         if (empty($entryInfo)) {
             Flash::error('Entry Info not found');
