@@ -1,77 +1,81 @@
     <div class="table-responsive">
         <table class="uk-table uk-table-divider" id="entryInfos-table">
-            <thead>
-                <tr>
-                    <th>SC期数</th>
-                    <th>課程別回数</th>
-                    <th>確認</th>
-                    <th>課題提出</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ $entryInfo->sc_number }}</td>
-                    <td>{{ $entryInfo->division_number }}</td>
-                    <td>
-                        @if (isset($entryInfo->gm_checked_at))
-                            団:{{ $entryInfo->gm_checked_at->format('Y-m-d') }}<br>
+            <tr>
+                <th>SC期数</th>
+                <td>{{ $entryInfo->sc_number }}</td>
+            </tr>
+            <tr>
+                <th>課程別回数</th>
+                <td>{{ $entryInfo->division_number }}</td>
+            </tr>
+            <tr>
+                <th>課題提出</th>
+                <td>
+                    <ul class="uk-list">
+                        @if ($entryInfo->assignment_sc == 'up')
+                            <li><a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf">スカウトコース課題 アップロード済み</a></li>
                         @else
-                            団:未<br>
+                            <li><a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
+                                    class="uk-button uk-button-default uk-button-small uk-width-1-2"
+                                    uk-icon="icon: upload">スカウトコース</a></li>
                         @endif
-
-                        @if (isset($entryInfo->commi_checked_at))
-                            地区:{{ $entryInfo->commi_checked_at->format('Y-m-d') }}<br>
+                        @if ($entryInfo->assignment_division == 'up')
+                            <li><a href="/storage/assignment/division/{{ $entryInfo->uuid }}.pdf">課程別研修課題 アップロード済み</a></li>
                         @else
-                            地区:未<br>
+                            <li><a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=division"
+                                    class="uk-button uk-button-default uk-button-small uk-width-1-2"
+                                    uk-icon="icon: upload">課程別</a></li>
                         @endif
-
-                        @if (isset($entryInfo->ais_checked_at))
-                            AIS:{{ $entryInfo->ais_checked_at->format('Y-m-d') }}
-                        @else
-                            AIS:未<br>
-                        @endif
-                    </td>
-                    <td>
-                        <ul class="uk-list">
-                            @if ($entryInfo->assignment_sc == 'up')
-                                <li><a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf">SC課題</a></li>
-                            @else
-                                <li><a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
-                                        class="uk-button uk-button-default uk-button-small uk-width-1-1"
-                                        uk-icon="icon: upload">スカウトコース</a></li>
-                            @endif
-                            @if ($entryInfo->assignment_division == 'up')
-                                <li><a href="/storage/assignment/division/{{ $entryInfo->uuid }}.pdf">課程別研修</a></li>
-                            @else
-                                <li><a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=division"
-                                        class="uk-button uk-button-default uk-button-small uk-width-1-1"
-                                        uk-icon="icon: upload">課程別</a></li>
-                            @endif
-                        </ul>
-                    </td>
-                    <td>
-                        {{-- {!! Form::open(['route' => ['entryInfos.destroy', $entryInfo->id], 'method' => 'delete']) !!} --}}
-                        <div class='btn-group'>
-                            <a href="{{ url('/user/pdf') }}" class='btn btn-default'>
-                                <span uk-icon="download"></span>PDF
-                            </a>
-                            <a href="{{ route('entryInfos.show', [$entryInfo->id]) }}"
-                                class='uk-button uk-button-default uk-button-small'>
-                                確認
-                            </a>
-                            <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
-                                class='uk-button uk-button-default uk-button-small'><span
-                                    uk-icon="icon: file-edit"></span></a>
-                            {{-- {!! Form::button('<span uk-icon="icon: ban"></span>', [
-                                'type' => 'submit',
-                                'class' => 'uk-button uk-button-danger uk-button-small',
-                                'onclick' => "return confirm('情報を削除して参加を取りやめますか?')",
-                            ]) !!} --}}
-                        </div>
-                        {!! Form::close() !!}
-                    </td>
-                </tr>
-            </tbody>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>団認定</th>
+                <td>
+                    @if (isset($entryInfo->gm_checked_at))
+                        {{ $entryInfo->gm_checked_at->format('Y-m-d') }}
+                    @else
+                        <span class="uk-text-danger">未認定</span>
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th>地区認定</th>
+                <td>
+                    @if (isset($entryInfo->commi_checked_at))
+                        {{ $entryInfo->commi_checked_at->format('Y-m-d') }}
+                    @else
+                        <span class="uk-text-danger">未認定</span>
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th>AIS委員会認定</th>
+                <td>
+                    @if (isset($entryInfo->ais_checked_at))
+                        {{ $entryInfo->ais_checked_at->format('Y-m-d') }}
+                    @else
+                        <span class="uk-text-danger">未認定</span>
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th>操作</th>
+                <td>
+                    <div class='btn-group'>
+                        <a href="{{ url('/user/pdf') }}" class='btn btn-default'>
+                            <span uk-icon="download"></span>PDF
+                        </a>
+                        <a href="{{ route('entryInfos.show', [$entryInfo->id]) }}"
+                            class='uk-button uk-button-default uk-button-small'>
+                            確認
+                        </a>
+                        <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
+                            class='uk-button uk-button-default uk-button-small'><span
+                                uk-icon="icon: file-edit"></span></a>
+                    </div>
+                    {!! Form::close() !!}
+                </td>
+            </tr>
         </table>
     </div>

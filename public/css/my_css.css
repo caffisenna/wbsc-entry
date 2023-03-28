@@ -1,0 +1,11 @@
+.login-logo a {
+    color: #fff !important;
+}
+
+.login-box .card {
+    opacity: 0.9 !important;
+}
+
+[class*=sidebar-dark-] {
+    background-color: #115740 !important;
+}

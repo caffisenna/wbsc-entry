@@ -30,6 +30,9 @@
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="{{ url('/uikit/uikit.min.css') }}" />
 
+    {{-- my css --}}
+    <link rel="stylesheet" href="{{ url('/css/my_css.css') }}" />
+
     @stack('page_css')
 </head>
 

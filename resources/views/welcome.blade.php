@@ -16,11 +16,39 @@
     <!-- UIkit JS -->
     <script src="{{ url('/uikit/uikit.min.js') }}"></script>
     <script src="{{ url('/uikit/uikit-icons.min.js') }}"></script>
+
+    {{-- bg image --}}
+    <style type="text/css">
+        body {
+            background-image: url("images/bg.jpg");
+            /* 画像 */
+            background-size: cover;
+            /* 全画面 */
+            background-attachment: fixed;
+            /* 固定 */
+            background-position: center center;
+            /* 縦横中央 */
+        }
+
+        .txt-bg {
+            display: inline;
+            /* font-size: 2.5rem; */
+            /* font-weight: 600; */
+            /* line-height: 1.4em; */
+            padding: 5px;
+            background: linear-gradient(transparent 0%, #fffefe 50%);
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        .mt-8 {
+            opacity: 0.95 !important;
+        }
+    </style>
 </head>
 
 <body class="antialiased">
-    <div
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    <div class="relative flex items-top justify-center min-h-screen sm:items-center py-4 sm:pt-0">
         @if (Route::has('login'))
             <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                 @auth
@@ -45,8 +73,6 @@
                     </svg> --}}
                 <img src="{{ url('/images/tokyo-logo.png') }}" alt="" width="200px" height="">
             </div>
-
-            <p class="uk-text-large" style="color:white">ボーイスカウト東京連盟 WB研修所申込サイト</p>
 
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
@@ -76,20 +102,30 @@
 
                     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                         <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            {{-- <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
                                 <path
                                     d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
                                 </path>
                                 <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="#"
-                                    class="underline text-gray-900 dark:text-white">何かメニュー</a></div>
+                            </svg> --}}
+                            <div class="uk-text-large" style="color: white;">アカウント</div>
                         </div>
 
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                うおうお
+                        <div class="">
+                            <div class="mt-2">
+                                @auth
+                                    <a href="{{ url('/home') }}" class="uk-text-default" style="color: white;">Home</a>
+                                @else
+                                    <span uk-icon="sign-in" style="color: white"></span><a href="{{ route('login') }}"
+                                        class="uk-text-default" style="color: white;">ログイン</a>
+
+                                    @if (Route::has('register'))
+                                        <br>
+                                        <span uk-icon="user" style="color: white"></span><a href="{{ route('register') }}"
+                                            class="uk-text-default" style="color: white;">ユーザー登録</a>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                     </div>
@@ -121,7 +157,7 @@
                                     d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                                 </path>
                             </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">どこかへのリンク
+                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">リンク
                             </div>
                         </div>
 
@@ -159,6 +195,7 @@
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div> --}}
             </div>
+            <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 WB研修所申込システム</p>
         </div>
     </div>
 </body>

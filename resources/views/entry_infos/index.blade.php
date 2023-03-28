@@ -54,7 +54,7 @@
     <div id="modal-delete-assignment-sc" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
             <h2 class="uk-modal-title uk-text-danger">課題の削除</h2>
-            <p>アップロード済みのスカウトコースの課題を削除します。</p>
+            <p>アップロード済みのスカウトコースの課題を削除します。削除すると再アップロードが必要になりますので充分にご注意ください。</p>
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                 <a class="uk-button uk-button-danger uk-width-1-1@m"
@@ -66,7 +66,7 @@
     <div id="modal-delete-assignment-division" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
             <h2 class="uk-modal-title uk-text-danger">課題の削除</h2>
-            <p>課程別研修の課題を削除します。</p>
+            <p>アップロード済みの課程別研修の課題を削除します。削除すると再アップロードが必要になりますので充分にご注意ください。</p>
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                 <a class="uk-button uk-button-danger uk-width-1-1@m"
@@ -78,7 +78,7 @@
     <div id="modal-delete-face" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
             <h2 class="uk-modal-title uk-text-danger">顔写真の削除</h2>
-            <p>顔写真を削除します。</p>
+            <p>顔写真を削除します。削除すると再アップロードが必要になりますので充分にご注意ください。</p>
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                 <a class="uk-button uk-button-danger uk-width-1-1@m"
