@@ -34,7 +34,7 @@
                                 {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
                             @else
                                 <a href="{{ url('/commi/commi_check/?id=') }}{{ $entryInfo->entry_info->id }}"
-                                    class=" uk-button uk-button-primary">承認する</a>
+                                    class=" uk-button uk-button-primary" onclick="return confirm('{{ $entryInfo->name }}さんを承認しますか?')">承認する</a>
                             @endif
                         </td>
                         <td>
