@@ -109,8 +109,8 @@ class Entry_infoController extends AppBaseController
         $entryInfo = $this->entryInfoRepository->find($id);
         // 生年月日分離
         $entryInfo->bd_year = $entryInfo->birthday->format('Y');
-        $entryInfo->bd_month = $entryInfo->birthday->format('m');
-        $entryInfo->bd_day = $entryInfo->birthday->format('d');
+        $entryInfo->bd_month = $entryInfo->birthday->format('n');
+        $entryInfo->bd_day = $entryInfo->birthday->format('j');
 
         if (empty($entryInfo)) {
             Flash::error('Entry Info not found');
