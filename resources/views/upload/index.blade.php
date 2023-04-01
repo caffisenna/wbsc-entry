@@ -25,7 +25,7 @@
         @elseif ($q == 'division')
             <p class="uk-text-danger">スカウトコースの課題ではありません。</p>
         @endif
-        <p class="uk-text-danger">必ずトレーナー認定済みの課題をPDF形式でアップしてください。</p>
+        <p class="uk-text-danger">トレーナーから指導を受けた課題をPDF形式でアップしてください。(認定はオンラインで別途行います)</p>
 
         <div class="clearfix"></div>
         <div class="card">
@@ -45,5 +45,7 @@
             @enderror
 
         </div>
+        この画面でアップロードする課題はこの「まとめシート」です。
+        <img src="{{ url('/images/assignment_sc.jpg') }}" width="300px">
     </div>
 @endsection
