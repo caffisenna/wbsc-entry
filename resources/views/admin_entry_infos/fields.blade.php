@@ -74,7 +74,23 @@
         </tr>
         <tr>
             <td>生年月日</td>
-            <td>{!! Form::date('birthday', null, ['class' => 'form-control']) !!}
+            <td>
+                {{-- {!! Form::date('birthday', null, ['class' => 'form-control', 'min'=>'1947-01-01', 'max'=>'2004-12-31']) !!} --}}
+                {!! Form::selectRange('bd_year', 1942, 2004, null, [
+                    'class' => 'form-control custom-select',
+                    'placeholder' => '年',
+                ]) !!}
+                {!! Form::selectrange(
+                    'bd_month',1,12,null,
+                    [
+                        'class' => 'form-control custom-select',
+                        'placeholder' => '月',
+                    ],
+                ) !!}
+                {!! Form::selectRange('bd_day', 1, 31, null, [
+                    'class' => 'form-control custom-select',
+                    'placeholder' => '日',
+                ]) !!}
                 @error('birthday')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror

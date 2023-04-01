@@ -109,6 +109,10 @@ class AdminEntry_infoController extends AppBaseController
     {
         $entryInfo = Entry_info::where('user_id', $id)->first();
         $user = User::where('id', $id)->first();
+        // 生年月日分離
+        $entryInfo->bd_year = $entryInfo->birthday->format('Y');
+        $entryInfo->bd_month = $entryInfo->birthday->format('n');
+        $entryInfo->bd_day = $entryInfo->birthday->format('j');
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -139,7 +143,7 @@ class AdminEntry_infoController extends AppBaseController
 
         $entryInfo = $this->entryInfoRepository->update($request->all(), $id);
 
-        Flash::success('申込情報を更新しました');
+        Flash::success($entryInfo->user->name.'の申込情報を更新しました');
 
         return redirect(route('admin_entryInfos.index'));
     }
@@ -165,7 +169,7 @@ class AdminEntry_infoController extends AppBaseController
 
         $this->entryInfoRepository->delete($id);
 
-        Flash::success('申込情報を削除しました');
+        Flash::success($entryInfo->user->name.'の申込情報を削除しました');
 
         return redirect(route('admin_entryInfos.index'));
     }
