@@ -15,6 +15,9 @@ use Ramsey\Uuid\Uuid;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AisChecked;
+use Illuminate\Support\Facades\DB; // excel export用
+use App\Exports\ExcelExport; // excel export用
+use Maatwebsite\Excel\Facades\Excel; // excel export用
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -84,7 +87,7 @@ class AdminEntry_infoController extends AppBaseController
      */
     public function show($id)
     {
-        $entryInfo = User::where('id',$id)->with('entry_info')->first();
+        $entryInfo = User::where('id', $id)->with('entry_info')->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -104,8 +107,8 @@ class AdminEntry_infoController extends AppBaseController
      */
     public function edit($id)
     {
-        $entryInfo = Entry_info::where('user_id',$id)->first();
-        $user = User::where('id',$id)->first();
+        $entryInfo = Entry_info::where('user_id', $id)->first();
+        $user = User::where('id', $id)->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -113,7 +116,7 @@ class AdminEntry_infoController extends AppBaseController
             return redirect(route('admin_entryInfos.index'));
         }
 
-        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user',$user);
+        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user', $user);
     }
 
     /**
@@ -182,12 +185,12 @@ class AdminEntry_infoController extends AppBaseController
     {
         // AIS委員会のチェック機能
         $id = $request['id'];
-        $entryInfo = Entry_info::where('id',$id)->first();
+        $entryInfo = Entry_info::where('id', $id)->first();
         $entryInfo->ais_checked_at = now();
         $entryInfo->save();
 
         // 氏名取得
-        $user = User::where('id',$entryInfo->user_id)->first();
+        $user = User::where('id', $entryInfo->user_id)->first();
 
         // 確認メール送信
         $sendto = $user->email;
@@ -195,8 +198,34 @@ class AdminEntry_infoController extends AppBaseController
 
 
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name.'さん AIS委員会のチェックをしました');
+        Flash::success($user->name . 'さん AIS委員会のチェックをしました');
 
         return back();
+    }
+
+    public function admin_export()
+    {
+        // $data = User::with('entry_info')->get();
+        $data = Entry_info::with('user')->get();
+        // dd($data);
+        $filename = 'export.' . 'xlsx'; //ファイル名
+        //エクセルの見出しを以下で設定
+        $headings = [
+            '申込ID',
+            'SC期数',
+            '課程別回数',
+            '県連',
+            '地区',
+            '団名',
+            '隊',
+            '役務',
+            '氏名',
+            'ふりがな',
+            'ケータイ',
+            'email',
+        ];
+
+        //以下で先ほど作成したExcelExportにデータを渡す。
+        return Excel::download(new ExcelExport($data, $headings), $filename);
     }
 }

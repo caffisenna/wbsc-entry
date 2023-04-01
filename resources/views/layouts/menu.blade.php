@@ -24,6 +24,12 @@
             <p>申込一覧</p>
         </a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('admin_export') }}"
+            class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
+            <p>エクスポート</p>
+        </a>
+    </li>
 @endif
 
 {{-- 地区コミ --}}

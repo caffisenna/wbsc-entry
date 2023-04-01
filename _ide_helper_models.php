@@ -84,7 +84,7 @@ namespace App\Models{
  * @property string|null $assignment_sc
  * @property string|null $assignment_division
  * @property string|null $face_picture
- * @property string|null $uuid
+ * @property string $uuid
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
