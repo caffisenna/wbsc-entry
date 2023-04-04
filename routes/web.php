@@ -63,6 +63,7 @@ Route::middleware('verified')->group(function () {
     Route::prefix('admin')->middleware('can:admin')->group(function () {
         Route::resource('admin_entryInfos', App\Http\Controllers\AdminEntry_infoController::class);
         Route::get('/pdf', [App\Http\Controllers\AdminEntry_infoController::class, 'pdf'])->name('pdf');
+        Route::get('/multi_pdf', [App\Http\Controllers\AdminEntry_infoController::class, 'multi_pdf'])->name('multi_pdf');
         Route::get('/ais_check', [App\Http\Controllers\AdminEntry_infoController::class, 'ais_check'])->name('ais_check');
         Route::get('/admin_export', [App\Http\Controllers\AdminEntry_infoController::class, 'admin_export'])->name('admin_export');
         // Route::get('/', 'Admin\HomeController@index');

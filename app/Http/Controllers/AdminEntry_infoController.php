@@ -18,6 +18,8 @@ use App\Mail\AisChecked;
 use Illuminate\Support\Facades\DB; // excel export用
 use App\Exports\ExcelExport; // excel export用
 use Maatwebsite\Excel\Facades\Excel; // excel export用
+use ZipArchive; // zipで固める
+use Storage;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -38,11 +40,29 @@ class AdminEntry_infoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $entryInfos = User::with('entry_info')
-            ->where('is_admin', 0)
-            ->where('is_staff', 0)
-            ->where('is_commi', NULL)
-            ->get();
+        if (isset($request['q'])) { // スカウトコース 期数抽出
+            $entryInfos = User::wherehas(
+                'entry_info',
+                function ($query) {
+                    $q = $_REQUEST['q'];
+                    $query->where('sc_number', $q);
+                }
+            )->with('entry_info')->get();
+        } elseif (isset($request['div'])) { // 課程別研修 回数抽出
+            $entryInfos = User::wherehas(
+                'entry_info',
+                function ($query) {
+                    $q = $_REQUEST['div'];
+                    $query->where('division_number', $q);
+                }
+            )->with('entry_info')->get();
+        } else {
+            $entryInfos = User::with('entry_info')
+                ->where('is_admin', 0)
+                ->where('is_staff', 0)
+                ->where('is_commi', NULL)
+                ->get();
+        }
 
         return view('admin_entry_infos.index')
             ->with('entryInfos', $entryInfos);
@@ -143,7 +163,7 @@ class AdminEntry_infoController extends AppBaseController
 
         $entryInfo = $this->entryInfoRepository->update($request->all(), $id);
 
-        Flash::success($entryInfo->user->name.'の申込情報を更新しました');
+        Flash::success($entryInfo->user->name . 'の申込情報を更新しました');
 
         return redirect(route('admin_entryInfos.index'));
     }
@@ -169,7 +189,7 @@ class AdminEntry_infoController extends AppBaseController
 
         $this->entryInfoRepository->delete($id);
 
-        Flash::success($entryInfo->user->name.'の申込情報を削除しました');
+        Flash::success($entryInfo->user->name . 'の申込情報を削除しました');
 
         return redirect(route('admin_entryInfos.index'));
     }
@@ -183,6 +203,51 @@ class AdminEntry_infoController extends AppBaseController
         $pdf->setPaper('A4');
         return $pdf->download();
         // return $pdf->stream();
+    }
+
+    public function multi_pdf(Request $request)
+    // コース単位 全員の申込書PDF生成
+    {
+        $entryInfos = User::wherehas(
+            'entry_info',
+            function ($query) {
+                $q = $_REQUEST['q'];
+                $query->where('sc_number', $q);
+            }
+        )->with('entry_info')->get();
+
+        // 個別の申込書を生成
+        foreach ($entryInfos as $entryInfo) {
+            $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo', $entryInfo));
+            $pdf->setPaper('A4');
+            $pdf = $pdf->output(); // PDF生成
+            $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
+            Storage::put('public/pdfs/' . $fname . '.pdf', $pdf);
+        }
+
+        // zip生成
+        $zip = new ZipArchive();
+        $dl_file = 'sc_entry_all.zip'; // DLされるファイル名
+        $zip->open(public_path() . "/$dl_file", ZipArchive::CREATE);
+        $path = storage_path() . '/app/public/pdfs/';
+
+        // zipArchiveは個別にファイルを追加する必要がある
+        $pdfs = glob($path . "*");
+        foreach ($pdfs as $single_pdf) {
+            $file_info = pathinfo($single_pdf);
+            $file_name = $file_info['filename'] . '.' . $file_info['extension'];
+            $zip->addFile($single_pdf, $file_name);
+        }
+        $zip->close();
+
+        // 一時ファイル削除
+        Storage::disk('public')->deleteDirectory('/pdfs');
+
+        // DLさせて末尾のdeleteAfterSend() で自動削除
+        return response()->download(public_path() . "/$dl_file")->deleteFileAfterSend();
+
+        Flash::success($entryInfo->entry_info->sc_number . 'の申込書を生成しました');
+        return back();
     }
 
     public function ais_check(Request $request)
