@@ -19,6 +19,12 @@
 @if (Auth::user()->is_admin)
     <h3 class="uk-text-warning">管理者メニュー</h3>
     <li class="nav-item">
+        <a href="{{ url('/home') }}"
+            class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
+            <p>HOME</p>
+        </a>
+    </li>
+    <li class="nav-item">
         <a href="{{ route('admin_entryInfos.index') }}"
             class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
             <p>申込一覧</p>
