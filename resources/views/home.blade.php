@@ -16,14 +16,17 @@
                     </tr>
                     @foreach ($count as $val)
                         <tr>
-                            <td><a href="{{ url('admin/admin_entryInfos?q=' . $val->sc_number) }}">{{ $val->sc_number }}</a></td>
+                            <td><a href="{{ url('admin/admin_entryInfos?q=' . $val->sc_number) }}">SC{{ $val->sc_number }}</a>
+                            </td>
                             <td>{{ $val->count_sc_number }}名</td>
                             <td><a href="#" class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
                             </td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number }}" class="uk-button uk-button-primary"
+                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=false' }}"
+                                    class="uk-button uk-button-primary"
                                     onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                         uk-icon="download"></span>一括DL</a></td>
-                            <td><a href="#" class="uk-button uk-button-primary"><span uk-icon="download"></span>一括DL</a>
+                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=true' }}"
+                                    class="uk-button uk-button-primary"><span uk-icon="download"></span>一括DL</a>
                             </td>
                         </tr>
                     @endforeach
