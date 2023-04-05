@@ -33,7 +33,14 @@
     <li class="nav-item">
         <a href="{{ route('admin_export') }}"
             class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
-            <p>エクスポート</p>
+            <p>エクスポート(xlsx)</p>
+        </a>
+    </li>
+    <h3 class="uk-text-warning">事務局メニュー</h3>
+    <li class="nav-item">
+        <a href="{{ route('fee_check') }}"
+            class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
+            <p>参加費確認</p>
         </a>
     </li>
 @endif
