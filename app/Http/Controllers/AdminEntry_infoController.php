@@ -306,7 +306,7 @@ class AdminEntry_infoController extends AppBaseController
             $id = $request['id'];
             $entryinfo = Entry_info::where('id', $id)->with('user')->firstOrFail();
             $entryinfo->fee_checked_at = now();
-            // $entryinfo->save();
+            $entryinfo->save();
 
             // メール送信機能を付ける
             // 確認メール送信
