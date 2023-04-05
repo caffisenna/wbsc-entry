@@ -26,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->is_admin) {
+            // 管理者
             // 各コースの申込人数を集計してhome画面に渡す
             $count = Entry_info::select('sc_number')->selectRaw('count(user_id) as count_sc_number')->groupBy('sc_number')->get();
             $count = $count->sortBy('sc_number'); // 期数毎にソート
@@ -33,7 +34,12 @@ class HomeController extends Controller
             $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
 
             return view('home')->with('count', $count)->with('div_count', $div_count);
+        } elseif (Auth::user()->is_commi) {
+            // 地区コミ
+            // 地区の一覧にリダイレクト
+            return redirect()->route('commi_entryInfos.index');
         } else {
+            // その他
             return view('home');
         }
     }
