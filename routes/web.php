@@ -62,10 +62,11 @@ Route::middleware('verified')->group(function () {
     // 管理ユーザ用
     Route::prefix('admin')->middleware('can:admin')->group(function () {
         Route::resource('admin_entryInfos', App\Http\Controllers\AdminEntry_infoController::class);
-        Route::get('/pdf', [App\Http\Controllers\AdminEntry_infoController::class, 'pdf'])->name('pdf');
+        Route::get('/pdf', [App\Http\Controllers\AdminEntry_infoController::class, 'pdf'])->name('admin_pdf');
         Route::get('/multi_pdf', [App\Http\Controllers\AdminEntry_infoController::class, 'multi_pdf'])->name('multi_pdf');
         Route::get('/ais_check', [App\Http\Controllers\AdminEntry_infoController::class, 'ais_check'])->name('ais_check');
         Route::get('/admin_export', [App\Http\Controllers\AdminEntry_infoController::class, 'admin_export'])->name('admin_export');
+        Route::get('/fee_check', [App\Http\Controllers\AdminEntry_infoController::class, 'fee_check'])->name('fee_check');
         // Route::get('/', 'Admin\HomeController@index');
         // Route::resource('adminConfigs', App\Http\Controllers\AdminConfigController::class);
         // Route::resource('adminentries', App\Http\Controllers\adminentryFormController::class, ['except' => 'create']);
@@ -87,7 +88,7 @@ Route::middleware('verified')->group(function () {
     // 地区コミ用
     Route::prefix('commi')->middleware('can:commi')->group(function () {
         Route::resource('commi_entryInfos', App\Http\Controllers\CommiEntry_infoController::class);
-        Route::get('/pdf', [App\Http\Controllers\CommiEntry_infoController::class, 'pdf'])->name('pdf');
+        Route::get('/pdf', [App\Http\Controllers\CommiEntry_infoController::class, 'pdf'])->name('commi_pdf');
         Route::get('/commi_check', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_check'])->name('commi_check');
         // Route::resource('entries', App\Http\Controllers\commiEntryFormController::class, ['only' => ['index', 'show']]);
         // Route::get('commi_check', [App\Http\Controllers\commiEntryFormController::class, 'commi_check'])->name('commi_check');
