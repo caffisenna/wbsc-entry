@@ -20,6 +20,7 @@ use App\Exports\ExcelExport; // excel export用
 use Maatwebsite\Excel\Facades\Excel; // excel export用
 use ZipArchive; // zipで固める
 use Storage;
+use App\Mail\FeeChecked;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -296,5 +297,33 @@ class AdminEntry_infoController extends AppBaseController
 
         //以下で先ほど作成したExcelExportにデータを渡す。
         return Excel::download(new ExcelExport($data, $headings), $filename);
+    }
+
+    public function fee_check(Request $request)
+    {
+        // 入金IDがあるとき
+        if (isset($request['id'])) {
+            $id = $request['id'];
+            $entryinfo = Entry_info::where('id', $id)->with('user')->firstOrFail();
+            $entryinfo->fee_checked_at = now();
+            // $entryinfo->save();
+
+            // メール送信機能を付ける
+            // 確認メール送信
+            $sendto = $entryinfo->user->email;
+            $name = $entryinfo->user->name;
+            Mail::to($sendto)->queue(new FeeChecked($name)); // メールをqueueで送信
+
+            // flashメッセージを設定
+            Flash::success($entryinfo->user->name . 'の入金確認を行いました');
+
+            // 一覧に戻る
+            return back();
+        } else {
+            // 入金IDがなく、一覧を返す
+            $entryinfos = Entry_info::with('user')->orderby('furigana')->get();
+            return view('fee_check.index')
+                ->with('entryinfos', $entryinfos);
+        }
     }
 }
