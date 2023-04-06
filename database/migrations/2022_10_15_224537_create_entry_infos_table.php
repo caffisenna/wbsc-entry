@@ -86,6 +86,7 @@ class CreateEntryInfosTable extends Migration
             $table->date('trainer_division_checked_at')->nullable();        // トレーナー認定課程別
             $table->string('trainer_division_name',50)->nullable();              // トレーナー認定氏名
             $table->date('gm_checked_at')->nullable();                      // 団委員長確認
+            $table->string('gm_name',50)->nullable();                         // 団委員長氏名
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認
             $table->date('ais_checked_at')->nullable();                     // AIS委員会確認
             $table->date('fee_checked_at')->nullable();                     // 参加費確認

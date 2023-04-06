@@ -16,6 +16,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CommiChecked;
 use App\Mail\TrainerRequest;
+use App\Mail\GmRequest;
 
 class CommiEntry_infoController extends AppBaseController
 {
@@ -217,6 +218,26 @@ class CommiEntry_infoController extends AppBaseController
         Mail::to($sendto)->queue(new TrainerRequest($name,$uuid)); // メールをqueueで送信
 
         Flash::success($name . 'さんにトレーナー認定依頼メールを発送しました');
+        return back();
+    }
+
+    public function gm_request(Request $request)
+    {
+        $uuid = $request['id'];
+        $userinfo = Entry_info::where('uuid', $uuid)->with('user')->firstOrFail();
+
+        return view('commi_entry_infos.gm_request')->with('userinfo', $userinfo);
+    }
+
+    public function gm_request_send(Request $request)
+    {
+        $uuid = $request['uuid'];
+        $sendto = $request['email'];
+        $name = $request['name'];
+        // 確認メール送信
+        Mail::to($sendto)->queue(new GmRequest($name,$uuid)); // メールをqueueで送信
+
+        Flash::success($name . 'さんに参加承認の依頼メールを発送しました');
         return back();
     }
 }

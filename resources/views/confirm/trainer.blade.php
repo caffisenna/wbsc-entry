@@ -59,7 +59,7 @@
                 @if (isset($userinfo->trainer_sc_checked_at))
                     <td>認定済み</td>
                 @else
-                    <td><a href="#modal-confirm-assignment-sc" uk-toggle class="uk-button uk-button-primary">認定する</td>
+                    <td><a href="#modal-confirm-assignment-sc" uk-toggle class="uk-button uk-button-primary">認定する</a></td>
                 @endif
                 @if (isset($userinfo->trainer_sc_checked_at))
                     <td>{{ $userinfo->trainer_sc_checked_at }}</td>
@@ -79,7 +79,7 @@
                 @if (isset($userinfo->trainer_division_checked_at))
                     <td>認定済み</td>
                 @else
-                    <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</td>
+                    <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</a></td>
                 @endif
                 @if (isset($userinfo->trainer_division_checked_at))
                     <td>{{ $userinfo->trainer_division_checked_at }}</td>

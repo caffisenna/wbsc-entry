@@ -44,7 +44,8 @@
                             @if (isset($entryInfo->entry_info->gm_checked_at))
                                 {{ $entryInfo->entry_info->gm_checked_at->format('Y-m-d') }}
                             @else
-                                未承認
+                            <a href="{{ url('/commi/gm_request?id=') }}{{ $entryInfo->entry_info->uuid }}"
+                                uk-toggle class="uk-link uk-button uk-button-primary uk-button-small">承認依頼</a>
                             @endif
                         </td>
                         <td>

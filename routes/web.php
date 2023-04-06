@@ -25,6 +25,10 @@ Route::get('/', function () {
 Route::get('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 'trainer_confirm'])->name('trainer_confirm');
 Route::post('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 'trainer_confirm_post'])->name('trainer_confirm_post');
 
+// 団委員長承認
+Route::get('/confirm/gm', [App\Http\Controllers\ConfirmController::class, 'gm_confirm'])->name('gm_confirm');
+Route::post('/confirm/gm', [App\Http\Controllers\ConfirmController::class, 'gm_confirm_post'])->name('gm_confirm_post');
+
 Auth::routes();
 
 Route::get('/email/verify', function () {
@@ -76,5 +80,7 @@ Route::middleware('verified')->group(function () {
         Route::get('/commi_check', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_check'])->name('commi_check');
         Route::get('/trainer_request', [App\Http\Controllers\CommiEntry_infoController::class, 'trainer_request'])->name('trainer_request');
         Route::post('/trainer_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'trainer_request_send'])->name('trainer_request_send');
+        Route::get('/gm_request', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request'])->name('gm_request');
+        Route::post('/gm_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request_send'])->name('gm_request_send');
     });
 });
