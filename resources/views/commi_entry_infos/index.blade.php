@@ -8,11 +8,6 @@
                     <h1>WB研修所申込書 {{ Auth::user()->name }}</h1>
                 </div>
                 <div class="col-sm-6">
-                    {{-- @if (empty($entryInfo))
-                        <a class="btn btn-primary float-right" href="{{ route('entryInfos.create') }}">
-                            申込書作成
-                        </a>
-                    @endif --}}
                 </div>
             </div>
         </div>
