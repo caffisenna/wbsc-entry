@@ -82,7 +82,9 @@ class CreateEntryInfosTable extends Migration
             $table->string('face_picture')->nullable();    // 顔写真
             $table->string('uuid')->unique();                   // UUID
             $table->date('trainer_sc_checked_at')->nullable();              // トレーナー認定SC
+            $table->string('trainer_sc_name',50)->nullable();                    // トレーナー認定氏名
             $table->date('trainer_division_checked_at')->nullable();        // トレーナー認定課程別
+            $table->string('trainer_division_name',50)->nullable();              // トレーナー認定氏名
             $table->date('gm_checked_at')->nullable();                      // 団委員長確認
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認
             $table->date('ais_checked_at')->nullable();                     // AIS委員会確認
