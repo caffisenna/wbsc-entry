@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>WB研修所申込書 {{ Auth::user()->name }}さん</h1>
+                    <h1>WB研修所申込書 {{ Auth::user()->name }}</h1>
                 </div>
                 <div class="col-sm-6">
                     {{-- @if (empty($entryInfo))
