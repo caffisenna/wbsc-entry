@@ -64,7 +64,7 @@
                             <p>
                                 @auth
                                     {{ Auth::user()->name }}
-                                    <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small>
+                                    {{-- <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small> --}}
                                 @endauth
                             </p>
                         </li>
@@ -73,10 +73,10 @@
                             @auth
 
 
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                {{-- <a href="#" class="btn btn-default btn-flat">Profile</a> --}}
                                 <a href="#" class="btn btn-default btn-flat float-right"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Sign out
+                                    サインアウト
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
@@ -101,6 +101,7 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
+                Copyright &copy; ボーイスカウト東京連盟 指導者養成委員会 / ICT小委員会
             </div>
         </footer>
     </div>
