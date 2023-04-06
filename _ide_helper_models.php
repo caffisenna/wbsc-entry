@@ -85,6 +85,12 @@ namespace App\Models{
  * @property string|null $assignment_division
  * @property string|null $face_picture
  * @property string $uuid
+ * @property string|null $trainer_sc_checked_at
+ * @property string|null $trainer_sc_name
+ * @property string|null $trainer_division_checked_at
+ * @property string|null $trainer_division_name
+ * @property string|null $gm_name
+ * @property string|null $fee_checked_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -110,9 +116,11 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDistrictRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDivisionNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFacePicture($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFeeCheckedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFurigana($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereGender($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereGmCheckedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereGmName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereHealthIllness($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereHealthMemo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereId($value)
@@ -130,6 +138,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist4Term($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist5Role($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist5Term($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereTrainerDivisionCheckedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereTrainerDivisionName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereTrainerScCheckedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereTrainerScName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereTroop($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereTroopRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereUpdatedAt($value)
