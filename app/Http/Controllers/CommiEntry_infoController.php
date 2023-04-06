@@ -15,6 +15,7 @@ use Ramsey\Uuid\Uuid;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CommiChecked;
+use App\Mail\TrainerRequest;
 
 class CommiEntry_infoController extends AppBaseController
 {
@@ -83,7 +84,7 @@ class CommiEntry_infoController extends AppBaseController
      */
     public function show($id)
     {
-        $entryInfo = User::where('id',$id)->with('entry_info')->first();
+        $entryInfo = User::where('id', $id)->with('entry_info')->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -103,8 +104,8 @@ class CommiEntry_infoController extends AppBaseController
      */
     public function edit($id)
     {
-        $entryInfo = Entry_info::where('user_id',$id)->first();
-        $user = User::where('id',$id)->first();
+        $entryInfo = Entry_info::where('user_id', $id)->first();
+        $user = User::where('id', $id)->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -112,7 +113,7 @@ class CommiEntry_infoController extends AppBaseController
             return redirect(route('admin_entryInfos.index'));
         }
 
-        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user',$user);
+        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user', $user);
     }
 
     /**
@@ -181,12 +182,12 @@ class CommiEntry_infoController extends AppBaseController
     {
         // 地区コミのチェック機能
         $id = $request['id'];
-        $entryInfo = Entry_info::where('id',$id)->first();
+        $entryInfo = Entry_info::where('id', $id)->first();
         $entryInfo->commi_checked_at = now();
         $entryInfo->save();
 
         // 氏名取得
-        $user = User::where('id',$entryInfo->user_id)->first();
+        $user = User::where('id', $entryInfo->user_id)->first();
 
         // 確認メール送信
         $sendto = $user->email;
@@ -194,8 +195,28 @@ class CommiEntry_infoController extends AppBaseController
 
 
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name.'さん 地区コミのチェックをしました');
+        Flash::success($user->name . 'さん 地区コミのチェックをしました');
 
+        return back();
+    }
+
+    public function trainer_request(Request $request)
+    {
+        $uuid = $request['id'];
+        $userinfo = Entry_info::where('uuid', $uuid)->with('user')->firstOrFail();
+
+        return view('commi_entry_infos.trainer_request')->with('userinfo', $userinfo);
+    }
+
+    public function trainer_request_send(Request $request)
+    {
+        $uuid = $request['uuid'];
+        $sendto = $request['email'];
+        $name = $request['name'];
+        // 確認メール送信
+        Mail::to($sendto)->queue(new TrainerRequest($name,$uuid)); // メールをqueueで送信
+
+        Flash::success($name . 'さんにトレーナー認定依頼メールを発送しました');
         return back();
     }
 }

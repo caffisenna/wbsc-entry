@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// トレーナー認定
+Route::get('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 'trainer_confirm'])->name('trainer_confirm');
+Route::post('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 'trainer_confirm_post'])->name('trainer_confirm_post');
+
 Auth::routes();
 
 Route::get('/email/verify', function () {
@@ -46,13 +50,6 @@ Route::middleware('verified')->group(function () {
 
     // 一般ユーザ用
     Route::prefix('user')->group(function () {
-        // Route::get('/', 'User\HomeController@index');
-        // Route::resource('entryForms', App\Http\Controllers\entryFormController::class);
-        // Route::resource('elearnings', App\Http\Controllers\elearningController::class);
-        // Route::resource('resultUploads', App\Http\Controllers\resultUploadController::class);
-        // Route::resource('planUploads', App\Http\Controllers\planUploadController::class, ['except' => ['edit','show','update']]);
-        // Route::resource('temps', App\Http\Controllers\tempsController::class);
-        // Route::resource('resultInputs', App\Http\Controllers\resultInputsController::class);
         Route::resource('entryInfos', App\Http\Controllers\Entry_infoController::class);
         Route::get('/pdf', [App\Http\Controllers\Entry_infoController::class, 'pdf'])->name('pdf');
         Route::resource('upload',UploadController::class);
@@ -67,19 +64,6 @@ Route::middleware('verified')->group(function () {
         Route::get('/ais_check', [App\Http\Controllers\AdminEntry_infoController::class, 'ais_check'])->name('ais_check');
         Route::get('/admin_export', [App\Http\Controllers\AdminEntry_infoController::class, 'admin_export'])->name('admin_export');
         Route::get('/fee_check', [App\Http\Controllers\AdminEntry_infoController::class, 'fee_check'])->name('fee_check');
-        // Route::get('/', 'Admin\HomeController@index');
-        // Route::resource('adminConfigs', App\Http\Controllers\AdminConfigController::class);
-        // Route::resource('adminentries', App\Http\Controllers\adminentryFormController::class, ['except' => 'create']);
-        // Route::get('non_tokyo', [App\Http\Controllers\adminentryFormController::class, 'non_tokyo'])->name('non_tokyo');
-        // Route::get('/deleted', [App\Http\Controllers\adminentryFormController::class, 'deleted'])->name('deleted');
-        // Route::resource('buddylists', App\Http\Controllers\BuddylistController::class);
-        // Route::get('fee_check', [App\Http\Controllers\adminentryFormController::class, 'fee_check'])->name('fee_check');
-        // Route::get('registration_check', [App\Http\Controllers\adminentryFormController::class, 'registration_check'])->name('registration_check');
-        // Route::resource('adminresultUploads', App\Http\Controllers\adminresultUploadController::class, ['except' => 'create']);
-        // Route::get('/result_lists', [App\Http\Controllers\adminresultUploadController::class, 'lists'])->name('resultlists');
-        // Route::get('/temp_lists', [App\Http\Controllers\tempsController::class, 'temp_list'])->name('templists');
-        // Route::resource('reach50100', App\Http\Controllers\reach50100Controller::class);
-        // Route::resource('adminplanUploads', App\Http\Controllers\adminplanUploadController::class, ['except' => ['create','edit','show','update']]);
     });
     // スタッフ用
     // Route::prefix('staff')->middleware('can:staff')->group(function () {
@@ -90,7 +74,7 @@ Route::middleware('verified')->group(function () {
         Route::resource('commi_entryInfos', App\Http\Controllers\CommiEntry_infoController::class);
         Route::get('/pdf', [App\Http\Controllers\CommiEntry_infoController::class, 'pdf'])->name('commi_pdf');
         Route::get('/commi_check', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_check'])->name('commi_check');
-        // Route::resource('entries', App\Http\Controllers\commiEntryFormController::class, ['only' => ['index', 'show']]);
-        // Route::get('commi_check', [App\Http\Controllers\commiEntryFormController::class, 'commi_check'])->name('commi_check');
+        Route::get('/trainer_request', [App\Http\Controllers\CommiEntry_infoController::class, 'trainer_request'])->name('trainer_request');
+        Route::post('/trainer_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'trainer_request_send'])->name('trainer_request_send');
     });
 });
