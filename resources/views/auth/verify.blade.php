@@ -27,6 +27,7 @@
                             @csrf
                         </form>
                     </div>
+                    <p class="uk-text">もし認証済みでこの画面が表示されているようならば<a href="{{ url('/home') }}">HOME</a>へ進んでください。</p>
                 </div>
             </div>
         </div>
