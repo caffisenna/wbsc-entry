@@ -39,8 +39,9 @@ class HomeController extends Controller
             // 地区の一覧にリダイレクト
             return redirect()->route('commi_entryInfos.index');
         } else {
-            // その他
-            return view('home');
+            // 一般ユーザーがログインしたときに、申込情報にリダイレクト
+            return redirect(route('entryInfos.index'));
+            // return view('home');
         }
     }
 }
