@@ -80,7 +80,7 @@
         <tr>
             <td>登録番号<br><span class="uk-text-danger uk-text-small">2023年度より登録番号が変わっています</td>
             <td>{!! Form::text('bs_id', null, [
-                'class' => 'form-control',
+                'class' => 'form-control uk-form-width-medium',
                 'placeholder' => '登録証を確認し11桁の登録番号を入力してください',
             ]) !!}
                 @error('bs_id')
