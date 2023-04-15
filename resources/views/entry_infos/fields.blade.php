@@ -2,20 +2,15 @@
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
             <td>スカウトコースの期数</td>
-            <td>{!! Form::select(
-                'sc_number',
-                [
-                    '' => '',
-                    '27' => '27',
-                    '28' => '28',
-                    '29' => '29',
-                    '30' => '30',
-                ],
-                null,
-                [
-                    'class' => 'form-control custom-select',
-                ],
-            ) !!}
+            <td>
+                <select name="sc_number" class="form-control custom-select uk-form-width-small">
+                    <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
+                    </option>
+                    @foreach ($courselists as $courselist)
+                        <option value="{{ $courselist->number }}" @if (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) selected @endif>
+                            {{ $courselist->number }}期</option>
+                    @endforeach
+                </select>
                 @error('sc_number')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -23,24 +18,15 @@
         </tr>
         <tr>
             <td>課程別研修の回数</td>
-            <td>{!! Form::select(
-                'division_number',
-                [
-                    '' => '',
-                    'BVS11' => 'BVS11',
-                    'CS11' => 'CS11',
-                    'BS11' => 'BS11',
-                    'VS11' => 'VS11',
-                    'BVS12' => 'BVS12',
-                    'CS12' => 'CS12',
-                    'BS12' => 'BS12',
-                    'VS12' => 'VS12',
-                ],
-                null,
-                [
-                    'class' => 'form-control custom-select',
-                ],
-            ) !!}
+            <td>
+                <select name="division_number" class="form-control custom-select uk-form-width-small">
+                    <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>選択してください
+                    </option>
+                    @foreach ($divisionlists as $divisionlist)
+                        <option value="{{ $divisionlist }}" @if (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) selected @endif>
+                            {{ $divisionlist }}回</option>
+                    @endforeach
+                </select>
                 @error('division_number')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -65,7 +51,7 @@
         <tr>
             <td>性別</td>
             <td>{!! Form::select('gender', ['' => '', '男' => '男', '女' => '女'], null, [
-                'class' => 'form-control custom-select',
+                'class' => 'form-control custom-select uk-form-width-small',
             ]) !!}
                 @error('gender')
                     <div class="error text-danger">{{ $message }}</div>
@@ -75,32 +61,27 @@
         <tr>
             <td>生年月日</td>
             <td>
-                {{-- {!! Form::date('birthday', null, ['class' => 'form-control', 'min'=>'1947-01-01', 'max'=>'2004-12-31']) !!} --}}
                 {!! Form::selectRange('bd_year', 1942, 2004, null, [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '年',
-                ]) !!}
-                {!! Form::selectrange(
-                    'bd_month',1,12,null,
-                    [
-                        'class' => 'form-control custom-select',
-                        'placeholder' => '月',
-                    ],
-                ) !!}
+                ]) !!}年{!! Form::selectrange('bd_month', 1, 12, null, [
+                    'class' => 'form-control custom-select uk-form-width-xsmall',
+                    'placeholder' => '月',
+                ]) !!}月
                 {!! Form::selectRange('bd_day', 1, 31, null, [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-xsmall',
                     'placeholder' => '日',
-                ]) !!}
+                ]) !!}日
                 @error('birthday')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
         </tr>
         <tr>
-            <td>登録番号</td>
+            <td>登録番号<br><span class="uk-text-danger uk-text-small">2023年度より登録番号が変わっています</td>
             <td>{!! Form::text('bs_id', null, [
                 'class' => 'form-control',
-                'placeholder' => '登録証を確認し10桁の登録番号を入力してください',
+                'placeholder' => '登録証を確認し11桁の登録番号を入力してください',
             ]) !!}
                 @error('bs_id')
                     <div class="error text-danger">{{ $message }}</div>
@@ -162,7 +143,7 @@
                     '沖縄' => '沖縄',
                 ],
                 '東京',
-                ['class' => 'form-control custom-select'],
+                ['class' => 'form-control custom-select uk-form-width-small'],
             ) !!}
                 @error('prefecture')
                     <div class="error text-danger">{{ $message }}</div>
@@ -192,7 +173,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                 ],
             ) !!}
                 @error('district')
@@ -223,7 +204,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-medium',
                 ],
             ) !!}
                 @error('troop')
@@ -250,7 +231,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-medium',
                 ],
             ) !!}
                 @error('troop_role')
@@ -317,181 +298,46 @@
             </td>
         </tr>
 
-        <tr>
-            <td>その他の研修所履歴(1)</td>
-            <td>課程:{!! Form::text('wb_basic1_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic1_number', null, [
+        @for ($i = 1; $i <= 5; $i++)
+            <tr>
+                <td>その他の研修所履歴({{ $i }})</td>
+                <td>課程:{!! Form::text("wb_basic{$i}_category", null, [
                     'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
+                    'placeholder' => '課程を入力してください(例: ボーイ課程)',
                 ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic1_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
+                    期数:{!! Form::text("wb_basic{$i}_number", null, [
+                        'class' => 'form-control',
+                        'placeholder' => '期数を入力してください(例: 東京21期)',
+                    ]) !!}<br>
+                    修了年月:{!! Form::text("wb_basic{$i}_date", null, [
+                        'class' => 'form-control',
+                        'placeholder' => '修了年月を入力してください(例: 2021年10月)',
+                    ]) !!}</td>
+            </tr>
+        @endfor
 
+        @for ($i = 1; $i <= 5; $i++)
         <tr>
-            <td>その他の研修所履歴(2)</td>
-            <td>課程:{!! Form::text('wb_basic2_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic2_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic2_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の研修所履歴(3)</td>
-            <td>課程:{!! Form::text('wb_basic3_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic3_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic3_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の研修所履歴(4)</td>
-            <td>課程:{!! Form::text('wb_basic4_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic4_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic4_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の研修所履歴(5)</td>
-            <td>課程:{!! Form::text('wb_basic5_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic5_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic5_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-
-        <tr>
-            <td>その他の実修所履歴(1)</td>
-            <td>課程:{!! Form::text('wb_adv1_category', null, [
+            <td>その他の実修所履歴({{ $i }})</td>
+            <td>課程:{!! Form::text("wb_adv{$i}_category", null, [
                 'class' => 'form-control',
             ]) !!}<br>
-                期数:{!! Form::text('wb_adv1_number', null, [
+                期数:{!! Form::text("wb_adv{$i}_number", null, [
                     'class' => 'form-control',
                 ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv1_date', null, [
+                修了年月:{!! Form::text("wb_adv{$i}_date", null, [
                     'class' => 'form-control',
                 ]) !!}</td>
         </tr>
+        @endfor
 
+        @for ($i = 1; $i <= 5; $i++)
         <tr>
-            <td>その他の実修所履歴(2)</td>
-            <td>課程:{!! Form::text('wb_adv2_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv2_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv2_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
+            <td>奉仕歴({{ $i }}) @if($i == 1)最新のものから順に直近5年 @endif</td>
+            <td>役務:{!! Form::text("service_hist{$i}_role", null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
+                期間:{!! Form::text("service_hist{$i}_term", null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
         </tr>
-
-        <tr>
-            <td>その他の実修所履歴(3)</td>
-            <td>課程:{!! Form::text('wb_adv3_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv3_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv3_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(4)</td>
-            <td>課程:{!! Form::text('wb_adv4_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv4_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv4_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(5)</td>
-            <td>課程:{!! Form::text('wb_adv5_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv5_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv5_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(1) 最新のものから順に直近5年</td>
-            <td>役務:{!! Form::text('service_hist1_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist1_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(2)</td>
-            <td>役務:{!! Form::text('service_hist2_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist2_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(3)</td>
-            <td>役務:{!! Form::text('service_hist3_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist3_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(4)</td>
-            <td>役務:{!! Form::text('service_hist4_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist4_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(5)</td>
-            <td>役務:{!! Form::text('service_hist5_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist5_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
+        @endfor
 
         <tr>
             <td>現在治療中の病気(病名などをご記入ください)</td>
