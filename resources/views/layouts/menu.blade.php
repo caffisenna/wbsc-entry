@@ -36,6 +36,12 @@
                 <p>エクスポート(xlsx)</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('courseLists.index') }}"
+               class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
+                <p>コース一覧</p>
+            </a>
+        </li>
         <h3 class="uk-text-warning">事務局メニュー</h3>
         <li class="nav-item">
             <a href="{{ route('fee_check') }}" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
@@ -56,3 +62,4 @@
     @endif
 
 @endauth
+
