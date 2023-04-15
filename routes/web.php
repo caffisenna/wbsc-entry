@@ -68,8 +68,8 @@ Route::middleware('verified')->group(function () {
         Route::get('/ais_check', [App\Http\Controllers\AdminEntry_infoController::class, 'ais_check'])->name('ais_check');
         Route::get('/admin_export', [App\Http\Controllers\AdminEntry_infoController::class, 'admin_export'])->name('admin_export');
         Route::get('/fee_check', [App\Http\Controllers\AdminEntry_infoController::class, 'fee_check'])->name('fee_check');
-        Route::resource('courseLists', App\Http\Controllers\course_listController::class);
-        Route::resource('zzzs', App\Http\Controllers\zzzController::class);
+        Route::resource('courseLists', App\Http\Controllers\course_listController::class); // スカウトコース設定
+        Route::resource('divisionLists', App\Http\Controllers\division_listController::class); // 課程別研修設定
     });
     // スタッフ用
     // Route::prefix('staff')->middleware('can:staff')->group(function () {
@@ -86,6 +86,3 @@ Route::middleware('verified')->group(function () {
         Route::post('/gm_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request_send'])->name('gm_request_send');
     });
 });
-
-
-
