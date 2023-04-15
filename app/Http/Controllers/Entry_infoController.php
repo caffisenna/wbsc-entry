@@ -16,6 +16,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InputRegisterd;
 use Storage;
+use App\Models\course_list;
+use App\Models\division_list;
 
 class Entry_infoController extends AppBaseController
 {
@@ -50,7 +52,16 @@ class Entry_infoController extends AppBaseController
      */
     public function create()
     {
-        return view('entry_infos.create');
+        // スカウトコース取得
+        $courselists = course_list::all();
+
+        // 課程別研修取得
+        $dls = division_list::select('division', 'number')->get();
+        foreach ($dls as $dl) {
+            $divisionlists[] = $dl->division . $dl->number;
+        }
+
+        return view('entry_infos.create', compact('courselists', 'divisionlists'));
     }
 
     /**
@@ -112,13 +123,22 @@ class Entry_infoController extends AppBaseController
         $entryInfo->bd_month = $entryInfo->birthday->format('n');
         $entryInfo->bd_day = $entryInfo->birthday->format('j');
 
+        // スカウトコース取得
+        $courselists = course_list::all();
+
+        // 課程別研修取得
+        $dls = division_list::select('division', 'number')->get();
+        foreach ($dls as $dl) {
+            $divisionlists[] = $dl->division . $dl->number;
+        }
+
         if (empty($entryInfo)) {
             Flash::error('Entry Info not found');
 
             return redirect(route('entryInfos.index'));
         }
 
-        return view('entry_infos.edit')->with('entryInfo', $entryInfo);
+        return view('entry_infos.edit', compact('entryInfo', 'courselists', 'divisionlists'));
     }
 
     /**
