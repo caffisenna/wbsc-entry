@@ -21,7 +21,9 @@ class CreateEntry_infoRequest extends FormRequest
     {
         // getValidatorInstance でフォームから投稿された値を取得できる
         // ここで取得した値を加工して、バリデーションに渡すことが可能
-        $birthday = $this->input('bd_year') . '-'. $this->input('bd_month') .'-'.$this->input('bd_day');
+
+        // 生年月日処理
+        $birthday = $this->input('bd_year') . '-' . $this->input('bd_month') . '-' . $this->input('bd_day');
         // rules()に渡す値を追加でセット
         //     これで、この場で作った変数にもバリデーションを設定できるようになる
         $this->merge([
