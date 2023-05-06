@@ -52,6 +52,13 @@ class Entry_infoController extends AppBaseController
      */
     public function create()
     {
+        // 重複入力はブロック
+        $entryInfo = Entry_info::where('user_id', Auth::user()->id)->first();
+        if($entryInfo){
+            Flash::success('既に申込データが存在します。複数の申込をすることはできません。');
+            return view('home'); // homeにリダイレクト
+        }
+
         // スカウトコース取得
         $courselists = course_list::all();
 
@@ -76,6 +83,13 @@ class Entry_infoController extends AppBaseController
         $input = $request->all();
         $input['user_id'] = Auth::user()->id;
         $input['uuid'] = Uuid::uuid4();
+
+        // SC期数が現行の期数が選択されていて、かつ、修了済みのSC期数が入力されている場合
+        // sc_number_doneをnull化する
+        if ($input['sc_number'] !== 'done') {
+            $input['sc_number_done'] = NULL;
+        }
+
 
         $entryInfo = $this->entryInfoRepository->create($input);
 
