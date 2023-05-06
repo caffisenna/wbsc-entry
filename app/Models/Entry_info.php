@@ -15,6 +15,8 @@ use App\Models\User;
  * @property string $furigana
  * @property string $gender
  * @property string $bs_id
+ * @property string $sc_number
+ * @property string $sc_number_done
  * @property string $prefecture
  * @property string $district
  * @property string $dan
@@ -57,6 +59,7 @@ class Entry_info extends Model
     public $fillable = [
         'user_id',
         'sc_number',
+        'sc_number_done',
         'division_number',
         'furigana',
         'gender',
@@ -131,6 +134,7 @@ class Entry_info extends Model
         'id' => 'integer',
         'user_id' => 'integer',
         'sc_number' => 'string',
+        'sc_number_done' => 'string',
         'division_number' => 'string',
         'furigana' => 'string',
         'gender' => 'string',
@@ -203,6 +207,7 @@ class Entry_info extends Model
      */
     public static $rules = [
         'sc_number' => 'required',
+        'sc_number_done' => 'required_if:sc_number,履修済み',
         'division_number' => 'required',
         'furigana' => 'required',
         'gender' => 'required',
@@ -222,6 +227,7 @@ class Entry_info extends Model
 
     public static $messages = [
         'sc_number.required' => 'スカウトコースの期数を選択してください',
+        'sc_number_done.required' => 'スカウトコースを修了済みの場合は期数を入力してください',
         'division_number.required' => '課程研修別の期数を選択してください',
         'furigana.required' => 'ふりがなを入力してください',
         'gender.required' => '性別を選択してください',

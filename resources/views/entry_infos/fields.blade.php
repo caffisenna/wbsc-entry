@@ -3,17 +3,31 @@
         <tr>
             <td>スカウトコースの期数</td>
             <td>
-                <select name="sc_number" class="form-control custom-select uk-form-width-small">
+                <select name="sc_number" class="form-control custom-select uk-form-width-small" id="sc_select"
+                    onchange="toggleTextbox()">
                     <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
                     </option>
                     @foreach ($courselists as $courselist)
-                        <option value="{{ $courselist->number }}" @if (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) selected @endif>
+                        <option value="{{ $courselist->number }}" @if (
+                            (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) ||
+                                old('sc_number') == $courselist->number) selected @endif>
                             {{ $courselist->number }}期</option>
                     @endforeach
+                    <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
                 </select>
                 @error('sc_number')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
+                {{-- 既修了者入力ボックス --}}
+                <div id="textboxContainer" style="display:none;">
+                    <label for="myTextbox">修了コース名を入力してください</label>
+                    <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
+                        placeholder="例: 東京15期" value="{{ old('sc_number_done') }}">
+                    @error('sc_number_done')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- 既修了者入力ボックス --}}
             </td>
         </tr>
         <tr>
@@ -23,7 +37,9 @@
                     <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>選択してください
                     </option>
                     @foreach ($divisionlists as $divisionlist)
-                        <option value="{{ $divisionlist }}" @if (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) selected @endif>
+                        <option value="{{ $divisionlist }}" @if (
+                            (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) ||
+                                old('division_number') == $divisionlist) selected @endif>
                             {{ $divisionlist }}回</option>
                     @endforeach
                 </select>
@@ -42,7 +58,7 @@
         </tr>
         <tr>
             <td>ふりがな</td>
-            <td>{!! Form::text('furigana', null, ['class' => 'form-control']) !!}
+            <td>{!! Form::text('furigana', null, ['class' => 'form-control uk-form-width-medium']) !!}
                 @error('furigana')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -242,7 +258,7 @@
 
         <tr>
             <td>ケータイ</td>
-            <td>{!! Form::text('cell_phone', null, ['class' => 'form-control']) !!}
+            <td>{!! Form::text('cell_phone', null, ['class' => 'form-control uk-form-width-medium']) !!}
                 @error('cell_phone')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -251,7 +267,7 @@
 
         <tr>
             <td>郵便番号</td>
-            <td>{!! Form::text('zip', null, ['class' => 'form-control']) !!}
+            <td>{!! Form::text('zip', null, ['class' => 'form-control uk-form-width-medium']) !!}
                 @error('zip')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -269,17 +285,20 @@
 
         <tr>
             <td>地区役務</td>
-            <td>{!! Form::text('district_role', null, ['class' => 'form-control']) !!}</td>
+            <td>{!! Form::text('district_role', null, ['class' => 'form-control uk-form-width-medium']) !!}</td>
         </tr>
 
         <tr>
             <td>県連役務</td>
-            <td>{!! Form::text('prefecture_role', null, ['class' => 'form-control']) !!}</td>
+            <td>{!! Form::text('prefecture_role', null, ['class' => 'form-control uk-form-width-medium']) !!}</td>
         </tr>
 
         <tr>
             <td>スカウトキャンプ研修会</td>
-            <td>{!! Form::text('scout_camp', null, ['class' => 'form-control', 'placeholder' => '修了年月日を入力してください']) !!}
+            <td>{!! Form::text('scout_camp', null, [
+                'class' => 'form-control uk-form-width-medium',
+                'placeholder' => '修了年月日を入力',
+            ]) !!}
                 @error('scout_camp')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -289,8 +308,8 @@
         <tr>
             <td>ボーイスカウト講習会</td>
             <td>{!! Form::text('bs_basic_course', null, [
-                'class' => 'form-control',
-                'placeholder' => '修了年月日を入力してください',
+                'class' => 'form-control uk-form-width-medium',
+                'placeholder' => '修了年月日を入力',
             ]) !!}
                 @error('bs_basic_course')
                     <div class="error text-danger">{{ $message }}</div>
@@ -302,41 +321,50 @@
             <tr>
                 <td>その他の研修所履歴({{ $i }})</td>
                 <td>課程:{!! Form::text("wb_basic{$i}_category", null, [
-                    'class' => 'form-control',
-                    'placeholder' => '課程を入力してください(例: ボーイ課程)',
+                    'class' => 'form-control uk-form-width-medium',
+                    'placeholder' => '例: ボーイ課程',
                 ]) !!}<br>
                     期数:{!! Form::text("wb_basic{$i}_number", null, [
-                        'class' => 'form-control',
-                        'placeholder' => '期数を入力してください(例: 東京21期)',
+                        'class' => 'form-control uk-form-width-small',
+                        'placeholder' => '例: 東京21期',
                     ]) !!}<br>
                     修了年月:{!! Form::text("wb_basic{$i}_date", null, [
-                        'class' => 'form-control',
-                        'placeholder' => '修了年月を入力してください(例: 2021年10月)',
+                        'class' => 'form-control uk-form-width-medium',
+                        'placeholder' => '例: 2021年10月',
                     ]) !!}</td>
             </tr>
         @endfor
 
         @for ($i = 1; $i <= 5; $i++)
-        <tr>
-            <td>その他の実修所履歴({{ $i }})</td>
-            <td>課程:{!! Form::text("wb_adv{$i}_category", null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text("wb_adv{$i}_number", null, [
-                    'class' => 'form-control',
+            <tr>
+                <td>その他の実修所履歴({{ $i }})</td>
+                <td>課程:{!! Form::text("wb_adv{$i}_category", null, [
+                    'class' => 'form-control uk-form-width-medium',
                 ]) !!}<br>
-                修了年月:{!! Form::text("wb_adv{$i}_date", null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
+                    期数:{!! Form::text("wb_adv{$i}_number", null, [
+                        'class' => 'form-control uk-form-width-small',
+                    ]) !!}<br>
+                    修了年月:{!! Form::text("wb_adv{$i}_date", null, [
+                        'class' => 'form-control uk-form-width-medium',
+                    ]) !!}</td>
+            </tr>
         @endfor
 
         @for ($i = 1; $i <= 5; $i++)
-        <tr>
-            <td>奉仕歴({{ $i }}) @if($i == 1)最新のものから順に直近5年 @endif</td>
-            <td>役務:{!! Form::text("service_hist{$i}_role", null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text("service_hist{$i}_term", null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
+            <tr>
+                <td>奉仕歴({{ $i }}) @if ($i == 1)
+                        最新のものから順に直近5年
+                    @endif
+                </td>
+                <td>役務:{!! Form::text("service_hist{$i}_role", null, [
+                    'class' => 'form-control uk-form-width-medium',
+                    'placeholder' => '例:カブ副長',
+                ]) !!}<br>
+                    期間:{!! Form::text("service_hist{$i}_term", null, [
+                        'class' => 'form-control uk-form-width-large',
+                        'placeholder' => '例: 2019/4/1〜2020/3/31',
+                    ]) !!}</td>
+            </tr>
         @endfor
 
         <tr>
@@ -349,12 +377,18 @@
             <td>{!! Form::textarea('health_memo', null, ['class' => 'form-control']) !!}</td>
         </tr>
 
-        {{-- <tr>
-            <td>確認</td>
-            <td>団委員長:{!! Form::text('gm_checked_at', null, ['class' => 'form-control']) !!}<br>
-                地区コミッショナー:{!! Form::text('commi_checked_at', null, ['class' => 'form-control']) !!}<br>
-                AIS委員会:{!! Form::text('ais_checked_at', null, ['class' => 'form-control']) !!}</td>
-        </tr> --}}
-
     </table>
 </div>
+<script>
+    function toggleTextbox() {
+        var selectbox = document.getElementById("sc_select");
+        var textboxContainer = document.getElementById("textboxContainer");
+        var selectedOption = selectbox.options[selectbox.selectedIndex].value;
+
+        if (selectedOption === "done") {
+            textboxContainer.style.display = "block";
+        } else {
+            textboxContainer.style.display = "none";
+        }
+    }
+</script>
