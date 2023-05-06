@@ -200,7 +200,7 @@ class AdminEntry_infoController extends AppBaseController
         $id = $request['id'];
         $entryInfo = User::where('id', $id)->with('entry_info')->first();
 
-        $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo', $entryInfo));
+        $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');
         return $pdf->download();
         // return $pdf->stream();
@@ -219,7 +219,7 @@ class AdminEntry_infoController extends AppBaseController
 
         // 個別の申込書を生成
         foreach ($entryInfos as $entryInfo) {
-            $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo', $entryInfo));
+            $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
             $pdf->setPaper('A4');
             $pdf = $pdf->output(); // PDF生成
             $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
