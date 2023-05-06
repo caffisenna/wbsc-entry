@@ -19,7 +19,7 @@
                             <td><a href="{{ url('admin/admin_entryInfos?q=' . $val->sc_number) }}">SC{{ $val->sc_number }}</a>
                             </td>
                             <td>{{ $val->count_sc_number }}名</td>
-                            <td><a href="#" class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
+                            <td><a href="{{ route('admin_export') }}?sc={{ $val->sc_number }}" class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
                             </td>
                             <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=false' }}"
                                     class="uk-button uk-button-primary"

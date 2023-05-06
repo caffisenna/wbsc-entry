@@ -273,11 +273,14 @@ class AdminEntry_infoController extends AppBaseController
         return back();
     }
 
-    public function admin_export()
+    public function admin_export(Request $request)
     {
-        // $data = User::with('entry_info')->get();
-        $data = Entry_info::with('user')->get();
-        // dd($data);
+        if (isset($request->sc)) { // 一覧表からSC番号が指定されたとき
+            $data = Entry_info::with('user')->where('sc_number', $request->sc)->get();
+        } else { // or 全県取得
+            $data = Entry_info::with('user')->get();
+        }
+
         $filename = 'export.' . 'xlsx'; //ファイル名
         //エクセルの見出しを以下で設定
         $headings = [
