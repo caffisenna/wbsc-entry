@@ -87,7 +87,8 @@
                     {{-- 申込情報がブランクなら無視 --}}
                     @if (isset($entryInfo->entry_info))
                         <tr>
-                            <td>{{ $entryInfo->name }}</td>
+                            <td><a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}"
+                                    class='uk-link'>{{ $entryInfo->name }}</a></td>
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
                             <td>{{ $entryInfo->entry_info->sc_number }}期<br>
@@ -146,10 +147,6 @@
                                     <a href="{{ url('/admin/pdf/?id=') }}{{ $entryInfo->entry_info->user_id }}"
                                         class='uk-button uk-button-default uk-button-small'>
                                         <span uk-icon="download"></span>PDF
-                                    </a>
-                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}"
-                                        class='btn btn-default'>
-                                        <i class="far fa-eye"></i>
                                     </a>
                                     <a href="{{ route('admin_entryInfos.edit', [$entryInfo->id]) }}"
                                         class='btn btn-default'>
