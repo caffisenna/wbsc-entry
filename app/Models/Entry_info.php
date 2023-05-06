@@ -207,7 +207,7 @@ class Entry_info extends Model
      */
     public static $rules = [
         'sc_number' => 'required',
-        'sc_number_done' => 'required_if:sc_number,履修済み',
+        'sc_number_done' => 'required_if:sc_number,done',
         'division_number' => 'required',
         'furigana' => 'required',
         'gender' => 'required',
