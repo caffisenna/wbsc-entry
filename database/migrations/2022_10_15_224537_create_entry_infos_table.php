@@ -18,7 +18,7 @@ class CreateEntryInfosTable extends Migration
             $table->increments('id');
             $table->foreignId('user_id')->nullable()->constrained();
             $table->string('sc_number');                // スカウトコースX期
-            $table->string('sc_number_done');           // 修了済みスカウトコースX期
+            $table->string('sc_number_done')->nullable();           // 修了済みスカウトコースX期
             $table->string('division_number');   // 課程別X期
             $table->string('furigana');
             $table->string('gender');
