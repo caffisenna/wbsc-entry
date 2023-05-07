@@ -19,6 +19,8 @@ namespace App\Models{
  * @property string $furigana
  * @property string $gender
  * @property string $bs_id
+ * @property string $sc_number
+ * @property string $sc_number_done
  * @property string $prefecture
  * @property string $district
  * @property string $dan
@@ -46,7 +48,6 @@ namespace App\Models{
  * @property string $gm_checked_at
  * @property int $id
  * @property int|null $user_id
- * @property string $sc_number
  * @property string $division_number
  * @property \Illuminate\Support\Carbon $birthday
  * @property string|null $wb_basic2_category
@@ -95,10 +96,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\User|null $user
- * @method static \Database\Factories\Entry_infoFactory factory(...$parameters)
+ * @method static \Database\Factories\Entry_infoFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info newQuery()
- * @method static \Illuminate\Database\Query\Builder|Entry_info onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info query()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereAisCheckedAt($value)
@@ -127,6 +128,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info wherePrefecture($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info wherePrefectureRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScNumberDone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScoutCamp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist1Role($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist1Term($value)
@@ -178,8 +180,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic5Date($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic5Number($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereZip($value)
- * @method static \Illuminate\Database\Query\Builder|Entry_info withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Entry_info withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info withoutTrashed()
  */
 	class Entry_info extends \Eloquent {}
 }
@@ -201,11 +203,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Entry_info|null $entry_info
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -223,5 +225,84 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent implements \Illuminate\Contracts\Auth\MustVerifyEmail {}
+}
+
+namespace App\Models{
+/**
+ * Class course_list
+ *
+ * @package App\Models
+ * @version April 7, 2023, 11:14 am JST
+ * @property string $category
+ * @property string $number
+ * @property string $director
+ * @property string $place
+ * @property string $day_start
+ * @property string $day_end
+ * @property string $guidance_date
+ * @property string $deadline
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Database\Factories\course_listFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list query()
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereDayEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereDayStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereDeadline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereDirector($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereGuidanceDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list wherePlace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|course_list withoutTrashed()
+ */
+	class course_list extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * Class division_list
+ *
+ * @package App\Models
+ * @version April 15, 2023, 2:32 pm JST
+ * @property string $division
+ * @property string $number
+ * @property string $director
+ * @property string $place
+ * @property string $day_start
+ * @property string $guidance_date
+ * @property string $deadline
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Database\Factories\division_listFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list query()
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereDayStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereDeadline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereDirector($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereDivision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereGuidanceDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list wherePlace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|division_list withoutTrashed()
+ */
+	class division_list extends \Eloquent {}
 }
 
