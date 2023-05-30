@@ -21,6 +21,7 @@ use Maatwebsite\Excel\Facades\Excel; // excel export用
 use ZipArchive; // zipで固める
 use Storage;
 use App\Mail\FeeChecked;
+use Illuminate\Support\Str;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -217,38 +218,39 @@ class AdminEntry_infoController extends AppBaseController
             }
         )->with('entry_info')->get();
 
+        // 一時ディレクトリを作成する
+        $tmpDirName = 'tmp_' . Str::random(8);
+        Storage::makeDirectory($tmpDirName);
+
         // 個別の申込書を生成
         foreach ($entryInfos as $entryInfo) {
             $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
             $pdf->setPaper('A4');
             $pdf = $pdf->output(); // PDF生成
             $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
-            Storage::put('public/pdfs/' . $fname . '.pdf', $pdf);
+            $fname = str_replace(' ', '_', $fname); // ファイル名のスペースを_に置換
+            Storage::put($tmpDirName . "/" . $fname . '.pdf', $pdf);
         }
 
         // zip生成
+        $zipFileName = "sc_entry_all.zip";
+        $zipFilePath = storage_path('app/' . $zipFileName);
         $zip = new ZipArchive();
-        $dl_file = 'sc_entry_all.zip'; // DLされるファイル名
-        $zip->open(public_path() . "/$dl_file", ZipArchive::CREATE);
-        $path = storage_path() . '/app/public/pdfs/';
-
-        // zipArchiveは個別にファイルを追加する必要がある
-        $pdfs = glob($path . "*");
-        foreach ($pdfs as $single_pdf) {
-            $file_info = pathinfo($single_pdf);
-            $file_name = $file_info['filename'] . '.' . $file_info['extension'];
-            $zip->addFile($single_pdf, $file_name);
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
+            $files = Storage::files($tmpDirName);
+            foreach ($files as $file) {
+                $fileName = basename($file);
+                if (Storage::exists($file)) {
+                    $zip->addFile(storage_path('app/' . $file), $fileName);
+                }
+            }
+            $zip->close();
         }
-        $zip->close();
 
-        // 一時ファイル削除
-        Storage::disk('public')->deleteDirectory('/pdfs');
-
+        // 一時ディレクトリ削除
+        Storage::deleteDirectory($tmpDirName);
         // DLさせて末尾のdeleteAfterSend() で自動削除
-        return response()->download(public_path() . "/$dl_file")->deleteFileAfterSend();
-
-        Flash::success($entryInfo->entry_info->sc_number . 'の申込書を生成しました');
-        return back();
+        return response()->download($zipFilePath)->deleteFileAfterSend();
     }
 
     public function ais_check(Request $request)
