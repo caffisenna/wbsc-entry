@@ -58,7 +58,7 @@
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザー登録111</a>
+                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザー登録222</a>
                     @endif
                 @endauth
             </div>
