@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>スカウトコース申込システム | HOME</title>
+    <title>スカウトコース申込システム | HOMEEEE</title>
 
     <!-- Styles welcome.cssに追い出した-->
     <link rel="stylesheet" href="{{ url('/css/welcome.css') }}" />
@@ -58,7 +58,7 @@
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザー登録2279</a>
+                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザー登録</a>
                     @endif
                 @endauth
             </div>
