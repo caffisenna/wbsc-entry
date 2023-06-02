@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>スカウトコース申込システム | HOMEあいえ</title>
+    <title>スカウトコース申込システム | HOMEすすす</title>
 
     <!-- Styles welcome.cssに追い出した-->
     <link rel="stylesheet" href="{{ url('/css/welcome.css') }}" />
