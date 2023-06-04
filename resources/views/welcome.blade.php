@@ -69,7 +69,7 @@
                 <img src="{{ url('/images/tokyo-logo.png') }}" alt="" width="200px" height="">
             </div>
 
-            <div class="mt-8 dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
                         <div class="flex items-center">
@@ -93,21 +93,21 @@
                     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                         <div class="flex items-center">
                             <span uk-icon="user"></span>
-                            <div class="uk-text-large" style="color: white;">アカウント</div>
+                            <div class="uk-text-large text-gray-900 dark:text-white" style="">アカウント</div>
                         </div>
 
                         <div class="">
                             <div class="mt-2">
                                 @auth
-                                    <a href="{{ url('/home') }}" class="uk-text-default" style="color: white;">Home</a>
+                                    <a href="{{ url('/home') }}" class="uk-text-default text-gray-900 dark:text-white" style="color: white;">Home</a>
                                 @else
-                                    <span uk-icon="sign-in" style="color: white"></span><a href="{{ route('login') }}"
-                                        class="uk-text-default" style="color: white;">ログイン</a>
+                                    <span uk-icon="sign-in" style=""></span><a href="{{ route('login') }}"
+                                        class="uk-text-default text-gray-900 dark:text-white" style=";">ログイン</a>
 
                                     @if (Route::has('register'))
                                         <br>
-                                        <span uk-icon="user" style="color: white"></span><a href="{{ route('register') }}"
-                                            class="uk-text-default" style="color: white;">ユーザー登録</a>
+                                        <span uk-icon="user" style=""></span><a href="{{ route('register') }}"
+                                            class="uk-text-default text-gray-900 dark:text-white" style=";">ユーザー登録</a>
                                     @endif
                                 @endauth
                             </div>
@@ -149,7 +149,6 @@
                     <div class="flex items-center">
                     </div>
                 </div>
-
             </div>
             <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 WB研修所申込システム</p>
         </div>
