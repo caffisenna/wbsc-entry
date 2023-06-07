@@ -10,7 +10,6 @@
             font-family: migmix;
             font-style: normal;
             font-weight: normal;
-            src: url('{{ storage_path("fonts/ipag.ttf")}}');
         }
 
         body {
