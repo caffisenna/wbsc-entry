@@ -6,8 +6,6 @@
                 'sc_number',
                 [
                     '' => '',
-                    '27' => '27',
-                    '28' => '28',
                     '29' => '29',
                     '30' => '30',
                 ],
@@ -80,13 +78,10 @@
                     'class' => 'form-control custom-select',
                     'placeholder' => '年',
                 ]) !!}
-                {!! Form::selectrange(
-                    'bd_month',1,12,null,
-                    [
-                        'class' => 'form-control custom-select',
-                        'placeholder' => '月',
-                    ],
-                ) !!}
+                {!! Form::selectrange('bd_month', 1, 12, null, [
+                    'class' => 'form-control custom-select',
+                    'placeholder' => '月',
+                ]) !!}
                 {!! Form::selectRange('bd_day', 1, 31, null, [
                     'class' => 'form-control custom-select',
                     'placeholder' => '日',
@@ -466,7 +461,14 @@
         <tr>
             <td>奉仕歴(1) 最新のものから順に直近5年</td>
             <td>役務:{!! Form::text('service_hist1_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist1_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
+                期間:{!! Form::text('service_hist1_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}
+                @error('service_hist1_role')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+                @error('service_hist1_term')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
         </tr>
 
         <tr>

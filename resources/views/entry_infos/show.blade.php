@@ -18,7 +18,7 @@
 
     <div class="content px-3">
         <div class="card">
-
+            @include('flash::message')
             <div class="card-body">
                 <div class="row">
                     @include('entry_infos.show_fields')

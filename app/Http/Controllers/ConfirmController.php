@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entry_info;
 use Flash;
+use App\Mail\GmConfirm;
+use Mail;
+use App\Mail\TrainerConfirm;
 
 class ConfirmController extends Controller
 {
@@ -41,6 +44,11 @@ class ConfirmController extends Controller
             Flash::success($userinfo->user->name . 'さんの課程別課題研修についてトレーナー認定を行いました');
         }
 
+        // 確認メール送信
+        $sendto = $userinfo->user->email;
+        $name = $userinfo->user->name;
+        Mail::to($sendto)->queue(new TrainerConfirm($name, $uuid)); // メールをqueueで送信
+
         // 前画面に戻る
         return back();
     }
@@ -65,9 +73,13 @@ class ConfirmController extends Controller
         if (isset($gm_name) && isset($gm_checked_at)) {
             $userinfo->gm_checked_at = $gm_checked_at;
             $userinfo->gm_name = $gm_name;
-            // dd($userinfo);
             $userinfo->save();
-            Flash::success($userinfo->user->name . 'さんについて参加承認を行いました');
+
+            // 確認メール送信
+            $sendto = $userinfo->user->email;
+            $name = $userinfo->user->name;
+            Mail::to($sendto)->queue(new GmConfirm($uuid, $name)); // メールをqueueで送信
+            Flash::success($userinfo->user->name . 'さんの参加承認を行いました');
         }
 
         // 前画面に戻る

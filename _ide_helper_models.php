@@ -86,9 +86,9 @@ namespace App\Models{
  * @property string|null $assignment_division
  * @property string|null $face_picture
  * @property string $uuid
- * @property string|null $trainer_sc_checked_at
+ * @property \Illuminate\Support\Carbon|null $trainer_sc_checked_at
  * @property string|null $trainer_sc_name
- * @property string|null $trainer_division_checked_at
+ * @property \Illuminate\Support\Carbon|null $trainer_division_checked_at
  * @property string|null $trainer_division_name
  * @property string|null $gm_name
  * @property string|null $fee_checked_at

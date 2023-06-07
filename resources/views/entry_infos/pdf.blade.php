@@ -10,8 +10,6 @@
             font-family: migmix;
             font-style: normal;
             font-weight: normal;
-            /* src: url("{{ storage_path('fonts/migmix-2p-regular.ttf') }}") format('truetype'); */
-            /* src: url("{{ storage_path('fonts/ipag.ttf') }}") format('truetype'); */
         }
 
         body {
@@ -43,8 +41,13 @@
             </tr>
             <tr>
                 <td>基本情報</td>
-                <td>{{ $entryInfo->name }}({{ $entryInfo->entry_info->furigana }})
-                    {{ $entryInfo->entry_info->gender }} 【登録番号:】 {{ $entryInfo->entry_info->bs_id }}</td>
+                <td>
+                    @if ($entryInfo->face_picture)
+                        <img src="{{ url('/storage/picture/') }}{{ '/' . $entryInfo->face_picture }}" width="100px">
+                    @endif
+                    {{ $entryInfo->name }}({{ $entryInfo->entry_info->furigana }})
+                    {{ $entryInfo->entry_info->gender }} 【登録番号:】 {{ $entryInfo->entry_info->bs_id }}
+                </td>
             </tr>
             <tr>
                 <td>所属・役務</td>

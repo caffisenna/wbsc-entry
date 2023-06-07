@@ -173,7 +173,7 @@ class CommiEntry_infoController extends AppBaseController
         $id = $request['id'];
         $entryInfo = User::where('id', $id)->with('entry_info')->first();
 
-        $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo', $entryInfo));
+        $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');
         return $pdf->download();
         // return $pdf->stream();
@@ -212,12 +212,15 @@ class CommiEntry_infoController extends AppBaseController
     public function trainer_request_send(Request $request)
     {
         $uuid = $request['uuid'];
+        $name = User::whereHas('entry_info', function ($query) use ($uuid) {
+            $query->where('uuid', $uuid);
+        })->with('entry_info')->value('name');
         $sendto = $request['email'];
-        $name = $request['name'];
+        $trainer_name = $request['name'];
         // 確認メール送信
-        Mail::to($sendto)->queue(new TrainerRequest($name,$uuid)); // メールをqueueで送信
+        Mail::to($sendto)->queue(new TrainerRequest($name, $uuid, $trainer_name)); // メールをqueueで送信
 
-        Flash::success($name . 'さんにトレーナー認定依頼メールを発送しました');
+        Flash::success($trainer_name . 'さんにトレーナー認定依頼メールを発送しました');
         return back();
     }
 
@@ -232,12 +235,15 @@ class CommiEntry_infoController extends AppBaseController
     public function gm_request_send(Request $request)
     {
         $uuid = $request['uuid'];
+        $name = User::whereHas('entry_info', function ($query) use ($uuid) {
+            $query->where('uuid', $uuid);
+        })->with('entry_info')->value('name');
         $sendto = $request['email'];
-        $name = $request['name'];
+        $gm_name = $request['name'];
         // 確認メール送信
-        Mail::to($sendto)->queue(new GmRequest($name,$uuid)); // メールをqueueで送信
+        Mail::to($sendto)->queue(new GmRequest($gm_name, $uuid, $name)); // メールをqueueで送信
 
-        Flash::success($name . 'さんに参加承認の依頼メールを発送しました');
+        Flash::success($gm_name . 'さんに参加承認の依頼メールを発送しました');
         return back();
     }
 }

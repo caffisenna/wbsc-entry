@@ -198,6 +198,10 @@ class Entry_info extends Model
         'gm_checked_at' => 'date',
         'commi_checked_at' => 'date',
         'ais_checked_at' => 'date',
+        'trainer_sc_checked_at' => 'date',
+        'trainer_sc_name' => 'string',
+        'trainer_division_checked_at' => 'date',
+        'trainer_division_name' => 'string',
     ];
 
     /**
@@ -223,6 +227,8 @@ class Entry_info extends Model
         'address' => 'required',
         'scout_camp' => 'required',
         'bs_basic_course' => 'required',
+        'service_hist1_role' => 'required',
+        'service_hist1_term' => 'required',
     ];
 
     public static $messages = [
@@ -246,6 +252,8 @@ class Entry_info extends Model
         'address.required' => '住所を入力してください',
         'scout_camp.required' => 'スカウトキャンプ研修会の修了年月日を入力してください',
         'bs_basic_course.required' => 'ボーイスカウト講習会の修了年月日を入力してください',
+        'service_hist1_role.required' => '奉仕歴(1)の役務を入力してください',
+        'service_hist1_term.required' => '奉仕歴(1)の奉仕期間を入力してください',
     ];
 
     public function user() {

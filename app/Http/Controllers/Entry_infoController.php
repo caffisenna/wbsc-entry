@@ -38,8 +38,7 @@ class Entry_infoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        // $entryInfos = $this->entryInfoRepository->all();
-        $entryInfo = Entry_info::where('user_id', Auth::user()->id)->first();
+        $entryInfo = Entry_info::where('user_id', Auth::user()->id)->with('user')->first();
 
         return view('entry_infos.index')
             ->with('entryInfo', $entryInfo);
@@ -54,7 +53,7 @@ class Entry_infoController extends AppBaseController
     {
         // 重複入力はブロック
         $entryInfo = Entry_info::where('user_id', Auth::user()->id)->first();
-        if($entryInfo){
+        if ($entryInfo) {
             Flash::success('既に申込データが存在します。複数の申込をすることはできません。');
             return view('home'); // homeにリダイレクト
         }
@@ -114,12 +113,17 @@ class Entry_infoController extends AppBaseController
         $entryInfo = $this->entryInfoRepository->find($id);
 
         if (empty($entryInfo)) {
-            Flash::error('Entry Info not found');
+            Flash::error('データが見つかりません');
 
             return redirect(route('entryInfos.index'));
         }
 
-        return view('entry_infos.show')->with('entryInfo', $entryInfo);
+        if ($entryInfo->user_id == Auth::id()) {
+            return view('entry_infos.show')->with('entryInfo', $entryInfo);
+        } else {
+            Flash::warning('そのデータは閲覧権限がありません');
+            return back();
+        }
     }
 
     /**
@@ -152,7 +156,12 @@ class Entry_infoController extends AppBaseController
             return redirect(route('entryInfos.index'));
         }
 
-        return view('entry_infos.edit', compact('entryInfo', 'courselists', 'divisionlists'));
+        if ($entryInfo->user_id == Auth::id()) {
+            return view('entry_infos.edit', compact('entryInfo', 'courselists', 'divisionlists'));
+        } else {
+            Flash::warning('そのデータは閲覧権限がありません');
+            return view('home');
+        }
     }
 
     /**

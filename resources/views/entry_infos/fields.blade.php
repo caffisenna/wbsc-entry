@@ -363,7 +363,14 @@
                     期間:{!! Form::text("service_hist{$i}_term", null, [
                         'class' => 'form-control uk-form-width-large',
                         'placeholder' => '例: 2019/4/1〜2020/3/31',
-                    ]) !!}</td>
+                    ]) !!}
+                    @error("service_hist{$i}_role")
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
+                    @error("service_hist{$i}_term")
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
+                </td>
             </tr>
         @endfor
 
