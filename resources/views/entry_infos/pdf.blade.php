@@ -9,7 +9,6 @@
             font-family: migmix;
             font-style: normal;
             font-weight: normal;
-            src: url('{{ storage_path('fonts/migmix-2p-regular.ttf') }}') format('truetype');
         }
 
         body {

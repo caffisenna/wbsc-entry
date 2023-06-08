@@ -174,7 +174,7 @@ class CommiEntry_infoController extends AppBaseController
         $entryInfo = User::where('id', $id)->with('entry_info')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
-        $pdf->setPaper('A4');
+        // $pdf->setPaper('A4');
         return $pdf->download();
         // return $pdf->stream();
     }
