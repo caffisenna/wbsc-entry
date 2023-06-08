@@ -269,7 +269,9 @@ class AdminEntry_infoController extends AppBaseController
         // 一時ディレクトリ削除
         Storage::deleteDirectory($tmpDirName);
         // DLさせて末尾のdeleteAfterSend() で自動削除
-        return response()->download($zipFilePath)->deleteFileAfterSend();
+        if (File::exists($zipFilePath)) {
+            return response()->download($zipFilePath)->deleteFileAfterSend();
+        }
     }
 
     public function ais_check(Request $request)
