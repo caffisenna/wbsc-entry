@@ -99,7 +99,8 @@
                         <div class="">
                             <div class="mt-2">
                                 @auth
-                                    <a href="{{ url('/home') }}" class="uk-text-default text-gray-900 dark:text-white" style="color: white;">Home</a>
+                                    <a href="{{ url('/home') }}" class="uk-text-default text-gray-900 dark:text-white"
+                                        style="color: white;">Home</a>
                                 @else
                                     <span uk-icon="sign-in" style=""></span><a href="{{ route('login') }}"
                                         class="uk-text-default text-gray-900 dark:text-white" style=";">ログイン</a>
@@ -150,7 +151,10 @@
                     </div>
                 </div>
             </div>
-            <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 WB研修所申込システム</p>
+            <div class="uk-text-center">
+                <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 WB研修所申込システム</p><br>
+                <p class="uk-text-large uk-text-emphasis txt-bg uk-text-danger">テスト運用中(テスト中に入力されたデータは全て破棄されます)</p>
+            </div>
         </div>
     </div>
 </body>
