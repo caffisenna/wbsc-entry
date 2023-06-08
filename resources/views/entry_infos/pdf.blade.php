@@ -24,7 +24,7 @@
 
     <div><img src="{{ url('/images/woggle.png') }}" class="uk-align-left" style="height:80px;"></div>
     <div class="uk-text-center">
-        <p class="uk-text-large">WB研修所スカウトコース参加申込書1</p>
+        <p class="uk-text-large">WB研修所スカウトコース参加申込書</p>
     </div>
 
 
