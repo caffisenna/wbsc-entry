@@ -271,6 +271,8 @@ class AdminEntry_infoController extends AppBaseController
         // DLさせて末尾のdeleteAfterSend() で自動削除
         if (File::exists($zipFilePath)) {
             return response()->download($zipFilePath)->deleteFileAfterSend();
+        }else{
+            Flash::danger('ダウンロード可能なファイルがありません');
         }
     }
 
