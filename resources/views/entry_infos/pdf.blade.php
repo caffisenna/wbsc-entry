@@ -1,4 +1,3 @@
-{{-- {{ dd($entryInfo) }} --}}
 <html lang="ja">
 
 <head>
