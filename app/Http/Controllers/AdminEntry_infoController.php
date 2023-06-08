@@ -273,6 +273,7 @@ class AdminEntry_infoController extends AppBaseController
             return response()->download($zipFilePath)->deleteFileAfterSend();
         }else{
             Flash::error('ダウンロード可能なファイルがありません');
+            return back();
         }
     }
 
