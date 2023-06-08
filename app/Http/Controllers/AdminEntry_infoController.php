@@ -22,6 +22,7 @@ use ZipArchive; // zipで固める
 use Storage;
 use App\Mail\FeeChecked;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -222,18 +223,36 @@ class AdminEntry_infoController extends AppBaseController
         $tmpDirName = 'tmp_' . Str::random(8);
         Storage::makeDirectory($tmpDirName);
 
-        // 個別の申込書を生成
-        foreach ($entryInfos as $entryInfo) {
-            $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
-            $pdf->setPaper('A4');
-            $pdf = $pdf->output(); // PDF生成
-            $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
-            $fname = str_replace(' ', '_', $fname); // ファイル名のスペースを_に置換
-            Storage::put($tmpDirName . "/" . $fname . '.pdf', $pdf);
+        if ($request['assignment'] == 'false') {
+            // 個別の申込書を生成
+            foreach ($entryInfos as $entryInfo) {
+                $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
+                $pdf->setPaper('A4');
+                $pdf = $pdf->output(); // PDF生成
+                $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
+                $fname = str_replace(' ', '_', $fname); // ファイル名のスペースを_に置換
+                Storage::put($tmpDirName . "/" . $fname . '.pdf', $pdf);
+            }
+        } elseif ($request['assignment'] == 'true') {
+            // 課題の一括DL
+            foreach ($entryInfos as $entryInfo) {
+                $uuid = $entryInfo->entry_info->uuid;
+                $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
+                $fname = str_replace(' ', '_', $fname) . '.pdf'; // ファイル名のスペースを_に置換
+                $srcPath = storage_path('app/public/assignment/sc/') . $uuid . ".pdf";
+                $dstPath = storage_path('app/') . $tmpDirName . '/' . $fname;
+                if (File::exists($srcPath)) { // ファイルの存在を確認してコピー
+                    File::copy($srcPath, $dstPath);
+                }
+            }
         }
 
         // zip生成
-        $zipFileName = "sc_entry_all.zip";
+        if ($request['assignment'] == 'false') {
+            $zipFileName = "sc_entry_all.zip";
+        } elseif ($request['assignment'] == 'true') {
+            $zipFileName = "sc_assignment_all.zip";
+        }
         $zipFilePath = storage_path('app/' . $zipFileName);
         $zip = new ZipArchive();
         if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
