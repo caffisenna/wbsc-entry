@@ -11,10 +11,11 @@
 @endif
 
 {{-- Intro Lines --}}
-@foreach ($introLines as $line)
+{{-- @foreach ($introLines as $line)
 {{ $line }}
 
-@endforeach
+@endforeach --}}
+あなたのアカウントに対してパスワードのリセット申請がありましたのでメールをお送りします。<br>
 
 {{-- Action Button --}}
 @isset($actionText)
@@ -34,10 +35,12 @@
 @endisset
 
 {{-- Outro Lines --}}
-@foreach ($outroLines as $line)
+{{-- @foreach ($outroLines as $line)
 {{ $line }}
 
-@endforeach
+@endforeach --}}
+このリセットリンクの有効期限は60分間です。時間内に上記のボタンよりパスワードリセット手続きを行ってください。<br>
+もしパスワードをリセットしない場合はこのメールを無視してください。
 
 {{-- Salutation --}}
 @if (! empty($salutation))
