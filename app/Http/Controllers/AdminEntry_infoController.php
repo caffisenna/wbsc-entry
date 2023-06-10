@@ -62,7 +62,7 @@ class AdminEntry_infoController extends AppBaseController
         } else {
             $entryInfos = User::with('entry_info')
                 ->where('is_admin', 0)
-                ->where('is_staff', 0)
+                ->where('is_staff', NULL)
                 ->where('is_commi', NULL)
                 ->get();
         }
