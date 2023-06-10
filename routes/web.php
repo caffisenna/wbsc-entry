@@ -70,6 +70,7 @@ Route::middleware('verified')->group(function () {
         Route::get('/fee_check', [App\Http\Controllers\AdminEntry_infoController::class, 'fee_check'])->name('fee_check');
         Route::resource('courseLists', App\Http\Controllers\course_listController::class); // スカウトコース設定
         Route::resource('divisionLists', App\Http\Controllers\division_listController::class); // 課程別研修設定
+        Route::resource('add_users', App\Http\Controllers\add_userController::class); // ユーザー追加
     });
     // スタッフ用
     // Route::prefix('staff')->middleware('can:staff')->group(function () {
