@@ -136,7 +136,7 @@ return [
 
         'tables_searchable_default' => false,
 
-        'repository_pattern' => true,
+        'repository_pattern' => false,
 
         'resources' => false,
 
