@@ -193,7 +193,7 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property int $is_admin
- * @property int $is_staff
+ * @property string|null $is_staff
  * @property string|null $is_commi
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -225,6 +225,17 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent implements \Illuminate\Contracts\Auth\MustVerifyEmail {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\add_user
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|add_user newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|add_user newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|add_user query()
+ */
+	class add_user extends \Eloquent {}
 }
 
 namespace App\Models{
