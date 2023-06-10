@@ -4,9 +4,9 @@
 
 ほげほげ もげもげ
 
-<p>恐れ入りますがもしこの登録にお心当たりが無い場合は、<a href="mailto:register.rs100km@gmail.com">register.rs100km@gmail.com</a>までご連絡ください。</p>
+<p>恐れ入りますがもしこの登録にお心当たりが無い場合は、<a href="mailto:wb-system@scout.tokyo">wb-system@scout.tokyo</a>までご連絡ください。</p>
 <p></p>
 
 ----<br>
 東京連盟WBスカウトコース申込システム<br>
-<a href="mailto:register.rs100km@gmail.com">register.rs100km@gmail.com</a>
+<a href="mailto:wb-system@scout.tokyo">wb-system@scout.tokyo</a>
