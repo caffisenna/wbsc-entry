@@ -32,6 +32,6 @@ Server version: 8.0.31-0ubuntu0.20.04.2 (Ubuntu)
 No docs Avaliable.
 
 ## Contributor
-taichi.tadano@gmail
+taichi.tadano@gmail.com
 
 ## Disclaimer
