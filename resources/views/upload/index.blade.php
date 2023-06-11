@@ -25,7 +25,12 @@
         @elseif ($q == 'division')
             <p class="uk-text-danger">スカウトコースの課題ではありません。</p>
         @endif
-        <p class="uk-text-danger">トレーナーから指導を受けた課題をPDF形式でアップしてください。(認定はオンラインで別途行います)</p>
+        <ul class="uk-list">
+            <li>所定の書式を<a href="https://www.scout.tokyo/member/training/">東京連盟のwebサイト</a>からダウンロードしてください</li>
+            <li><span class="uk-text-danger">トレーナーから指導を受け、その内容を「まとめ用紙」に記載してください</span></li>
+            <li>表紙を含む「まとめ用紙」をPDF形式でアップロードしてください</li>
+            <li>トレーナーの認定はオンラインで別途行います。(表紙にトレーナー等の署名有無は問いません)</li>
+        </ul>
 
         <div class="clearfix"></div>
         <div class="card">
@@ -45,7 +50,5 @@
             @enderror
 
         </div>
-        この画面でアップロードする課題はこの「まとめシート」です。
-        <img src="{{ url('/images/assignment_sc.jpg') }}" width="300px">
     </div>
 @endsection
