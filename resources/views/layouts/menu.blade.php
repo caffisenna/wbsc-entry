@@ -31,38 +31,45 @@
                 <p>申込一覧</p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="{{ route('admin_export') }}" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
-                <p>エクスポート(xlsx)</p>
-            </a>
-        </li>
 
-        <li class="nav-item">
-            <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
-                {{-- <i class="nav-icon fas fa-user"></i> --}}
-                <p>アカウント作成</p>
-            </a>
-        </li>
+        {{-- 地区AIS委員はエクスポートさせない --}}
+        @unless (Auth::user()->is_staff)
+            <li class="nav-item">
+                <a href="{{ route('admin_export') }}" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
+                    <p>エクスポート(xlsx)</p>
+                </a>
+            </li>
 
-        <h3 class="uk-text-warning">コース設定</h3>
-        <li class="nav-item">
-            <a href="{{ route('courseLists.index') }}" class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
-                <p>スカウトコース</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('divisionLists.index') }}"
-                class="nav-link {{ Request::is('divisionLists*') ? 'active' : '' }}">
-                <p>課程別研修</p>
-            </a>
-        </li>
 
-        <h3 class="uk-text-warning">事務局メニュー</h3>
-        <li class="nav-item">
-            <a href="{{ route('fee_check') }}" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
-                <p>参加費確認</p>
-            </a>
-        </li>
+
+            <li class="nav-item">
+                <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
+                    {{-- <i class="nav-icon fas fa-user"></i> --}}
+                    <p>アカウント作成</p>
+                </a>
+            </li>
+
+
+            <h3 class="uk-text-warning">コース設定</h3>
+            <li class="nav-item">
+                <a href="{{ route('courseLists.index') }}" class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
+                    <p>スカウトコース</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('divisionLists.index') }}"
+                    class="nav-link {{ Request::is('divisionLists*') ? 'active' : '' }}">
+                    <p>課程別研修</p>
+                </a>
+            </li>
+
+            <h3 class="uk-text-warning">事務局メニュー</h3>
+            <li class="nav-item">
+                <a href="{{ route('fee_check') }}" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
+                    <p>参加費確認</p>
+                </a>
+            </li>
+        @endunless
     @endif
 
     {{-- 地区コミ --}}

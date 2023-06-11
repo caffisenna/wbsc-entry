@@ -44,27 +44,58 @@ class AdminEntry_infoController extends AppBaseController
     public function index(Request $request)
     {
         if (isset($request['q'])) { // スカウトコース 期数抽出
-            $entryInfos = User::wherehas(
-                'entry_info',
-                function ($query) {
-                    $q = $_REQUEST['q'];
-                    $query->where('sc_number', $q);
-                }
-            )->with('entry_info')->get();
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['q'];
+                        $query->where('sc_number', $q)->where('district', Auth::user()->is_staff);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['q'];
+                        $query->where('sc_number', $q);
+                    }
+                )->with('entry_info')->get();
+            }
         } elseif (isset($request['div'])) { // 課程別研修 回数抽出
-            $entryInfos = User::wherehas(
-                'entry_info',
-                function ($query) {
-                    $q = $_REQUEST['div'];
-                    $query->where('division_number', $q);
-                }
-            )->with('entry_info')->get();
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['div'];
+                        $query->where('division_number', $q)->where('district', Auth::user()->is_staff);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['div'];
+                        $query->where('division_number', $q);
+                    }
+                )->with('entry_info')->get();
+            }
         } else {
-            $entryInfos = User::with('entry_info')
-                ->where('is_admin', 0)
-                ->where('is_staff', NULL)
-                ->where('is_commi', NULL)
-                ->get();
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::with('entry_info')
+                    ->where('is_admin', 0)
+                    ->where('is_staff', NULL)
+                    ->where('is_commi', NULL)
+                    ->whereHas('entry_info', function ($query) {
+                        $query->where('district', Auth::user()->is_staff);
+                    })
+                    ->get();
+            } else {
+                $entryInfos = User::with('entry_info')
+                    ->where('is_admin', 0)
+                    ->where('is_staff', NULL)
+                    ->where('is_commi', NULL)
+                    ->get();
+            }
         }
 
         return view('admin_entry_infos.index')
@@ -204,20 +235,57 @@ class AdminEntry_infoController extends AppBaseController
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');
-        return $pdf->download();
+        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->entry_info->district . ' ' . $entryInfo->name . '.pdf';
+        return $pdf->download($filename);
         // return $pdf->stream();
     }
 
     public function multi_pdf(Request $request)
     // コース単位 全員の申込書PDF生成
     {
-        $entryInfos = User::wherehas(
-            'entry_info',
-            function ($query) {
-                $q = $_REQUEST['q'];
-                $query->where('sc_number', $q);
+        if ($_REQUEST['cat'] == 'division') {
+            // 課程別研修 申込書地区別
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['q'];
+                        $query->where('division_number', $q)->where('district', Auth::user()->is_staff);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                // 申込書全部
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['q'];
+                        $query->where('division_number', $q);
+                    }
+                )->with('entry_info')->get();
             }
-        )->with('entry_info')->get();
+        } elseif($_REQUEST['cat'] == 'sc') {
+            // スカウトコース 申込書地区別
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['q'];
+                        $query->where('sc_number', $q)->where('district', Auth::user()->is_staff);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                // 申込書全部
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $q = $_REQUEST['q'];
+                        $query->where('sc_number', $q);
+                    }
+                )->with('entry_info')->get();
+            }
+        }
+
+
 
         // 一時ディレクトリを作成する
         $tmpDirName = 'tmp_' . Str::random(8);
@@ -239,7 +307,12 @@ class AdminEntry_infoController extends AppBaseController
                 $uuid = $entryInfo->entry_info->uuid;
                 $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
                 $fname = str_replace(' ', '_', $fname) . '.pdf'; // ファイル名のスペースを_に置換
-                $srcPath = storage_path('app/public/assignment/sc/') . $uuid . ".pdf";
+                if ($_REQUEST['cat'] == 'division') {
+                    $srcPath = storage_path('app/public/assignment/division/') . $uuid . ".pdf";
+                } else {
+                    $srcPath = storage_path('app/public/assignment/sc/') . $uuid . ".pdf";
+                }
+
                 $dstPath = storage_path('app/') . $tmpDirName . '/' . $fname;
                 if (File::exists($srcPath)) { // ファイルの存在を確認してコピー
                     File::copy($srcPath, $dstPath);
@@ -271,7 +344,7 @@ class AdminEntry_infoController extends AppBaseController
         // DLさせて末尾のdeleteAfterSend() で自動削除
         if (File::exists($zipFilePath)) {
             return response()->download($zipFilePath)->deleteFileAfterSend();
-        }else{
+        } else {
             Flash::error('ダウンロード可能なファイルがありません');
             return back();
         }
@@ -302,12 +375,28 @@ class AdminEntry_infoController extends AppBaseController
     public function admin_export(Request $request)
     {
         if (isset($request->sc)) { // 一覧表からSC番号が指定されたとき
-            $data = Entry_info::with('user')->where('sc_number', $request->sc)->get();
+            if (Auth::user()->is_staff) {
+                $data = Entry_info::with('user')->where('sc_number', $request->sc)->where('district', Auth::user()->is_staff)->get();
+            } else {
+                $data = Entry_info::with('user')->where('sc_number', $request->sc)->get();
+            }
+        } elseif (isset($request->division)) { // 一覧表からSC番号が指定されたとき
+            if (Auth::user()->is_staff) {
+                $data = Entry_info::with('user')->where('division_number', $request->division)->where('district', Auth::user()->is_staff)->get();
+            } else {
+                $data = Entry_info::with('user')->where('division_number', $request->division)->get();
+            }
         } else { // or 全県取得
             $data = Entry_info::with('user')->get();
         }
 
-        $filename = 'export.' . 'xlsx'; //ファイル名
+        // DLファイル名の指定
+        if ($request->sc) {
+            $filename = 'スカウトコース申込一覧 ' . $request->sc . '期.xlsx';
+        } elseif ($request->division) {
+            $filename = '課程別研修申込一覧 ' . $request->division . '回.xlsx';
+        }
+
         //エクセルの見出しを以下で設定
         $headings = [
             '申込ID',

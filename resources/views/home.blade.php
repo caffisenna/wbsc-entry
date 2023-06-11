@@ -5,7 +5,10 @@
         @include('flash::message')
         <div class="row">
             @isset($count)
-                <h2>スカウトコース申込状況</h2>
+                <h2>スカウトコース申込状況 @if (Auth::user()->is_staff)
+                        {{ Auth::user()->is_staff }}地区
+                    @endif
+                </h2>
                 <table class="uk-table uk-table-divider uk-table-striped">
                     <tr>
                         <th>期数</th>
@@ -19,13 +22,14 @@
                             <td><a href="{{ url('admin/admin_entryInfos?q=' . $val->sc_number) }}">SC{{ $val->sc_number }}</a>
                             </td>
                             <td>{{ $val->count_sc_number }}名</td>
-                            <td><a href="{{ route('admin_export') }}?sc={{ $val->sc_number }}" class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
+                            <td><a href="{{ route('admin_export') }}?sc={{ $val->sc_number }}"
+                                    class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
                             </td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=false' }}"
+                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=false&cat=sc' }}"
                                     class="uk-button uk-button-primary"
                                     onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                         uk-icon="download"></span>一括DL</a></td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=true' }}"
+                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=true&cat=sc' }}"
                                     class="uk-button uk-button-primary"><span uk-icon="download"></span>一括DL</a>
                             </td>
                         </tr>
@@ -47,12 +51,17 @@
                                     href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>
                             </td>
                             <td>{{ $val->count_division_number }}</td>
-                            <td><a href="#" class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
+                            <td><a href="{{ route('admin_export') }}?division={{ $val->division_number }}"
+                                    class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
                             </td>
-                            <td><a href="#" class="uk-button uk-button-primary"><span uk-icon="download"></span>一括DL</a>
-                            </td>
-                            <td><a href="#" class="uk-button uk-button-primary"><span uk-icon="download"></span>一括DL</a>
-                            </td>
+                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->division_number . '&assignment=false&cat=division' }}"
+                                    class="uk-button uk-button-primary"
+                                    onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
+                                        uk-icon="download"></span>一括DL</a></td>
+                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->division_number . '&assignment=true&cat=division' }}"
+                                    class="uk-button uk-button-primary"
+                                    onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
+                                        uk-icon="download"></span>一括DL</a></td>
                         </tr>
                     @endforeach
                 </table>

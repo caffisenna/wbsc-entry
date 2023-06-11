@@ -5,14 +5,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>WB研修所申込一覧</h1>
+                    <h1>WB研修所申込一覧 @if (Auth::user()->is_staff)
+                            {{ Auth::user()->is_staff }}地区
+                        @endif
+                    </h1>
                 </div>
                 <div class="col-sm-6">
-                    {{-- @if (empty($entryInfo))
-                        <a class="btn btn-primary float-right" href="{{ route('entryInfos.create') }}">
-                            申込書作成
-                        </a>
-                    @endif --}}
+
                 </div>
             </div>
         </div>
