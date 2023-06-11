@@ -317,7 +317,7 @@
             </td>
         </tr>
 
-        @for ($i = 1; $i <= 5; $i++)
+        @for ($i = 1; $i <= 3; $i++)
             <tr>
                 <td>その他の研修所履歴({{ $i }})</td>
                 <td>課程:{!! Form::text("wb_basic{$i}_category", null, [
@@ -335,7 +335,7 @@
             </tr>
         @endfor
 
-        @for ($i = 1; $i <= 5; $i++)
+        @for ($i = 1; $i <= 3; $i++)
             <tr>
                 <td>その他の実修所履歴({{ $i }})</td>
                 <td>課程:{!! Form::text("wb_adv{$i}_category", null, [

@@ -45,27 +45,12 @@ class CreateEntryInfosTable extends Migration
             $table->string('wb_basic3_category')->nullable();
             $table->string('wb_basic3_number')->nullable();
             $table->string('wb_basic3_date')->nullable();
-            $table->string('wb_basic4_category')->nullable();
-            $table->string('wb_basic4_number')->nullable();
-            $table->string('wb_basic4_date')->nullable();
-            $table->string('wb_basic5_category')->nullable();
-            $table->string('wb_basic5_number')->nullable();
-            $table->string('wb_basic5_date')->nullable();
             $table->string('wb_adv1_category')->nullable();     // 実修所履歴
             $table->string('wb_adv1_number')->nullable();
             $table->string('wb_adv1_date')->nullable();
             $table->string('wb_adv2_category')->nullable();
             $table->string('wb_adv2_number')->nullable();
             $table->string('wb_adv2_date')->nullable();
-            $table->string('wb_adv3_category')->nullable();
-            $table->string('wb_adv3_number')->nullable();
-            $table->string('wb_adv3_date')->nullable();
-            $table->string('wb_adv4_category')->nullable();
-            $table->string('wb_adv4_number')->nullable();
-            $table->string('wb_adv4_date')->nullable();
-            $table->string('wb_adv5_category')->nullable();
-            $table->string('wb_adv5_number')->nullable();
-            $table->string('wb_adv5_date')->nullable();
             $table->string('service_hist1_role');               // 直近5年の奉仕履歴(役務)
             $table->string('service_hist1_term');               // 直近5年の奉仕履歴(期間)
             $table->string('service_hist2_role')->nullable();
