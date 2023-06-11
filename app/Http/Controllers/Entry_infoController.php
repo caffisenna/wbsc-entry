@@ -222,7 +222,7 @@ class Entry_infoController extends AppBaseController
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');
-        return $pdf->download();
+        return $pdf->download('WB研修所申込書 '. $entryInfo->name.'.pdf');
     }
 
     public function delete_file(Request $request)
