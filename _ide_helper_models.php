@@ -29,6 +29,9 @@ namespace App\Models{
  * @property string $cell_phone
  * @property string $zip
  * @property string $address
+ * @property string $emer_name
+ * @property string $emer_relation
+ * @property string $emer_phone
  * @property string $district_role
  * @property string $prefecture_role
  * @property string $scout_camp
@@ -56,24 +59,12 @@ namespace App\Models{
  * @property string|null $wb_basic3_category
  * @property string|null $wb_basic3_number
  * @property string|null $wb_basic3_date
- * @property string|null $wb_basic4_category
- * @property string|null $wb_basic4_number
- * @property string|null $wb_basic4_date
- * @property string|null $wb_basic5_category
- * @property string|null $wb_basic5_number
- * @property string|null $wb_basic5_date
  * @property string|null $wb_adv2_category
  * @property string|null $wb_adv2_number
  * @property string|null $wb_adv2_date
  * @property string|null $wb_adv3_category
  * @property string|null $wb_adv3_number
  * @property string|null $wb_adv3_date
- * @property string|null $wb_adv4_category
- * @property string|null $wb_adv4_number
- * @property string|null $wb_adv4_date
- * @property string|null $wb_adv5_category
- * @property string|null $wb_adv5_number
- * @property string|null $wb_adv5_date
  * @property string|null $service_hist2_role
  * @property string|null $service_hist2_term
  * @property string|null $service_hist3_role
@@ -116,6 +107,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDistrict($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDistrictRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDivisionNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereEmerName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereEmerPhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereEmerRelation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFacePicture($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFeeCheckedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFurigana($value)
@@ -158,12 +152,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv3Category($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv3Date($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv3Number($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv4Category($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv4Date($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv4Number($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv5Category($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv5Date($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbAdv5Number($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic1Category($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic1Date($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic1Number($value)
@@ -173,12 +161,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic3Category($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic3Date($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic3Number($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic4Category($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic4Date($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic4Number($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic5Category($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic5Date($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereWbBasic5Number($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereZip($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info withoutTrashed()

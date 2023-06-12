@@ -284,6 +284,33 @@
         </tr>
 
         <tr>
+            <td>緊急連絡先 氏名</td>
+            <td>{!! Form::text('emer_name', null, ['class' => 'form-control uk-form-width-medium']) !!}
+                @error('emer_name')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
+            <td>緊急連絡先 続柄</td>
+            <td>{!! Form::text('emer_relation', null, ['class' => 'form-control uk-form-width-medium']) !!}
+                @error('emer_relation')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
+            <td>緊急連絡先 電話</td>
+            <td>{!! Form::text('emer_phone', null, ['class' => 'form-control uk-form-width-medium']) !!}
+                @error('emer_phone')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
             <td>地区役務</td>
             <td>{!! Form::text('district_role', null, ['class' => 'form-control uk-form-width-medium']) !!}</td>
         </tr>
@@ -376,12 +403,30 @@
 
         <tr>
             <td>現在治療中の病気(病名などをご記入ください)</td>
-            <td>{!! Form::textarea('health_illness', null, ['class' => 'form-control']) !!}</td>
+            <td>
+                <label>{!! Form::checkbox('health_illness_none', 'true', null, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                @error('health_illness_none')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+                {!! Form::textarea('health_illness', null, [
+                    'class' => 'form-control',
+                    'placeholder' => '何かある場合はこちらに記入してください',
+                ]) !!}
+            </td>
         </tr>
 
         <tr>
             <td>健康上で不安なこと、食品アレルギーなど特記事項をご記入ください</td>
-            <td>{!! Form::textarea('health_memo', null, ['class' => 'form-control']) !!}</td>
+            <td>
+                <label>{!! Form::checkbox('health_memo_none', 'true', null, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                @error('health_memo_none')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+                {!! Form::textarea('health_memo', null, [
+                    'class' => 'form-control',
+                    'placeholder' => '何かある場合はこちらに記入してください',
+                ]) !!}
+            </td>
         </tr>
 
     </table>

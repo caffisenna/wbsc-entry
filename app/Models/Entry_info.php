@@ -25,6 +25,9 @@ use App\Models\User;
  * @property string $cell_phone
  * @property string $zip
  * @property string $address
+ * @property string $emer_name
+ * @property string $emer_relation
+ * @property string $emer_phone
  * @property string $district_role
  * @property string $prefecture_role
  * @property string $scout_camp
@@ -73,6 +76,9 @@ class Entry_info extends Model
         'cell_phone',
         'zip',
         'address',
+        'emer_name',
+        'emer_relation',
+        'emer_phone',
         'district_role',
         'prefecture_role',
         'scout_camp',
@@ -86,12 +92,6 @@ class Entry_info extends Model
         'wb_basic3_category',
         'wb_basic3_number',
         'wb_basic3_date',
-        'wb_basic4_category',
-        'wb_basic4_number',
-        'wb_basic4_date',
-        'wb_basic5_category',
-        'wb_basic5_number',
-        'wb_basic5_date',
         'wb_adv1_category',
         'wb_adv1_number',
         'wb_adv1_date',
@@ -101,12 +101,6 @@ class Entry_info extends Model
         'wb_adv3_category',
         'wb_adv3_number',
         'wb_adv3_date',
-        'wb_adv4_category',
-        'wb_adv4_number',
-        'wb_adv4_date',
-        'wb_adv5_category',
-        'wb_adv5_number',
-        'wb_adv5_date',
         'service_hist1_role',
         'service_hist1_term',
         'service_hist2_role',
@@ -148,6 +142,9 @@ class Entry_info extends Model
         'cell_phone' => 'string',
         'zip' => 'string',
         'address' => 'string',
+        'emer_name' => 'string',
+        'emer_relation' => 'string',
+        'emer_phone' => 'string',
         'district_role' => 'string',
         'prefecture_role' => 'string',
         'scout_camp' => 'string',
@@ -161,12 +158,6 @@ class Entry_info extends Model
         'wb_basic3_category' => 'string',
         'wb_basic3_number' => 'string',
         'wb_basic3_date' => 'string',
-        'wb_basic4_category' => 'string',
-        'wb_basic4_number' => 'string',
-        'wb_basic4_date' => 'string',
-        'wb_basic5_category' => 'string',
-        'wb_basic5_number' => 'string',
-        'wb_basic5_date' => 'string',
         'wb_adv1_category' => 'string',
         'wb_adv1_number' => 'string',
         'wb_adv1_date' => 'string',
@@ -176,12 +167,6 @@ class Entry_info extends Model
         'wb_adv3_category' => 'string',
         'wb_adv3_number' => 'string',
         'wb_adv3_date' => 'string',
-        'wb_adv4_category' => 'string',
-        'wb_adv4_number' => 'string',
-        'wb_adv4_date' => 'string',
-        'wb_adv5_category' => 'string',
-        'wb_adv5_number' => 'string',
-        'wb_adv5_date' => 'string',
         'service_hist1_role' => 'string',
         'service_hist1_term' => 'string',
         'service_hist2_role' => 'string',
@@ -225,10 +210,15 @@ class Entry_info extends Model
         'cell_phone' => 'required',
         'zip' => 'required|digits:7',
         'address' => 'required',
+        'emer_name' => 'required',
+        'emer_relation' => 'required',
+        'emer_phone' => 'required',
         'scout_camp' => 'required',
         'bs_basic_course' => 'required',
         'service_hist1_role' => 'required',
         'service_hist1_term' => 'required',
+        'health_illness_none' => 'required_if:health_illness,null',
+        'health_memo_none' => 'required_if:health_memo,null',
     ];
 
     public static $messages = [
@@ -254,11 +244,16 @@ class Entry_info extends Model
         'bs_basic_course.required' => 'ボーイスカウト講習会の修了年月日を入力してください',
         'service_hist1_role.required' => '奉仕歴(1)の役務を入力してください',
         'service_hist1_term.required' => '奉仕歴(1)の奉仕期間を入力してください',
+        'emer_name.required' => '緊急連絡先の氏名を入力してください',
+        'emer_relation.required' => '緊急連絡先の続柄を入力してください',
+        'emer_phone.required' => '緊急連絡先の日中連絡が取れる電話番号を入力してください',
+        'health_illness_none.required_if' => '治療中の病気など、申告事項が無い場合はチェックをしてください',
+        'health_memo_none.required_if' => '食品アレルギーなどの申告事項が無い場合はチェックをしてください',
     ];
 
-    public function user() {
+    public function user()
+    {
         // return $this->hasOne(user::class);
         return $this->belongsTo(user::class);
     }
-
 }

@@ -278,6 +278,33 @@
         </tr>
 
         <tr>
+            <td>緊急連絡先 氏名</td>
+            <td>{!! Form::text('emer_name', null, ['class' => 'form-control uk-form-width-medium']) !!}
+                @error('emer_name')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
+            <td>緊急連絡先 続柄</td>
+            <td>{!! Form::text('emer_relation', null, ['class' => 'form-control uk-form-width-medium']) !!}
+                @error('emer_relation')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
+            <td>緊急連絡先 電話</td>
+            <td>{!! Form::text('emer_phone', null, ['class' => 'form-control uk-form-width-medium']) !!}
+                @error('emer_phone')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
             <td>地区役務</td>
             <td>{!! Form::text('district_role', null, ['class' => 'form-control']) !!}</td>
         </tr>
@@ -357,39 +384,6 @@
         </tr>
 
         <tr>
-            <td>その他の研修所履歴(4)</td>
-            <td>課程:{!! Form::text('wb_basic4_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic4_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic4_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の研修所履歴(5)</td>
-            <td>課程:{!! Form::text('wb_basic5_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic5_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic5_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-
-        <tr>
             <td>その他の実修所履歴(1)</td>
             <td>課程:{!! Form::text('wb_adv1_category', null, [
                 'class' => 'form-control',
@@ -424,32 +418,6 @@
                     'class' => 'form-control',
                 ]) !!}<br>
                 修了年月:{!! Form::text('wb_adv3_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(4)</td>
-            <td>課程:{!! Form::text('wb_adv4_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv4_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv4_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(5)</td>
-            <td>課程:{!! Form::text('wb_adv5_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv5_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv5_date', null, [
                     'class' => 'form-control',
                 ]) !!}</td>
         </tr>

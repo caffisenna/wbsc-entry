@@ -72,6 +72,12 @@
                 </td>
             </tr>
             <tr>
+                <td>緊急連絡先</td>
+                <td>【氏名:】 {{ $entryInfo->entry_info->emer_name }}({{ $entryInfo->entry_info->emer_relation }})<br>
+                     【連絡先】 {{ $entryInfo->entry_info->emer_phone }}
+                </td>
+            </tr>
+            <tr>
                 <td>地区・県連役務</td>
                 <td>
                     【地区】 {{ $entryInfo->entry_info->district_role }} 【県連】

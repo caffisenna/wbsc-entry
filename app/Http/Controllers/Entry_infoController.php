@@ -80,6 +80,7 @@ class Entry_infoController extends AppBaseController
     public function store(CreateEntry_infoRequest $request)
     {
         $input = $request->all();
+
         $input['user_id'] = Auth::user()->id;
         $input['uuid'] = Uuid::uuid4();
 
@@ -87,6 +88,20 @@ class Entry_infoController extends AppBaseController
         // sc_number_doneをnull化する
         if ($input['sc_number'] !== 'done') {
             $input['sc_number_done'] = NULL;
+        }
+
+        // 病気項目の処理
+        if (isset($input['health_illness_none'])) {
+            if ($input['health_illness_none'] == 'true' && $input['health_illness'] == '') {
+                $input['health_illness'] = '特になし';
+            }
+        }
+
+        // アレルギー項目の処理
+        if (isset($input['health_memo_none'])) {
+            if ($input['health_memo_none'] == 'true' && $input['health_memo'] == '') {
+                $input['health_memo'] = '特になし';
+            }
         }
 
 
@@ -183,6 +198,20 @@ class Entry_infoController extends AppBaseController
             return redirect(route('entryInfos.index'));
         }
 
+        // 病気項目の処理
+        if (isset($request['health_illness_none'])) {
+            if ($request['health_illness_none'] == 'true' && $request['health_illness'] == '') {
+                $request['health_illness'] = '特になし';
+            }
+        }
+
+        // アレルギー項目の処理
+        if (isset($request['health_memo_none'])) {
+            if ($request['health_memo_none'] == 'true' && $request['health_memo'] == '') {
+                $request['health_memo'] = '特になし';
+            }
+        }
+
         $entryInfo = $this->entryInfoRepository->update($request->all(), $id);
 
         Flash::success('申込情報を更新しました');
@@ -222,7 +251,7 @@ class Entry_infoController extends AppBaseController
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');
-        return $pdf->download('WB研修所申込書 '. $entryInfo->name.'.pdf');
+        return $pdf->download('WB研修所申込書 ' . $entryInfo->name . '.pdf');
     }
 
     public function delete_file(Request $request)
