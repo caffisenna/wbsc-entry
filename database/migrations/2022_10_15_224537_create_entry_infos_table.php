@@ -81,6 +81,8 @@ class CreateEntryInfosTable extends Migration
             $table->string('gm_name', 50)->nullable();                         // 団委員長氏名
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認
             $table->date('ais_checked_at')->nullable();                     // AIS委員会確認
+            $table->date('accepted_at')->nullable();                  // AIS委員委員長の参加認定
+            $table->date('rejected_at')->nullable();                  // AIS委員委員長の参加認定
             $table->date('fee_checked_at')->nullable();                     // 参加費確認
             $table->timestamps();
             $table->softDeletes();
