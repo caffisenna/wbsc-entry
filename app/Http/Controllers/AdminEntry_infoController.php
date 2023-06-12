@@ -263,7 +263,7 @@ class AdminEntry_infoController extends AppBaseController
                     }
                 )->with('entry_info')->get();
             }
-        } elseif($_REQUEST['cat'] == 'sc') {
+        } elseif ($_REQUEST['cat'] == 'sc') {
             // スカウトコース 申込書地区別
             if (Auth::user()->is_staff) {
                 $entryInfos = User::wherehas(
@@ -395,6 +395,8 @@ class AdminEntry_infoController extends AppBaseController
             $filename = 'スカウトコース申込一覧 ' . $request->sc . '期.xlsx';
         } elseif ($request->division) {
             $filename = '課程別研修申込一覧 ' . $request->division . '回.xlsx';
+        } else {
+            $filename = '申込一覧.xlsx';
         }
 
         //エクセルの見出しを以下で設定
