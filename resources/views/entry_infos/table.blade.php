@@ -18,6 +18,8 @@
             <td>
                 @if ($entryInfo->sc_number)
                     スカウトコース{{ $entryInfo->sc_number }}期
+                @elseif($entryInfo->sc_number_done)
+                    スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
                 @endif
             </td>
         </tr>

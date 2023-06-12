@@ -17,7 +17,7 @@ class CreateEntryInfosTable extends Migration
         Schema::create('entry_infos', function (Blueprint $table) {
             $table->increments('id');
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->string('sc_number');                // スカウトコースX期
+            $table->string('sc_number')->nullable();                // スカウトコースX期
             $table->string('sc_number_done')->nullable();           // 修了済みスカウトコースX期
             $table->string('division_number');   // 課程別X期
             $table->string('furigana');

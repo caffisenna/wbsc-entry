@@ -34,7 +34,11 @@
             <tr>
                 <td>申込コース</td>
                 <td>
-                    スカウトコース: {{ $entryInfo->entry_info->sc_number }}<br>
+                    @if (isset($entryInfo->entry_info->sc_number))
+                        スカウトコース: {{ $entryInfo->entry_info->sc_number }}<br>
+                    @elseif(isset($entryInfo->entry_info->sc_number_done))
+                        スカウトコース: {{ $entryInfo->entry_info->sc_number_done }}(修了済み)<br>
+                    @endif
                     課程別研修: {{ $entryInfo->entry_info->division_number }}
                 </td>
             </tr>
@@ -74,7 +78,7 @@
             <tr>
                 <td>緊急連絡先</td>
                 <td>【氏名:】 {{ $entryInfo->entry_info->emer_name }}({{ $entryInfo->entry_info->emer_relation }})<br>
-                     【連絡先】 {{ $entryInfo->entry_info->emer_phone }}
+                    【連絡先】 {{ $entryInfo->entry_info->emer_phone }}
                 </td>
             </tr>
             <tr>
