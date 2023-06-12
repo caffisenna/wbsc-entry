@@ -86,7 +86,7 @@
             </td>
         </tr>
         <tr>
-            <th>地区の承認</th>
+            <th>地区コミの承認</th>
             <td>
                 @if (isset($entryInfo->commi_checked_at))
                     {{ $entryInfo->commi_checked_at->format('Y-m-d') }}
@@ -96,13 +96,20 @@
             </td>
         </tr>
         <tr>
-            <th>AIS委員会の認定</th>
+            <th>地区AIS委員会の認定</th>
             <td>
                 @if (isset($entryInfo->ais_checked_at))
-                    {{ $entryInfo->ais_checked_at->format('Y-m-d') }}
+                    {{ $entryInfo->ais_checked_at->format('Y-m-d') }}<br>
+                    <span class="uk-text-warning">地区AIS委員会の認定後はデータの修正はできません</span>
                 @else
                     <span class="uk-text-danger"><span uk-icon="comment"></span>未認定(認定をお待ちください)</span>
                 @endif
+            </td>
+        </tr>
+        <tr>
+            <th>参加認定</th>
+            <td>
+
             </td>
         </tr>
         <tr>
@@ -116,9 +123,11 @@
                         class='uk-button uk-button-default uk-button-small'>
                         <span uk-icon="eye"></span>申込内容の確認
                     </a>
-                    <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
-                        class='uk-button uk-button-default uk-button-small'><span
-                            uk-icon="icon: file-edit"></span>申込内容の修正</a>
+                    @unless (isset($entryInfo->ais_checked_at))
+                        <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
+                            class='uk-button uk-button-default uk-button-small'><span
+                                uk-icon="icon: file-edit"></span>申込内容の修正</a>
+                    @endunless
                 </div>
                 {!! Form::close() !!}
             </td>
