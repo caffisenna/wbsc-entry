@@ -53,6 +53,13 @@
             <td>{{ $entryInfo->zip }}<br>{{ $entryInfo->address }}</td>
         </tr>
 
+        <tr>
+            <th>緊急連絡先</th>
+            <td>【氏名:】 {{ $entryInfo->emer_name }}({{ $entryInfo->emer_relation }})<br>
+                【連絡先】 {{ $entryInfo->emer_phone }}
+            </td>
+        </tr>
+
         @if (isset($entryInfo->district_role))
             <tr>
                 <th>地区役務</th>
