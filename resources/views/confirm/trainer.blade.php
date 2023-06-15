@@ -24,7 +24,6 @@
             <tr>
                 <th>写真</th>
                 <td>
-
                     @if ($userinfo->user->face_picture)
                         <img src="{{ url('/storage/picture/') }}/{{ $userinfo->user->face_picture }}" width="150px">
                     @else
