@@ -247,4 +247,30 @@ class CommiEntry_infoController extends AppBaseController
         Flash::success($gm_name . 'さんに参加承認の依頼メールを発送しました');
         return back();
     }
+
+    public function commi_comment(Request $request)
+    {
+        $id = $request['id'];
+        $userinfo = Entry_info::where('user_id', $id)->with('user')->firstOrFail();
+
+        return view('commi_entry_infos.commi_comment')->with('userinfo', $userinfo);
+    }
+
+    public function commi_comment_post(Request $request)
+    {
+        $input = $request->all();
+
+        $userinfo = Entry_info::where('uuid', $input['uuid'])->with('user')->firstOrFail();
+        $userinfo->additional_comment = $input['comment'];
+        $userinfo->save();
+
+        Flash::success($userinfo->user->name . 'さんの副信書を作成しました。');
+
+        $entryInfos = User::whereHas('entry_info', function ($query) {
+            $query->where('district', Auth::user()->is_commi);
+        })->with('entry_info')->get();
+
+        return view('commi_entry_infos.index')
+            ->with('entryInfos', $entryInfos);
+    }
 }

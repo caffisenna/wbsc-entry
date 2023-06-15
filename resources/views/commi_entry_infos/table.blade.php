@@ -8,6 +8,7 @@
                 <th>課題認定者</th>
                 <th>団委員長</th>
                 <th>地区コミ</th>
+                <th>副信書</th>
                 <th>AIS委員会</th>
                 <th>申込書</th>
             </tr>
@@ -57,6 +58,7 @@
                                     onclick="return confirm('{{ $entryInfo->name }}さんを承認しますか?')">承認する</a>
                             @endif
                         </td>
+                        <td><a href="{{ url("/commi/commi_comment?id=$entryInfo->id") }}" class="uk-button uk-button-small uk-button-primary">副信書</a></td>
                         <td>
                             @if (isset($entryInfo->entry_info->ais_checked_at))
                                 {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}

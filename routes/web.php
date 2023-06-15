@@ -56,8 +56,8 @@ Route::middleware('verified')->group(function () {
     Route::prefix('user')->group(function () {
         Route::resource('entryInfos', App\Http\Controllers\Entry_infoController::class);
         Route::get('/pdf', [App\Http\Controllers\Entry_infoController::class, 'pdf'])->name('pdf');
-        Route::resource('upload',UploadController::class);
-        Route::resource('face_upload',FaceUploadController::class);
+        Route::resource('upload', UploadController::class);
+        Route::resource('face_upload', FaceUploadController::class);
         Route::get('/delete_file', [App\Http\Controllers\Entry_infoController::class, 'delete_file'])->name('delete_file'); // ファイルの削除
     });
     // 管理ユーザ用
@@ -85,5 +85,7 @@ Route::middleware('verified')->group(function () {
         Route::post('/trainer_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'trainer_request_send'])->name('trainer_request_send');
         Route::get('/gm_request', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request'])->name('gm_request');
         Route::post('/gm_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request_send'])->name('gm_request_send');
+        Route::get('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment'])->name('commi_comment'); // 副信書
+        Route::post('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment_post'])->name('commi_comment_post'); // 副信書
     });
 });

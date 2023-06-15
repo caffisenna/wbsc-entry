@@ -69,6 +69,7 @@ class CreateEntryInfosTable extends Migration
             $table->string('service_hist5_term')->nullable();
             $table->string('health_illness')->nullable();       // 病気など
             $table->string('health_memo')->nullable();          // 健康上の留意点
+            $table->string('additional_comment',500)->nullable();   // 地区コミからの副信書
             $table->string('assignment_sc')->nullable();          // 課題研修SC
             $table->string('assignment_division')->nullable();    // 課題研修課程別
             $table->string('face_picture')->nullable();    // 顔写真

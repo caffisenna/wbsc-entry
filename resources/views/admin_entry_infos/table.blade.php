@@ -87,8 +87,14 @@
                     {{-- 申込情報がブランクなら無視 --}}
                     @if (isset($entryInfo->entry_info))
                         <tr>
-                            <td><a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}"
-                                    class='uk-link'>{{ $entryInfo->name }}</a></td>
+                            <td>
+                                <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}"
+                                    class='uk-link'>{{ $entryInfo->name }}
+                                    @if ($entryInfo->entry_info->additional_comment)
+                                        <span uk-icon="commenting" class="uk-text-danger"></span>
+                                    @endif
+                                </a>
+                            </td>
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
                             <td>
@@ -100,7 +106,7 @@
                                         <span class=" uk-text-danger">未提出</span>
                                     @endif
                                 @elseif($entryInfo->entry_info->sc_number_done)
-                                {{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)
+                                    {{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)
                                 @endif
                             </td>
                             <td>{{ $entryInfo->entry_info->division_number }}回<br>
