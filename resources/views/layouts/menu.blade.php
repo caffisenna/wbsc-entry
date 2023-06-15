@@ -65,8 +65,13 @@
 
             <h3 class="uk-text-warning">事務局メニュー</h3>
             <li class="nav-item">
-                <a href="{{ route('fee_check') }}" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
-                    <p>参加費確認</p>
+                <a href="{{ route('fee_check') }}?cat=sc" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
+                    <p>参加費確認(SC)</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('fee_check') }}?cat=div" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
+                    <p>参加費確認(課程別)</p>
                 </a>
             </li>
         @endunless

@@ -5,7 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>入金チェック</h1>
+                    @if ($_REQUEST['cat'] == 'div')
+                        <h1>入金チェック(課程別研修)</h1>
+                    @else
+                        <h1>入金チェック(スカウトコース)</h1>
+                    @endif
                 </div>
                 <div class="col-sm-6">
                 </div>

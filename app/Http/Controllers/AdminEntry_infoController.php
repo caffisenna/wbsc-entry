@@ -421,18 +421,23 @@ class AdminEntry_infoController extends AppBaseController
 
     public function fee_check(Request $request)
     {
+        $cat = $request['cat'];
         // 入金IDがあるとき
         if (isset($request['id'])) {
             $id = $request['id'];
             $entryinfo = Entry_info::where('id', $id)->with('user')->firstOrFail();
-            $entryinfo->fee_checked_at = now();
+            if ($request['cat'] == 'sc') {
+                $entryinfo->sc_fee_checked_at = now();
+            } elseif ($request['cat'] == 'div') {
+                $entryinfo->div_fee_checked_at = now();
+            }
             $entryinfo->save();
 
             // メール送信機能を付ける
             // 確認メール送信
             $sendto = $entryinfo->user->email;
             $name = $entryinfo->user->name;
-            Mail::to($sendto)->queue(new FeeChecked($name)); // メールをqueueで送信
+            Mail::to($sendto)->queue(new FeeChecked($name, $cat)); // メールをqueueで送信
 
             // flashメッセージを設定
             Flash::success($entryinfo->user->name . 'の入金確認を行いました');
@@ -441,7 +446,14 @@ class AdminEntry_infoController extends AppBaseController
             return back();
         } else {
             // 入金IDがなく、一覧を返す
-            $entryinfos = Entry_info::with('user')->orderby('furigana')->get();
+            if ($cat == 'div') {
+                // 課程別研修は全員拾う
+                $entryinfos = Entry_info::with('user')->orderby('furigana')->get();
+            } else {
+                // 修了済みスカウトコースの期数がブランクを拾う
+                $entryinfos = Entry_info::where('sc_number_done', '')->with('user')->orderby('furigana')->get();
+            }
+
             return view('fee_check.index')
                 ->with('entryinfos', $entryinfos);
         }

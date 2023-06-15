@@ -10,16 +10,17 @@ use Illuminate\Queue\SerializesModels;
 class FeeChecked extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $name;
+    protected $name, $cat;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($name, $cat)
     {
         $this->name = $name;
+        $this->cat = $cat;
     }
 
     /**
@@ -31,6 +32,7 @@ class FeeChecked extends Mailable
     {
         return $this->view('mail.feechecked')
             ->subject('入金確認のお知らせ')
-            ->with('name', $this->name);
+            ->with('name', $this->name)
+            ->with('cat', $this->cat);
     }
 }
