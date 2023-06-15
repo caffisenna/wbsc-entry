@@ -23,7 +23,14 @@
         <table class="uk-table uk-table-divider">
             <tr>
                 <th>写真</th>
-                <td><img src="{{ url('/storage/picture/') }}/{{ $userinfo->user->face_picture }}" width="150px"></td>
+                <td>
+
+                    @if ($userinfo->user->face_picture)
+                        <img src="{{ url('/storage/picture/') }}/{{ $userinfo->user->face_picture }}" width="150px">
+                    @else
+                        写真なし
+                    @endif
+                </td>
             </tr>
             <tr>
                 <th>氏名</th>
@@ -71,15 +78,22 @@
                 @else
                     <td>---</td>
                 @endif
-                <td><a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                            uk-icon="file-pdf"></span>スカウトコース課題を確認</a></td>
+                <td>
+                    @if ($userinfo->assignment_sc == 'up')
+                        <a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
+                                uk-icon="file-pdf"></span>スカウトコース課題を確認</a>
+                    @else
+                        <span class="uk-text-danger">未提出</span>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <th>課程別</th>
                 @if (isset($userinfo->trainer_division_checked_at))
                     <td>認定済み</td>
                 @else
-                    <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</a></td>
+                    <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</a>
+                    </td>
                 @endif
                 @if (isset($userinfo->trainer_division_checked_at))
                     <td>{{ $userinfo->trainer_division_checked_at->format('Y-m-d') }}</td>
@@ -91,8 +105,14 @@
                 @else
                     <td>---</td>
                 @endif
-                <td><a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                            uk-icon="file-pdf"></span>課程別研修課題を確認</a></td>
+                <td>
+                    @if ($userinfo->assignment_division == 'up')
+                        <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
+                                uk-icon="file-pdf"></span>課程別研修課題を確認</a>
+                    @else
+                        <span class="uk-text-danger">未提出</span>
+                    @endif
+                </td>
             </tr>
         </table>
 

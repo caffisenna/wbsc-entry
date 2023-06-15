@@ -22,13 +22,20 @@
         @if (empty($userinfo->gm_name))
             <a href="#modal-confirm-gm" uk-toggle class="uk-button uk-button-primary">承認する</a>
         @else
-            <p class="uk-text uk-text-primary">承認済み</p> {{ $userinfo->gm_checked_at->format('Y-m-d') }} {{ $userinfo->gm_name }}
+            <p class="uk-text uk-text-primary">承認済み</p> {{ $userinfo->gm_checked_at->format('Y-m-d') }}
+            {{ $userinfo->gm_name }}
         @endif
         <h3>参加者情報</h3>
         <table class="uk-table uk-table-divider">
             <tr>
                 <th>写真</th>
-                <td><img src="{{ url('/storage/picture/') }}/{{ $userinfo->user->face_picture }}" width="150px"></td>
+                <td>
+                    @if ($userinfo->user->face_picture)
+                        <img src="{{ url('/storage/picture/') }}/{{ $userinfo->user->face_picture }}" width="150px">
+                    @else
+                        写真なし
+                    @endif
+                </td>
             </tr>
             <tr>
                 <th>氏名</th>
@@ -58,13 +65,25 @@
             </tr>
             <tr>
                 <th>スカウトコース</th>
-                <td><a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                            uk-icon="file-pdf"></span>スカウトコース課題を確認</a></td>
+                <td>
+                    @if ($userinfo->assignment_sc == 'up')
+                        <a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
+                                uk-icon="file-pdf"></span>スカウトコース課題を確認</a>
+                    @else
+                        <span class="uk-text-danger">未提出</span>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <th>課程別</th>
-                <td><a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                            uk-icon="file-pdf"></span>課程別研修課題を確認</a></td>
+                <td>
+                    @if ($userinfo->assignment_division == 'up')
+                        <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
+                                uk-icon="file-pdf"></span>課程別研修課題を確認</a>
+                    @else
+                        <span class="uk-text-danger">未提出</span>
+                    @endif
+                </td>
             </tr>
         </table>
 
