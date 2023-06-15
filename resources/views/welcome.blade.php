@@ -73,27 +73,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <span uk-icon="file-text"></span>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="#"
-                                    class="underline text-gray-900 dark:text-white">使い方</a></div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                <ol>
-                                    <li>ユーザー登録をする</li>
-                                    <li>メール認証をする</li>
-                                    <li>ログインする</li>
-                                    <li>申込データを入力する</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                        <div class="flex items-center">
                             <span uk-icon="user"></span>
-                            <div class="uk-text-large text-gray-900 dark:text-white" style="">アカウント</div>
+                            <span class="uk-text-large text-gray-900 dark:text-white">アカウント</span>
                         </div>
 
                         <div class="">
@@ -113,23 +94,25 @@
                                 @endauth
                             </div>
                         </div>
+
                     </div>
 
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                         <div class="flex items-center">
-                            <span uk-icon="comment"></span>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="#"
-                                    class="underline text-gray-900 dark:text-white">何かメニュー2</a></div>
+                            <div class="flex items-center">
+                                <span uk-icon="user"></span>
+                                <span class="uk-text-large text-gray-900 dark:text-white">使い方</span>
+                            </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                何か一言
+                                <a href="#">ガイドのURL</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
                         <div class="flex items-center">
                             <span uk-icon="link"></span>
                             <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">リンク
@@ -141,6 +124,10 @@
                                 <a href="https://www.scout.tokyo/member/training/">東京連盟加盟員サイト</a>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+
                     </div>
                 </div>
             </div>
