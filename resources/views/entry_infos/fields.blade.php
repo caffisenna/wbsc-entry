@@ -13,7 +13,7 @@
                                 old('sc_number') == $courselist->number) selected @endif>
                             {{ $courselist->number }}期</option>
                     @endforeach
-                    <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
+                    <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
                 </select>
                 @error('sc_number')
                     <div class="error text-danger">{{ $message }}</div>
@@ -22,7 +22,8 @@
                 <div id="textboxContainer" style="display:none;">
                     <label for="myTextbox">修了コース名を入力してください</label>
                     <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
-                        placeholder="例: 東京15期" value="{{ old('sc_number_done') }}">
+                        placeholder="例: 東京15期"
+                        value="@if ($entryInfo->sc_number_done){{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }}@endif">
                     @error('sc_number_done')
                         <div class="error text-danger">{{ $message }}</div>
                     @enderror
@@ -437,70 +438,116 @@
     </table>
 </div>
 <script>
+    // function toggleTextbox() {
+    //     var selectbox = document.getElementById("sc_select");
+    //     var textboxContainer = document.getElementById("textboxContainer");
+    //     var selectedOption = selectbox.options[selectbox.selectedIndex].value;
+
+    //     if (selectedOption === "done") {
+    //         textboxContainer.style.display = "block";
+    //     } else {
+    //         textboxContainer.style.display = "none";
+    //     }
+    // }
+</script>
+
+<script>
+    // ページ読み込み時に初期値をチェック
+    document.addEventListener("DOMContentLoaded", function() {
+        var selectbox = document.getElementById("sc_select");
+        var selectedOption = selectbox.options[selectbox.selectedIndex].value;
+        if (selectedOption === "done") {
+            showTextbox();
+        }
+    });
+
     function toggleTextbox() {
         var selectbox = document.getElementById("sc_select");
-        var textboxContainer = document.getElementById("textboxContainer");
         var selectedOption = selectbox.options[selectbox.selectedIndex].value;
 
         if (selectedOption === "done") {
-            textboxContainer.style.display = "block";
+            showTextbox();
         } else {
-            textboxContainer.style.display = "none";
+            hideTextbox();
         }
+    }
+
+    function showTextbox() {
+        var textboxContainer = document.getElementById("textboxContainer");
+        textboxContainer.style.display = "block";
+    }
+
+    function hideTextbox() {
+        var textboxContainer = document.getElementById("textboxContainer");
+        textboxContainer.style.display = "none";
     }
 </script>
 
 <script>
     // セレクトボックスAの選択によってセレクトボックスBのoptionを変更する関数
     function updateDan() {
-      var selectDistrict = document.getElementById("selectDistrict");
-      var selectDan = document.getElementById("selectDan");
-      var selectedValue = selectDistrict.value;
+        var selectDistrict = document.getElementById("selectDistrict");
+        var selectDan = document.getElementById("selectDan");
+        var selectedValue = selectDistrict.value;
 
-      // セレクトボックスBのoptionを一旦クリア
-      selectDan.innerHTML = "";
+        // セレクトボックスBのoptionを一旦クリア
+        selectDan.innerHTML = "";
 
-      // 選択された値に応じてセレクトボックスBのoptionを追加
-      if (selectedValue === "大都心") {
-        selectDan.innerHTML = "<option value='千代田第1団'>千代田第1団</option><option value='千代田第6団'>千代田第6団</option><option value='千代田第7団'>千代田第7団</option><option value='千代田第8団'>千代田第8団</option><option value='千代田第9団'>千代田第9団</option><option value='千代田第10団'>千代田第10団</option><option value='千代田第11団'>千代田第11団</option><option value='中央第5団'>中央第5団</option><option value='中央第6団'>中央第6団</option><option value='中央第7団'>中央第7団</option><option value='中央第10団'>中央第10団</option><option value='中央第11団'>中央第11団</option><option value='港第1団'>港第1団</option><option value='港第3団'>港第3団</option><option value='港第5団'>港第5団</option><option value='港第12団'>港第12団</option><option value='港第14団'>港第14団</option><option value='港第15団'>港第15団</option><option value='港第16団'>港第16団</option><option value='港第18団'>港第18団</option><option value='新宿第1団'>新宿第1団</option><option value='新宿第2団'>新宿第2団</option><option value='新宿第4団'>新宿第4団</option><option value='新宿第8団'>新宿第8団</option><option value='新宿第9団'>新宿第9団</option><option value='新宿第17団'>新宿第17団</option><option value='新宿第18団'>新宿第18団</option>";
-      } else if (selectedValue === "さくら") {
-        selectDan.innerHTML = "<option value='台東第1団'>台東第1団</option><option value='台東第2団'>台東第2団</option><option value='台東第3団'>台東第3団</option><option value='台東第4団'>台東第4団</option><option value='台東第7団'>台東第7団</option><option value='文京第1団'>文京第1団</option><option value='文京第2団'>文京第2団</option><option value='文京第3団'>文京第3団</option><option value='文京第5団'>文京第5団</option><option value='文京第6団'>文京第6団</option><option value='荒川第1団'>荒川第1団</option><option value='荒川第2団'>荒川第2団</option><option value='荒川第6団'>荒川第6団</option><option value='足立第3団'>足立第3団</option><option value='足立第4団'>足立第4団</option><option value='足立第5団'>足立第5団</option><option value='足立第14団'>足立第14団</option>";
-      } else if (selectedValue === "城東") {
-        selectDan.innerHTML = "<option value='江戸川第1団'>江戸川第1団</option><option value='江戸川第2団'>江戸川第2団</option><option value='江戸川第3団'>江戸川第3団</option><option value='江戸川第5団'>江戸川第5団</option><option value='江戸川第7団'>江戸川第7団</option><option value='葛飾第2団'>葛飾第2団</option><option value='葛飾第3団'>葛飾第3団</option><option value='葛飾第4団'>葛飾第4団</option><option value='葛飾第5団'>葛飾第5団</option><option value='葛飾第9団'>葛飾第9団</option><option value='江東第2団'>江東第2団</option><option value='江東第3団'>江東第3団</option><option value='江東第6団'>江東第6団</option><option value='墨田第3団'>墨田第3団</option><option value='墨田第4団'>墨田第3団</option><option value='墨田第8団'>墨田第3団</option><option value='墨田第9団'>墨田第3団</option>";
-      } else if (selectedValue === "山手") {
-        selectDan.innerHTML = "<option value='目黒第1団'>目黒第1団</option><option value='目黒第3団'>目黒第3団</option><option value='目黒第6団'>目黒第6団</option><option value='目黒第7団'>目黒第7団</option><option value='目黒第8団'>目黒第8団</option><option value='目黒第9団'>目黒第9団</option><option value='目黒第15団'>目黒第15団</option><option value='渋谷第2団'>渋谷第2団</option><option value='渋谷第5団'>渋谷第5団</option><option value='渋谷第6団'>渋谷第6団</option><option value='渋谷第9団'>渋谷第9団</option><option value='渋谷第10団'>渋谷第10団</option><option value='渋谷第14団'>渋谷第14団</option>";
-      } else if (selectedValue === "つばさ") {
-        selectDan.innerHTML = "<option value='品川第1団'>品川第1団</option><option value='品川第2団'>品川第2団</option><option value='品川第6団'>品川第6団</option><option value='品川第8団'>品川第8団</option><option value='大田第1団'>大田第1団</option><option value='大田第2団'>大田第2団</option><option value='大田第3団'>大田第3団</option><option value='大田第4団'>大田第4団</option><option value='大田第6団'>大田第6団</option><option value='大田第7団'>大田第7団</option><option value='大田第11団'>大田第11団</option><option value='大田第14団'>大田第14団</option><option value='大田第15団'>大田第15団</option><option value='大田第17団'>大田第17団</option><option value='大田第18団'>大田第18団</option><option value='大田第19団'>大田第19団</option>";
-      } else if (selectedValue === "城北") {
-        selectDan.innerHTML = "<option value='豊島第1団'>豊島第1団</option><option value='豊島第4団'>豊島第4団</option><option value='豊島第6団'>豊島第6団</option><option value='豊島第7団'>豊島第7団</option><option value='豊島第8団'>豊島第8団</option><option value='豊島第9団'>豊島第9団</option><option value='豊島第17団'>豊島第17団</option><option value='北第1団'>北第1団</option><option value='北第3団'>北第3団</option><option value='北第5団'>北第5団</option><option value='北第8団'>北第8団</option><option value='北第11団'>北第11団</option><option value='板橋第2団'>板橋第2団</option><option value='板橋第3団'>板橋第3団</option><option value='板橋第4団'>板橋第4団</option><option value='板橋第5団'>板橋第5団</option><option value='板橋第7団'>板橋第7団</option><option value='板橋第9団'>板橋第9団</option><option value='板橋第10団'>板橋第10団</option><option value='板橋第11団'>板橋第11団</option><option value='板橋第15団'>板橋第15団</option>";
-      } else if (selectedValue === "世田谷") {
-        selectDan.innerHTML = "<option value='世田谷第1団'>世田谷第1団</option><option value='世田谷第2団'>世田谷第2団</option><option value='世田谷第3団'>世田谷第3団</option><option value='世田谷第4団'>世田谷第4団</option><option value='世田谷第5団'>世田谷第5団</option><option value='世田谷第6団'>世田谷第6団</option><option value='世田谷第7団'>世田谷第7団</option><option value='世田谷第8団'>世田谷第8団</option><option value='世田谷第9団'>世田谷第9団</option><option value='世田谷第10団'>世田谷第10団</option><option value='世田谷第11団'>世田谷第11団</option><option value='世田谷第12団'>世田谷第12団</option><option value='世田谷第14団'>世田谷第14団</option><option value='世田谷第15団'>世田谷第15団</option><option value='世田谷第16団'>世田谷第16団</option><option value='世田谷第19団'>世田谷第19団</option><option value='世田谷第20団'>世田谷第20団</option><option value='世田谷第22団'>世田谷第22団</option><option value='世田谷第23団'>世田谷第23団</option><option value='世田谷第24団'>世田谷第24団</option><option value='世田谷第25団'>世田谷第25団</option>";
-      } else if (selectedValue === "あすなろ") {
-        selectDan.innerHTML = "<option value='中野第3団'>中野第3団</option><option value='中野第5団'>中野第5団</option><option value='中野第8団'>中野第8団</option><option value='中野第11団'>中野第11団</option><option value='杉並第2団'>杉並第2団</option><option value='杉並第3団'>杉並第3団</option><option value='杉並第4団'>杉並第4団</option><option value='杉並第5団'>杉並第5団</option><option value='杉並第6団'>杉並第6団</option><option value='杉並第9団'>杉並第9団</option><option value='杉並第11団'>杉並第11団</option><option value='杉並第12団'>杉並第12団</option><option value='杉並第13団'>杉並第13団</option>";
-      } else if (selectedValue === "練馬") {
-        selectDan.innerHTML = "<option value='練馬第1団'>練馬第1団</option><option value='練馬第3団'>練馬第3団</option><option value='練馬第4団'>練馬第4団</option><option value='練馬第5団'>練馬第5団</option><option value='練馬第6団'>練馬第6団</option><option value='練馬第7団'>練馬第7団</option><option value='練馬第8団'>練馬第8団</option><option value='練馬第9団'>練馬第9団</option><option value='練馬第10団'>練馬第10団</option><option value='練馬第13団'>練馬第13団</option><option value='練馬第15団'>練馬第15団</option><option value='練馬第16団'>練馬第16団</option><option value='練馬第17団'>練馬第17団</option>";
-      } else if (selectedValue === "多摩西") {
-        selectDan.innerHTML = "<option value='青梅第2団'>青梅第2団</option><option value='青梅第4団'>青梅第4団</option><option value='福生第1団'>福生第1団</option><option value='福生第2団'>福生第2団</option><option value='あきる野第1団'>あきる野第1団</option><option value='瑞穂第1団'>瑞穂第1団</option><option value='羽村第1団'>羽村第1団</option><option value='八王子第1団'>八王子第1団</option><option value='八王子第2団'>八王子第2団</option><option value='八王子第5団'>八王子第5団</option><option value='八王子第6団'>八王子第6団</option><option value='八王子第7団'>八王子第7団</option><option value='八王子第11団'>八王子第11団</option><option value='八王子第12団'>八王子第12団</option><option value='八王子第13団'>八王子第13団</option>";
-      } else if (selectedValue === "新多磨") {
-        selectDan.innerHTML = "<option value='立川第3団'>立川第3団</option><option value='立川第4団'>立川第4団</option><option value='立川第6団'>立川第6団</option><option value='立川第10団'>立川第10団</option><option value='国立第1団'>国立第1団</option><option value='国立第2団'>国立第2団</option><option value='昭島第1団'>昭島第1団</option><option value='日野第2団'>日野第2団</option><option value='日野第4団'>日野第4団</option><option value='多摩第1団'>多摩第1団</option><option value='多摩第3団'>多摩第3団</option><option value='稲城第1団'>稲城第1団</option>";
-      } else if (selectedValue === "南武蔵野") {
-        selectDan.innerHTML = "<option value='武蔵野第1団'>武蔵野第1団</option><option value='三鷹第1団'>三鷹第1団</option><option value='三鷹第2団'>三鷹第2団</option><option value='三鷹第3団'>三鷹第3団</option><option value='小金井第1団'>小金井第1団</option><option value='小金井第2団'>小金井第2団</option><option value='小金井第4団'>小金井第4団</option><option value='国分寺第1団'>国分寺第1団</option><option value='国分寺第2団'>国分寺第2団</option><option value='調布第2団'>調布第2団</option><option value='調布第3団'>調布第3団</option><option value='調布第6団'>調布第6団</option><option value='調布第9団'>調布第9団</option><option value='調布第10団'>調布第10団</option><option value='狛江第1団'>狛江第1団</option><option value='狛江第3団'>狛江第3団</option><option value='狛江第5団'>狛江第5団</option><option value='府中第1団'>府中第1団</option><option value='府中第2団'>府中第2団</option><option value='府中第6団'>府中第6団</option>";
-      } else if (selectedValue === "町田") {
-        selectDan.innerHTML = "<option value='町田第1団'>町田第1団</option><option value='町田第3団'>町田第3団</option><option value='町田第6団'>町田第6団</option><option value='町田第9団'>町田第9団</option><option value='町田第13団'>町田第13団</option><option value='町田第15団'>町田第15団</option><option value='町田第16団'>町田第16団</option><option value='町田第18団'>町田第18団</option><option value='町田第20団'>町田第20団</option>";
-      } else if (selectedValue === "北多摩") {
-        selectDan.innerHTML = "<option value='東大和第1団'>東大和第1団</option><option value='東大和第2団'>東大和第2団</option><option value='東村山第6団'>東村山第6団</option><option value='小平第1団'>小平第1団</option><option value='小平第2団'>小平第2団</option><option value='小平第3団'>小平第3団</option><option value='小平第4団'>小平第4団</option><option value='小平第5団'>小平第5団</option><option value='清瀬第2団'>清瀬第2団</option><option value='東久留米第1団'>東久留米第1団</option><option value='東久留米第2団'>東久留米第2団</option><option value='西東京第1団'>西東京第1団</option><option value='西東京第2団'>西東京第2団</option>";
-      }
+        // 選択された値に応じてセレクトボックスBのoptionを追加
+        if (selectedValue === "大都心") {
+            selectDan.innerHTML =
+                "<option value='千代田第1団'>千代田第1団</option><option value='千代田第6団'>千代田第6団</option><option value='千代田第7団'>千代田第7団</option><option value='千代田第8団'>千代田第8団</option><option value='千代田第9団'>千代田第9団</option><option value='千代田第10団'>千代田第10団</option><option value='千代田第11団'>千代田第11団</option><option value='中央第5団'>中央第5団</option><option value='中央第6団'>中央第6団</option><option value='中央第7団'>中央第7団</option><option value='中央第10団'>中央第10団</option><option value='中央第11団'>中央第11団</option><option value='港第1団'>港第1団</option><option value='港第3団'>港第3団</option><option value='港第5団'>港第5団</option><option value='港第12団'>港第12団</option><option value='港第14団'>港第14団</option><option value='港第15団'>港第15団</option><option value='港第16団'>港第16団</option><option value='港第18団'>港第18団</option><option value='新宿第1団'>新宿第1団</option><option value='新宿第2団'>新宿第2団</option><option value='新宿第4団'>新宿第4団</option><option value='新宿第8団'>新宿第8団</option><option value='新宿第9団'>新宿第9団</option><option value='新宿第17団'>新宿第17団</option><option value='新宿第18団'>新宿第18団</option>";
+        } else if (selectedValue === "さくら") {
+            selectDan.innerHTML =
+                "<option value='台東第1団'>台東第1団</option><option value='台東第2団'>台東第2団</option><option value='台東第3団'>台東第3団</option><option value='台東第4団'>台東第4団</option><option value='台東第7団'>台東第7団</option><option value='文京第1団'>文京第1団</option><option value='文京第2団'>文京第2団</option><option value='文京第3団'>文京第3団</option><option value='文京第5団'>文京第5団</option><option value='文京第6団'>文京第6団</option><option value='荒川第1団'>荒川第1団</option><option value='荒川第2団'>荒川第2団</option><option value='荒川第6団'>荒川第6団</option><option value='足立第3団'>足立第3団</option><option value='足立第4団'>足立第4団</option><option value='足立第5団'>足立第5団</option><option value='足立第14団'>足立第14団</option>";
+        } else if (selectedValue === "城東") {
+            selectDan.innerHTML =
+                "<option value='江戸川第1団'>江戸川第1団</option><option value='江戸川第2団'>江戸川第2団</option><option value='江戸川第3団'>江戸川第3団</option><option value='江戸川第5団'>江戸川第5団</option><option value='江戸川第7団'>江戸川第7団</option><option value='葛飾第2団'>葛飾第2団</option><option value='葛飾第3団'>葛飾第3団</option><option value='葛飾第4団'>葛飾第4団</option><option value='葛飾第5団'>葛飾第5団</option><option value='葛飾第9団'>葛飾第9団</option><option value='江東第2団'>江東第2団</option><option value='江東第3団'>江東第3団</option><option value='江東第6団'>江東第6団</option><option value='墨田第3団'>墨田第3団</option><option value='墨田第4団'>墨田第3団</option><option value='墨田第8団'>墨田第3団</option><option value='墨田第9団'>墨田第3団</option>";
+        } else if (selectedValue === "山手") {
+            selectDan.innerHTML =
+                "<option value='目黒第1団'>目黒第1団</option><option value='目黒第3団'>目黒第3団</option><option value='目黒第6団'>目黒第6団</option><option value='目黒第7団'>目黒第7団</option><option value='目黒第8団'>目黒第8団</option><option value='目黒第9団'>目黒第9団</option><option value='目黒第15団'>目黒第15団</option><option value='渋谷第2団'>渋谷第2団</option><option value='渋谷第5団'>渋谷第5団</option><option value='渋谷第6団'>渋谷第6団</option><option value='渋谷第9団'>渋谷第9団</option><option value='渋谷第10団'>渋谷第10団</option><option value='渋谷第14団'>渋谷第14団</option>";
+        } else if (selectedValue === "つばさ") {
+            selectDan.innerHTML =
+                "<option value='品川第1団'>品川第1団</option><option value='品川第2団'>品川第2団</option><option value='品川第6団'>品川第6団</option><option value='品川第8団'>品川第8団</option><option value='大田第1団'>大田第1団</option><option value='大田第2団'>大田第2団</option><option value='大田第3団'>大田第3団</option><option value='大田第4団'>大田第4団</option><option value='大田第6団'>大田第6団</option><option value='大田第7団'>大田第7団</option><option value='大田第11団'>大田第11団</option><option value='大田第14団'>大田第14団</option><option value='大田第15団'>大田第15団</option><option value='大田第17団'>大田第17団</option><option value='大田第18団'>大田第18団</option><option value='大田第19団'>大田第19団</option>";
+        } else if (selectedValue === "城北") {
+            selectDan.innerHTML =
+                "<option value='豊島第1団'>豊島第1団</option><option value='豊島第4団'>豊島第4団</option><option value='豊島第6団'>豊島第6団</option><option value='豊島第7団'>豊島第7団</option><option value='豊島第8団'>豊島第8団</option><option value='豊島第9団'>豊島第9団</option><option value='豊島第17団'>豊島第17団</option><option value='北第1団'>北第1団</option><option value='北第3団'>北第3団</option><option value='北第5団'>北第5団</option><option value='北第8団'>北第8団</option><option value='北第11団'>北第11団</option><option value='板橋第2団'>板橋第2団</option><option value='板橋第3団'>板橋第3団</option><option value='板橋第4団'>板橋第4団</option><option value='板橋第5団'>板橋第5団</option><option value='板橋第7団'>板橋第7団</option><option value='板橋第9団'>板橋第9団</option><option value='板橋第10団'>板橋第10団</option><option value='板橋第11団'>板橋第11団</option><option value='板橋第15団'>板橋第15団</option>";
+        } else if (selectedValue === "世田谷") {
+            selectDan.innerHTML =
+                "<option value='世田谷第1団'>世田谷第1団</option><option value='世田谷第2団'>世田谷第2団</option><option value='世田谷第3団'>世田谷第3団</option><option value='世田谷第4団'>世田谷第4団</option><option value='世田谷第5団'>世田谷第5団</option><option value='世田谷第6団'>世田谷第6団</option><option value='世田谷第7団'>世田谷第7団</option><option value='世田谷第8団'>世田谷第8団</option><option value='世田谷第9団'>世田谷第9団</option><option value='世田谷第10団'>世田谷第10団</option><option value='世田谷第11団'>世田谷第11団</option><option value='世田谷第12団'>世田谷第12団</option><option value='世田谷第14団'>世田谷第14団</option><option value='世田谷第15団'>世田谷第15団</option><option value='世田谷第16団'>世田谷第16団</option><option value='世田谷第19団'>世田谷第19団</option><option value='世田谷第20団'>世田谷第20団</option><option value='世田谷第22団'>世田谷第22団</option><option value='世田谷第23団'>世田谷第23団</option><option value='世田谷第24団'>世田谷第24団</option><option value='世田谷第25団'>世田谷第25団</option>";
+        } else if (selectedValue === "あすなろ") {
+            selectDan.innerHTML =
+                "<option value='中野第3団'>中野第3団</option><option value='中野第5団'>中野第5団</option><option value='中野第8団'>中野第8団</option><option value='中野第11団'>中野第11団</option><option value='杉並第2団'>杉並第2団</option><option value='杉並第3団'>杉並第3団</option><option value='杉並第4団'>杉並第4団</option><option value='杉並第5団'>杉並第5団</option><option value='杉並第6団'>杉並第6団</option><option value='杉並第9団'>杉並第9団</option><option value='杉並第11団'>杉並第11団</option><option value='杉並第12団'>杉並第12団</option><option value='杉並第13団'>杉並第13団</option>";
+        } else if (selectedValue === "練馬") {
+            selectDan.innerHTML =
+                "<option value='練馬第1団'>練馬第1団</option><option value='練馬第3団'>練馬第3団</option><option value='練馬第4団'>練馬第4団</option><option value='練馬第5団'>練馬第5団</option><option value='練馬第6団'>練馬第6団</option><option value='練馬第7団'>練馬第7団</option><option value='練馬第8団'>練馬第8団</option><option value='練馬第9団'>練馬第9団</option><option value='練馬第10団'>練馬第10団</option><option value='練馬第13団'>練馬第13団</option><option value='練馬第15団'>練馬第15団</option><option value='練馬第16団'>練馬第16団</option><option value='練馬第17団'>練馬第17団</option>";
+        } else if (selectedValue === "多摩西") {
+            selectDan.innerHTML =
+                "<option value='青梅第2団'>青梅第2団</option><option value='青梅第4団'>青梅第4団</option><option value='福生第1団'>福生第1団</option><option value='福生第2団'>福生第2団</option><option value='あきる野第1団'>あきる野第1団</option><option value='瑞穂第1団'>瑞穂第1団</option><option value='羽村第1団'>羽村第1団</option><option value='八王子第1団'>八王子第1団</option><option value='八王子第2団'>八王子第2団</option><option value='八王子第5団'>八王子第5団</option><option value='八王子第6団'>八王子第6団</option><option value='八王子第7団'>八王子第7団</option><option value='八王子第11団'>八王子第11団</option><option value='八王子第12団'>八王子第12団</option><option value='八王子第13団'>八王子第13団</option>";
+        } else if (selectedValue === "新多磨") {
+            selectDan.innerHTML =
+                "<option value='立川第3団'>立川第3団</option><option value='立川第4団'>立川第4団</option><option value='立川第6団'>立川第6団</option><option value='立川第10団'>立川第10団</option><option value='国立第1団'>国立第1団</option><option value='国立第2団'>国立第2団</option><option value='昭島第1団'>昭島第1団</option><option value='日野第2団'>日野第2団</option><option value='日野第4団'>日野第4団</option><option value='多摩第1団'>多摩第1団</option><option value='多摩第3団'>多摩第3団</option><option value='稲城第1団'>稲城第1団</option>";
+        } else if (selectedValue === "南武蔵野") {
+            selectDan.innerHTML =
+                "<option value='武蔵野第1団'>武蔵野第1団</option><option value='三鷹第1団'>三鷹第1団</option><option value='三鷹第2団'>三鷹第2団</option><option value='三鷹第3団'>三鷹第3団</option><option value='小金井第1団'>小金井第1団</option><option value='小金井第2団'>小金井第2団</option><option value='小金井第4団'>小金井第4団</option><option value='国分寺第1団'>国分寺第1団</option><option value='国分寺第2団'>国分寺第2団</option><option value='調布第2団'>調布第2団</option><option value='調布第3団'>調布第3団</option><option value='調布第6団'>調布第6団</option><option value='調布第9団'>調布第9団</option><option value='調布第10団'>調布第10団</option><option value='狛江第1団'>狛江第1団</option><option value='狛江第3団'>狛江第3団</option><option value='狛江第5団'>狛江第5団</option><option value='府中第1団'>府中第1団</option><option value='府中第2団'>府中第2団</option><option value='府中第6団'>府中第6団</option>";
+        } else if (selectedValue === "町田") {
+            selectDan.innerHTML =
+                "<option value='町田第1団'>町田第1団</option><option value='町田第3団'>町田第3団</option><option value='町田第6団'>町田第6団</option><option value='町田第9団'>町田第9団</option><option value='町田第13団'>町田第13団</option><option value='町田第15団'>町田第15団</option><option value='町田第16団'>町田第16団</option><option value='町田第18団'>町田第18団</option><option value='町田第20団'>町田第20団</option>";
+        } else if (selectedValue === "北多摩") {
+            selectDan.innerHTML =
+                "<option value='東大和第1団'>東大和第1団</option><option value='東大和第2団'>東大和第2団</option><option value='東村山第6団'>東村山第6団</option><option value='小平第1団'>小平第1団</option><option value='小平第2団'>小平第2団</option><option value='小平第3団'>小平第3団</option><option value='小平第4団'>小平第4団</option><option value='小平第5団'>小平第5団</option><option value='清瀬第2団'>清瀬第2団</option><option value='東久留米第1団'>東久留米第1団</option><option value='東久留米第2団'>東久留米第2団</option><option value='西東京第1団'>西東京第1団</option><option value='西東京第2団'>西東京第2団</option>";
+        }
     }
 
     // ページ読み込み時の処理
     window.onload = function() {
-      // 保存されているデータからセレクトボックスAとBの選択を自動で設定
-      var savedData = "{{ $entryInfo->district }}"; // 保存されているデータ（例として "option2" を指定）
-      var selectDistrict = document.getElementById("selectDistrict");
-      var selectDan = document.getElementById("selectDan");
+        // 保存されているデータからセレクトボックスAとBの選択を自動で設定
+        var savedData = "{{ $entryInfo->district }}"; // 保存されているデータ（例として "option2" を指定）
+        var selectDistrict = document.getElementById("selectDistrict");
+        var selectDan = document.getElementById("selectDan");
 
-      selectDistrict.value = savedData;
-      updateDan(); // セレクトボックスBのoptionを更新
-      selectDan.value = "{{ $entryInfo->dan }}"; // 保存されているデータに応じたセレクトボックスBの選択を設定
+        selectDistrict.value = savedData;
+        updateDan(); // セレクトボックスBのoptionを更新
+        selectDan.value = "{{ $entryInfo->dan }}"; // 保存されているデータに応じたセレクトボックスBの選択を設定
     };
-  </script>
+</script>
