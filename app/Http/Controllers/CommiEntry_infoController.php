@@ -174,8 +174,9 @@ class CommiEntry_infoController extends AppBaseController
         $entryInfo = User::where('id', $id)->with('entry_info')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
+        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->entry_info->district . ' ' . $entryInfo->name . '.pdf';
         // $pdf->setPaper('A4');
-        return $pdf->download();
+        return $pdf->download($filename);
         // return $pdf->stream();
     }
 
