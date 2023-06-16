@@ -14,9 +14,9 @@
             </td>
         </tr>
         <tr>
-            <th>SC期数</th>
+            <th>スカウトコース期数</th>
             <td>
-                @if ($entryInfo->sc_number)
+                @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
                     スカウトコース{{ $entryInfo->sc_number }}期
                 @elseif($entryInfo->sc_number_done)
                     スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
@@ -112,6 +112,18 @@
 
             </td>
         </tr>
+        @unless ($entryInfo->sc_number == 'done')
+            <tr>
+                <th>スカウトコース参加費</th>
+                <td>
+                    @if ($entryInfo->sc_fee_checked_at == null)
+                        <span class="uk-text-warning">未確認</span>
+                    @elseif($entryInfo->sc_fee_checked_at)
+                        <span class="uk-text-success">納入済み</span>
+                    @endif
+                </td>
+            </tr>
+        @endunless
         <tr>
             <th>操作</th>
             <td>
