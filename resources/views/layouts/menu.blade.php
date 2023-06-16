@@ -9,17 +9,17 @@
             </a>
         </li>
 
-        <p class="uk-text-warning">写真アップロード</p>
+        {{-- <p class="uk-text-warning">写真アップロード</p>
         <li class="nav-item">
             <a href="{{ route('face_upload.index') }}" class="nav-link {{ Request::is('face_upload*') ? 'active' : '' }}">
                 <p>顔写真</p>
             </a>
-        </li>
+        </li> --}}
     @endunless
 
     {{-- 管理者 --}}
     @if (Auth::user()->is_admin)
-        <h3 class="uk-text-warning">管理者メニュー</h3>
+        <h3 class="uk-text-warning">管理者</h3>
         <li class="nav-item">
             <a href="{{ url('/home') }}" class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
                 <p>HOME</p>
@@ -63,7 +63,7 @@
                 </a>
             </li>
 
-            <h3 class="uk-text-warning">事務局メニュー</h3>
+            <h3 class="uk-text-warning">事務局</h3>
             <li class="nav-item">
                 <a href="{{ route('fee_check') }}?cat=sc" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
                     <p>参加費確認(SC)</p>
