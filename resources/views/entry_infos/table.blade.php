@@ -125,6 +125,16 @@
             </tr>
         @endunless
         <tr>
+            <th>課程別研修参加費</th>
+            <td>
+                @if ($entryInfo->div_fee_checked_at == null)
+                    <span class="uk-text-warning">未確認</span>
+                @elseif($entryInfo->div_fee_checked_at)
+                    <span class="uk-text-success">納入済み</span>
+                @endif
+            </td>
+        </tr>
+        <tr>
             <th>操作</th>
             <td>
                 <div class='btn-group'>
