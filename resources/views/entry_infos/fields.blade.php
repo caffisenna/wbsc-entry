@@ -449,19 +449,6 @@
 
     </table>
 </div>
-<script>
-    // function toggleTextbox() {
-    //     var selectbox = document.getElementById("sc_select");
-    //     var textboxContainer = document.getElementById("textboxContainer");
-    //     var selectedOption = selectbox.options[selectbox.selectedIndex].value;
-
-    //     if (selectedOption === "done") {
-    //         textboxContainer.style.display = "block";
-    //     } else {
-    //         textboxContainer.style.display = "none";
-    //     }
-    // }
-</script>
 
 <script>
     // ページ読み込み時に初期値をチェック
