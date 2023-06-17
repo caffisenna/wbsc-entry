@@ -2,15 +2,15 @@
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
             <th>スカウトコースの期数</th>
-            @if ($entryInfo->entry_info->sc_number != 'done' && $entryInfo->entry_info->sc_number_done != '')
-                <td>{{ $entryInfo->entry_info->sc_number }}</td>
+            @if ($entryInfo->entry_info->sc_number == 'done')
+                <td><span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}(修了済み)</span></td>
             @else
-                <td>{{ $entryInfo->entry_info->sc_number_done }}</td>
+                <td>{{ $entryInfo->entry_info->sc_number }}期</td>
             @endif
         </tr>
         <tr>
             <th>課程別研修の回数</th>
-            <td>{{ $entryInfo->entry_info->division_number }}</td>
+            <td>{{ $entryInfo->entry_info->division_number }}回</td>
         </tr>
         <tr>
             <th>お名前</th>
