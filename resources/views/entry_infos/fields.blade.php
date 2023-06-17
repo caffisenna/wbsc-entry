@@ -13,7 +13,11 @@
                                 old('sc_number') == $courselist->number) selected @endif>
                             {{ $courselist->number }}期</option>
                     @endforeach
-                    <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
+                    @isset($entryInfo->sc_number)
+                        <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
+                    @else
+                        <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
+                    @endisset
                 </select>
                 @error('sc_number')
                     <div class="error text-danger">{{ $message }}</div>
@@ -21,9 +25,14 @@
                 {{-- 既修了者入力ボックス --}}
                 <div id="textboxContainer" style="display:none;">
                     <label for="myTextbox">修了コース名を入力してください</label>
-                    <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
-                        placeholder="例: 東京15期"
-                        value="@if ($entryInfo->sc_number_done){{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }}@endif">
+                    @isset($entryInfo->sc_number_done)
+                        <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
+                            placeholder="例: 東京15期"
+                            value="@if ($entryInfo->sc_number_done) {{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }} @endif">
+                    @else
+                        <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
+                            placeholder="例: 東京15期" value="{{ old('sc_number_done') }}">
+                    @endisset
                     @error('sc_number_done')
                         <div class="error text-danger">{{ $message }}</div>
                     @enderror
@@ -542,12 +551,12 @@
     // ページ読み込み時の処理
     window.onload = function() {
         // 保存されているデータからセレクトボックスAとBの選択を自動で設定
-        var savedData = "{{ $entryInfo->district }}"; // 保存されているデータ（例として "option2" を指定）
+        var savedData = "{{ @$entryInfo->district }}";
         var selectDistrict = document.getElementById("selectDistrict");
         var selectDan = document.getElementById("selectDan");
 
         selectDistrict.value = savedData;
         updateDan(); // セレクトボックスBのoptionを更新
-        selectDan.value = "{{ $entryInfo->dan }}"; // 保存されているデータに応じたセレクトボックスBの選択を設定
+        selectDan.value = "{{ @$entryInfo->dan }}"; // 保存されているデータに応じたセレクトボックスBの選択を設定
     };
 </script>
