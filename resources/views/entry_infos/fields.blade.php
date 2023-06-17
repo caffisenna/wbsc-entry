@@ -104,10 +104,10 @@
             </td>
         </tr>
         <tr>
-            <td>登録番号<br><span class="uk-text-danger uk-text-small">2023年度より登録番号が変わっています</td>
+            <td>登録番号<br><span class="uk-text-danger uk-text-small">2023年度より登録番号が11桁に変わっています</td>
             <td>{!! Form::text('bs_id', null, [
-                'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '登録証を確認し11桁の登録番号を入力してください',
+                'class' => 'form-control uk-form-width-large',
+                'placeholder' => '団に確認し11桁の登録番号を入力してください',
             ]) !!}
                 @error('bs_id')
                     <div class="error text-danger">{{ $message }}</div>
@@ -273,7 +273,7 @@
 
         <tr>
             <td>ケータイ</td>
-            <td>{!! Form::text('cell_phone', null, ['class' => 'form-control uk-form-width-medium']) !!}
+            <td>{!! Form::text('cell_phone', null, ['class' => 'form-control uk-form-width-medium', 'placeholder'=>'ハイフン不要']) !!}
                 @error('cell_phone')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -282,7 +282,7 @@
 
         <tr>
             <td>郵便番号</td>
-            <td>{!! Form::text('zip', null, ['class' => 'form-control uk-form-width-medium']) !!}
+            <td>{!! Form::text('zip', null, ['class' => 'form-control uk-form-width-medium', 'placeholder'=>'7桁の整数で入力']) !!}
                 @error('zip')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -291,7 +291,7 @@
 
         <tr>
             <td>住所</td>
-            <td>{!! Form::text('address', null, ['class' => 'form-control']) !!}
+            <td>{!! Form::text('address', null, ['class' => 'form-control', 'placeholder'=>'都道府県から番地まで入力']) !!}
                 @error('address')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -318,7 +318,7 @@
 
         <tr>
             <td>緊急連絡先 電話</td>
-            <td>{!! Form::text('emer_phone', null, ['class' => 'form-control uk-form-width-medium']) !!}
+            <td>{!! Form::text('emer_phone', null, ['class' => 'form-control uk-form-width-medium', 'placeholder'=>'日中連絡の取れるケータイなど']) !!}
                 @error('emer_phone')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -339,7 +339,7 @@
             <td>スカウトキャンプ研修会</td>
             <td>{!! Form::text('scout_camp', null, [
                 'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '修了年月日を入力',
+                'placeholder' => '例:2023/3/6',
             ]) !!}
                 @error('scout_camp')
                     <div class="error text-danger">{{ $message }}</div>
@@ -351,7 +351,7 @@
             <td>ボーイスカウト講習会</td>
             <td>{!! Form::text('bs_basic_course', null, [
                 'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '修了年月日を入力',
+                'placeholder' => '例:2020/5/14',
             ]) !!}
                 @error('bs_basic_course')
                     <div class="error text-danger">{{ $message }}</div>
@@ -382,12 +382,15 @@
                 <td>その他の実修所履歴({{ $i }})</td>
                 <td>課程:{!! Form::text("wb_adv{$i}_category", null, [
                     'class' => 'form-control uk-form-width-medium',
+                    'placeholder'=>'例:ボーイ課程'
                 ]) !!}<br>
                     期数:{!! Form::text("wb_adv{$i}_number", null, [
                         'class' => 'form-control uk-form-width-small',
+                        'placeholder'=>'例:161期'
                     ]) !!}<br>
                     修了年月:{!! Form::text("wb_adv{$i}_date", null, [
                         'class' => 'form-control uk-form-width-medium',
+                        'placeholder'=>'例:2006/11/5'
                     ]) !!}</td>
             </tr>
         @endfor
@@ -425,7 +428,7 @@
                 @enderror
                 {!! Form::textarea('health_illness', null, [
                     'class' => 'form-control',
-                    'placeholder' => '何かある場合はこちらに記入してください',
+                    'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
                 ]) !!}
             </td>
         </tr>
@@ -439,7 +442,7 @@
                 @enderror
                 {!! Form::textarea('health_memo', null, [
                     'class' => 'form-control',
-                    'placeholder' => '何かある場合はこちらに記入してください',
+                    'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
                 ]) !!}
             </td>
         </tr>
