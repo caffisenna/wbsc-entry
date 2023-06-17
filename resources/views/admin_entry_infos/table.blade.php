@@ -98,7 +98,7 @@
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
                             <td>
-                                @if (isset($entryInfo->entry_info->sc_number))
+                                @if ($entryInfo->entry_info->sc_number != 'done')
                                     {{ $entryInfo->entry_info->sc_number }}期<br>
                                     @if ($entryInfo->entry_info->assignment_sc)
                                         <span class=" uk-text-success">課題済</span>
@@ -106,7 +106,8 @@
                                         <span class=" uk-text-danger">未提出</span>
                                     @endif
                                 @elseif($entryInfo->entry_info->sc_number_done)
-                                    {{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)
+                                    <span
+                                        class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)</span>
                                 @endif
                             </td>
                             <td>{{ $entryInfo->entry_info->division_number }}回<br>
