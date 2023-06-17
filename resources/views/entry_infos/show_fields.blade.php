@@ -174,13 +174,13 @@
                 @if (isset($entryInfo->service_hist2_role))
                     役務:{{ $entryInfo->service_hist2_role }} 期間:{{ $entryInfo->service_hist2_term }}<br>
                 @endif
-                @if (isset($entryInfo->service_hist2_role))
+                @if (isset($entryInfo->service_hist3_role))
                     役務:{{ $entryInfo->service_hist3_role }} 期間:{{ $entryInfo->service_hist3_term }}<br>
                 @endif
-                @if (isset($entryInfo->service_hist2_role))
+                @if (isset($entryInfo->service_hist4_role))
                     役務:{{ $entryInfo->service_hist4_role }} 期間:{{ $entryInfo->service_hist4_term }}<br>
                 @endif
-                @if (isset($entryInfo->service_hist2_role))
+                @if (isset($entryInfo->service_hist5_role))
                     役務:{{ $entryInfo->service_hist5_role }} 期間:{{ $entryInfo->service_hist5_term }}
                 @endif
             </td>
