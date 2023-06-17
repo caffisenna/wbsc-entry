@@ -63,16 +63,16 @@
             <td>{{ Auth::user()->name }}</td>
         </tr>
         <tr>
-            <td>Email</td>
-            <td>{{ Auth::user()->email }}</td>
-        </tr>
-        <tr>
             <td>ふりがな</td>
             <td>{!! Form::text('furigana', null, ['class' => 'form-control uk-form-width-medium']) !!}
                 @error('furigana')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ Auth::user()->email }}</td>
         </tr>
         <tr>
             <td>性別</td>
@@ -339,7 +339,7 @@
             <td>スカウトキャンプ研修会</td>
             <td>{!! Form::text('scout_camp', null, [
                 'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '例:2023/3/6',
+                'placeholder' => '例:2023/3/6(修了年月日)',
             ]) !!}
                 @error('scout_camp')
                     <div class="error text-danger">{{ $message }}</div>
@@ -351,7 +351,7 @@
             <td>ボーイスカウト講習会</td>
             <td>{!! Form::text('bs_basic_course', null, [
                 'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '例:2020/5/14',
+                'placeholder' => '例:2020/5/14(修了年月日)',
             ]) !!}
                 @error('bs_basic_course')
                     <div class="error text-danger">{{ $message }}</div>
