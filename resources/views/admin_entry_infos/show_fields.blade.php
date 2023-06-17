@@ -117,23 +117,6 @@
             </tr>
         @endif
 
-        @if (isset($entryInfo->entry_info->wb_basic4_category))
-            <tr>
-                <th>その他の研修所履歴(4)</th>
-                <td>{{ $entryInfo->entry_info->wb_basic4_category }}課程 {{ $entryInfo->entry_info->wb_basic4_number }}期
-                    ({{ $entryInfo->entry_info->wb_basic4_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->entry_info->wb_basic5_category))
-            <tr>
-                <th>その他の研修所履歴(5)</th>
-                <td>{{ $entryInfo->entry_info->wb_basic5_category }}課程 {{ $entryInfo->entry_info->wb_basic5_number }}期
-                    ({{ $entryInfo->entry_info->wb_basic5_date }}修了)</td>
-            </tr>
-        @endif
-
-
         @if (isset($entryInfo->entry_info->wb_adv1_category))
             <tr>
                 <th>その他の実修所履歴(1)</th>
@@ -155,22 +138,6 @@
                 <th>その他の実修所履歴(3)</th>
                 <td>{{ $entryInfo->entry_info->wb_adv3_category }}課程 {{ $entryInfo->entry_info->wb_adv3_number }}期
                     ({{ $entryInfo->entry_info->wb_adv3_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->entry_info->wb_adv4_category))
-            <tr>
-                <th>その他の実修所履歴(4)</th>
-                <td>{{ $entryInfo->entry_info->wb_adv4_category }}課程 {{ $entryInfo->entry_info->wb_adv4_number }}期
-                    ({{ $entryInfo->entry_info->wb_adv4_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->entry_info->wb_adv5_category))
-            <tr>
-                <th>その他の実修所履歴(5)</th>
-                <td>{{ $entryInfo->entry_info->wb_adv5_category }}課程 {{ $entryInfo->entry_info->wb_adv5_number }}期
-                    ({{ $entryInfo->entry_info->wb_adv5_date }}修了)</td>
             </tr>
         @endif
 
@@ -295,6 +262,56 @@
             <tr>
                 <th>副信書</th>
                 <td>{{ $entryInfo->entry_info->additional_comment }}</td>
+            </tr>
+        @endif
+        @if (Auth::user()->is_admin)
+            @unless ($entryInfo->entry_info->sc_number == 'done')
+                <tr>
+                    <th>参加認定(SC)</th>
+                    <td>
+                        @if (empty($entryInfo->entry_info->sc_accepted_at) && empty($entryInfo->entry_info->sc_rejected_at))
+                            <a href="{{ url('admin/accept?cat=sc&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                                class="uk-button uk-button-primary"
+                                onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加を承認しますか?')">スカウトコース<br>参加承認</a>
+                            <a href="{{ url('admin/accept?cat=sc&flag=deny') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                                class="uk-button uk-button-danger"
+                                onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加を否認しますか?')">スカウトコース<br>参加否認</a>
+                        @else
+                            @isset($entryInfo->entry_info->sc_accepted_at)
+                                {{ $entryInfo->entry_info->sc_accepted_at }} 参加承認済み
+                            @endisset
+                            @isset($entryInfo->entry_info->sc_rejected_at)
+                                {{ $entryInfo->entry_info->sc_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
+                            @endisset
+                            <a href="{{ url('admin/accept?cat=sc&revert=true') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                                class="uk-button uk-button-danger"
+                                onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
+                        @endif
+                    </td>
+                </tr>
+            @endunless
+            <tr>
+                <th>参加認定(課程別)</th>
+                <td>
+                    @if (empty($entryInfo->entry_info->div_accepted_at) && empty($entryInfo->entry_info->div_rejected_at))
+                        <a href="{{ url('admin/accept?cat=div&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-primary"
+                            onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加を承認しますか?')">課程別研修参<br>加承認</a>
+                        <a href="{{ url('admin/accept?cat=div&flag=deny') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-danger"
+                            onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加を否認しますか?')">課程別研修<br>参加否認</a>
+                    @else
+                        @isset($entryInfo->entry_info->div_accepted_at)
+                            {{ $entryInfo->entry_info->div_accepted_at }} 参加承認済み
+                        @endisset
+                        @isset($entryInfo->entry_info->div_rejected_at)
+                            {{ $entryInfo->entry_info->div_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
+                        @endisset
+                        <a href="{{ url('admin/accept?cat=div&revert=true') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-danger"
+                            onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
+                    @endif
+                </td>
             </tr>
         @endif
 

@@ -511,4 +511,73 @@ class AdminEntry_infoController extends AppBaseController
 
         return back();
     }
+
+    public function accept(Request $request)
+    {
+        // 取り消し機能
+        $uuid = $request['uuid'];
+        $cat = $request['cat'];
+        $flag = $request['flag'];
+        $revert = $request['revert'];
+        $entryInfo = Entry_info::where('uuid', $uuid)->first();
+
+        switch ($cat) {
+            case 'sc':
+                if ($flag == 'accept') {
+                    $entryInfo->sc_accepted_at = now();
+                } elseif ($flag == 'deny') {
+                    $entryInfo->sc_rejected_at = now();
+                } elseif ($revert == 'true') {
+                    $entryInfo->sc_accepted_at = null;
+                    $entryInfo->sc_rejected_at = null;
+                }
+                break;
+
+            case 'div':
+                if ($flag == 'accept') {
+                    $entryInfo->div_accepted_at = now();
+                } elseif ($flag == 'deny') {
+                    $entryInfo->div_rejected_at = now();
+                } elseif ($revert == 'true') {
+                    $entryInfo->div_accepted_at = null;
+                    $entryInfo->div_rejected_at = null;
+                }
+                break;
+
+            default:
+                # code...
+                break;
+        }
+
+
+        // 保存
+        $entryInfo->save();
+
+        // 氏名取得
+        $user = User::where('id', $entryInfo->user_id)->first();
+
+        if ($cat == 'sc') {
+            $cat_name = 'スカウトコース';
+        } else {
+            $cat_name = '課程別研修';
+        }
+
+        if ($flag == 'accept') {
+            $flag_status = '参加承認';
+        } elseif ($flag == 'reject') {
+            $flag_status = '参加否認';
+        } elseif ($revert == 'true') {
+            $flag_status = '参加承認・否認の初期化';
+        }
+
+        // 確認メール送信
+        // $sendto = $user->email;
+        // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+
+
+        // 名前+flashメッセージを返して戻る
+        Flash::success($user->name . 'さんの ' . $cat_name . 'の' . $flag_status . 'をしました。<br>参加者に案内メールを送信しました。');
+
+        return back();
+    }
 }
