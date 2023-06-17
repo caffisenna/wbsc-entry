@@ -66,7 +66,7 @@
             <tr>
                 <th>スカウトコース</th>
                 <td>
-                    @if ($userinfo->assignment_sc == 'up')
+                    @if (File::exists(storage_path('app/public/assignment/sc/') . $userinfo->uuid . '.pdf'))
                         <a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
                                 uk-icon="file-pdf"></span>スカウトコース課題を確認</a>
                     @else
@@ -77,7 +77,7 @@
             <tr>
                 <th>課程別</th>
                 <td>
-                    @if ($userinfo->assignment_division == 'up')
+                    @if (File::exists(storage_path('app/public/assignment/division/') . $userinfo->uuid . '.pdf'))
                         <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
                                 uk-icon="file-pdf"></span>課程別研修課題を確認</a>
                     @else
