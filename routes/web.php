@@ -68,6 +68,7 @@ Route::middleware('verified')->group(function () {
         Route::get('/ais_check', [App\Http\Controllers\AdminEntry_infoController::class, 'ais_check'])->name('ais_check');
         Route::get('/admin_export', [App\Http\Controllers\AdminEntry_infoController::class, 'admin_export'])->name('admin_export');
         Route::get('/fee_check', [App\Http\Controllers\AdminEntry_infoController::class, 'fee_check'])->name('fee_check');
+        Route::get('/revert', [App\Http\Controllers\AdminEntry_infoController::class, 'revert'])->name('revert'); // 取り消し
         Route::resource('courseLists', App\Http\Controllers\course_listController::class); // スカウトコース設定
         Route::resource('divisionLists', App\Http\Controllers\division_listController::class); // 課程別研修設定
         Route::resource('add_users', App\Http\Controllers\add_userController::class); // ユーザー追加

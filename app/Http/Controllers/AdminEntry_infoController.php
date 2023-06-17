@@ -458,4 +458,57 @@ class AdminEntry_infoController extends AppBaseController
                 ->with('entryinfos', $entryinfos);
         }
     }
+
+    public function revert(Request $request)
+    {
+        // 取り消し機能
+        $uuid = $request['uuid'];
+        $cat = $request['cat'];
+        $entryInfo = Entry_info::where('uuid', $uuid)->first();
+
+        // カテゴリによってnull化
+        switch ($cat) {
+            case 'dan':
+                $entryInfo->gm_checked_at = null;
+                $entryInfo->gm_name = null;
+                $cat_name = '団承認';
+                break;
+            case 'trainer':
+                $entryInfo->trainer_sc_checked_at = null;
+                $entryInfo->trainer_sc_name = null;
+                $entryInfo->trainer_division_checked_at = null;
+                $entryInfo->trainer_division_name = null;
+                $entryInfo->assignment_sc = null;
+                $entryInfo->assignment_division = null;
+                $cat_name = 'トレーナー認定';
+                break;
+            case 'commi':
+                $entryInfo->commi_checked_at = null;
+                $cat_name = '地区コミ確認';
+                break;
+            case 'ais':
+                $entryInfo->ais_checked_at = null;
+                $cat_name = '地区AIS委員長確認';
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        // 保存
+        $entryInfo->save();
+
+        // 氏名取得
+        $user = User::where('id', $entryInfo->user_id)->first();
+
+        // 確認メール送信
+        // $sendto = $user->email;
+        // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+
+
+        // 名前+flashメッセージを返して戻る
+        Flash::success($user->name . 'さんの ' . $cat_name . 'を取り消しました。');
+
+        return back();
+    }
 }

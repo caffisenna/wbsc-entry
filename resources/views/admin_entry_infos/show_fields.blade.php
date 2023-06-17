@@ -1,8 +1,12 @@
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
-            <th>スカウトコースの期数</td>
-            <td>{{ $entryInfo->entry_info->sc_number }}</td>
+            <th>スカウトコースの期数</th>
+            @if ($entryInfo->entry_info->sc_number != 'done' && $entryInfo->entry_info->sc_number_done != '')
+                <td>{{ $entryInfo->entry_info->sc_number }}</td>
+            @else
+                <td>{{ $entryInfo->entry_info->sc_number_done }}</td>
+            @endif
         </tr>
         <tr>
             <th>課程別研修の回数</th>
@@ -203,6 +207,74 @@
             <th>健康上で不安なことなど</th>
             <td>{{ $entryInfo->entry_info->health_memo }}</td>
         </tr>
+        @if (Auth::user()->is_admin)
+            <tr>
+                <th><span class="uk-text-danger">団承認取り消し</th>
+                <td>
+                    @if (isset($entryInfo->entry_info->gm_checked_at))
+                        <a href="{{ url('admin/revert?cat=dan') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-danger"
+                            onclick="return confirm('{{ $entryInfo->name }}さんの団承認を取り消しますか?')">取り消し</a>
+                        {{ $entryInfo->entry_info->gm_checked_at->format('Y-m-d') }}
+                    @else
+                        団委員長 未確認
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th><span class="uk-text-danger">トレーナー認定取り消し</th>
+                <td>
+                    @if ($entryInfo->entry_info->assignment_sc == 'up' || $entryInfo->entry_info->assignment_division == 'up')
+                        <a href="{{ url('admin/revert?cat=trainer') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-danger"
+                            onclick="return confirm('{{ $entryInfo->name }}さんのトレーナー認定を取り消しますか?\n(スカウトコース、課程別両方の認定が取り消されます。)')">取り消し</a>
+                        <ul>
+                            <li>スカウトコース: @if ($entryInfo->entry_info->trainer_sc_name)
+                                    {{ $entryInfo->entry_info->trainer_sc_name }}
+                                @else
+                                    未認定
+                                @endif
+                            </li>
+                            <li>スカウトコース: @if ($entryInfo->entry_info->trainer_division_name)
+                                    {{ $entryInfo->entry_info->trainer_division_name }}
+                                @else
+                                    未認定
+                                @endif
+                            </li>
+                        </ul>
+                    @elseif(empty($entryInfo->entry_info->assignment_sc) && empty($entryInfo->entry_info->assignment_division))
+                        未認定
+                    @endif
+
+                </td>
+            </tr>
+            <tr>
+                <th><span class="uk-text-danger">地区コミ認定取り消し</th>
+                <td>
+                    @if ($entryInfo->entry_info->commi_checked_at)
+                        <a href="{{ url('admin/revert?cat=commi') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-danger"
+                            onclick="return confirm('{{ $entryInfo->name }}さんの地区コミ確認を取り消しますか?')">取り消し</a>
+                        {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
+                    @else
+                        地区コミ未確認
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th><span class="uk-text-danger">地区AIS確認取り消し</th>
+                <td>
+                    @if (isset($entryInfo->entry_info->ais_checked_at))
+                        <a href="{{ url('admin/revert?cat=ais') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            class="uk-button uk-button-danger"
+                            onclick="return confirm('{{ $entryInfo->name }}さんの地区AIS確認を取り消しますか?')">取り消し</a>
+                        {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}
+                    @else
+                        未認定
+                    @endif
+                </td>
+            </tr>
+        @endif
         <tr>
             <th>団承認URL</th>
             <td>
