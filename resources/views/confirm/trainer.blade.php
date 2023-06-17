@@ -18,7 +18,8 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
-        <p class="uk-text">{{ $userinfo->user->name }}さんの提出課題について、トレーナー認定を依頼します。</p>
+        <p class="uk-text">{{ $userinfo->user->name }}さんの提出課題について、トレーナー認定を依頼します。<br>
+        ページ下部に提出課題と認定ボタンがありますので、認定手続きをお願い致します。</p>
         <h3>参加者情報</h3>
         <table class="uk-table uk-table-divider">
             <tr>
@@ -46,7 +47,11 @@
             <tr>
                 <th>参加コース</th>
                 <td>
-                    スカウトコース {{ $userinfo->sc_number }}期<br>
+                    @if ($userinfo->sc_number == 'done')
+                        <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
+                    @else
+                        スカウトコース {{ $userinfo->sc_number }}期<br>
+                    @endif
                     課程別研修 {{ $userinfo->division_number }}回
                 </td>
             </tr>
@@ -63,7 +68,7 @@
             <tr>
                 <th>スカウトコース</th>
                 @if (isset($userinfo->trainer_sc_checked_at))
-                    <td>認定済み</td>
+                    <td><span class="uk-text-success">認定済み</span></td>
                 @else
                     <td><a href="#modal-confirm-assignment-sc" uk-toggle class="uk-button uk-button-primary">認定する</a></td>
                 @endif
@@ -89,7 +94,7 @@
             <tr>
                 <th>課程別</th>
                 @if (isset($userinfo->trainer_division_checked_at))
-                    <td>認定済み</td>
+                    <td><span class="uk-text-success">認定済み</span></td>
                 @else
                     <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</a>
                     </td>

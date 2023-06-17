@@ -18,7 +18,8 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
-        <p class="uk-text">{{ $userinfo->user->name }}さんについて、参加承認を依頼します。</p>
+        <p class="uk-text">{{ $userinfo->user->name }}さんについて、参加承認依頼をお送りします。<br>
+            内容をご確認いただき、承認操作をしてください。</p>
         @if (empty($userinfo->gm_name))
             <a href="#modal-confirm-gm" uk-toggle class="uk-button uk-button-primary">承認する</a>
         @else
@@ -43,7 +44,7 @@
             </tr>
             <tr>
                 <th>所属</th>
-                <td>{{ $userinfo->district }}地区 {{ $userinfo->dan }}団</td>
+                <td>{{ $userinfo->district }}地区 {{ $userinfo->dan }}</td>
             </tr>
             <tr>
                 <th>役務</th>
@@ -52,7 +53,11 @@
             <tr>
                 <th>参加コース</th>
                 <td>
-                    スカウトコース {{ $userinfo->sc_number }}期<br>
+                    @if ($userinfo->sc_number == 'done')
+                        <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
+                    @else
+                        スカウトコース {{ $userinfo->sc_number }}期<br>
+                    @endif
                     課程別研修 {{ $userinfo->division_number }}回
                 </td>
             </tr>
