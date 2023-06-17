@@ -183,15 +183,15 @@
                     役務:{{ $entryInfo->entry_info->service_hist2_role }}
                     期間:{{ $entryInfo->entry_info->service_hist2_term }}<br>
                 @endif
-                @if (isset($entryInfo->entry_info->service_hist2_role))
+                @if (isset($entryInfo->entry_info->service_hist3_role))
                     役務:{{ $entryInfo->entry_info->service_hist3_role }}
                     期間:{{ $entryInfo->entry_info->service_hist3_term }}<br>
                 @endif
-                @if (isset($entryInfo->entry_info->service_hist2_role))
+                @if (isset($entryInfo->entry_info->service_hist4_role))
                     役務:{{ $entryInfo->entry_info->service_hist4_role }}
                     期間:{{ $entryInfo->entry_info->service_hist4_term }}<br>
                 @endif
-                @if (isset($entryInfo->entry_info->service_hist2_role))
+                @if (isset($entryInfo->entry_info->service_hist5_role))
                     役務:{{ $entryInfo->entry_info->service_hist5_role }}
                     期間:{{ $entryInfo->entry_info->service_hist5_term }}
                 @endif
