@@ -22,13 +22,13 @@
         <h3 class="uk-text-warning">管理者</h3>
         <li class="nav-item">
             <a href="{{ url('/home') }}" class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
-                <p>HOME</p>
+                <p><span uk-icon="users"></span>コース・課程別一覧</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('admin_entryInfos.index') }}"
                 class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
-                <p>申込一覧</p>
+                <p><span uk-icon="table"></span>申込一覧</p>
             </a>
         </li>
 
@@ -36,7 +36,7 @@
         @unless (Auth::user()->is_staff)
             <li class="nav-item">
                 <a href="{{ route('admin_export') }}" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
-                    <p>エクスポート(xlsx)</p>
+                    <p><span uk-icon="pull"></span>エクスポート(xlsx)</p>
                 </a>
             </li>
 
@@ -45,7 +45,7 @@
             <li class="nav-item">
                 <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
                     {{-- <i class="nav-icon fas fa-user"></i> --}}
-                    <p>アカウント作成</p>
+                    <p><span uk-icon="user"></span>アカウント作成</p>
                 </a>
             </li>
 
@@ -53,25 +53,25 @@
             <h3 class="uk-text-warning">コース設定</h3>
             <li class="nav-item">
                 <a href="{{ route('courseLists.index') }}" class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
-                    <p>スカウトコース</p>
+                    <p><span uk-icon="plus-circle"></span>スカウトコース</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('divisionLists.index') }}"
                     class="nav-link {{ Request::is('divisionLists*') ? 'active' : '' }}">
-                    <p>課程別研修</p>
+                    <p><span uk-icon="plus-circle"></span>課程別研修</p>
                 </a>
             </li>
 
             <h3 class="uk-text-warning">事務局</h3>
             <li class="nav-item">
                 <a href="{{ route('fee_check') }}?cat=sc" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
-                    <p>参加費確認(SC)</p>
+                    <p><span uk-icon="cart"></span>参加費確認(SC)</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('fee_check') }}?cat=div" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
-                    <p>参加費確認(課程別)</p>
+                    <p><span uk-icon="cart"></span>参加費確認(課程別)</p>
                 </a>
             </li>
         @endunless
