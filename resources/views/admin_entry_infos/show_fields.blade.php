@@ -258,6 +258,29 @@
                 <span class="uk-text-warning uk-text-small">このURLから課題のトレーナー認定を行うことができます</span>
             </td>
         </tr>
+        <tr>
+            <th>課題認定</th>
+            <td>
+                <ul class="uk-list">
+                    @if ($entryInfo->entry_info->trainer_sc_name)
+                        <li>スカウトコース: {{ $entryInfo->entry_info->trainer_sc_name }}</li>
+                    @endif
+                    @if ($entryInfo->entry_info->trainer_division_name)
+                        <li>課程別: {{ $entryInfo->entry_info->trainer_division_name }}</li>
+                    @endif
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>団承認</th>
+            <td>
+                @if ($entryInfo->entry_info->gm_name)
+                    {{ $entryInfo->entry_info->gm_name }}
+                @else
+                    未承認
+                @endif
+            </td>
+        </tr>
         @if ($entryInfo->entry_info->additional_comment)
             <tr>
                 <th>副信書</th>
