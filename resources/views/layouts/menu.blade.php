@@ -78,7 +78,7 @@
     @endif
 
     {{-- 地区コミ --}}
-    @if (Auth::user()->is_commi)
+    @if (Auth::user()->is_commi && Auth::user()->is_admin == 0)
         <h3 class="uk-text-warning">地区コミ</h3>
         <li class="nav-item">
             <a href="{{ route('commi_entryInfos.index') }}"
