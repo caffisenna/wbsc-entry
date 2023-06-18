@@ -45,6 +45,8 @@ use App\Models\User;
  * @property string $commi_checked_at
  * @property string $ais_checked_at
  * @property string $gm_checked_at
+ * @property string $certification_sc
+ * @property string $certification_div
  */
 class Entry_info extends Model
 {
@@ -117,6 +119,8 @@ class Entry_info extends Model
         'gm_checked_at',
         'commi_checked_at',
         'ais_checked_at',
+        'certification_sc',
+        'certification_div',
     ];
 
     /**

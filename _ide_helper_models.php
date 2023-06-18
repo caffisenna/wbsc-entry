@@ -49,6 +49,8 @@ namespace App\Models{
  * @property string $commi_checked_at
  * @property string $ais_checked_at
  * @property string $gm_checked_at
+ * @property string $certification_sc
+ * @property string $certification_div
  * @property int $id
  * @property int|null $user_id
  * @property string $division_number
@@ -73,6 +75,7 @@ namespace App\Models{
  * @property string|null $service_hist4_term
  * @property string|null $service_hist5_role
  * @property string|null $service_hist5_term
+ * @property string|null $additional_comment
  * @property string|null $assignment_sc
  * @property string|null $assignment_division
  * @property string|null $face_picture
@@ -82,7 +85,12 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $trainer_division_checked_at
  * @property string|null $trainer_division_name
  * @property string|null $gm_name
- * @property string|null $fee_checked_at
+ * @property string|null $sc_accepted_at
+ * @property string|null $sc_rejected_at
+ * @property string|null $div_accepted_at
+ * @property string|null $div_rejected_at
+ * @property string|null $sc_fee_checked_at
+ * @property string|null $div_fee_checked_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -92,6 +100,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereAdditionalComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereAisCheckedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereAssignmentDivision($value)
@@ -100,18 +109,22 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereBsBasicCourse($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereBsId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereCellPhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereCertificationDiv($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereCertificationSc($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereCommiCheckedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDistrict($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDistrictRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDivAcceptedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDivFeeCheckedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDivRejectedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereDivisionNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereEmerName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereEmerPhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereEmerRelation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFacePicture($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFeeCheckedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereFurigana($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereGender($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereGmCheckedAt($value)
@@ -121,8 +134,11 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info wherePrefecture($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info wherePrefectureRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScAcceptedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScFeeCheckedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScNumberDone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScRejectedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScoutCamp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist1Role($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereServiceHist1Term($value)

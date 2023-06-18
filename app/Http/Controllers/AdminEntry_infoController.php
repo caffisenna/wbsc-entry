@@ -98,8 +98,15 @@ class AdminEntry_infoController extends AppBaseController
             }
         }
 
+        if ($request['q']) {
+            $request['cat'] = 'sc';
+        } elseif ($request['div']) {
+            $request['cat'] = 'div';
+        }
+
+
         return view('admin_entry_infos.index')
-            ->with('entryInfos', $entryInfos);
+            ->with('entryInfos', $entryInfos)->with('request', $request);
     }
 
     /**
@@ -577,6 +584,39 @@ class AdminEntry_infoController extends AppBaseController
 
         // 名前+flashメッセージを返して戻る
         Flash::success($user->name . 'さんの ' . $cat_name . 'の' . $flag_status . 'をしました。<br>参加者に案内メールを送信しました。');
+
+        return back();
+    }
+
+    public function certificate(Request $request)
+    {
+        // 修了認定
+        $uuid = $request['uuid'];
+        $cat =  $request['cat'];
+        $status =  $request['status'];
+        $entryInfo = Entry_info::where('uuid', $uuid)->firstorfail();
+
+        switch ($cat) {
+            case 'sc':
+                $entryInfo->certification_sc = $status;
+                break;
+            case 'div':
+                $entryInfo->certification_div = $status;
+                break;
+        }
+
+        $entryInfo->save();
+
+        // 氏名取得
+        $user = User::where('id', $entryInfo->user_id)->first();
+
+        // 確認メール送信
+        // $sendto = $user->email;
+        // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+
+
+        // 名前+flashメッセージを返して戻る
+        Flash::success($user->name . 'さん 参加認定をしました');
 
         return back();
     }

@@ -86,6 +86,8 @@ class CreateEntryInfosTable extends Migration
             $table->date('sc_rejected_at')->nullable();                  // AIS委員委員長の参加認定
             $table->date('div_accepted_at')->nullable();                  // AIS委員委員長の参加認定
             $table->date('div_rejected_at')->nullable();                  // AIS委員委員長の参加認定
+            $table->string('certification_sc', 5)->nullable();           // 修了認定ステータス pass or ng
+            $table->string('certification_div', 5)->nullable();          // 修了認定ステータス pass or ng
             $table->date('sc_fee_checked_at')->nullable();                     // SC参加費確認
             $table->date('div_fee_checked_at')->nullable();                    // 課程別参加費確認
             $table->timestamps();
