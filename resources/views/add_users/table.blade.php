@@ -12,6 +12,7 @@
             </thead>
             <tbody>
                 @foreach ($addUsers as $addUser)
+                @unless($addUser->email == 'caffi.senna@gmail.com')
                     <tr>
                         <td>{{ $addUser->name }}</td>
                         <td>{{ $addUser->email }}</td>
@@ -32,6 +33,7 @@
                             {!! Form::close() !!}
                         </td>
                     </tr>
+                    @endunless
                 @endforeach
             </tbody>
         </table>
