@@ -22,7 +22,7 @@
         <h3 class="uk-text-warning">管理者</h3>
         <li class="nav-item">
             <a href="{{ url('/home') }}" class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
-                <p><span uk-icon="users"></span>コース・課程別一覧</p>
+                <p><span uk-icon="list"></span>コース・課程別一覧</p>
             </a>
         </li>
         <li class="nav-item">
@@ -45,7 +45,7 @@
             <li class="nav-item">
                 <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
                     {{-- <i class="nav-icon fas fa-user"></i> --}}
-                    <p><span uk-icon="user"></span>アカウント作成</p>
+                    <p><span uk-icon="users"></span>アカウント作成</p>
                 </a>
             </li>
 
@@ -53,13 +53,13 @@
             <h3 class="uk-text-warning">コース設定</h3>
             <li class="nav-item">
                 <a href="{{ route('courseLists.index') }}" class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
-                    <p><span uk-icon="plus-circle"></span>スカウトコース</p>
+                    <p><span uk-icon="cog"></span>スカウトコース</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('divisionLists.index') }}"
                     class="nav-link {{ Request::is('divisionLists*') ? 'active' : '' }}">
-                    <p><span uk-icon="plus-circle"></span>課程別研修</p>
+                    <p><span uk-icon="cog"></span>課程別研修</p>
                 </a>
             </li>
 
