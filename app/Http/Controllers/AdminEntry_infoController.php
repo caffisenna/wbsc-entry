@@ -590,34 +590,45 @@ class AdminEntry_infoController extends AppBaseController
 
     public function certificate(Request $request)
     {
-        // 修了認定
-        $uuid = $request['uuid'];
-        $cat =  $request['cat'];
-        $status =  $request['status'];
-        $entryInfo = Entry_info::where('uuid', $uuid)->firstorfail();
+        if ($request['list'] == 'all') {
 
-        switch ($cat) {
-            case 'sc':
-                $entryInfo->certification_sc = $status;
-                break;
-            case 'div':
-                $entryInfo->certification_div = $status;
-                break;
+            $count = Entry_info::select('sc_number')->selectRaw('count(user_id) as count_sc_number')->groupBy('sc_number')->get();
+            $count = $count->sortBy('sc_number'); // 期数毎にソート
+
+            $div_count = Entry_info::select('division_number')->selectRaw('count(user_id) as count_division_number')->groupBy('division_number')->get();
+            $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
+
+            return view('certificate')->with('count', $count)->with('div_count', $div_count);
+        } else {
+            // 修了認定
+            $uuid = $request['uuid'];
+            $cat =  $request['cat'];
+            $status =  $request['status'];
+            $entryInfo = Entry_info::where('uuid', $uuid)->firstorfail();
+
+            switch ($cat) {
+                case 'sc':
+                    $entryInfo->certification_sc = $status;
+                    break;
+                case 'div':
+                    $entryInfo->certification_div = $status;
+                    break;
+            }
+
+            $entryInfo->save();
+
+            // 氏名取得
+            $user = User::where('id', $entryInfo->user_id)->first();
+
+            // 確認メール送信
+            // $sendto = $user->email;
+            // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+
+
+            // 名前+flashメッセージを返して戻る
+            Flash::success($user->name . 'さん 参加認定をしました');
+
+            return back();
         }
-
-        $entryInfo->save();
-
-        // 氏名取得
-        $user = User::where('id', $entryInfo->user_id)->first();
-
-        // 確認メール送信
-        // $sendto = $user->email;
-        // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
-
-
-        // 名前+flashメッセージを返して戻る
-        Flash::success($user->name . 'さん 参加認定をしました');
-
-        return back();
     }
 }

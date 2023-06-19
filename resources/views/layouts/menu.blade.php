@@ -35,12 +35,17 @@
         {{-- 地区AIS委員はエクスポートさせない --}}
         @unless (Auth::user()->is_staff)
             <li class="nav-item">
+                <a href="{{ url('/admin/certificate') }}?list=all"
+                    class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
+                    <p><span uk-icon="bolt"></span>修了認定</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="{{ route('admin_export') }}" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
                     <p><span uk-icon="pull"></span>エクスポート(xlsx)</p>
                 </a>
             </li>
-
-
 
             <li class="nav-item">
                 <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
@@ -48,7 +53,6 @@
                     <p><span uk-icon="users"></span>アカウント作成</p>
                 </a>
             </li>
-
 
             <h3 class="uk-text-warning">コース設定</h3>
             <li class="nav-item">

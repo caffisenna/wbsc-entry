@@ -16,7 +16,6 @@
                         <th>一覧DL</th>
                         <th>申込書DL</th>
                         <th>課題DL</th>
-                        <th>修了認定</th>
                     </tr>
                     @foreach ($count as $val)
                         @if (isset($val->sc_number))
@@ -36,9 +35,6 @@
                                     <td><a href="{{ url('/admin/multi_pdf?q=') . $val->sc_number . '&assignment=true&cat=sc' }}"
                                             class="uk-button uk-button-primary"><span uk-icon="download"></span>一括DL</a>
                                     </td>
-                                    <td>
-                                        <a href="{{ url('admin/admin_entryInfos?certificate=true&q=' . $val->sc_number) }}">修了認定</a>
-                                    </td>
                                 </tr>
                             @endunless
                         @endif
@@ -53,7 +49,6 @@
                         <th>一覧DL</th>
                         <th>申込書DL</th>
                         <th>課題DL</th>
-                        <th>修了認定</th>
                     </tr>
                     @foreach ($div_count as $val)
                         <tr>
@@ -72,9 +67,6 @@
                                     class="uk-button uk-button-primary"
                                     onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                         uk-icon="download"></span>一括DL</a></td>
-                            <td>
-                                <a href="{{ url('admin/admin_entryInfos?certificate=true&div=' . $val->division_number) }}">修了認定</a>
-                            </td>
                         </tr>
                     @endforeach
                 </table>
