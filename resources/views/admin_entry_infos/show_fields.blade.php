@@ -281,6 +281,28 @@
                 @endif
             </td>
         </tr>
+        <tr>
+            <td>スカウトコース課題</td>
+            <td>
+                @if (File::exists(storage_path('app/public/assignment/sc/') . $entryInfo->entry_info->uuid . '.pdf'))
+                    <a href="{{ url('/storage/assignment/sc/') . '/' . $entryInfo->entry_info->uuid . '.pdf' }}"
+                        target="_blank"><span uk-icon="file-pdf"></span>スカウトコース課題を確認</a>
+                @else
+                    <span class="uk-text-danger">未提出</span>
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td>課程別研修課題</td>
+            <td>
+                @if (File::exists(storage_path('app/public/assignment/division/') . $entryInfo->entry_info->uuid . '.pdf'))
+                    <a href="{{ url('/storage/assignment/division/') . '/' . $entryInfo->entry_info->uuid . '.pdf' }}"
+                        target="_blank"><span uk-icon="file-pdf"></span>課程別研修課題を確認</a>
+                @else
+                    <span class="uk-text-danger">未提出</span>
+                @endif
+            </td>
+        </tr>
         @if ($entryInfo->entry_info->additional_comment)
             <tr>
                 <th>副信書</th>
