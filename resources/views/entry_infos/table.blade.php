@@ -117,7 +117,7 @@
                 <th>スカウトコース参加費</th>
                 <td>
                     @if ($entryInfo->sc_fee_checked_at == null)
-                        <span class="uk-text-warning">未確認</span>
+                        <span class="uk-text-warning">未確認(振込案内をお待ちください)</span>
                     @elseif($entryInfo->sc_fee_checked_at)
                         <span class="uk-text-success">納入済み</span>
                     @endif
@@ -128,7 +128,7 @@
             <th>課程別研修参加費</th>
             <td>
                 @if ($entryInfo->div_fee_checked_at == null)
-                    <span class="uk-text-warning">未確認</span>
+                    <span class="uk-text-warning">未確認(振込案内をお待ちください)</span>
                 @elseif($entryInfo->div_fee_checked_at)
                     <span class="uk-text-success">納入済み</span>
                 @endif
