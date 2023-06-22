@@ -26,8 +26,11 @@
     </div>
 
 
-    <p class="uk-text-right uk-text-small">データ入力日時:{{ $entryInfo->entry_info->updated_at }}<br>
-        申込番号:{{ $entryInfo->entry_info->id }}</p>
+    <p class="uk-text-right uk-text-small">
+        東京連盟書式<br>
+        データ入力日時:{{ $entryInfo->entry_info->updated_at }}<br>
+        申込番号:{{ $entryInfo->entry_info->id }}
+    </p>
 
     <table class="uk-table uk-table-striped uk-table-small uk-text-small uk-table-justify">
         <tbody class="uk-text-small">
