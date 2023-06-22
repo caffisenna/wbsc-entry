@@ -78,7 +78,7 @@
                     <th>団委員長</th>
                     <th>トレーナー認定</th>
                     <th>地区コミ</th>
-                    <th>委員会</th>
+                    <th>委員会確認</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -150,7 +150,7 @@
                                 @else
                                     <a href="{{ url('/admin/ais_check/?id=') }}{{ $entryInfo->entry_info->id }}"
                                         class=" uk-button uk-button-primary uk-button-small"
-                                        onclick="return confirm('{{ $entryInfo->name }}さんを承認しますか?')">承認</a>
+                                        onclick="return confirm('{{ $entryInfo->name }}さん 地区AIS委員長として確認OKですか?')">確認</a>
                                 @endif
                             </td>
                             <td>
