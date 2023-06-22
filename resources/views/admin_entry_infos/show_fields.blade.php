@@ -309,7 +309,7 @@
                 <td>{{ $entryInfo->entry_info->additional_comment }}</td>
             </tr>
         @endif
-        @if (Auth::user()->is_admin)
+        @if (Auth::user()->is_admin && Auth::user()->is_staff == null)
             @unless ($entryInfo->entry_info->sc_number == 'done')
                 <tr>
                     <th>参加認定(SC)</th>
