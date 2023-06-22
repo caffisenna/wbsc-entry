@@ -18,6 +18,7 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
+        <p class="uk-text-warning">直近6ヶ月以内に撮影したもので、上半身、脱帽のもの(スマートフォンで撮影したものでOKです)</p>
         <div class="card">
             <div class="card-body p-0">
                 <form method="POST" action="/user/face_upload" enctype="multipart/form-data">
