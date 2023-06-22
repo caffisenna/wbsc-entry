@@ -33,7 +33,7 @@ class UploadController extends Controller
 
         $messages = [
             'file.required' => 'ファイルをアップロードしてください',
-            'file.mimes' => 'ファイルはPDF形式のみです',
+            'file.mimes' => 'ファイルはPDF形式のみです(wordファイルはpdf形式に変換してアップロードしてください)',
         ];
 
         $validator = validator::make($request->all(), $rules, $messages);
