@@ -19,6 +19,8 @@
 
         <div class="clearfix"></div>
         <p class="uk-text-warning">直近6ヶ月以内に撮影したもので、上半身、脱帽のもの(スマートフォンで撮影したものでOKです)</p>
+        <img src="{{ url('/images/face_sample.jpg') }}" alt="" width="150px" height=""><br>
+        <span class="uk-text-small uk-text-warning">サンブル: このような写真をアップロードしてください。</span>
         <div class="card">
             <div class="card-body p-0">
                 <form method="POST" action="/user/face_upload" enctype="multipart/form-data">
