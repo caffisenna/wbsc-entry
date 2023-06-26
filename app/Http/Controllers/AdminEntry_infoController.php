@@ -23,6 +23,7 @@ use Storage;
 use App\Mail\FeeChecked;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Http\Util\Slack\SlackPost;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -376,6 +377,10 @@ class AdminEntry_infoController extends AppBaseController
         // 名前+flashメッセージを返して戻る
         Flash::success($user->name . 'さん AIS委員会のチェックをしました');
 
+        // slack通知
+        $slack = new SlackPost();
+        $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区AIS委員長確認が完了しました');
+
         return back();
     }
 
@@ -435,8 +440,10 @@ class AdminEntry_infoController extends AppBaseController
             $entryinfo = Entry_info::where('id', $id)->with('user')->firstOrFail();
             if ($request['cat'] == 'sc') {
                 $entryinfo->sc_fee_checked_at = now();
+                $category = 'スカウトコース';
             } elseif ($request['cat'] == 'div') {
                 $entryinfo->div_fee_checked_at = now();
+                $category = '課程別研修';
             }
             $entryinfo->save();
 
@@ -444,10 +451,15 @@ class AdminEntry_infoController extends AppBaseController
             // 確認メール送信
             $sendto = $entryinfo->user->email;
             $name = $entryinfo->user->name;
+            $dist = $entryinfo->district;
             Mail::to($sendto)->queue(new FeeChecked($name, $cat)); // メールをqueueで送信
 
             // flashメッセージを設定
             Flash::success($entryinfo->user->name . 'の入金確認を行いました');
+
+            // slack通知
+            $slack = new SlackPost();
+            $slack->send(':moneybag:' . $dist . '地区 ' . $name . ' さんの ' . $category . ' 入金確認が完了しました');
 
             // 一覧に戻る
             return back();

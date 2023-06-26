@@ -8,6 +8,7 @@ use App\Models\Entry_info;
 use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Util\Slack\SlackPost;
 
 class UploadController extends Controller
 {
@@ -52,7 +53,7 @@ class UploadController extends Controller
         $extension = $file->extension();
 
         // SCと課程別で保存先を変える
-        $entryinfo = Entry_info::where('uuid', $uuid)->first(); // DB取得
+        $entryinfo = Entry_info::where('uuid', $uuid)->with('user')->first(); // DB取得
         if ($q == 'sc') {
             $path = 'public/assignment/sc';
             $entryinfo->assignment_sc = 'up';
@@ -64,6 +65,17 @@ class UploadController extends Controller
 
         // ファイル保存
         $request->file('file')->storeAs($path, $uuid . '.' . $extension);
+
+        // slack通知
+        $slack = new SlackPost();
+        $name = $entryinfo->user->name;
+        $dist = $entryinfo->district;
+        if ($q == 'sc') {
+            $cat = 'スカウトコース';
+        } elseif ($q == 'division') {
+            $cat = '課程別研修';
+        }
+        $slack->send(":up:" . $dist . '地区 ' . $name . 'さんが ' . $cat . ' の課題をアップロードしました');
 
         // flashメッセージを返す
         Flash::success('課題研修をアップロードしました');

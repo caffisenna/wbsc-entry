@@ -18,6 +18,7 @@ use App\Mail\InputRegisterd;
 use Storage;
 use App\Models\course_list;
 use App\Models\division_list;
+use App\Http\Util\Slack\SlackPost;
 
 class Entry_infoController extends AppBaseController
 {
@@ -105,13 +106,36 @@ class Entry_infoController extends AppBaseController
         }
 
 
-        $entryInfo = $this->entryInfoRepository->create($input);
+        // $entryInfo = $this->entryInfoRepository->create($input);
 
         Flash::success('申込データを登録しました');
 
         // 確認メール送信
         $sendto = User::where('id', $input['user_id'])->first();
         Mail::to($sendto->email)->queue(new InputRegisterd($sendto->name)); // メールをqueueで送信
+
+        // Slackアラート通知
+        // スカウトコース総数
+        if ($request['sc_number'] != 'done') {
+            $sc_count = Entry_info::where('sc_number', $request['sc_number'])->count();
+        }
+        // 課程別総数
+        $div_count = Entry_info::where('division_number', $request['division_number'])->count();
+
+        $slack = new SlackPost();
+        if ($request['sc_number'] == 'done') {
+            $slack->send(
+                ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
+                    "課程別研修のみ: " . $input['division_number'] . "回 (トータル: $div_count 人)"
+            );
+        } else {
+            $slack->send(
+                ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
+                    "スカウトコース: " . $input['sc_number'] . "期 (トータル: $sc_count 人)\n" .
+                    "課程別研修: " . $input['division_number'] . "回 (トータル: $div_count 人)"
+            );
+        }
+
 
         return redirect(route('entryInfos.index'));
     }

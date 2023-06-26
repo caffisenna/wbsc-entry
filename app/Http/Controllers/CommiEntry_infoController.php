@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CommiChecked;
 use App\Mail\TrainerRequest;
 use App\Mail\GmRequest;
+use App\Http\Util\Slack\SlackPost;
 
 class CommiEntry_infoController extends AppBaseController
 {
@@ -194,6 +195,10 @@ class CommiEntry_infoController extends AppBaseController
         // 確認メール送信
         $sendto = $user->email;
         Mail::to($sendto)->queue(new CommiChecked($user->name)); // メールをqueueで送信
+
+        // slack通知
+        $slack = new SlackPost();
+        $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区コミ推薦が行われました');
 
 
         // 名前+flashメッセージを返して戻る

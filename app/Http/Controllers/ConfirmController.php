@@ -8,6 +8,7 @@ use Flash;
 use App\Mail\GmConfirm;
 use Mail;
 use App\Mail\TrainerConfirm;
+use App\Http\Util\Slack\SlackPost;
 
 class ConfirmController extends Controller
 {
@@ -30,18 +31,23 @@ class ConfirmController extends Controller
         $name_division = $request['name_division'];
         $confirm_date_division = $request['confirm_date_division'];
 
+        // slacj通知
+        $slack = new SlackPost();
+
         if (isset($name_sc) && isset($confirm_date_sc)) {
             // SCのセット
             $userinfo->trainer_sc_checked_at = $confirm_date_sc;
             $userinfo->trainer_sc_name = $name_sc;
             $userinfo->save();
             Flash::success($userinfo->user->name . 'さんのスカウトコース課題研修についてトレーナー認定を行いました');
+            $slack->send(':white_check_mark:' . $userinfo->district . '地区 ' . $userinfo->user->name . ' さんのスカウトコース課題についてトレーナー認定完了');
         } elseif (isset($name_division) && isset($confirm_date_division)) {
             // 課程別のセット
             $userinfo->trainer_division_checked_at = $confirm_date_division;
             $userinfo->trainer_division_name = $name_division;
             $userinfo->save();
             Flash::success($userinfo->user->name . 'さんの課程別課題研修についてトレーナー認定を行いました');
+            $slack->send(':white_check_mark:' . $userinfo->district . '地区 ' . $userinfo->user->name . ' さんの課程別研修課題についてトレーナー認定完了');
         }
 
         // 確認メール送信
@@ -80,6 +86,10 @@ class ConfirmController extends Controller
             $name = $userinfo->user->name;
             Mail::to($sendto)->queue(new GmConfirm($uuid, $name)); // メールをqueueで送信
             Flash::success($userinfo->user->name . 'さんの参加承認を行いました');
+
+            // slack通知
+            $slack = new SlackPost();
+            $slack->send(':white_check_mark:' . $userinfo->district . '地区 ' . $userinfo->user->name . ' さんの団承認が完了しました');
         }
 
         // 前画面に戻る

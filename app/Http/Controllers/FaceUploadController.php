@@ -10,6 +10,7 @@ use Laracasts\Flash\Flash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Util\Slack\SlackPost;
 
 class FaceUploadController extends Controller
 {
@@ -44,7 +45,7 @@ class FaceUploadController extends Controller
         // $extension = $file->extension();
 
         // ユーザーテーブルにファイル名を保存
-        $user = User::where('id', Auth::id())->first(); // DB取得
+        $user = User::where('id', Auth::id())->with('entry_info')->first(); // DB取得
         $user->face_picture = $name;
         $user->save();
 
@@ -52,6 +53,11 @@ class FaceUploadController extends Controller
 
         // ファイル保存
         $request->file('file')->storeAs($path, $name);
+
+        $slack = new SlackPost();
+        $name = $user->name;
+        $dist = $user->entry_info->district;
+        $slack->send(":frame_with_picture:" . $dist . '地区 ' . $name . 'さんが 顔写真をアップロードしました');
 
         // flashメッセージを返す
         Flash::success('顔写真をアップロードしました');
