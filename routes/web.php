@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
 // トレーナー認定
 Route::get('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 'trainer_confirm'])->name('trainer_confirm');
 Route::post('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 'trainer_confirm_post'])->name('trainer_confirm_post');
