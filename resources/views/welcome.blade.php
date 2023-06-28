@@ -74,14 +74,16 @@
                     <div class="p-6">
                         <div class="flex items-center">
                             <span uk-icon="user"></span>
-                            <span class="uk-text-large text-gray-900 dark:text-white">アカウント</span>
+                            <span class="uk-text-large text-gray-900 dark:text-white">ログイン</span>
                         </div>
 
                         <div class="">
                             <div class="mt-2">
                                 @auth
-                                    <a href="{{ url('/home') }}" class="uk-text-default text-gray-900 dark:text-white"
-                                        style="color: white;">Home</a>
+                                    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                        <a href="{{ url('/home') }}"
+                                            class="">Home</a>
+                                    </div>
                                 @else
                                     <span uk-icon="sign-in" style=""></span><a href="{{ route('login') }}"
                                         class="uk-text-default text-gray-900 dark:text-white" style=";">ログイン</a>
@@ -129,7 +131,8 @@
                     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
                         <div class="flex items-center">
                             <span uk-icon="link"></span>
-                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">{{ config('app.name') }}について</div>
+                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
+                                {{ config('app.name') }}について</div>
                         </div>
 
                         <div class="ml-12">
