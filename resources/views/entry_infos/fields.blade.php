@@ -119,54 +119,7 @@
             <td>{!! Form::select(
                 'prefecture',
                 [
-                    '' => '',
-                    '北海道' => '北海道',
-                    '青森' => '青森',
-                    '岩手' => '岩手',
-                    '宮城' => '宮城',
-                    '秋田' => '秋田',
-                    '山形' => '山形',
-                    '福島' => '福島',
-                    '茨城' => '茨城',
-                    '栃木' => '栃木',
-                    '群馬' => '群馬',
-                    '埼玉' => '埼玉',
-                    '千葉' => '千葉',
-                    '神奈川' => '神奈川',
-                    '山梨' => '山梨',
                     '東京' => '東京',
-                    '新潟' => '新潟',
-                    '富山' => '富山',
-                    '石川' => '石川',
-                    '福井' => '福井',
-                    '長野' => '長野',
-                    '岐阜' => '岐阜',
-                    '静岡' => '静岡',
-                    '愛知' => '愛知',
-                    '三重' => '三重',
-                    '滋賀' => '滋賀',
-                    '京都' => '京都',
-                    '兵庫' => '兵庫',
-                    '奈良' => '奈良',
-                    '和歌山' => '和歌山',
-                    '大阪' => '大阪',
-                    '鳥取' => '鳥取',
-                    '島根' => '島根',
-                    '岡山' => '岡山',
-                    '広島' => '広島',
-                    '山口' => '山口',
-                    '徳島' => '徳島',
-                    '香川' => '香川',
-                    '愛媛' => '愛媛',
-                    '高知' => '高知',
-                    '福岡' => '福岡',
-                    '佐賀' => '佐賀',
-                    '長崎' => '長崎',
-                    '熊本' => '熊本',
-                    '大分' => '大分',
-                    '宮崎' => '宮崎',
-                    '鹿児島' => '鹿児島',
-                    '沖縄' => '沖縄',
                 ],
                 '東京',
                 ['class' => 'form-control custom-select uk-form-width-small'],
@@ -273,7 +226,10 @@
 
         <tr>
             <td>ケータイ</td>
-            <td>{!! Form::text('cell_phone', null, ['class' => 'form-control uk-form-width-medium', 'placeholder'=>'ハイフン不要']) !!}
+            <td>{!! Form::text('cell_phone', null, [
+                'class' => 'form-control uk-form-width-medium',
+                'placeholder' => 'ハイフン不要',
+            ]) !!}
                 @error('cell_phone')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -282,7 +238,10 @@
 
         <tr>
             <td>郵便番号</td>
-            <td>{!! Form::text('zip', null, ['class' => 'form-control uk-form-width-medium', 'placeholder'=>'7桁の整数で入力']) !!}
+            <td>{!! Form::text('zip', null, [
+                'class' => 'form-control uk-form-width-medium',
+                'placeholder' => '7桁の整数で入力',
+            ]) !!}
                 @error('zip')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -291,7 +250,7 @@
 
         <tr>
             <td>住所</td>
-            <td>{!! Form::text('address', null, ['class' => 'form-control', 'placeholder'=>'都道府県から番地まで入力']) !!}
+            <td>{!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => '都道府県から番地まで入力']) !!}
                 @error('address')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -318,7 +277,10 @@
 
         <tr>
             <td>緊急連絡先 電話</td>
-            <td>{!! Form::text('emer_phone', null, ['class' => 'form-control uk-form-width-medium', 'placeholder'=>'日中連絡の取れるケータイなど']) !!}
+            <td>{!! Form::text('emer_phone', null, [
+                'class' => 'form-control uk-form-width-medium',
+                'placeholder' => '日中連絡の取れるケータイなど',
+            ]) !!}
                 @error('emer_phone')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -382,15 +344,15 @@
                 <td>その他の実修所履歴({{ $i }})</td>
                 <td>課程:{!! Form::text("wb_adv{$i}_category", null, [
                     'class' => 'form-control uk-form-width-medium',
-                    'placeholder'=>'例:ボーイ課程'
+                    'placeholder' => '例:ボーイ課程',
                 ]) !!}<br>
                     期数:{!! Form::text("wb_adv{$i}_number", null, [
                         'class' => 'form-control uk-form-width-small',
-                        'placeholder'=>'例:161期'
+                        'placeholder' => '例:161期',
                     ]) !!}<br>
                     修了年月:{!! Form::text("wb_adv{$i}_date", null, [
                         'class' => 'form-control uk-form-width-medium',
-                        'placeholder'=>'例:2006/11/5'
+                        'placeholder' => '例:2006/11/5',
                     ]) !!}</td>
             </tr>
         @endfor
