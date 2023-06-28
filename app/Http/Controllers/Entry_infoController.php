@@ -106,7 +106,7 @@ class Entry_infoController extends AppBaseController
         }
 
 
-        // $entryInfo = $this->entryInfoRepository->create($input);
+        $entryInfo = $this->entryInfoRepository->create($input);
 
         Flash::success('申込データを登録しました');
 
