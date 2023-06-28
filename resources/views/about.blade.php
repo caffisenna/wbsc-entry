@@ -4,11 +4,11 @@
     <div class="container">
         @include('flash::message')
         <div class="row">
-            <h2>{{ env('APP_NAME') }}について </h2>
+            <h2>{{ config('app.name') }}について </h2>
             <table class="uk-table uk-table-divider">
                 <tr>
                     <th>アプリケーション名</th>
-                    <td>{{ env('APP_NAME') }} (AIS Entry System / アイセス)</td>
+                    <td>{{ config('app.name') }} (AIS Entry System / アイセス)</td>
                 </tr>
                 <tr>
                     <th>概要</th>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ env('APP_NAME') }} | HOME</title>
+    <title>{{ config('app.name') }} | HOME</title>
 
     <!-- Styles welcome.cssに追い出した-->
     <link rel="stylesheet" href="{{ url('/css/welcome.css') }}" />
@@ -129,12 +129,12 @@
                     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
                         <div class="flex items-center">
                             <span uk-icon="link"></span>
-                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">{{ env('APP_NAME') }}について</div>
+                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">{{ config('app.name') }}について</div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                <a href="{{ url('/about') }}">{{ env('APP_NAME') }}について</a>
+                                <a href="{{ url('/about') }}">{{ config('app.name') }}について</a>
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="uk-text-center">
-                <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 {{ env('APP_NAME') }}</p><br>
+                <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 {{ config('app.name') }}</p><br>
                 <p class="uk-text-large uk-text-emphasis txt-bg uk-text-danger">テスト運用中(テスト中に入力されたデータは全て破棄されます)</p>
             </div>
         </div>

@@ -60,7 +60,7 @@
         <!-- /.login-box-body -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">{{ env('APP_NAME') }}にログインする</p>
+                <p class="login-box-msg">{{ config('app.name') }}にログインする</p>
 
                 <form method="post" action="{{ url('/login') }}">
                     @csrf
