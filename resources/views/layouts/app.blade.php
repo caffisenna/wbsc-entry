@@ -101,7 +101,7 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                Copyright &copy; ボーイスカウト東京連盟 AIS委員会 / ICT小委員会
+                Copyright &copy; <a href="{{ env('APP_URL') }}">{{ env('APP_NAME') }}</a> ボーイスカウト東京連盟 AIS委員会 / ICT小委員会
             </div>
         </footer>
     </div>

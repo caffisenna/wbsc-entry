@@ -1,4 +1,4 @@
-# WB研修所web申込システム　
+# AISES 指導者研修申込システム　
 
 ## Dev enviroments
 

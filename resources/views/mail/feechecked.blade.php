@@ -1,5 +1,5 @@
 <p>{{ $name }} 様</p>
-<p>WB研修所参加申し込みシステムから自動送信しています。</p>
+<p>ボーイスカウト東京連盟 {{ env('APP_NAME') }}から自動送信しています。</p>
 @if ($cat == 'sc')
     <p>東京連盟事務局にてWB研修所スカウトコースの参加費お振り込みを確認致しました。</p>
 @else
@@ -13,6 +13,5 @@
 <p></p>
 
 ----<br>
-ボーイスカウト東京連盟<br>
-WB研修所申込システム<br>
+ボーイスカウト東京連盟 {{ env('APP_NAME') }}<br>
 <a href="mailto:wb-system@scout.tokyo">wb-system@scout.tokyo</a>
