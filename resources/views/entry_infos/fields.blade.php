@@ -243,14 +243,14 @@
             <td>
                 <div class="h-adr">
                     <span class="p-country-name" style="display:none;">Japan</span>
-                {!! Form::text('zip', null, [
-                    'class' => 'p-postal-code form-control',
-                    'placeholder' => '郵便番号を7桁の整数で入力(例: 1510071)',
-                ]) !!}
-                {!! Form::text('address', null, [
-                    'class' => 'p-region p-locality p-street-address p-extended-address form-control',
-                    'placeholder' => '住所が自動で補完されます。番地以降を追記入力してください。',
-                ]) !!}
+                    {!! Form::text('zip', null, [
+                        'class' => 'p-postal-code form-control',
+                        'placeholder' => '郵便番号を7桁の整数で入力(例: 1510071)',
+                    ]) !!}
+                    {!! Form::text('address', null, [
+                        'class' => 'p-region p-locality p-street-address p-extended-address form-control',
+                        'placeholder' => '住所が自動で補完されます。番地以降を追記入力してください。',
+                    ]) !!}
                 </div>
 
                 @error('zip')
@@ -389,11 +389,13 @@
         <tr>
             <td>現在治療中の病気(病名などをご記入ください)</td>
             <td>
-                <label>{!! Form::checkbox('health_illness_none', 'true', null, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                <label>{!! Form::checkbox('health_illness_none', 'true', $entryInfo->health_illness == '特になし' ? 'true' : null, [
+                    'class' => 'uk-checkbox',
+                ]) !!} 特になし</label>
                 @error('health_illness_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
-                {!! Form::textarea('health_illness', null, [
+                {!! Form::textarea('health_illness', $entryInfo->health_illness == '特になし' ? '' : null, [
                     'class' => 'form-control',
                     'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
                 ]) !!}
@@ -403,11 +405,11 @@
         <tr>
             <td>健康上で不安なこと、食品アレルギーなど特記事項をご記入ください</td>
             <td>
-                <label>{!! Form::checkbox('health_memo_none', 'true', null, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                <label>{!! Form::checkbox('health_memo_none', 'true', $entryInfo->health_memo == '特になし' ? 'true' : null, ['class' => 'uk-checkbox']) !!} 特になし</label>
                 @error('health_memo_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
-                {!! Form::textarea('health_memo', null, [
+                {!! Form::textarea('health_memo', $entryInfo->health_memo == '特になし' ? '' : null, [
                     'class' => 'form-control',
                     'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
                 ]) !!}
