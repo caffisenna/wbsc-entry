@@ -236,12 +236,14 @@
             </td>
         </tr>
 
+
         <tr>
             <td>郵便番号</td>
-            <td>{!! Form::text('zip', null, [
-                'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '7桁の整数で入力',
-            ]) !!}
+            <td>
+                {!! Form::text('zip', null, [
+                    'class' => 'form-control',
+                    'placeholder' => '7桁の整数で入力',
+                ]) !!}
                 @error('zip')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -250,7 +252,11 @@
 
         <tr>
             <td>住所</td>
-            <td>{!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => '都道府県から番地まで入力']) !!}
+            <td>
+                {!! Form::text('address', null, [
+                    'class' => 'form-control',
+                    'placeholder' => '都道府県から番地まで入力',
+                ]) !!}
                 @error('address')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -503,12 +509,22 @@
     // ページ読み込み時の処理
     window.onload = function() {
         // 保存されているデータからセレクトボックスAとBの選択を自動で設定
-        var savedData = "{{ @$entryInfo->district }}";
+        // var savedData = "{{ @$entryInfo->district }}";
+        @if (old('district'))
+            var savedData = "{{ old('district') }}";
+        @elseif (isset($entryInfo->district))
+            var savedData = "{{ $entryInfo->district }}";
+        @endif
         var selectDistrict = document.getElementById("selectDistrict");
         var selectDan = document.getElementById("selectDan");
 
         selectDistrict.value = savedData;
         updateDan(); // セレクトボックスBのoptionを更新
-        selectDan.value = "{{ @$entryInfo->dan }}"; // 保存されているデータに応じたセレクトボックスBの選択を設定
+        // selectDan.value = "{{ @$entryInfo->dan }}"; // 保存されているデータに応じたセレクトボックスBの選択を設定
+        @if (old('dan'))
+            selectDan.value = "{{ old('dan') }}";
+        @elseif (isset($entryInfo->dan))
+            selectDan.value = "{{ $entryInfo->dan }}";
+        @endif
     };
 </script>
