@@ -5,9 +5,9 @@
         @include('flash::message')
         <div class="row">
             <h2>{{ config('app.name') }}について </h2>
-            <table class="uk-table uk-table-divider">
+            <table class="uk-table uk-table-divider uk-table-justify uk-table-middle uk-table-responsive">
                 <tr>
-                    <th>アプリケーション名</th>
+                    <th class="uk-table-expand">アプリケーション名</th>
                     <td>{{ config('app.name') }} (AIS Entry System / アイセス)</td>
                 </tr>
                 <tr>
@@ -17,10 +17,10 @@
                 </tr>
                 <tr>
                     <th>概要と目的</th>
-                    <td>参加者自身による正確なデータ入力をもとに、従来は紙ベースで行っていた指導者研修の申込を完全ペーパーレス化しました。<br>
+                    <td>
+                        参加者自身による正確なデータ入力をもとに、従来は紙ベースで行っていた指導者研修の申込を完全ペーパーレス化しました。<br>
                         これにより、各所で発生していた書類の滞留や締め切り間際の集中処理などを削減することができます。<br>
-                        県連事務局でのアナログ処理を大幅に削減が可能となりました。<br>
-                        また申込プロセスの各所で発生していた「今どうなっている」がweb上で確認できるようになり、業務の効率化を支援することが可能になりました。<br>
+                        事務手続きの敏速化が図れるようになる他、申込プロセスの各所で発生していた「今どうなっている」がweb上で確認できるようになり、業務の効率化を支援することが可能になりました。<br>
                         ※課題研修の取り組みは従来と変更はありません。
                     </td>
                 </tr>
@@ -84,7 +84,8 @@
                 </tr>
                 <tr>
                     <th>開発</th>
-                    <td>東京連盟ICT小委員会 <a href="https://github.com/caffisenna/wbsc-entry"><span uk-icon="github"></span>GitHub</a></td>
+                    <td>東京連盟ICT小委員会 <a href="https://github.com/caffisenna/wbsc-entry"><span
+                                uk-icon="github"></span>GitHub</a></td>
                 </tr>
             </table>
         </div>
