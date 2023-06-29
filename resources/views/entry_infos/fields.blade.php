@@ -1,3 +1,4 @@
+<script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
@@ -238,25 +239,23 @@
 
 
         <tr>
-            <td>郵便番号</td>
+            <td>郵便番号・住所</td>
             <td>
+                <div class="h-adr">
+                    <span class="p-country-name" style="display:none;">Japan</span>
                 {!! Form::text('zip', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '7桁の整数で入力',
+                    'class' => 'p-postal-code form-control',
+                    'placeholder' => '郵便番号を7桁の整数で入力(例: 1510071)',
                 ]) !!}
+                {!! Form::text('address', null, [
+                    'class' => 'p-region p-locality p-street-address p-extended-address form-control',
+                    'placeholder' => '住所が自動で補完されます。番地以降を追記入力してください。',
+                ]) !!}
+                </div>
+
                 @error('zip')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
-            </td>
-        </tr>
-
-        <tr>
-            <td>住所</td>
-            <td>
-                {!! Form::text('address', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '都道府県から番地まで入力',
-                ]) !!}
                 @error('address')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
