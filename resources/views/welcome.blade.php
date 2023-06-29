@@ -52,13 +52,13 @@
         @if (Route::has('login'))
             <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                 @auth
-                    <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                    <a href="{{ url('/home') }}" class="text-gray-700 dark:text-gray-500 underline">Home</a>
                 @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a>
+                    <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-500 underline">ログイン</a>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザー登録</a>
+                            class="ml-4 text-gray-700 dark:text-gray-500 underline">ユーザー登録</a>
                     @endif
                 @endauth
             </div>
@@ -80,19 +80,23 @@
                         <div class="">
                             <div class="mt-2">
                                 @auth
-                                    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                        <a href="{{ url('/home') }}"
-                                            class="">Home</a>
+                                    <div class="ml-12">
+                                        <div class="mt-2 text-gray-600 dark:text-gray-400">
+                                            <a href="{{ url('/home') }}">Home</a>
+                                        </div>
                                     </div>
                                 @else
-                                    <span uk-icon="sign-in" style=""></span><a href="{{ route('login') }}"
-                                        class="uk-text-default text-gray-900 dark:text-white" style=";">ログイン</a>
+                                    <div class="ml-12">
+                                        <span uk-icon="sign-in" style=""></span><a href="{{ route('login') }}"
+                                            class="uk-text-default text-gray-900 dark:text-white" style=";">ログイン</a>
 
-                                    @if (Route::has('register'))
-                                        <br>
-                                        <span uk-icon="user" style=""></span><a href="{{ route('register') }}"
-                                            class="uk-text-default text-gray-900 dark:text-white" style=";">ユーザー登録</a>
-                                    @endif
+                                        @if (Route::has('register'))
+                                            <br>
+                                            <span uk-icon="user" style=""></span><a href="{{ route('register') }}"
+                                                class="uk-text-default text-gray-900 dark:text-white"
+                                                style=";">ユーザー登録</a>
+                                        @endif
+                                    </div>
                                 @endauth
                             </div>
                         </div>
@@ -108,7 +112,7 @@
                         </div>
 
                         <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            <div class="mt-2 text-gray-600 dark:text-gray-400">
                                 <a href="#">ガイドのURL</a>
                             </div>
                         </div>
@@ -122,7 +126,7 @@
                         </div>
 
                         <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            <div class="mt-2 text-gray-600 dark:text-gray-400">
                                 <a href="https://www.scout.tokyo/member/training/">東京連盟加盟員サイト</a>
                             </div>
                         </div>
@@ -136,7 +140,7 @@
                         </div>
 
                         <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            <div class="mt-2 text-gray-600 dark:text-gray-400">
                                 <a href="{{ url('/about') }}">{{ config('app.name') }}について</a>
                             </div>
                         </div>
