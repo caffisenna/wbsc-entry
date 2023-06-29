@@ -387,7 +387,9 @@
         @endfor
 
         <tr>
-            <td>現在治療中の病気(病名などをご記入ください)</td>
+            <td>現在治療中の病気(病名などをご記入ください)<br>
+                <a href="#modal-health_illness" uk-toggle>入力上の注意事項</a>
+            </td>
             <td>
                 <label>{!! Form::checkbox('health_illness_none', 'true', $entryInfo->health_illness == '特になし' ? 'true' : null, [
                     'class' => 'uk-checkbox',
@@ -403,9 +405,13 @@
         </tr>
 
         <tr>
-            <td>健康上で不安なこと、食品アレルギーなど特記事項をご記入ください</td>
+            <td>健康上で不安なこと、食品アレルギーなど特記事項をご記入ください<br>
+                <a href="#modal-health_memo" uk-toggle>入力上の注意事項</a>
+            </td>
             <td>
-                <label>{!! Form::checkbox('health_memo_none', 'true', $entryInfo->health_memo == '特になし' ? 'true' : null, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                <label>{!! Form::checkbox('health_memo_none', 'true', $entryInfo->health_memo == '特になし' ? 'true' : null, [
+                    'class' => 'uk-checkbox',
+                ]) !!} 特になし</label>
                 @error('health_memo_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -417,6 +423,42 @@
         </tr>
 
     </table>
+</div>
+
+<!-- 治療中モーダル -->
+<div id="modal-health_illness" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">現在治療中の病気</h2>
+        <p class="uk-text-default">この質問は活動期間中の健康状態の参考にします。(必要に応じて、個別に健康状態をお伺いすることがあります。)</p>
+        <ul class="uk-list uk-list-bullet">
+            <li>例えば、高血圧・心臓病・喘息・肺疾患・糖尿病・肝臓病・胃腸病・腎臓病・血液疾患・感染症・腰のヘルニア・アレルギー・妊娠など活動中に配慮すべきことがあれば記入してください。また、携行持薬の有無を記入してください
+            </li>
+            <li>直近3ヶ月で、病気で休んだことがあれば、病名と休んだ期間を記入してください(風邪で1日休んだなどは記載不要です。)</li>
+            <li>最近の体調について、気になることがあれば、記入してください。例えば、頭痛・めまい・動悸・息苦しい・咳・鼻血・のどの渇き・頻尿・むくみ・不眠・腹痛・下痢・便秘・腰痛・関節痛・だるさ・不安感・失神など</li>
+        </ul>
+        特に、申告する事項が無ければ、「□特になし」にチェックを入れてください。
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">閉じる</button>
+        </p>
+    </div>
+</div>
+
+<!-- 治療中モーダル -->
+<div id="modal-health_memo" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">健康上で不安なこと、食品アレルギーなど</h2>
+        <p class="uk-text-default">
+            この質問は活動期間中に配慮すべき事項として参考にします。(必要に応じて、個別に詳細をお伺いすることがあります。また、ご申告いただいても、すべてに応じることをお約束するものではありません。予めご了承ください。)</p>
+        <ul class="uk-list uk-list-bullet">
+            <li>アレルギー(アレルゲンを記載の上、どうすれば良いかを記入してください)</li>
+            <li>特に医師から注意を受けていることがあれば記入してください</li>
+            <li>過去の既往症など特記すること、不安なことがあれば記入してください</li>
+        </ul>
+        特に、申告する事項が無ければ、「□特になし」にチェックを入れてください。
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">閉じる</button>
+        </p>
+    </div>
 </div>
 
 <script>
