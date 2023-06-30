@@ -421,9 +421,6 @@
                 @error('health_memo_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
-                @error('health_memo_none')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
             </td>
         </tr>
 
