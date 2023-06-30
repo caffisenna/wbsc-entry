@@ -390,8 +390,12 @@
                     $checked = isset($entryInfo->health_illness) && $entryInfo->health_illness == '特になし';
                 @endphp
 
-                <label>{!! Form::checkbox('health_illness_none', 'true', $checked, ['class' => 'uk-checkbox']) !!} 特になし</label>
-                {!! Form::textarea('health_illness', $checked ? '' : null, ['class' => 'form-control']) !!}
+                <label>{!! Form::checkbox('health_illness_none', 'true', $checked, ['class' => 'uk-checkbox', 'id' => 'health_cb']) !!} 特になし</label>
+                {!! Form::textarea('health_illness', $checked ? '' : null, [
+                    'class' => 'form-control',
+                    'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
+                    'id' => 'health_txt',
+                ]) !!}
                 @error('health_illness_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -408,8 +412,12 @@
                     $checked = isset($entryInfo->health_memo) && $entryInfo->health_memo == '特になし';
                 @endphp
 
-                <label>{!! Form::checkbox('health_memo_none', 'true', $checked, ['class' => 'uk-checkbox']) !!} 特になし</label>
-                {!! Form::textarea('health_memo', $checked ? '' : null, ['class' => 'form-control']) !!}
+                <label>{!! Form::checkbox('health_memo_none', 'true', $checked, ['class' => 'uk-checkbox', 'id' => 'health_memo_cb']) !!} 特になし</label>
+                {!! Form::textarea('health_memo', $checked ? '' : null, [
+                    'class' => 'form-control',
+                    'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
+                    'id' => 'health_memo_txt',
+                ]) !!}
                 @error('health_memo_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -567,4 +575,52 @@
             selectDan.value = "{{ $entryInfo->dan }}";
         @endif
     };
+</script>
+
+<script>
+    var healthCheckbox = document.getElementById('health_cb');
+    var healthTextarea = document.getElementById('health_txt');
+
+    // id=health_cbのチェックボックスが変更されたときのイベントハンドラ
+    healthCheckbox.addEventListener('change', function() {
+        if (healthCheckbox.checked) {
+            healthTextarea.disabled = true; // id=health_txtを無効化
+            healthTextarea.value = ''; // textareaの入力をクリアー
+        } else {
+            healthTextarea.disabled = false; // id=health_txtを有効化
+        }
+    });
+
+    // id=health_txtのテキストエリアの入力が変更されたときのイベントハンドラ
+    healthTextarea.addEventListener('input', function() {
+        if (healthTextarea.value.trim() !== '') {
+            healthCheckbox.checked = false; // id=health_cbのチェックを外す
+            healthCheckbox.disabled = true; // id=health_cbを無効化
+        } else {
+            healthCheckbox.disabled = false; // id=health_cbを有効化
+        }
+    });
+
+    var healthMemoCheckbox = document.getElementById('health_memo_cb');
+    var healthMemoTextarea = document.getElementById('health_memo_txt');
+
+    // id=health_memo_cbのチェックボックスが変更されたときのイベントハンドラ
+    healthMemoCheckbox.addEventListener('change', function() {
+        if (healthMemoCheckbox.checked) {
+            healthMemoTextarea.disabled = true; // id=health_memo_txtを無効化
+            healthMemoTextarea.value = ''; // textareaの入力をクリアー
+        } else {
+            healthMemoTextarea.disabled = false; // id=health_memo_txtを有効化
+        }
+    });
+
+    // id=health_memo_txtのテキストエリアの入力が変更されたときのイベントハンドラ
+    healthMemoTextarea.addEventListener('input', function() {
+        if (healthMemoTextarea.value.trim() !== '') {
+            healthMemoCheckbox.checked = false; // id=health_memo_cbのチェックを外す
+            healthMemoCheckbox.disabled = true; // id=health_memo_cbを無効化
+        } else {
+            healthMemoCheckbox.disabled = false; // id=health_memo_cbを有効化
+        }
+    });
 </script>
