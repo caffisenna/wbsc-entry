@@ -165,11 +165,6 @@
         </tr>
         <tr>
             <td>団</td>
-            {{-- <td>{!! Form::text('dan', null, ['class' => 'form-control', 'placeholder' => '例:渋谷14']) !!}
-                @error('dan')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-            </td> --}}
             <td>
                 <select id="selectDan" class="form-control" name="dan"></select>
             </td>
@@ -391,21 +386,12 @@
                 <a href="#modal-health_illness" uk-toggle>入力上の注意事項</a>
             </td>
             <td>
-                @if (isset($entryInfo->health_illness))
-                    <label>{!! Form::checkbox('health_illness_none', 'true', $entryInfo->health_illness == '特になし' ? 'true' : null, [
-                        'class' => 'uk-checkbox',
-                    ]) !!} 特になし</label>
-                    {!! Form::textarea('health_illness', $entryInfo->health_illness == '特になし' ? '' : null, [
-                        'class' => 'form-control',
-                        'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
-                    ]) !!}
-                @elseif(empty($entryInfo->health_illness))
-                    <label>{!! Form::checkbox('health_illness_none', 'true', null, ['class' => 'uk-checkbox']) !!} 特になし</label>
-                    {!! Form::textarea('health_illness', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
-                    ]) !!}
-                @endif
+                @php
+                    $checked = isset($entryInfo->health_illness) && $entryInfo->health_illness == '特になし';
+                @endphp
+
+                <label>{!! Form::checkbox('health_illness_none', 'true', $checked, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                {!! Form::textarea('health_illness', $checked ? '' : null, ['class' => 'form-control']) !!}
                 @error('health_illness_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -418,21 +404,15 @@
                 <a href="#modal-health_memo" uk-toggle>入力上の注意事項</a>
             </td>
             <td>
-                @if (isset($entryInfo->health_memo))
-                    <label>{!! Form::checkbox('health_memo_none', 'true', $entryInfo->health_memo == '特になし' ? 'true' : null, [
-                        'class' => 'uk-checkbox',
-                    ]) !!} 特になし</label>
-                    {!! Form::textarea('health_memo', $entryInfo->health_memo == '特になし' ? '' : null, [
-                        'class' => 'form-control',
-                        'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
-                    ]) !!}
-                @elseif(empty($entryInfo->health_memo))
-                    <label>{!! Form::checkbox('health_memo_none', 'true', null, ['class' => 'uk-checkbox']) !!} 特になし</label>
-                    {!! Form::textarea('health_memo', null, [
-                        'class' => 'form-control',
-                        'placeholder' => '何かある場合はこちらに記入してください。特になければ↑のチェックを忘れずに!',
-                    ]) !!}
-                @endif
+                @php
+                    $checked = isset($entryInfo->health_memo) && $entryInfo->health_memo == '特になし';
+                @endphp
+
+                <label>{!! Form::checkbox('health_memo_none', 'true', $checked, ['class' => 'uk-checkbox']) !!} 特になし</label>
+                {!! Form::textarea('health_memo', $checked ? '' : null, ['class' => 'form-control']) !!}
+                @error('health_memo_none')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
                 @error('health_memo_none')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
