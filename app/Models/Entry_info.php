@@ -251,8 +251,8 @@ class Entry_info extends Model
         'emer_name.required' => '緊急連絡先の氏名を入力してください',
         'emer_relation.required' => '緊急連絡先の続柄を入力してください',
         'emer_phone.required' => '緊急連絡先の日中連絡が取れる電話番号を入力してください',
-        'health_illness_none.required_if' => '治療中の病気など、申告事項が無い場合はチェックをしてください',
-        'health_memo_none.required_if' => '食品アレルギーなどの申告事項が無い場合はチェックをしてください',
+        'health_illness_none.required_if' => '治療中の病気など、申告事項が無い場合は「特になし」をチェックしてください',
+        'health_memo_none.required_if' => '食品アレルギーなどの申告事項が無い場合は「特になし」をチェックしてください',
     ];
 
     public function user()
