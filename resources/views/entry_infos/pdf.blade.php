@@ -58,7 +58,7 @@
             <tr>
                 <td>所属・役務</td>
                 <td>{{ $entryInfo->entry_info->prefecture }}連盟 {{ $entryInfo->entry_info->district }}地区
-                    {{ $entryInfo->entry_info->dan }}団 {{ $entryInfo->entry_info->troop }}
+                    {{ $entryInfo->entry_info->dan }} {{ $entryInfo->entry_info->troop }}
                     {{ $entryInfo->entry_info->troop_role }}
                 </td>
             </tr>
