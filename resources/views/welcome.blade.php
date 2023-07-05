@@ -4,6 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLPR6CVXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PLPR6CVXMM');
+    </script>
 
     <title>{{ config('app.name') }} | HOME</title>
 
@@ -57,8 +69,7 @@
                     <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-500 underline">ログイン</a>
 
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="ml-4 text-gray-700 dark:text-gray-500 underline">ユーザー登録</a>
+                        <a href="{{ route('register') }}" class="ml-4 text-gray-700 dark:text-gray-500 underline">ユーザー登録</a>
                     @endif
                 @endauth
             </div>

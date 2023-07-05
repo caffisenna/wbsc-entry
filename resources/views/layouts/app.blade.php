@@ -5,6 +5,18 @@
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLPR6CVXMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PLPR6CVXMM');
+    </script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
@@ -101,7 +113,8 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                Copyright &copy; <a href="{{ config('app.url') }}">{{ config('app.name') }}</a> ボーイスカウト東京連盟 AIS委員会 / ICT小委員会
+                Copyright &copy; <a href="{{ config('app.url') }}">{{ config('app.name') }}</a> ボーイスカウト東京連盟 AIS委員会 /
+                ICT小委員会
             </div>
         </footer>
     </div>
