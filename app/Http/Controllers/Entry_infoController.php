@@ -93,14 +93,14 @@ class Entry_infoController extends AppBaseController
 
         // 病気項目の処理
         if (isset($input['health_illness_none'])) {
-            if ($input['health_illness_none'] == 'true' && $input['health_illness'] == '') {
+            if ($input['health_illness_none']) {
                 $input['health_illness'] = '特になし';
             }
         }
 
         // アレルギー項目の処理
         if (isset($input['health_memo_none'])) {
-            if ($input['health_memo_none'] == 'true' && $input['health_memo'] == '') {
+            if ($input['health_memo_none']) {
                 $input['health_memo'] = '特になし';
             }
         }
