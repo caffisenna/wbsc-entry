@@ -30,7 +30,7 @@ class InputRegisterd extends Mailable
     public function build()
     {
         return $this->view('emails.input_registerd')
-        ->subject('スカウトコース参加者情報登録のお知らせ')
+        ->subject('指導者訓練 参加申込システム情報登録のお知らせ')
         ->with('name', $this->name);
     }
 }

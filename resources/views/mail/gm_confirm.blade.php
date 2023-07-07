@@ -1,5 +1,5 @@
 <p>{{ $name }} 様</p>
-<p>ボーイスカウト東京連盟 {{ config('app.name') }}から自動送信しています。</p>
+<p>ボーイスカウト東京連盟 指導者訓練 参加申込システム {{ config('app.name') }}から自動送信しています。</p>
 <p>所属団より参加承認が行われましたのでお知らせ致します。</p>
 
 <h3>確認方法</h3>
@@ -9,5 +9,5 @@
 <p></p>
 
 ----<br>
-<a href="{{ config('app.url') }}">ボーイスカウト東京連盟 {{ config('app.name') }}</a><br>
+<a href="{{ config('app.url') }}">ボーイスカウト東京連盟 指導者訓練 参加申込システム {{ config('app.name') }}</a><br>
 <a href="mailto:wb-system@scout.tokyo">wb-system@scout.tokyo</a>

@@ -29,7 +29,7 @@ class TrainerConfirm extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'トレーナー認定完了のお知らせ',
+            subject: '指導者訓練課題 トレーナー認定完了のお知らせ',
         );
     }
 

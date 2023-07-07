@@ -30,7 +30,7 @@ class AisChecked extends Mailable
     public function build()
     {
         return $this->view('emails.ais_checked')
-        ->subject('スカウトコース参加申込 AIS委員会確認のお知らせ')
+        ->subject('指導者訓練参加 地区AIS委員長確認完了のお知らせ')
         ->with('name', $this->name);
     }
 }

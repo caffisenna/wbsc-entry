@@ -31,7 +31,7 @@ class FeeChecked extends Mailable
     public function build()
     {
         return $this->view('mail.feechecked')
-            ->subject('入金確認のお知らせ')
+            ->subject('指導者訓練 入金確認のお知らせ')
             ->with('name', $this->name)
             ->with('cat', $this->cat);
     }

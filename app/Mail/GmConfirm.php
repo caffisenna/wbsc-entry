@@ -39,7 +39,7 @@ class GmConfirm extends Mailable
     public function build()
     {
         return $this->view('mail.gm_confirm')
-            ->subject('WB研修所 団承認完了のお知らせ')
+            ->subject('指導者訓練参加 団承認完了のお知らせ')
             ->with('name', $this->name)->with('uuid', $this->uuid);
     }
 

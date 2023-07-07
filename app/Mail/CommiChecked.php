@@ -30,7 +30,7 @@ class CommiChecked extends Mailable
     public function build()
     {
         return $this->view('emails.commi_checked')
-        ->subject('スカウトコース参加申込 地区コミッショナー確認のお知らせ')
+        ->subject('指導者訓練参加 地区コミッショナー推薦完了のお知らせ')
         ->with('name', $this->name);
     }
 }

@@ -32,7 +32,7 @@ class GmRequest extends Mailable
     public function build()
     {
         return $this->view('mail.gm_request')
-            ->subject('WB研修所 参加承認のお願い')
+            ->subject('指導者訓練参加 参加承認のお願い')
             ->with('name', $this->name)->with('uuid', $this->uuid)
             ->with('gm_name', $this->gm_name);
     }
