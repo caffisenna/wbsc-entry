@@ -534,7 +534,7 @@ class AdminEntry_infoController extends AppBaseController
 
     public function accept(Request $request)
     {
-        // 取り消し機能
+        // 参加認定機能
         $uuid = $request['uuid'];
         $cat = $request['cat'];
         $flag = $request['flag'];
@@ -545,7 +545,7 @@ class AdminEntry_infoController extends AppBaseController
             case 'sc':
                 if ($flag == 'accept') {
                     $entryInfo->sc_accepted_at = now();
-                } elseif ($flag == 'deny') {
+                } elseif ($flag == 'reject') {
                     $entryInfo->sc_rejected_at = now();
                 } elseif ($revert == 'true') {
                     $entryInfo->sc_accepted_at = null;
@@ -556,7 +556,7 @@ class AdminEntry_infoController extends AppBaseController
             case 'div':
                 if ($flag == 'accept') {
                     $entryInfo->div_accepted_at = now();
-                } elseif ($flag == 'deny') {
+                } elseif ($flag == 'reject') {
                     $entryInfo->div_rejected_at = now();
                 } elseif ($revert == 'true') {
                     $entryInfo->div_accepted_at = null;
