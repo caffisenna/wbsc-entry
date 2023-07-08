@@ -318,7 +318,7 @@
                             <a href="{{ url('admin/accept?cat=sc&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                                 class="uk-button uk-button-primary"
                                 onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加を承認しますか?')">スカウトコース<br>参加承認</a>
-                            <a href="{{ url('admin/accept?cat=sc&flag=deny') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                            <a href="{{ url('admin/accept?cat=sc&flag=reject') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                                 class="uk-button uk-button-danger"
                                 onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加を否認しますか?')">スカウトコース<br>参加否認</a>
                         @else
@@ -342,7 +342,7 @@
                         <a href="{{ url('admin/accept?cat=div&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-primary"
                             onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加を承認しますか?')">課程別研修参<br>加承認</a>
-                        <a href="{{ url('admin/accept?cat=div&flag=deny') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                        <a href="{{ url('admin/accept?cat=div&flag=reject') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-danger"
                             onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加を否認しますか?')">課程別研修<br>参加否認</a>
                     @else
