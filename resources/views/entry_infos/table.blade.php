@@ -95,7 +95,7 @@
                 @endif
             </td>
         </tr>
-        <tr>
+        {{-- <tr>
             <th>地区AIS委員会確認</th>
             <td>
                 @if (isset($entryInfo->ais_checked_at))
@@ -105,7 +105,7 @@
                     <span class="uk-text-danger"><span uk-icon="comment"></span>未認定(認定をお待ちください)</span>
                 @endif
             </td>
-        </tr>
+        </tr> --}}
         <tr>
             <th>参加認定(スカウトコース)</th>
             <td>
