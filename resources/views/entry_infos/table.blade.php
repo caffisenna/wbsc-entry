@@ -76,7 +76,7 @@
             </td>
         </tr>
         <tr>
-            <th>団の承認</th>
+            <th>団承認</th>
             <td>
                 @if (isset($entryInfo->gm_checked_at))
                     {{ $entryInfo->gm_checked_at->format('Y-m-d') }}
@@ -86,7 +86,7 @@
             </td>
         </tr>
         <tr>
-            <th>地区コミの承認</th>
+            <th>地区コミッショナー推薦</th>
             <td>
                 @if (isset($entryInfo->commi_checked_at))
                     {{ $entryInfo->commi_checked_at->format('Y-m-d') }}
@@ -96,7 +96,7 @@
             </td>
         </tr>
         <tr>
-            <th>地区AIS委員会の認定</th>
+            <th>地区AIS委員会確認</th>
             <td>
                 @if (isset($entryInfo->ais_checked_at))
                     {{ $entryInfo->ais_checked_at->format('Y-m-d') }}<br>
@@ -107,9 +107,27 @@
             </td>
         </tr>
         <tr>
-            <th>参加認定</th>
+            <th>参加認定(スカウトコース)</th>
             <td>
-
+                @if ($entryInfo->sc_accepted_at)
+                    参加認定 {{ $entryInfo->sc_accepted_at }}
+                @elseif($entryInfo->sc_rejected_at)
+                    <span class="uk-text-danger">参加否認</span> {{ $entryInfo->sc_rejected_at }}
+                @else
+                    <span class="uk-text-danger"><span uk-icon="comment"></span>未認定(認定をお待ちください)</span>
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <th>参加認定(課程別研修)</th>
+            <td>
+                @if ($entryInfo->div_accepted_at)
+                    参加認定 {{ $entryInfo->div_accepted_at }}
+                @elseif($entryInfo->div_rejected_at)
+                    <span class="uk-text-danger">参加否認</span> {{ $entryInfo->div_rejected_at }}
+                @else
+                    <span class="uk-text-danger"><span uk-icon="comment"></span>未認定(認定をお待ちください)</span>
+                @endif
             </td>
         </tr>
         @unless ($entryInfo->sc_number == 'done')
@@ -117,7 +135,7 @@
                 <th>スカウトコース参加費</th>
                 <td>
                     @if ($entryInfo->sc_fee_checked_at == null)
-                        <span class="uk-text-warning">未確認(振込案内をお待ちください)</span>
+                        <span class="uk-text-danger">未確認(振込案内をお待ちください)</span>
                     @elseif($entryInfo->sc_fee_checked_at)
                         <span class="uk-text-success">納入済み</span>
                     @endif
@@ -128,7 +146,7 @@
             <th>課程別研修参加費</th>
             <td>
                 @if ($entryInfo->div_fee_checked_at == null)
-                    <span class="uk-text-warning">未確認(振込案内をお待ちください)</span>
+                    <span class="uk-text-danger">未確認(振込案内をお待ちください)</span>
                 @elseif($entryInfo->div_fee_checked_at)
                     <span class="uk-text-success">納入済み</span>
                 @endif
