@@ -371,7 +371,8 @@ class AdminEntry_infoController extends AppBaseController
 
         // 確認メール送信
         $sendto = $user->email;
-        Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+        // 2023/07/08 地区AIS委員長のチェック結果は参加者に通知しないように仕様変更
+        // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
 
 
         // 名前+flashメッセージを返して戻る
