@@ -359,7 +359,7 @@
                 </td>
             </tr>
             <tr>
-                <th>特殊操作</th>
+                <th>地区コミ機能</th>
                 <td>
                     <ul class="uk-list">
                         <li><a
@@ -369,7 +369,7 @@
                                 href="{{ url('/commi/trainer_request?id=') }}{{ $entryInfo->entry_info->uuid }}">トレーナーへ認定依頼</a>
                         </li>
                         <li><a href="{{ url('/commi/commi_check?id=') }}{{ $entryInfo->entry_info->id }}"
-                                onclick="return confirm('{{ $entryInfo->name }}さんを承認しますか?')">地区コミ認定をする</a></li>
+                                onclick="return confirm('{{ $entryInfo->name }}さんを推薦しますか?')">地区コミ推薦をする</a></li>
                         <li><a
                                 href="{{ url('/commi/commi_comment?id=') }}{{ $entryInfo->entry_info->user_id }}">副信書を作成する</a>
                         </li>
