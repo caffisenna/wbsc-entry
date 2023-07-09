@@ -42,6 +42,16 @@ class FaceUploadController extends Controller
         // $uuid = $request['uuid'];
         $file = $request->file('file');
         $name = $file->hashName();
+
+        // 画像のリサイズ 横幅600pxに
+        $file = \Image::make($file)->orientate()->resize(
+            600,
+            null,
+            function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            }
+        );
         // $extension = $file->extension();
 
         // ユーザーテーブルにファイル名を保存
@@ -49,10 +59,10 @@ class FaceUploadController extends Controller
         $user->face_picture = $name;
         $user->save();
 
-        $path = 'public/picture'; // 画像保存先
+        $path = 'picture'; // 画像保存先
 
         // ファイル保存
-        $request->file('file')->storeAs($path, $name);
+        $file->save(public_path('/storage/' . $path . '/' . $name));
 
         $slack = new SlackPost();
         $name = $user->name;
