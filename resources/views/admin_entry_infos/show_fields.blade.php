@@ -176,7 +176,7 @@
         </tr>
         @if (Auth::user()->is_admin)
             <tr>
-                <th><span class="uk-text-danger">団承認取り消し</th>
+                <th><span class="uk-text-danger">団承認取消</th>
                 <td>
                     @if (isset($entryInfo->entry_info->gm_checked_at))
                         <a href="{{ url('admin/revert?cat=dan') }}&uuid={{ $entryInfo->entry_info->uuid }}"
@@ -189,9 +189,9 @@
                 </td>
             </tr>
             <tr>
-                <th><span class="uk-text-danger">トレーナー認定取り消し</th>
+                <th><span class="uk-text-danger">トレーナー認定取消</th>
                 <td>
-                    @if ($entryInfo->entry_info->assignment_sc == 'up' || $entryInfo->entry_info->assignment_division == 'up')
+                    @if ($entryInfo->entry_info->trainer_sc_checked_at || $entryInfo->entry_info->trainer_division_checked_at)
                         <a href="{{ url('admin/revert?cat=trainer') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-danger"
                             onclick="return confirm('{{ $entryInfo->name }}さんのトレーナー認定を取り消しますか?\n(スカウトコース、課程別両方の認定が取り消されます。)')">取り消し</a>
@@ -209,14 +209,14 @@
                                 @endif
                             </li>
                         </ul>
-                    @elseif(empty($entryInfo->entry_info->assignment_sc) && empty($entryInfo->entry_info->assignment_division))
+                    @elseif(empty($entryInfo->entry_info->trainer_sc_checked_at) && empty($entryInfo->entry_info->trainer_division_checked_at))
                         未認定
                     @endif
 
                 </td>
             </tr>
             <tr>
-                <th><span class="uk-text-danger">地区コミ認定取り消し</th>
+                <th><span class="uk-text-danger">地区コミ認定取消</th>
                 <td>
                     @if ($entryInfo->entry_info->commi_checked_at)
                         <a href="{{ url('admin/revert?cat=commi') }}&uuid={{ $entryInfo->entry_info->uuid }}"
@@ -229,7 +229,7 @@
                 </td>
             </tr>
             <tr>
-                <th><span class="uk-text-danger">地区AIS確認取り消し</th>
+                <th><span class="uk-text-danger">地区AIS確認取消</th>
                 <td>
                     @if (isset($entryInfo->entry_info->ais_checked_at))
                         <a href="{{ url('admin/revert?cat=ais') }}&uuid={{ $entryInfo->entry_info->uuid }}"
