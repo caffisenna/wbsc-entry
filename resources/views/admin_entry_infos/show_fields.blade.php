@@ -95,7 +95,7 @@
             <tr>
                 <th>その他の研修所履歴(1)</th>
                 <td>
-                    {{ $entryInfo->entry_info->wb_basic1_category }}課程 {{ $entryInfo->entry_info->wb_basic1_number }}期
+                    {{ $entryInfo->entry_info->wb_basic1_category }} {{ $entryInfo->entry_info->wb_basic1_number }}期
                     ({{ $entryInfo->entry_info->wb_basic1_date }}修了)
                 </td>
             </tr>
@@ -104,7 +104,7 @@
         @if (isset($entryInfo->entry_info->wb_basic2_category))
             <tr>
                 <th>その他の研修所履歴(2)</th>
-                <td>{{ $entryInfo->entry_info->wb_basic2_category }}課程 {{ $entryInfo->entry_info->wb_basic2_number }}期
+                <td>{{ $entryInfo->entry_info->wb_basic2_category }} {{ $entryInfo->entry_info->wb_basic2_number }}期
                     ({{ $entryInfo->entry_info->wb_basic2_date }}修了)</td>
             </tr>
         @endif
@@ -112,7 +112,7 @@
         @if (isset($entryInfo->entry_info->wb_basic3_category))
             <tr>
                 <th>その他の研修所履歴(3)</th>
-                <td>{{ $entryInfo->entry_info->wb_basic3_category }}課程 {{ $entryInfo->entry_info->wb_basic3_number }}期
+                <td>{{ $entryInfo->entry_info->wb_basic3_category }} {{ $entryInfo->entry_info->wb_basic3_number }}期
                     ({{ $entryInfo->entry_info->wb_basic3_date }}修了)</td>
             </tr>
         @endif
@@ -120,7 +120,7 @@
         @if (isset($entryInfo->entry_info->wb_adv1_category))
             <tr>
                 <th>その他の実修所履歴(1)</th>
-                <td>{{ $entryInfo->entry_info->wb_adv1_category }}課程 {{ $entryInfo->entry_info->wb_adv1_number }}期
+                <td>{{ $entryInfo->entry_info->wb_adv1_category }} {{ $entryInfo->entry_info->wb_adv1_number }}期
                     ({{ $entryInfo->entry_info->wb_adv1_date }}修了)</td>
             </tr>
         @endif
@@ -128,7 +128,7 @@
         @if (isset($entryInfo->entry_info->wb_adv2_category))
             <tr>
                 <th>その他の実修所履歴(2)</th>
-                <td>{{ $entryInfo->entry_info->wb_adv2_category }}課程 {{ $entryInfo->entry_info->wb_adv2_number }}期
+                <td>{{ $entryInfo->entry_info->wb_adv2_category }} {{ $entryInfo->entry_info->wb_adv2_number }}期
                     ({{ $entryInfo->entry_info->wb_adv2_date }}修了)</td>
             </tr>
         @endif
@@ -136,7 +136,7 @@
         @if (isset($entryInfo->entry_info->wb_adv3_category))
             <tr>
                 <th>その他の実修所履歴(3)</th>
-                <td>{{ $entryInfo->entry_info->wb_adv3_category }}課程 {{ $entryInfo->entry_info->wb_adv3_number }}期
+                <td>{{ $entryInfo->entry_info->wb_adv3_category }} {{ $entryInfo->entry_info->wb_adv3_number }}期
                     ({{ $entryInfo->entry_info->wb_adv3_date }}修了)</td>
             </tr>
         @endif
@@ -216,12 +216,12 @@
                 </td>
             </tr>
             <tr>
-                <th><span class="uk-text-danger">地区コミ認定取消</th>
+                <th><span class="uk-text-danger">地区コミ推薦取消</th>
                 <td>
                     @if ($entryInfo->entry_info->commi_checked_at)
                         <a href="{{ url('admin/revert?cat=commi') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-danger"
-                            onclick="return confirm('{{ $entryInfo->name }}さんの地区コミ確認を取り消しますか?')">取り消し</a>
+                            onclick="return confirm('{{ $entryInfo->name }}さんの地区コミ推薦を取り消しますか?')">取り消し</a>
                         {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
                     @else
                         地区コミ未確認
