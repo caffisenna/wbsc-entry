@@ -498,8 +498,8 @@ class AdminEntry_infoController extends AppBaseController
                 $entryInfo->trainer_sc_name = null;
                 $entryInfo->trainer_division_checked_at = null;
                 $entryInfo->trainer_division_name = null;
-                $entryInfo->assignment_sc = null;
-                $entryInfo->assignment_division = null;
+                // $entryInfo->assignment_sc = null;
+                // $entryInfo->assignment_division = null;
                 $cat_name = 'トレーナー認定';
                 break;
             case 'commi':
