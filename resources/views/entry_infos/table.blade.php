@@ -91,7 +91,7 @@
                 @if (isset($entryInfo->commi_checked_at))
                     {{ $entryInfo->commi_checked_at->format('Y-m-d') }}
                 @else
-                    <span class="uk-text-danger"><span uk-icon="comment"></span>未承認(承認をお待ちください)</span>
+                    <span class="uk-text-danger"><span uk-icon="comment"></span>未承認(推薦をお待ちください)</span>
                 @endif
             </td>
         </tr>
@@ -135,7 +135,7 @@
                 <th>スカウトコース参加費</th>
                 <td>
                     @if ($entryInfo->sc_fee_checked_at == null)
-                        <span class="uk-text-danger">未確認(振込案内をお待ちください)</span>
+                        <span class="uk-text-danger"><span uk-icon="comment"></span>未確認(振込案内をお待ちください)</span>
                     @elseif($entryInfo->sc_fee_checked_at)
                         <span class="uk-text-success">納入済み</span>
                     @endif
@@ -146,7 +146,7 @@
             <th>課程別研修参加費</th>
             <td>
                 @if ($entryInfo->div_fee_checked_at == null)
-                    <span class="uk-text-danger">未確認(振込案内をお待ちください)</span>
+                    <span class="uk-text-danger"><span uk-icon="comment"></span>未確認(振込案内をお待ちください)</span>
                 @elseif($entryInfo->div_fee_checked_at)
                     <span class="uk-text-success">納入済み</span>
                 @endif
@@ -161,12 +161,15 @@
                     </a>
                     <a href="{{ route('entryInfos.show', [$entryInfo->id]) }}"
                         class='uk-button uk-button-default uk-button-small'>
-                        <span uk-icon="eye"></span>申込内容の確認
+                        申込内容の確認
                     </a>
-                    @unless (isset($entryInfo->ais_checked_at))
+                    @unless (isset($entryInfo->gm_checked_at) ||
+                            isset($entryInfo->trainer_sc_checked_at) ||
+                            isset($entryInfo->trainer_division_checked_at))
                         <a href="{{ route('entryInfos.edit', [$entryInfo->id]) }}"
-                            class='uk-button uk-button-default uk-button-small'><span
-                                uk-icon="icon: file-edit"></span>申込内容の修正</a>
+                            class='uk-button uk-button-default uk-button-small'>申込内容の修正</a>
+                    @else
+                        <button class="uk-button uk-button-default" disabled uk-tooltip="団承認かトレーナー認定が完了した後はデータの修正ができません。"><span uk-icon="lock"></span>修正できません</button>
                     @endunless
                 </div>
                 {!! Form::close() !!}
