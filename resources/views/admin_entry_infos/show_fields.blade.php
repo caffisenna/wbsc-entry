@@ -17,6 +17,14 @@
             <td>{{ $entryInfo->name }}</td>
         </tr>
         <tr>
+            <th>写真</th>
+            <td>
+                @if ($entryInfo->face_picture)
+                    <img src="{{ url('/storage/picture/') }}{{ '/' . $entryInfo->face_picture }}" width="100px">
+                @endif
+            </td>
+        </tr>
+        <tr>
             <th>Email</th>
             <td>{{ $entryInfo->email }}</td>
         </tr>
