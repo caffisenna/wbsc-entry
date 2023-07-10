@@ -26,7 +26,9 @@
         <tr>
             <th>課程別回数</th>
             <td>
-                @if ($entryInfo->division_number)
+                @if ($entryInfo->division_number == 'etc')
+                    その他
+                @elseif ($entryInfo->division_number)
                     {{ $entryInfo->division_number }}回
                 @endif
             </td>

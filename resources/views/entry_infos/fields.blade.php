@@ -53,6 +53,13 @@
                                 old('division_number') == $divisionlist) selected @endif>
                             {{ $divisionlist }}回</option>
                     @endforeach
+
+                    {{-- その他対応 --}}
+                    @php
+                        $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
+                    @endphp
+                    <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>その他</option>
+                    {{-- その他対応 --}}
                 </select>
                 @error('division_number')
                     <div class="error text-danger">{{ $message }}</div>

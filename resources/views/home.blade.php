@@ -52,8 +52,13 @@
                     </tr>
                     @foreach ($div_count as $val)
                         <tr>
-                            <td><a
-                                    href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>
+                            <td>
+                                @if ($val->division_number == 'etc')
+                                    <a href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">その他</a>
+                                @else
+                                    <a
+                                        href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>
+                                @endif
                             </td>
                             <td>{{ $val->count_division_number }}</td>
                             <td><a href="{{ route('admin_export') }}?division={{ $val->division_number }}"

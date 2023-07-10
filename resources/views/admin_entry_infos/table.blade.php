@@ -110,7 +110,12 @@
                                         class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)</span>
                                 @endif
                             </td>
-                            <td>{{ $entryInfo->entry_info->division_number }}回<br>
+                            <td>
+                                @if ($entryInfo->entry_info->division_number == 'etc')
+                                    その他<br>
+                                @else
+                                    {{ $entryInfo->entry_info->division_number }}回<br>
+                                @endif
                                 @if ($entryInfo->entry_info->assignment_division)
                                     <span class=" uk-text-success">課題済</span>
                                 @else

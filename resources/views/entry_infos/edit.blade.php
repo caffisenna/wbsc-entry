@@ -26,7 +26,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('更新する', ['class' => 'btn btn-primary']) !!}
+                {!! Form::submit('更新する', ['class' => 'btn btn-primary' , 'onclick' => 'window.onbeforeunload=null']) !!}
                 <a href="{{ route('entryInfos.index') }}" class="btn btn-default">キャンセル</a>
             </div>
 
