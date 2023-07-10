@@ -75,7 +75,7 @@
                 <th>氏名</th>
                 <th>地区</th>
                 <th>所属</th>
-                <th>AIS委員会認定</th>
+                <th>AIS委員会確認</th>
                 <th>参加費確認</th>
             </tr>
         </thead>
