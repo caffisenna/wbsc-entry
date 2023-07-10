@@ -112,7 +112,7 @@
                             </td>
                             <td>
                                 @if ($entryInfo->entry_info->division_number == 'etc')
-                                    その他<br>
+                                    それ以外<br>
                                 @else
                                     {{ $entryInfo->entry_info->division_number }}回<br>
                                 @endif

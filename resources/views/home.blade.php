@@ -54,7 +54,7 @@
                         <tr>
                             <td>
                                 @if ($val->division_number == 'etc')
-                                    <a href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">その他</a>
+                                    <a href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">それ以外</a>
                                 @else
                                     <a
                                         href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>

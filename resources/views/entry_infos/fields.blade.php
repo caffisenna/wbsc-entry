@@ -58,7 +58,7 @@
                     @php
                         $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
                     @endphp
-                    <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>その他</option>
+                    <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
                     {{-- その他対応 --}}
                 </select>
                 @error('division_number')
