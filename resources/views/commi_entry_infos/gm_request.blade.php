@@ -19,10 +19,11 @@
 
         <div class="clearfix"></div>
         <p class="uk-text">{{ $userinfo->user->name }}さんについて、団委員長に承認依頼のメールを送付します。<br>
-            下記フォームに団委員長の氏名、メールアドレスを入力してください。</p>
+            下記フォームに団委員長の氏名、メールアドレスを入力してください。<br>
+            メール以外で送信する場合は、ページ下部をご参照下さい。</p>
 
+        <h3>メールで依頼する</h3>
         <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">
-
             <form method="POST" action="{{ route('gm_request_send') }}">
                 @csrf
                 <div class="uk-margin">
@@ -47,5 +48,38 @@
             </form>
         </div>
 
+        <h3>メール以外の方法で依頼する</h3>
+        <ol>
+            <li><button onclick="copyToClipboard()" class="uk-button uk-button-primary">団承認のURLをコピー</button>をクリックする
+            </li>
+            <li>URLがクリップボードにコピーされるので、チャットアプリなどに貼り付けて送信する</li>
+        </ol>
+        <span class="uk-text-danger">コピーしたURLはメーリングリストやグループチャットなどで送付することは厳禁とします。<br>
+            必ず該当者本人にのみ通知できるようにご注意ください。</span>
+
     </div>
 @endsection
+
+<script>
+    function copyToClipboard() {
+        // コピーする文字列を取得
+        var text = "{{ url("/confirm/gm?uuid=$userinfo->uuid") }}";
+
+        // テキストエリアを作成してコピー用のテキストを設定
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+
+        // テキストエリアの選択範囲を設定
+        textarea.select();
+
+        // コピー操作を実行
+        document.execCommand("copy");
+
+        // テキストエリアを削除
+        document.body.removeChild(textarea);
+
+        // コピー完了のメッセージを表示（任意）
+        alert("団承認のURLをクリップボードにコピーしました: " + text);
+    }
+</script>
