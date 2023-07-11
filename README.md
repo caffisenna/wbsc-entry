@@ -1,6 +1,6 @@
 # AISES 指導者研修申込システム　
 
-## Dev enviroments
+## Dev environments
 
 ### Framework
 [Laravel]('https://github.com/laravel/framework)
@@ -29,7 +29,7 @@ Server version: 8.0.31-0ubuntu0.20.04.2 (Ubuntu)
 2. run `composer install`
 
 ## Documentation
-No docs Avaliable.
+No docs avaliable.
 
 ## Contributor
 taichi.tadano@gmail.com
