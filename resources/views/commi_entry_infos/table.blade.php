@@ -7,7 +7,7 @@
                 <th>トレーナー認定</th>
                 <th>団委員長</th>
                 <th>地区コミ</th>
-                <th>副信書</th>
+                <th>副申請書</th>
                 <th>申込書</th>
             </tr>
         </thead>
@@ -54,7 +54,7 @@
                             @endif
                         </td>
                         <td><a href="{{ url("/commi/commi_comment?id=$entryInfo->id") }}"
-                                class="uk-button uk-button-small uk-button-primary">副信書</a></td>
+                                class="uk-button uk-button-small uk-button-primary">副申請書</a></td>
                         <td>
                             <div class='btn-group'>
                                 <a href="{{ url('/commi/pdf/?id=') }}{{ $entryInfo->entry_info->user_id }}"

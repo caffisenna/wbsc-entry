@@ -269,7 +269,7 @@ class CommiEntry_infoController extends AppBaseController
         $userinfo->additional_comment = $input['comment'];
         $userinfo->save();
 
-        Flash::success($userinfo->user->name . 'さんの副信書を作成しました。');
+        Flash::success($userinfo->user->name . 'さんの副申請書を作成しました。');
 
         $entryInfos = User::whereHas('entry_info', function ($query) {
             $query->where('district', Auth::user()->is_commi);

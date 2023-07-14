@@ -313,7 +313,7 @@
         </tr>
         @if ($entryInfo->entry_info->additional_comment)
             <tr>
-                <th>副信書</th>
+                <th>副申請書</th>
                 <td>{{ $entryInfo->entry_info->additional_comment }}</td>
             </tr>
         @endif
@@ -379,7 +379,7 @@
                         <li><a href="{{ url('/commi/commi_check?id=') }}{{ $entryInfo->entry_info->id }}"
                                 onclick="return confirm('{{ $entryInfo->name }}さんを推薦しますか?')">地区コミ推薦をする</a></li>
                         <li><a
-                                href="{{ url('/commi/commi_comment?id=') }}{{ $entryInfo->entry_info->user_id }}">副信書を作成する</a>
+                                href="{{ url('/commi/commi_comment?id=') }}{{ $entryInfo->entry_info->user_id }}">副申請書を作成する</a>
                         </li>
                     </ul>
 

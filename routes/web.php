@@ -92,7 +92,7 @@ Route::middleware('verified')->group(function () {
         Route::post('/trainer_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'trainer_request_send'])->name('trainer_request_send');
         Route::get('/gm_request', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request'])->name('gm_request');
         Route::post('/gm_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request_send'])->name('gm_request_send');
-        Route::get('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment'])->name('commi_comment'); // 副信書
-        Route::post('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment_post'])->name('commi_comment_post'); // 副信書
+        Route::get('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment'])->name('commi_comment'); // 副申請書
+        Route::post('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment_post'])->name('commi_comment_post'); // 副申請書
     });
 });
