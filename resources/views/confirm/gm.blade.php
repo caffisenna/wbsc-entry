@@ -58,8 +58,183 @@
                     @else
                         スカウトコース {{ $userinfo->sc_number }}期<br>
                     @endif
-                    課程別研修 {{ $userinfo->division_number }}回
+                    @unless ($userinfo->division_number == 'etc')
+                        課程別研修 {{ $userinfo->division_number }}回
+                    @else
+                        課程別研修 <span class="uk-text-warning">次回以降(開催予定以外)</span>
+                    @endunless
                 </td>
+            </tr>
+            <tr>
+                <th>生年月日</th>
+                <td>{{ $userinfo->birthday->format('Y年m月d日') }}
+                    ({{ \Carbon\Carbon::parse($userinfo->birthday)->age }}才)</td>
+            </tr>
+            <tr>
+                <th>登録番号</th>
+                <td>{{ $userinfo->bs_id }}</td>
+            </tr>
+            <tr>
+                <th>所属</th>
+                <td>{{ $userinfo->prefecture }}連盟 {{ $userinfo->district }}地区 {{ $userinfo->dan }}</td>
+            </tr>
+
+            <tr>
+                <th>所属隊・役務</th>
+                <td>{{ $userinfo->troop }} {{ $userinfo->troop_role }}</td>
+            </tr>
+
+            <tr>
+                <th>ケータイ</th>
+                <td>{{ $userinfo->cell_phone }}</td>
+            </tr>
+
+            <tr>
+                <th>住所</th>
+                <td>{{ $userinfo->zip }}<br>{{ $userinfo->address }}</td>
+            </tr>
+
+            <tr>
+                <th>緊急連絡先</th>
+                <td>【氏名:】 {{ $userinfo->emer_name }}({{ $userinfo->emer_relation }})<br>
+                    【連絡先】 {{ $userinfo->emer_phone }}
+                </td>
+            </tr>
+
+            @if (isset($userinfo->district_role))
+                <tr>
+                    <th>地区役務</th>
+                    <td>{{ $userinfo->district_role }}</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->prefecture_role))
+                <tr>
+                    <th>県連役務</th>
+                    <td>{{ $userinfo->prefecture_role }}</td>
+                </tr>
+            @endif
+
+            <tr>
+                <th>スカウトキャンプ研修会</th>
+                <td>{{ $userinfo->scout_camp }}</td>
+            </tr>
+
+            <tr>
+                <th>ボーイスカウト講習会</th>
+                <td>{{ $userinfo->bs_basic_course }}</td>
+            </tr>
+
+            @if (isset($userinfo->wb_basic1_category))
+                <tr>
+                    <th>その他の研修所履歴(1)</th>
+                    <td>
+                        {{ $userinfo->wb_basic1_category }}課程 {{ $userinfo->wb_basic1_number }}期
+                        ({{ $userinfo->wb_basic1_date }}修了)
+                    </td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_basic2_category))
+                <tr>
+                    <th>その他の研修所履歴(2)</th>
+                    <td>{{ $userinfo->wb_basic2_category }}課程 {{ $userinfo->wb_basic2_number }}期
+                        ({{ $userinfo->wb_basic2_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_basic3_category))
+                <tr>
+                    <th>その他の研修所履歴(3)</th>
+                    <td>{{ $userinfo->wb_basic3_category }}課程 {{ $userinfo->wb_basic3_number }}期
+                        ({{ $userinfo->wb_basic3_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_basic4_category))
+                <tr>
+                    <th>その他の研修所履歴(4)</th>
+                    <td>{{ $userinfo->wb_basic4_category }}課程 {{ $userinfo->wb_basic4_number }}期
+                        ({{ $userinfo->wb_basic4_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_basic5_category))
+                <tr>
+                    <th>その他の研修所履歴(5)</th>
+                    <td>{{ $userinfo->wb_basic5_category }}課程 {{ $userinfo->wb_basic5_number }}期
+                        ({{ $userinfo->wb_basic5_date }}修了)</td>
+                </tr>
+            @endif
+
+
+            @if (isset($userinfo->wb_adv1_category))
+                <tr>
+                    <th>その他の実修所履歴(1)</th>
+                    <td>{{ $userinfo->wb_adv1_category }}課程 {{ $userinfo->wb_adv1_number }}期
+                        ({{ $userinfo->wb_adv1_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_adv2_category))
+                <tr>
+                    <th>その他の実修所履歴(2)</th>
+                    <td>{{ $userinfo->wb_adv2_category }}課程 {{ $userinfo->wb_adv2_number }}期
+                        ({{ $userinfo->wb_adv2_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_adv3_category))
+                <tr>
+                    <th>その他の実修所履歴(3)</th>
+                    <td>{{ $userinfo->wb_adv3_category }}課程 {{ $userinfo->wb_adv3_number }}期
+                        ({{ $userinfo->wb_adv3_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_adv4_category))
+                <tr>
+                    <th>その他の実修所履歴(4)</th>
+                    <td>{{ $userinfo->wb_adv4_category }}課程 {{ $userinfo->wb_adv4_number }}期
+                        ({{ $userinfo->wb_adv4_date }}修了)</td>
+                </tr>
+            @endif
+
+            @if (isset($userinfo->wb_adv5_category))
+                <tr>
+                    <th>その他の実修所履歴(5)</th>
+                    <td>{{ $userinfo->wb_adv5_category }}課程 {{ $userinfo->wb_adv5_number }}期
+                        ({{ $userinfo->wb_adv5_date }}修了)</td>
+                </tr>
+            @endif
+
+            <tr>
+                <th>奉仕歴</th>
+                <td>
+                    役務:{{ $userinfo->service_hist1_role }} 期間:{{ $userinfo->service_hist1_term }}<br>
+                    @if (isset($userinfo->service_hist2_role))
+                        役務:{{ $userinfo->service_hist2_role }} 期間:{{ $userinfo->service_hist2_term }}<br>
+                    @endif
+                    @if (isset($userinfo->service_hist3_role))
+                        役務:{{ $userinfo->service_hist3_role }} 期間:{{ $userinfo->service_hist3_term }}<br>
+                    @endif
+                    @if (isset($userinfo->service_hist4_role))
+                        役務:{{ $userinfo->service_hist4_role }} 期間:{{ $userinfo->service_hist4_term }}<br>
+                    @endif
+                    @if (isset($userinfo->service_hist5_role))
+                        役務:{{ $userinfo->service_hist5_role }} 期間:{{ $userinfo->service_hist5_term }}
+                    @endif
+                </td>
+            </tr>
+
+            <tr>
+                <th>現在治療中の病気</th>
+                <td>{{ $userinfo->health_illness }}</td>
+            </tr>
+
+            <tr>
+                <th>健康上で不安なことなど</th>
+                <td>{{ $userinfo->health_memo }}</td>
             </tr>
         </table>
         <h3>課題研修</h3>
