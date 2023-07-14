@@ -124,7 +124,8 @@
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400">
-                                <a href="#">ガイドのURL</a>
+                                <a href="https://drive.google.com/file/d/1EckqQNrQStqHOTdVbaDUSvi1YXIBWdX_/view?usp=sharing"
+                                    target="_blank">参加者マニュアル</a>
                             </div>
                         </div>
                     </div>
