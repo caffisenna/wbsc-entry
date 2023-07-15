@@ -90,6 +90,12 @@
                 <p>申込一覧</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ url('/howto_commi') }}"
+                class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
+                <p>使い方ガイド</p>
+            </a>
+        </li>
     @endif
 
 @endauth
