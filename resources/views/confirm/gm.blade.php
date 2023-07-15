@@ -74,15 +74,6 @@
                 <th>登録番号</th>
                 <td>{{ $userinfo->bs_id }}</td>
             </tr>
-            <tr>
-                <th>所属</th>
-                <td>{{ $userinfo->prefecture }}連盟 {{ $userinfo->district }}地区 {{ $userinfo->dan }}</td>
-            </tr>
-
-            <tr>
-                <th>所属隊・役務</th>
-                <td>{{ $userinfo->troop }} {{ $userinfo->troop_role }}</td>
-            </tr>
 
             <tr>
                 <th>ケータイ</th>
