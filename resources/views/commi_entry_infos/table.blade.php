@@ -23,8 +23,17 @@
                             <br>
                             {{ $entryInfo->entry_info->dan }}
                         </td>
-                        <td>{{ $entryInfo->entry_info->sc_number }}期<br>
-                            {{ $entryInfo->entry_info->division_number }}回
+                        <td>
+                            @unless ($entryInfo->entry_info->sc_number == 'done')
+                                {{ $entryInfo->entry_info->sc_number }}期<br>
+                            @else
+                            <span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}期(済)</span><br>
+                            @endunless
+                            @unless ($entryInfo->entry_info->division_number == 'etc')
+                                {{ $entryInfo->entry_info->division_number }}回
+                            @else
+                                <span class="uk-text-warning">それ以外</span>
+                            @endunless
                         </td>
                         @if (empty($entryInfo->entry_info->trainer_sc_checked_at) ||
                                 empty($entryInfo->entry_info->trainer_sc_name) ||
