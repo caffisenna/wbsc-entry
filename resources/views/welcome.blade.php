@@ -118,14 +118,19 @@
                         <div class="flex items-center">
                             <div class="flex items-center">
                                 <span uk-icon="user"></span>
-                                <span class="uk-text-large text-gray-900 dark:text-white">使い方</span>
+                                <span class="uk-text-large text-gray-900 dark:text-white">使い方ガイド</span>
                             </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400">
-                                <a href="https://drive.google.com/file/d/1EckqQNrQStqHOTdVbaDUSvi1YXIBWdX_/view?usp=sharing"
-                                    target="_blank">参加者マニュアル</a>
+                                <ul class="uk-list">
+                                    <li><a href="https://drive.google.com/file/d/1EckqQNrQStqHOTdVbaDUSvi1YXIBWdX_/view?usp=sharing"
+                                            target="_blank">参加者マニュアル</a></li>
+                                    <li><a href="{{ url('/howto_gm') }}">団委員長 編</a></li>
+                                    <li><a href="{{ url('/howto_trainer') }}">トレーナー 編</a></li>
+                                    <li><a href="{{ url('/howto_commi') }}">地区コミッショナー 編</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
