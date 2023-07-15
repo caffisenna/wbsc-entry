@@ -281,7 +281,7 @@
                         </div>
 
                         <input type="hidden" name="uuid" value="{{ $userinfo->uuid }}">
-                        <input type="submit" value="認定する" class="uk-button uk-button-primary uk-width-1-1@m">
+                        <input type="submit" value="承認する" class="uk-button uk-button-primary uk-width-1-1@m">
                         <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m"
                             type="button">キャンセル</button>
                     </form>
