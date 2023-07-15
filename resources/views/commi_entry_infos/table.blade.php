@@ -16,8 +16,11 @@
                 {{-- 申込情報がブランクなら無視 --}}
                 @if (isset($entryInfo->entry_info))
                     <tr>
-                        <td><a
-                                href="{{ route('commi_entryInfos.show', [$entryInfo->id]) }}">{{ $entryInfo->name }}</a><br>
+                        <td><a href="{{ route('commi_entryInfos.show', [$entryInfo->id]) }}">{{ $entryInfo->name }}</a>
+                            @if ($entryInfo->entry_info->additional_comment)
+                                <span uk-icon="comment" class="uk-text-danger"></span>
+                            @endif
+                            <br>
                             {{ $entryInfo->entry_info->dan }}
                         </td>
                         <td>{{ $entryInfo->entry_info->sc_number }}期<br>
