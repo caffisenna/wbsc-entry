@@ -33,6 +33,18 @@ Route::post('/confirm/trainer', [App\Http\Controllers\ConfirmController::class, 
 Route::get('/confirm/gm', [App\Http\Controllers\ConfirmController::class, 'gm_confirm'])->name('gm_confirm');
 Route::post('/confirm/gm', [App\Http\Controllers\ConfirmController::class, 'gm_confirm_post'])->name('gm_confirm_post');
 
+// 使い方ガイド
+Route::get('/howto_gm', function () {
+    return view('howto_gm');        // 団委員長
+});
+
+Route::get('/howto_trainer', function () {
+    return view('howto_trainer');   // トレーナー
+});
+Route::get('/howto_commi', function () {
+    return view('howto_commi');     // 地区コミ
+});
+
 Auth::routes();
 
 Route::get('/email/verify', function () {
