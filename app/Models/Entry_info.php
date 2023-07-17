@@ -219,8 +219,8 @@ class Entry_info extends Model
         'emer_phone' => 'required',
         'scout_camp' => 'required',
         'bs_basic_course' => 'required',
-        'service_hist1_role' => 'required',
-        'service_hist1_term' => 'required',
+        'service_hist1_role' => "required_unless:troop_role,スカウト",
+        'service_hist1_term' => "required_unless:troop_role,スカウト",
         'health_illness_none' => 'required_if:health_illness,null',
         'health_memo_none' => 'required_if:health_memo,null',
     ];
