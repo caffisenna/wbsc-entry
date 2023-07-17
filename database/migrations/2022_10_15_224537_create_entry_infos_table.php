@@ -57,8 +57,8 @@ class CreateEntryInfosTable extends Migration
             $table->string('wb_adv3_category')->nullable();
             $table->string('wb_adv3_number')->nullable();
             $table->string('wb_adv3_date')->nullable();
-            $table->string('service_hist1_role');               // 直近5年の奉仕履歴(役務)
-            $table->string('service_hist1_term');               // 直近5年の奉仕履歴(期間)
+            $table->string('service_hist1_role')->nullable();   // 直近5年の奉仕履歴(役務)
+            $table->string('service_hist1_term')->nullable();   // 直近5年の奉仕履歴(期間)
             $table->string('service_hist2_role')->nullable();
             $table->string('service_hist2_term')->nullable();
             $table->string('service_hist3_role')->nullable();
