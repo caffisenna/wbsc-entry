@@ -121,6 +121,7 @@ class Entry_info extends Model
         'ais_checked_at',
         'certification_sc',
         'certification_div',
+        'order',
     ];
 
     /**
@@ -191,6 +192,7 @@ class Entry_info extends Model
         'trainer_sc_name' => 'string',
         'trainer_division_checked_at' => 'date',
         'trainer_division_name' => 'string',
+        'order' => 'string',
     ];
 
     /**
