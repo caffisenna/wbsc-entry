@@ -142,7 +142,7 @@ https://wbsc.scout.tokyo/confirm/gm?uuid=**********************にアクセス�
         </ul>
 
         <h3><a id="order">地区内優先順位</a></h3>
-        <p class="">再度メニューから <span class="uk-text-primary">[優先順位]</span> をクリックすると画面が遷移します。</p>
+        <p class="">サイドメニューから <span class="uk-text-primary">[優先順位]</span> をクリックすると画面が遷移します。</p>
         <img src="{{ url('/images/howto/howto-19.gif') }}" width="600px">
         <p class="">このように行をドラッグすると入れ換えをすることができます。<br>
             画面で表示されている順番に優先順位がデータベースに保存されます。<br>
