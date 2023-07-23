@@ -22,6 +22,7 @@
             <li><a href="#commi">地区コミッショナーの推薦</a></li>
             <li><a href="#add_comment">副申請書の作成</a></li>
             <li><a href="#details">参加者詳細画面</a></li>
+            <li><a href="#order">地区内優先順位</a></li>
         </ul>
 
         <h3><a id="lock">参加者データのロックと編集権限</a></h3>
@@ -139,5 +140,14 @@ https://wbsc.scout.tokyo/confirm/gm?uuid=**********************にアクセス�
             <li>【課程別研修課題】課程別研修の課題がアップロードされていれば課題PDFファイルへのリンクを表示</li>
             <li>【副申請書】副申請書が入力されていれば内容を表示</li>
         </ul>
+
+        <h3><a id="order">地区内優先順位</a></h3>
+        <p class="">再度メニューから <span class="uk-text-primary">[優先順位]</span> をクリックすると画面が遷移します。</p>
+        <img src="{{ url('/images/howto/howto-19.gif') }}" width="600px">
+        <p class="">このように行をドラッグすると入れ換えをすることができます。<br>
+            画面で表示されている順番に優先順位がデータベースに保存されます。<br>
+            <span class="uk-text-warning">同じ順位は設定できません。</span>
+        </p>
+
     </div>
 @endsection
