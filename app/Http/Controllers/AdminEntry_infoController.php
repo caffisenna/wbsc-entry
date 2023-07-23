@@ -24,6 +24,7 @@ use App\Mail\FeeChecked;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Http\Util\Slack\SlackPost;
+use App\Mail\AisAccepted;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -591,12 +592,23 @@ class AdminEntry_infoController extends AppBaseController
         }
 
         // 確認メール送信
-        // $sendto = $user->email;
-        // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
+        if ($flag == 'accept' || $flag == 'reject') {
+            $sendto = $user->email;
+            $name = $user->name;
+            Mail::to($sendto)
+                ->cc('ais@scout.tokyo')
+                ->queue(new AisAccepted($name, $flag)); // メールをqueueで送信
+        }
 
 
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name . 'さんの ' . $cat_name . 'の' . $flag_status . 'をしました。<br>参加者に案内メールを送信しました。');
+        if ($flag == 'accept' || $flag == 'reject') {
+            // 承認 or 否認の時
+            Flash::success($user->name . 'さんの ' . $cat_name . 'の' . $flag_status . "をしました。<br>$user->name さんに案内メールを送信しました。");
+        } elseif ($revert == 'true') {
+            // 取消の時
+            Flash::success($user->name . 'さんの ' . $cat_name . 'の' . $flag_status . 'をしました。');
+        }
 
         return back();
     }
