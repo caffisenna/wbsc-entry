@@ -10,7 +10,13 @@
         </tr>
         <tr>
             <th>課程別研修の回数</th>
-            <td>{{ $entryInfo->entry_info->division_number }}回</td>
+            <td>
+                @unless ($entryInfo->entry_info->division_number == 'etc')
+                    {{ $entryInfo->entry_info->division_number }}回
+                @else
+                    それ以外
+                @endunless
+            </td>
         </tr>
         <tr>
             <th>お名前</th>
