@@ -2,11 +2,23 @@
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
             <th>スカウトコースの期数</td>
-            <td>{{ $entryInfo->sc_number }}</td>
+            <td>
+                @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
+                    スカウトコース{{ $entryInfo->sc_number }}期
+                @elseif($entryInfo->sc_number_done)
+                    スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
+                @endif
+            </td>
         </tr>
         <tr>
             <th>課程別研修の回数</th>
-            <td>{{ $entryInfo->division_number }}</td>
+            <td>
+                @unless ($entryInfo->division_number == 'etc')
+                    {{ $entryInfo->division_number }}
+                @else
+                    それ以外
+                @endunless
+            </td>
         </tr>
         <tr>
             <th>お名前</th>
