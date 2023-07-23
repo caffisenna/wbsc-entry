@@ -91,6 +91,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ url('/commi/priority') }}"
+                class="nav-link {{ Request::is('/commi_entryInfos.priority') ? 'active' : '' }}">
+                <p>優先順位</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ url('/howto_commi') }}"
                 class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
                 <p>使い方ガイド</p>

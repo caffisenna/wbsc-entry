@@ -91,10 +91,7 @@ Route::middleware('verified')->group(function () {
         Route::resource('divisionLists', App\Http\Controllers\division_listController::class); // 課程別研修設定
         Route::resource('add_users', App\Http\Controllers\add_userController::class); // ユーザー追加
     });
-    // スタッフ用
-    // Route::prefix('staff')->middleware('can:staff')->group(function () {
-    //     Route::resource('staffplanUploads', App\Http\Controllers\staffplanUploadController::class, ['except' => ['create','edit','show','update']]);
-    // });
+
     // 地区コミ用
     Route::prefix('commi')->middleware('can:commi,admin')->group(function () {
         Route::resource('commi_entryInfos', App\Http\Controllers\CommiEntry_infoController::class);
@@ -106,5 +103,8 @@ Route::middleware('verified')->group(function () {
         Route::post('/gm_request_send', [App\Http\Controllers\CommiEntry_infoController::class, 'gm_request_send'])->name('gm_request_send');
         Route::get('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment'])->name('commi_comment'); // 副申請書
         Route::post('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment_post'])->name('commi_comment_post'); // 副申請書
+        // 以下2行 地区内優先順位ソート
+        Route::get('/priority', [App\Http\Controllers\CommiEntry_infoController::class, 'priority'])->name('priority');
+        Route::post('/priority_sortable',[App\Http\Controllers\CommiEntry_infoController::class, 'priority_sortable'])->name('priority_sortable');
     });
 });

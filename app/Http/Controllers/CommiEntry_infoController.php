@@ -41,7 +41,9 @@ class CommiEntry_infoController extends AppBaseController
         // whereHas構文で子テーブルの条件で絞れる
         $entryInfos = User::whereHas('entry_info', function ($query) {
             $query->where('district', Auth::user()->is_commi);
-        })->with('entry_info')->get();
+        })->with(['entry_info' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }])->get();
 
         return view('commi_entry_infos.index')
             ->with('entryInfos', $entryInfos);
@@ -277,5 +279,35 @@ class CommiEntry_infoController extends AppBaseController
 
         return view('commi_entry_infos.index')
             ->with('entryInfos', $entryInfos);
+    }
+
+    public function priority(Request $request)
+    {
+        // whereHas構文で子テーブルの条件で絞れる
+        $entryInfos = User::whereHas('entry_info', function ($query) {
+            $query->where('district', Auth::user()->is_commi);
+        })->with(['entry_info' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }])->get();
+
+        return view('commi_entry_infos.priority')
+            ->with('entryInfos', $entryInfos);
+    }
+
+    // 優先順位ソート
+    public function priority_sortable(Request $request)
+    {
+        // dd($request);
+        $entryInfos = Entry_info::all();
+
+        foreach ($entryInfos as $entryinfo) {
+            foreach ($request->order as $order) {
+                if ($order['id'] == $entryinfo->id) {
+                    $entryinfo->update(['order' => $order['position']]);
+                }
+            }
+        }
+
+        return response('Update Successfully.', 200);
     }
 }
