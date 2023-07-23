@@ -87,19 +87,19 @@
         <li class="nav-item">
             <a href="{{ route('commi_entryInfos.index') }}"
                 class="nav-link {{ Request::is('commi_entryInfos*') ? 'active' : '' }}">
-                <p>申込一覧</p>
+                <p><span uk-icon="list"></span>申込一覧</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ url('/commi/priority') }}"
                 class="nav-link {{ Request::is('/commi_entryInfos.priority') ? 'active' : '' }}">
-                <p>優先順位</p>
+                <p><span uk-icon="arrow-up"></span>優先順位</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ url('/howto_commi') }}"
                 class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
-                <p>使い方ガイド</p>
+                <p><span uk-icon="file-text"></span>使い方ガイド</p>
             </a>
         </li>
     @endif
