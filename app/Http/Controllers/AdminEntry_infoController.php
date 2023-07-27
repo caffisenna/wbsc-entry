@@ -472,7 +472,7 @@ class AdminEntry_infoController extends AppBaseController
                 $entryinfos = Entry_info::with('user')->orderby('furigana')->get();
             } else {
                 // 修了済みスカウトコースの期数がブランクを拾う
-                $entryinfos = Entry_info::where('sc_number_done', '')->with('user')->orderby('furigana')->get();
+                $entryinfos = Entry_info::where('sc_number_done', null)->with('user')->orderby('furigana')->get();
             }
 
             return view('fee_check.index')
