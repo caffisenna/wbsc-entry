@@ -55,7 +55,7 @@ class Entry_infoController extends AppBaseController
         // 重複入力はブロック
         $entryInfo = Entry_info::where('user_id', Auth::user()->id)->first();
         if ($entryInfo) {
-            Flash::success('既に申込データが存在します。複数の申込をすることはできません。');
+            Flash::error('既に申込データが存在します。複数の申込をすることはできません。');
             return view('home'); // homeにリダイレクト
         }
 
@@ -80,6 +80,14 @@ class Entry_infoController extends AppBaseController
      */
     public function store(CreateEntry_infoRequest $request)
     {
+        // 重複入力はブロック
+        $entryInfo = Entry_info::where('user_id', Auth::user()->id)->first();
+        if ($entryInfo) {
+            Flash::error("既に申込データが存在します。複数の申込をすることはできません。<br>
+            データの修正が必要な場合は修正を行ってください。");
+            return view('home'); // homeにリダイレクト
+        }
+
         $input = $request->all();
 
         $input['user_id'] = Auth::user()->id;
