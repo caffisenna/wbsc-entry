@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>氏名</th>
+                <th>写真</th>
                 <th>参加</th>
                 <th>トレーナー認定</th>
                 <th>団委員長</th>
@@ -24,10 +25,16 @@
                             {{ $entryInfo->entry_info->dan }}
                         </td>
                         <td>
+                            @if ($entryInfo->face_picture)
+                                <img src="{{ url('/storage/picture/') }}/{{ $entryInfo->face_picture }}" alt=""
+                                    width="50px" height="">
+                            @endif
+                        </td>
+                        <td>
                             @unless ($entryInfo->entry_info->sc_number == 'done')
                                 {{ $entryInfo->entry_info->sc_number }}期<br>
                             @else
-                            <span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}期(済)</span><br>
+                                <span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}期(済)</span><br>
                             @endunless
                             @unless ($entryInfo->entry_info->division_number == 'etc')
                                 {{ $entryInfo->entry_info->division_number }}回
