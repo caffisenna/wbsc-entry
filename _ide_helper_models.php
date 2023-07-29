@@ -91,6 +91,7 @@ namespace App\Models{
  * @property string|null $div_rejected_at
  * @property string|null $sc_fee_checked_at
  * @property string|null $div_fee_checked_at
+ * @property string|null $order
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -132,6 +133,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereHealthIllness($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereHealthMemo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info wherePrefecture($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info wherePrefectureRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Entry_info whereScAcceptedAt($value)
