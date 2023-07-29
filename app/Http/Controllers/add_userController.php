@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Createadd_userRequest;
 use App\Http\Requests\Updateadd_userRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\add_user;
 use App\Repositories\add_userRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -62,19 +63,23 @@ class add_userController extends AppBaseController
         $input['password'] = bcrypt($input['password']);
         $user = new User();
 
+        $user = User::create($input);
 
         // 権限
         if ($input['role'] == 'admin') {
             $user->is_admin  = 1;
-            $input['district'] = null;
+            $user->is_staff = null;
+            $user->is_commi = null;
         } elseif ($input['role'] == 'AIS') {
-            $input['is_staff'] = $input['district'];
+            $user->is_admin  = 1;
+            $user->is_staff = $input['district'];
+            $user->is_commi = null;
         } elseif ($input['role'] == 'commi') {
-            $input['is_commi'] = $input['district'];
+            $user->is_admin  = 0;
+            $user->is_staff  = null;
+            $user->is_commi = $input['district'];
         }
 
-
-        $user = User::create($input);
         $user->save();
 
         Flash::success('アカウントを作成しました。対象者に通知をしてください。');
@@ -141,18 +146,57 @@ class add_userController extends AppBaseController
      */
     public function destroy($id)
     {
-        $addUser = $this->addUserRepository->find($id);
+        $user = User::find($id);
 
-        if (empty($addUser)) {
-            Flash::error('Add User not found');
+        if (empty($user)) {
+            Flash::error('対象が見つかりません');
 
-            return redirect(route('addUsers.index'));
+            return redirect(route('add_users.index'));
         }
 
-        $this->addUserRepository->delete($id);
+        $user->delete($id);
 
-        Flash::success('Add User deleted successfully.');
+        Flash::success($user->name . ' のアカウントを削除しました');
 
-        return redirect(route('addUsers.index'));
+        return redirect(route('add_users.index'));
+    }
+
+    public function pass_reset(Request $request)
+    {
+        //  id判定でリダイレクト
+        if (isset($request->id)) {
+            $id = $request->id;
+            $user = User::find($id);
+            if (empty($user)) {
+                Flash::error('対象が見つかりません');
+
+                return redirect(route('add_users.index'));
+            }
+        } else {
+            Flash::error('対象が見つかりません');
+            return redirect(route('add_users.index'));
+        }
+
+        // ここでリセット処理か判定する
+        if ($request['confirm'] == 'true') {
+            // ここにリセット処理を書く
+            $user->password = bcrypt($request['new_password']);
+            $user->save();
+
+            Flash::success($user->name . ' のパスワードを更新しました');
+            return redirect(route('add_users.index'));
+        } else {
+            // create new password
+            $length = 8;
+            $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            $new_password = '';
+
+            for ($i = 0; $i < $length; $i++) {
+                $index = random_int(0, strlen($characters) - 1);
+                $new_password .= $characters[$index];
+            }
+            $user->new_password = $new_password;
+            return view('add_users.password_reset')->with('user', $user);
+        }
     }
 }
