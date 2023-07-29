@@ -97,11 +97,22 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('/howto_commi') }}"
-                class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
+            <a href="{{ url('/howto_commi') }}" class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
                 <p><span uk-icon="file-text"></span>使い方ガイド</p>
             </a>
         </li>
     @endif
-
+@else
+    <h3 class="uk-text-warning">使い方ガイド</h3>
+    <li class="nav-item">
+        <a href="{{ url('/howto_gm') }}" class="nav-link {{ Request::is('/howto_gm') ? 'active' : '' }}" target="_blank">
+            <p><span uk-icon="file-text"></span>団承認の仕方</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url('/howto_trainer') }}" class="nav-link {{ Request::is('/howto_trainer') ? 'active' : '' }}"
+            target="_blank">
+            <p><span uk-icon="file-text"></span>トレーナー認定の仕方</p>
+        </a>
+    </li>
 @endauth
