@@ -89,6 +89,7 @@ Route::middleware('verified')->group(function () {
         Route::get('/certificate', [App\Http\Controllers\AdminEntry_infoController::class, 'certificate'])->name('certificate'); // 修了認定
         Route::resource('courseLists', App\Http\Controllers\course_listController::class); // スカウトコース設定
         Route::resource('divisionLists', App\Http\Controllers\division_listController::class); // 課程別研修設定
+        Route::match(['get','post'],'/add_users/password_reset', [App\Http\Controllers\add_userController::class, 'pass_reset'])->name('pass_reset'); // passwordリセット
         Route::resource('add_users', App\Http\Controllers\add_userController::class); // ユーザー追加
     });
 
@@ -105,6 +106,6 @@ Route::middleware('verified')->group(function () {
         Route::post('/commi_comment', [App\Http\Controllers\CommiEntry_infoController::class, 'commi_comment_post'])->name('commi_comment_post'); // 副申請書
         // 以下2行 地区内優先順位ソート
         Route::get('/priority', [App\Http\Controllers\CommiEntry_infoController::class, 'priority'])->name('priority');
-        Route::post('/priority_sortable',[App\Http\Controllers\CommiEntry_infoController::class, 'priority_sortable'])->name('priority_sortable');
+        Route::post('/priority_sortable', [App\Http\Controllers\CommiEntry_infoController::class, 'priority_sortable'])->name('priority_sortable');
     });
 });

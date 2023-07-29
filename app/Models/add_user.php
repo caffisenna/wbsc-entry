@@ -13,7 +13,10 @@ class add_user extends Model
         'email',
         'role',
         'district',
-        'password'
+        'password',
+        'is_admin',
+        'is_staff',
+        'is_commi',
     ];
 
     protected $casts = [
