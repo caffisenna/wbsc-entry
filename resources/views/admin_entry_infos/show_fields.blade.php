@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <th>お名前</th>
-            <td>{{ $entryInfo->name }}</td>
+            <td>{{ $entryInfo->name }} ({{ $entryInfo->entry_info->furigana }})</td>
         </tr>
         <tr>
             <th>写真</th>
@@ -33,10 +33,6 @@
         <tr>
             <th>Email</th>
             <td>{{ $entryInfo->email }}</td>
-        </tr>
-        <tr>
-            <th>ふりがな</th>
-            <td>{{ $entryInfo->entry_info->furigana }}</td>
         </tr>
         <tr>
             <th>性別</th>
@@ -124,7 +120,7 @@
         @for ($i = 1; $i <= 3; $i++)
             @if (isset($entryInfo->entry_info->{"wb_adv{$i}_category"}))
                 <tr>
-                    <th>その他の実修所履歴(1)</th>
+                    <th>その他の実修所履歴({{ $i }})</th>
                     <td>{{ $entryInfo->entry_info->{"wb_adv{$i}_category"} }}
                         {{ $entryInfo->entry_info->{"wb_adv{$i}_number"} }}
                         @if (mb_strpos($entryInfo->entry_info->{"wb_adv{$i}_number"}, '期') == false)
