@@ -121,7 +121,10 @@
                     <tr>
                         <th>その他の研修所履歴({{ $i }})</th>
                         <td>
-                            {{ $userinfo->{"wb_basic{$i}_category"} }}課程 {{ $userinfo->{"wb_basic{$i}_number"} }}期
+                            {{ $userinfo->{"wb_basic{$i}_category"} }}課程 {{ $userinfo->{"wb_basic{$i}_number"} }}
+                            @if (mb_strpos($userinfo->{"wb_basic{$i}_number"}, '期') == false)
+                                期
+                            @endif
                             ({{ $userinfo->{"wb_basic{$i}_date"} }}修了)
                         </td>
                     </tr>
@@ -133,8 +136,12 @@
                 @if (isset($userinfo->{"wb_adv{$i}_category"}))
                     <tr>
                         <th>その他の実修所履歴({{ $i }})</th>
-                        <td>{{ $userinfo->{"wb_adv{$i}_category"} }}課程 {{ $userinfo->{"wb_adv{$i}_number"} }}期
-                            ({{ $userinfo->{"wb_adv{$i}_date"} }}修了)</td>
+                        <td>{{ $userinfo->{"wb_adv{$i}_category"} }}課程 {{ $userinfo->{"wb_adv{$i}_number"} }}
+                            @if (mb_strpos($userinfo->{"wb_adv{$i}_number"}, '期') == false)
+                                期
+                            @endif
+                            ({{ $userinfo->{"wb_adv{$i}_date"} }}修了)
+                        </td>
                     </tr>
                 @endif
             @endfor
