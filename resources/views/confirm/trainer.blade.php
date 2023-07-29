@@ -4,7 +4,7 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                     <h1>WB研修所申込 トレーナー認定</h1>
                 </div>
                 <div class="col-sm-6">
@@ -19,7 +19,7 @@
 
         <div class="clearfix"></div>
         <p class="uk-text">{{ $userinfo->user->name }}さんの提出課題について、トレーナー認定を依頼します。<br>
-        ページ下部に提出課題と認定ボタンがありますので、認定手続きをお願い致します。</p>
+            ページ下部に提出課題と認定ボタンがありますので、認定手続きをお願い致します。</p>
         <h3>参加者情報</h3>
         <table class="uk-table uk-table-divider">
             <tr>
@@ -52,7 +52,11 @@
                     @else
                         スカウトコース {{ $userinfo->sc_number }}期<br>
                     @endif
-                    課程別研修 {{ $userinfo->division_number }}回
+                    @unless ($userinfo->division_number == 'etc')
+                        課程別研修 {{ $userinfo->division_number }}回
+                    @else
+                        課程別研修 次回以降(開催予定以外)
+                    @endunless
                 </td>
             </tr>
         </table>
