@@ -96,105 +96,45 @@
             <td>{{ $entryInfo->bs_basic_course }}</td>
         </tr>
 
-        @if (isset($entryInfo->wb_basic1_category))
-            <tr>
-                <th>その他の研修所履歴(1)</th>
-                <td>
-                    {{ $entryInfo->wb_basic1_category }}課程 {{ $entryInfo->wb_basic1_number }}期
-                    ({{ $entryInfo->wb_basic1_date }}修了)
-                </td>
-            </tr>
-        @endif
+        @for ($i = 1; $i <= 3; $i++)
+            @if (isset($entryInfo->{"wb_basic{$i}_category"}))
+                <tr>
+                    <th>その他の研修所履歴({{ $i }})</th>
+                    <td>
+                        {{ $entryInfo->{"wb_basic{$i}_category"} }}課程 {{ $entryInfo->{"wb_basic{$i}_number"} }}
+                        @if (mb_strpos($entryInfo->{"wb_basic{$i}_number"}, '期') == false)
+                            期
+                        @endif
+                        ({{ $entryInfo->{"wb_basic{$i}_date"} }}修了)
+                    </td>
+                </tr>
+            @endif
+        @endfor
 
-        @if (isset($entryInfo->wb_basic2_category))
-            <tr>
-                <th>その他の研修所履歴(2)</th>
-                <td>{{ $entryInfo->wb_basic2_category }}課程 {{ $entryInfo->wb_basic2_number }}期
-                    ({{ $entryInfo->wb_basic2_date }}修了)</td>
-            </tr>
-        @endif
+        @for ($i = 1; $i <= 3; $i++)
+            @if (isset($entryInfo->{"wb_adv{$i}_category"}))
+                <tr>
+                    <th>その他の実修所履歴({{ $i }})</th>
+                    <td>{{ $entryInfo->{"wb_adv{$i}_category"} }}課程 {{ $entryInfo->{"wb_adv{$i}_number"} }}
+                        @if (mb_strpos($entryInfo->{"wb_adv{$i}_number"}, '期') == false)
+                            期
+                        @endif
+                        ({{ $entryInfo->{"wb_adv{$i}_date"} }}修了)
+                    </td>
+                </tr>
+            @endif
+        @endfor
 
-        @if (isset($entryInfo->wb_basic3_category))
-            <tr>
-                <th>その他の研修所履歴(3)</th>
-                <td>{{ $entryInfo->wb_basic3_category }}課程 {{ $entryInfo->wb_basic3_number }}期
-                    ({{ $entryInfo->wb_basic3_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->wb_basic4_category))
-            <tr>
-                <th>その他の研修所履歴(4)</th>
-                <td>{{ $entryInfo->wb_basic4_category }}課程 {{ $entryInfo->wb_basic4_number }}期
-                    ({{ $entryInfo->wb_basic4_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->wb_basic5_category))
-            <tr>
-                <th>その他の研修所履歴(5)</th>
-                <td>{{ $entryInfo->wb_basic5_category }}課程 {{ $entryInfo->wb_basic5_number }}期
-                    ({{ $entryInfo->wb_basic5_date }}修了)</td>
-            </tr>
-        @endif
-
-
-        @if (isset($entryInfo->wb_adv1_category))
-            <tr>
-                <th>その他の実修所履歴(1)</th>
-                <td>{{ $entryInfo->wb_adv1_category }}課程 {{ $entryInfo->wb_adv1_number }}期
-                    ({{ $entryInfo->wb_adv1_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->wb_adv2_category))
-            <tr>
-                <th>その他の実修所履歴(2)</th>
-                <td>{{ $entryInfo->wb_adv2_category }}課程 {{ $entryInfo->wb_adv2_number }}期
-                    ({{ $entryInfo->wb_adv2_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->wb_adv3_category))
-            <tr>
-                <th>その他の実修所履歴(3)</th>
-                <td>{{ $entryInfo->wb_adv3_category }}課程 {{ $entryInfo->wb_adv3_number }}期
-                    ({{ $entryInfo->wb_adv3_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->wb_adv4_category))
-            <tr>
-                <th>その他の実修所履歴(4)</th>
-                <td>{{ $entryInfo->wb_adv4_category }}課程 {{ $entryInfo->wb_adv4_number }}期
-                    ({{ $entryInfo->wb_adv4_date }}修了)</td>
-            </tr>
-        @endif
-
-        @if (isset($entryInfo->wb_adv5_category))
-            <tr>
-                <th>その他の実修所履歴(5)</th>
-                <td>{{ $entryInfo->wb_adv5_category }}課程 {{ $entryInfo->wb_adv5_number }}期
-                    ({{ $entryInfo->wb_adv5_date }}修了)</td>
-            </tr>
-        @endif
 
         <tr>
             <th>奉仕歴</th>
             <td>
-                役務:{{ $entryInfo->service_hist1_role }} 期間:{{ $entryInfo->service_hist1_term }}<br>
-                @if (isset($entryInfo->service_hist2_role))
-                    役務:{{ $entryInfo->service_hist2_role }} 期間:{{ $entryInfo->service_hist2_term }}<br>
-                @endif
-                @if (isset($entryInfo->service_hist3_role))
-                    役務:{{ $entryInfo->service_hist3_role }} 期間:{{ $entryInfo->service_hist3_term }}<br>
-                @endif
-                @if (isset($entryInfo->service_hist4_role))
-                    役務:{{ $entryInfo->service_hist4_role }} 期間:{{ $entryInfo->service_hist4_term }}<br>
-                @endif
-                @if (isset($entryInfo->service_hist5_role))
-                    役務:{{ $entryInfo->service_hist5_role }} 期間:{{ $entryInfo->service_hist5_term }}
-                @endif
+                @for ($i = 1; $i <= 5; $i++)
+                    @if (isset($entryInfo->{'service_hist' . $i . '_role'}))
+                        役務:{{ $entryInfo->{'service_hist' . $i . '_role'} }}
+                        期間:{{ $entryInfo->{'service_hist' . $i . '_term'} }}<br>
+                    @endif
+                @endfor
             </td>
         </tr>
 
