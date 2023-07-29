@@ -19,6 +19,7 @@ use Storage;
 use App\Models\course_list;
 use App\Models\division_list;
 use App\Http\Util\Slack\SlackPost;
+use Illuminate\Support\Facades\Log;
 
 class Entry_infoController extends AppBaseController
 {
@@ -222,7 +223,6 @@ class Entry_infoController extends AppBaseController
     public function update($id, UpdateEntry_infoRequest $request)
     {
         $entryInfo = $this->entryInfoRepository->find($id);
-        // dd($entryInfo);
 
         if (empty($entryInfo)) {
             Flash::error('Entry Info not found');
@@ -245,6 +245,9 @@ class Entry_infoController extends AppBaseController
         }
 
         $entryInfo = $this->entryInfoRepository->update($request->all(), $id);
+
+        // logging
+        Log::channel('user_action')->info($entryInfo->district . '地区 ' . Auth::user()->name . "が参加者情報を編集しました");
 
         Flash::success('申込情報を更新しました');
 

@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use App\Http\Util\Slack\SlackPost;
 use App\Mail\AisAccepted;
+use Illuminate\Support\Facades\Log;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -157,6 +158,10 @@ class AdminEntry_infoController extends AppBaseController
 
             return redirect(route('admin_entryInfos.index'));
         }
+
+        // logging
+        $user = $entryInfo->entry_info->district . '地区 ' . $entryInfo->name;
+        Log::channel('user_action')->info('管理者が' . $user . 'の情報を表示しました');
 
         return view('admin_entry_infos.show')->with('entryInfo', $entryInfo);
     }

@@ -113,6 +113,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        // カスタマイズログ
+        'user_action' => [
+            'driver' => 'single', // ログを単一ファイルに保存する設定
+            'path' => storage_path('logs/user_action.log'), // 保存先のパス
+            'level' => 'info', // ログのレベル（ここではinfoとしますが、必要に応じて変更できます）
+        ],
     ],
 
 ];
