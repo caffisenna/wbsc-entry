@@ -110,79 +110,42 @@
                 <td>
                     ボーイスカウト講習会:{{ $entryInfo->entry_info->bs_basic_course }}<br>
                     スカウトキャンプ研修会:{{ $entryInfo->entry_info->scout_camp }}<br>
-                    @if (isset($entryInfo->entry_info->wb_basic1_category))
-                        WB研修所{{ $entryInfo->entry_info->wb_basic1_category }}課程
-                        {{ $entryInfo->entry_info->wb_basic1_number }}期
-                        ({{ $entryInfo->entry_info->wb_basic1_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_basic2_category))
-                        WB研修所{{ $entryInfo->entry_info->wb_basic2_category }}課程
-                        {{ $entryInfo->entry_info->wb_basic2_number }}期
-                        ({{ $entryInfo->entry_info->wb_basic2_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_basic3_category))
-                        WB研修所{{ $entryInfo->entry_info->wb_basic3_category }}課程
-                        {{ $entryInfo->entry_info->wb_basic3_number }}期
-                        ({{ $entryInfo->entry_info->wb_basic3_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_basic4_category))
-                        WB研修所{{ $entryInfo->entry_info->wb_basic4_category }}課程
-                        {{ $entryInfo->entry_info->wb_basic4_number }}期
-                        ({{ $entryInfo->entry_info->wb_basic4_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_basic5_category))
-                        WB研修所{{ $entryInfo->entry_info->wb_basic5_category }}課程
-                        {{ $entryInfo->entry_info->wb_basic5_number }}期
-                        ({{ $entryInfo->entry_info->wb_basic5_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_adv1_category))
-                        WB実修所{{ $entryInfo->entry_info->wb_adv1_category }}課程
-                        {{ $entryInfo->entry_info->wb_adv1_number }}期
-                        ({{ $entryInfo->entry_info->wb_adv1_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_adv2_category))
-                        WB実修所{{ $entryInfo->entry_info->wb_adv2_category }}課程
-                        {{ $entryInfo->entry_info->wb_adv2_number }}期
-                        ({{ $entryInfo->entry_info->wb_adv2_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_adv3_category))
-                        WB実修所{{ $entryInfo->entry_info->wb_adv3_category }}課程
-                        {{ $entryInfo->entry_info->wb_adv3_number }}期
-                        ({{ $entryInfo->entry_info->wb_adv3_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_adv4_category))
-                        WB実修所{{ $entryInfo->entry_info->wb_adv4_category }}課程
-                        {{ $entryInfo->entry_info->wb_adv4_number }}期
-                        ({{ $entryInfo->entry_info->wb_adv4_date }}修了)<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->wb_adv5_category))
-                        WB実修所{{ $entryInfo->entry_info->wb_adv5_category }}課程
-                        {{ $entryInfo->entry_info->wb_adv5_number }}期
-                        ({{ $entryInfo->entry_info->wb_adv5_date }}修了)<br>
-                    @endif
+
+                    {{-- 研修所 --}}
+                    @for ($i = 1; $i <= 3; $i++)
+                        @if (isset($entryInfo->entry_info->{"wb_basic{$i}_category"}))
+                            WB研修所{{ $entryInfo->entry_info->{"wb_basic{$i}_category"} }}課程
+                            {{ $entryInfo->entry_info->{"wb_basic{$i}_number"} }}
+                            @if (mb_strpos($entryInfo->entry_info->{"wb_basic{$i}_number"}, '期') == false)
+                                期
+                            @endif
+                            ({{ $entryInfo->entry_info->{"wb_basic{$i}_date"} }}修了)<br>
+                        @endif
+                    @endfor
+
+                    {{-- 実修所 --}}
+                    @for ($i = 1; $i <= 3; $i++)
+                        @if (isset($entryInfo->entry_info->{"wb_adv{$i}_category"}))
+                            WB実修所{{ $entryInfo->entry_info->{"wb_adv{$i}_category"} }}課程
+                            {{ $entryInfo->entry_info->{"wb_adv{$i}_number"} }}
+                            @if (mb_strpos($entryInfo->entry_info->{"wb_adv{$i}_number"}, '期') == false)
+                                期
+                            @endif
+                            ({{ $entryInfo->entry_info->{"wb_adv{$i}_date"} }}修了)<br>
+                        @endif
+                    @endfor
+
                 </td>
             </tr>
             <tr>
                 <td>奉仕歴</td>
                 <td>
-                    役務:{{ $entryInfo->entry_info->service_hist1_role }}
-                    期間:{{ $entryInfo->entry_info->service_hist1_term }}<br>
-                    @if (isset($entryInfo->entry_info->service_hist2_role))
-                        役務:{{ $entryInfo->entry_info->service_hist2_role }}
-                        期間:{{ $entryInfo->entry_info->service_hist2_term }}<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->service_hist2_role))
-                        役務:{{ $entryInfo->entry_info->service_hist3_role }}
-                        期間:{{ $entryInfo->entry_info->service_hist3_term }}<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->service_hist2_role))
-                        役務:{{ $entryInfo->entry_info->service_hist4_role }}
-                        期間:{{ $entryInfo->entry_info->service_hist4_term }}<br>
-                    @endif
-                    @if (isset($entryInfo->entry_info->service_hist2_role))
-                        役務:{{ $entryInfo->entry_info->service_hist5_role }}
-                        期間:{{ $entryInfo->entry_info->service_hist5_term }}
-                    @endif
+                    @for ($i = 1; $i <= 5; $i++)
+                        @if (isset($entryInfo->entry_info->{'service_hist' . $i . '_role'}))
+                            役務:{{ $entryInfo->entry_info->{'service_hist' . $i . '_role'} }}
+                            期間:{{ $entryInfo->entry_info->{'service_hist' . $i . '_term'} }}<br>
+                        @endif
+                    @endfor
                 </td>
             </tr>
             <tr>
