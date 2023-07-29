@@ -71,6 +71,7 @@
             <thead>
                 <tr>
                     <th>氏名</th>
+                    <th>写真</th>
                     <th>地区</th>
                     <th>団</th>
                     <th>SC</th>
@@ -94,6 +95,12 @@
                                         <span uk-icon="commenting" class="uk-text-danger"></span>
                                     @endif
                                 </a>
+                            </td>
+                            <td>
+                                @if ($entryInfo->face_picture)
+                                    <img src="{{ url('/storage/picture/') }}/{{ $entryInfo->face_picture }}"
+                                        alt="" width="50px" height="">
+                                @endif
                             </td>
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
