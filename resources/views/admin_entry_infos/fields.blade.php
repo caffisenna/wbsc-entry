@@ -337,92 +337,38 @@
             </td>
         </tr>
 
-        <tr>
-            <td>その他の研修所履歴(1)</td>
-            <td>課程:{!! Form::text('wb_basic1_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic1_number', null, [
+        @for ($i = 1; $i <= 3; $i++)
+            <tr>
+                <td>その他の研修所履歴({{ $i }})</td>
+                <td>課程:{!! Form::text("wb_basic{$i}_category", null, [
                     'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
+                    'placeholder' => '課程を入力してください(例: ボーイ課程)',
                 ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic1_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
+                    期数:{!! Form::text("wb_basic{$i}_number", null, [
+                        'class' => 'form-control',
+                        'placeholder' => '期数を入力してください(例: 東京21期)',
+                    ]) !!}<br>
+                    修了年月:{!! Form::text("wb_basic{$i}_date", null, [
+                        'class' => 'form-control',
+                        'placeholder' => '修了年月を入力してください(例: 2021年10月)',
+                    ]) !!}</td>
+            </tr>
+        @endfor
 
-        <tr>
-            <td>その他の研修所履歴(2)</td>
-            <td>課程:{!! Form::text('wb_basic2_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic2_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic2_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の研修所履歴(3)</td>
-            <td>課程:{!! Form::text('wb_basic3_category', null, [
-                'class' => 'form-control',
-                'placeholder' => '課程を入力してください(例: ボーイ課程)',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_basic3_number', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '期数を入力してください(例: 東京21期)',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_basic3_date', null, [
-                    'class' => 'form-control',
-                    'placeholder' => '修了年月を入力してください(例: 2021年10月)',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(1)</td>
-            <td>課程:{!! Form::text('wb_adv1_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv1_number', null, [
+        @for ($i = 1; $i <= 3; $i++)
+            <tr>
+                <td>その他の実修所履歴({{ $i }})</td>
+                <td>課程:{!! Form::text("wb_adv{$i}_category", null, [
                     'class' => 'form-control',
                 ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv1_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(2)</td>
-            <td>課程:{!! Form::text('wb_adv2_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv2_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv2_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
-
-        <tr>
-            <td>その他の実修所履歴(3)</td>
-            <td>課程:{!! Form::text('wb_adv3_category', null, [
-                'class' => 'form-control',
-            ]) !!}<br>
-                期数:{!! Form::text('wb_adv3_number', null, [
-                    'class' => 'form-control',
-                ]) !!}<br>
-                修了年月:{!! Form::text('wb_adv3_date', null, [
-                    'class' => 'form-control',
-                ]) !!}</td>
-        </tr>
+                    期数:{!! Form::text("wb_adv{$i}_number", null, [
+                        'class' => 'form-control',
+                    ]) !!}<br>
+                    修了年月:{!! Form::text("wb_adv{$i}_date", null, [
+                        'class' => 'form-control',
+                    ]) !!}</td>
+            </tr>
+        @endfor
 
         <tr>
             <td>奉仕歴(1) 最新のものから順に直近5年</td>
@@ -437,29 +383,16 @@
             </td>
         </tr>
 
-        <tr>
-            <td>奉仕歴(2)</td>
-            <td>役務:{!! Form::text('service_hist2_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist2_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(3)</td>
-            <td>役務:{!! Form::text('service_hist3_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist3_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(4)</td>
-            <td>役務:{!! Form::text('service_hist4_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist4_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>奉仕歴(5)</td>
-            <td>役務:{!! Form::text('service_hist5_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist5_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}</td>
-        </tr>
+        @for ($i = 1; $i <= 5; $i++)
+            <tr>
+                <td>奉仕歴({{ $i }})</td>
+                <td>役務:{!! Form::text("service_hist{$i}_role", null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
+                    期間:{!! Form::text("service_hist{$i}_term", null, [
+                        'class' => 'form-control',
+                        'placeholder' => '2019/4/1〜2020/3/31',
+                    ]) !!}</td>
+            </tr>
+        @endfor
 
         <tr>
             <td>現在治療中の病気(病名などをご記入ください)</td>
@@ -470,13 +403,6 @@
             <td>健康上で不安なことなど特記事項をご記入ください</td>
             <td>{!! Form::textarea('health_memo', null, ['class' => 'form-control']) !!}</td>
         </tr>
-
-        {{-- <tr>
-            <td>確認</td>
-            <td>団委員長:{!! Form::text('gm_checked_at', null, ['class' => 'form-control']) !!}<br>
-                地区コミッショナー:{!! Form::text('commi_checked_at', null, ['class' => 'form-control']) !!}<br>
-                AIS委員会:{!! Form::text('ais_checked_at', null, ['class' => 'form-control']) !!}</td>
-        </tr> --}}
 
     </table>
 </div>
