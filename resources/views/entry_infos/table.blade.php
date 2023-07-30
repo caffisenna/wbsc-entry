@@ -197,7 +197,7 @@
                 <p class="uk-text-right">
                     <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                     <a class="uk-button uk-button-danger uk-width-1-1@m"
-                        href="{{ url('/') }}/user/delete_file/?id={{ Auth::user()->face_picture }}&q=face">削除する</a>
+                        href="{{ url('/') }}/user/delete_file/?id={{ $entryInfo->uuid }}&q=face">削除する</a>
                 </p>
             </div>
         </div>
