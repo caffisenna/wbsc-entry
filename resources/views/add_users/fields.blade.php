@@ -62,14 +62,15 @@
 </div>
 
 <!-- Password Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('password', 'パスワード:') !!}
-    {!! Form::text('password', null, ['class' => 'form-control', 'required']) !!}
-    @error('password')
-        <div class="error text-danger">{{ $message }}</div>
-    @enderror
-</div>
-
+@unless (isset($addUser->password))
+    <div class="form-group col-sm-6">
+        {!! Form::label('password', 'パスワード:') !!}
+        {!! Form::text('password', null, ['class' => 'form-control', 'required']) !!}
+        @error('password')
+            <div class="error text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+@endunless
 <script>
     function toggleTextbox() {
         var selectbox = document.getElementById("role");
