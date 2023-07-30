@@ -42,7 +42,12 @@
                     @elseif(isset($entryInfo->entry_info->sc_number_done))
                         スカウトコース: {{ $entryInfo->entry_info->sc_number_done }}(修了済み)<br>
                     @endif
-                    課程別研修: {{ $entryInfo->entry_info->division_number }}
+
+                    @unless ($entryInfo->entry_info->division_number == 'etc')
+                        課程別研修: {{ $entryInfo->entry_info->division_number }}
+                    @else
+                        課程別研修: それ以外
+                    @endunless
                 </td>
             </tr>
             <tr>
