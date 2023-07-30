@@ -304,14 +304,17 @@ class Entry_infoController extends AppBaseController
             $path = "assignment/sc/$id.pdf";
             $entryinfo->assignment_sc = NULL;
             $entryinfo->save();
+            $cat = 'スカウトコース課題';
         } elseif ($q == 'division') {
             $path = "assignment/division/$id.pdf";
             $entryinfo->assignment_division = NULL;
             $entryinfo->save();
+            $cat = '課程別研修課題';
         } elseif ($q == 'face') {
-            $path = "picture/$id";
+            $path = "picture/$user->face_picture";
             $user->face_picture = NULL;
             $user->save();
+            $cat = '顔写真';
         }
 
         // ファイル削除
@@ -320,6 +323,7 @@ class Entry_infoController extends AppBaseController
         }
 
         Flash::success('削除しました');
+        Log::channel('user_action')->info($entryinfo->district . '地区 ' . $user->name . ' ' . $cat . 'を削除しました');
 
         return redirect(route('entryInfos.index'));
     }
