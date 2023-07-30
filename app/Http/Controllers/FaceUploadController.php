@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Util\Slack\SlackPost;
+use Illuminate\Support\Facades\Log;
 
 class FaceUploadController extends Controller
 {
@@ -68,6 +69,9 @@ class FaceUploadController extends Controller
         $name = $user->name;
         $dist = $user->entry_info->district;
         $slack->send(":frame_with_picture:" . $dist . '地区 ' . $name . 'さんが 顔写真をアップロードしました');
+
+        // logging
+        Log::channel('user_action')->info($dist . '地区 ' . $name . 'さんが 顔写真をアップロードしました');
 
         // flashメッセージを返す
         Flash::success('顔写真をアップロードしました');
