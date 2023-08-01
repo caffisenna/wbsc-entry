@@ -60,7 +60,7 @@
                                         href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>
                                 @endif
                             </td>
-                            <td>{{ $val->count_division_number }}</td>
+                            <td>{{ $val->count_division_number }}名</td>
                             <td><a href="{{ route('admin_export') }}?division={{ $val->division_number }}"
                                     class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
                             </td>
