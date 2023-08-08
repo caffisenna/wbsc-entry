@@ -182,7 +182,7 @@
                                     未認定
                                 @endif
                             </li>
-                            <li>スカウトコース: @if ($entryInfo->entry_info->trainer_division_name)
+                            <li>課程別研修: @if ($entryInfo->entry_info->trainer_division_name)
                                     {{ $entryInfo->entry_info->trainer_division_name }}
                                 @else
                                     未認定
