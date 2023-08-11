@@ -161,7 +161,7 @@ class AdminEntry_infoController extends AppBaseController
 
         // logging
         $user = $entryInfo->entry_info->district . '地区 ' . $entryInfo->name;
-        Log::channel('user_action')->info('管理者が' . $user . 'の情報を表示しました');
+        Log::channel('user_action')->info(Auth::user()->name . 'が ' . $user . 'の情報を表示しました');
 
         return view('admin_entry_infos.show')->with('entryInfo', $entryInfo);
     }
