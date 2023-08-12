@@ -51,6 +51,8 @@ namespace App\Models{
  * @property string $gm_checked_at
  * @property string $certification_sc
  * @property string $certification_div
+ * @property string $sc_over_deadline
+ * @property string $div_over_deadline
  * @property int $id
  * @property int|null $user_id
  * @property string $division_number

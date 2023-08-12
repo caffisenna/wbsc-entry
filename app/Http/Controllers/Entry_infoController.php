@@ -61,12 +61,20 @@ class Entry_infoController extends AppBaseController
         }
 
         // スカウトコース取得
-        $courselists = course_list::all();
+        // SCはDBの取得結果がゼロでも問題ない
+        $courselists = course_list::where('deadline', '>', now())->get();
 
         // 課程別研修取得
-        $dls = division_list::select('division', 'number')->get();
-        foreach ($dls as $dl) {
-            $divisionlists[] = $dl->division . $dl->number;
+        $dls = division_list::select('division', 'number')->where('deadline', '>', now())->get();
+        if (count($dls) == 0) {
+            // 申込可能な課程別研修がなければ flashメッセージを表示してindexへリダイレクト
+            flash::error('現在申し込める課程別研修がありません。管理者へお問い合わせ下さい。');
+            return redirect()->route('entryInfos.index');
+        } else {
+            // 申込可能な課程別研修があれば配列化
+            foreach ($dls as $dl) {
+                $divisionlists[] = $dl->division . $dl->number;
+            }
         }
 
         return view('entry_infos.create', compact('courselists', 'divisionlists'));
@@ -131,18 +139,23 @@ class Entry_infoController extends AppBaseController
         // 課程別総数
         $div_count = Entry_info::where('division_number', $request['division_number'])->count();
 
-        $slack = new SlackPost();
-        if ($request['sc_number'] == 'done') {
-            $slack->send(
-                ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
-                    "課程別研修のみ: " . $input['division_number'] . "回 (トータル: $div_count 人)"
-            );
+        if (config('app.env') !== 'local') {
+            // ローカル環境ではslackの通知を出さない
+            $slack = new SlackPost();
+            if ($request['sc_number'] == 'done') {
+                $slack->send(
+                    ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
+                        "課程別研修のみ: " . $input['division_number'] . "回 (トータル: $div_count 人)"
+                );
+            } else {
+                $slack->send(
+                    ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
+                        "スカウトコース: " . $input['sc_number'] . "期 (トータル: $sc_count 人)\n" .
+                        "課程別研修: " . $input['division_number'] . "回 (トータル: $div_count 人)"
+                );
+            }
         } else {
-            $slack->send(
-                ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
-                    "スカウトコース: " . $input['sc_number'] . "期 (トータル: $sc_count 人)\n" .
-                    "課程別研修: " . $input['division_number'] . "回 (トータル: $div_count 人)"
-            );
+            // dd(config('app.env'));
         }
 
 

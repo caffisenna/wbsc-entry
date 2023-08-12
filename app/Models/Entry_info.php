@@ -47,6 +47,8 @@ use App\Models\User;
  * @property string $gm_checked_at
  * @property string $certification_sc
  * @property string $certification_div
+ * @property string $sc_over_deadline
+ * @property string $div_over_deadline
  */
 class Entry_info extends Model
 {
@@ -58,7 +60,6 @@ class Entry_info extends Model
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -193,6 +194,8 @@ class Entry_info extends Model
         'trainer_division_checked_at' => 'date',
         'trainer_division_name' => 'string',
         'order' => 'string',
+        'sc_over_deadline' => 'string',
+        'div_over_deadline' => 'string',
     ];
 
     /**
@@ -225,6 +228,8 @@ class Entry_info extends Model
         'service_hist1_term' => "required_unless:troop_role,スカウト",
         'health_illness_none' => 'required_if:health_illness,null',
         'health_memo_none' => 'required_if:health_memo,null',
+        'sc_over_deadline' => 'string|in:false',
+        'div_over_deadline' => 'string|in:false',
     ];
 
     public static $messages = [
@@ -255,6 +260,8 @@ class Entry_info extends Model
         'emer_phone.required' => '緊急連絡先の日中連絡が取れる電話番号を入力してください',
         'health_illness_none.required_if' => '治療中の病気など、申告事項が無い場合は「特になし」をチェックしてください',
         'health_memo_none.required_if' => '食品アレルギーなどの申告事項が無い場合は「特になし」をチェックしてください',
+        'sc_over_deadline.in' => '選択したスカウトコースは申込期限を越えたため、申し込みできません。',
+        'div_over_deadline.in' => '選択した課程別研修は申込期限を越えたため、申し込みできません。',
     ];
 
     public function user()
