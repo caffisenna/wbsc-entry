@@ -66,16 +66,22 @@ class UploadController extends Controller
         // ファイル保存
         $request->file('file')->storeAs($path, $uuid . '.' . $extension);
 
-        // slack通知
-        $slack = new SlackPost();
+        // 氏名と地区を取得
         $name = $entryinfo->user->name;
         $dist = $entryinfo->district;
-        if ($q == 'sc') {
-            $cat = 'スカウトコース';
-        } elseif ($q == 'division') {
-            $cat = '課程別研修';
+
+        // disable slack notifiacation from local
+        if (config('app.env') !== 'local') {
+            // slack通知
+            $slack = new SlackPost();
+
+            if ($q == 'sc') {
+                $cat = 'スカウトコース';
+            } elseif ($q == 'division') {
+                $cat = '課程別研修';
+            }
+            $slack->send(":up:" . $dist . '地区 ' . $name . 'さんが ' . $cat . ' の課題をアップロードしました');
         }
-        $slack->send(":up:" . $dist . '地区 ' . $name . 'さんが ' . $cat . ' の課題をアップロードしました');
 
         // flashメッセージを返す
         Flash::success('課題研修をアップロードしました');
