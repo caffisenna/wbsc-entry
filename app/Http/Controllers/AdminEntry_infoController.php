@@ -465,8 +465,11 @@ class AdminEntry_infoController extends AppBaseController
             Flash::success($entryinfo->user->name . 'の入金確認を行いました');
 
             // slack通知
-            $slack = new SlackPost();
-            $slack->send(':moneybag:' . $dist . '地区 ' . $name . ' さんの ' . $category . ' 入金確認が完了しました');
+            // disable slack notiofication from slack
+            if (config('app.env') !== 'local') {
+                $slack = new SlackPost();
+                $slack->send(':moneybag:' . $dist . '地区 ' . $name . ' さんの ' . $category . ' 入金確認が完了しました');
+            }
 
             // 一覧に戻る
             return back();
