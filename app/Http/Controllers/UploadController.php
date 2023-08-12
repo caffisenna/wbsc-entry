@@ -87,7 +87,8 @@ class UploadController extends Controller
         Flash::success('課題研修をアップロードしました');
 
         // リダイレクト
-        return back();
+        // return back();
+        return redirect()->route('entryInfos.index');
     }
 
     public function messages()

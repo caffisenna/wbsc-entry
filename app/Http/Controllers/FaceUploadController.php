@@ -82,6 +82,6 @@ class FaceUploadController extends Controller
         Flash::success('顔写真をアップロードしました');
 
         // リダイレクト
-        return back();
+        return redirect()->route('entryInfos.index');
     }
 }
