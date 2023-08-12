@@ -65,10 +65,15 @@ class FaceUploadController extends Controller
         // ファイル保存
         $file->save(public_path('/storage/' . $path . '/' . $name));
 
-        $slack = new SlackPost();
+        // 氏名と地区を取得
         $name = $user->name;
         $dist = $user->entry_info->district;
-        $slack->send(":frame_with_picture:" . $dist . '地区 ' . $name . 'さんが 顔写真をアップロードしました');
+
+        // ローカル環境ではslackに通知しない
+        if (config('app.env') !== 'local') {
+            $slack = new SlackPost();
+            $slack->send(":frame_with_picture:" . $dist . '地区 ' . $name . 'さんが 顔写真をアップロードしました');
+        }
 
         // logging
         Log::channel('user_action')->info($dist . '地区 ' . $name . 'さんが 顔写真をアップロードしました');
