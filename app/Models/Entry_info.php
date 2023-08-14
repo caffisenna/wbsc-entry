@@ -117,12 +117,17 @@ class Entry_info extends Model
         'health_illness',
         'health_memo',
         'uuid',
+        'gm_name',
         'gm_checked_at',
         'commi_checked_at',
         'ais_checked_at',
         'certification_sc',
         'certification_div',
         'order',
+        'trainer_sc_checked_at',
+        'trainer_sc_name',
+        'trainer_division_checked_at',
+        'trainer_division_name',
     ];
 
     /**

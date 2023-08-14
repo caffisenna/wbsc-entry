@@ -317,21 +317,21 @@
         </tr>
 
         <tr>
-            <td>スカウトキャンプ研修会</td>
-            <td>{!! Form::text('scout_camp', null, ['class' => 'form-control', 'placeholder' => '修了年月日を入力してください']) !!}
-                @error('scout_camp')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-            </td>
-        </tr>
-
-        <tr>
             <td>ボーイスカウト講習会</td>
             <td>{!! Form::text('bs_basic_course', null, [
                 'class' => 'form-control',
                 'placeholder' => '修了年月日を入力してください',
             ]) !!}
                 @error('bs_basic_course')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
+            <td>スカウトキャンプ研修会</td>
+            <td>{!! Form::text('scout_camp', null, ['class' => 'form-control', 'placeholder' => '修了年月日を入力してください']) !!}
+                @error('scout_camp')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
@@ -370,19 +370,6 @@
             </tr>
         @endfor
 
-        <tr>
-            <td>奉仕歴(1) 最新のものから順に直近5年</td>
-            <td>役務:{!! Form::text('service_hist1_role', null, ['class' => 'form-control', 'placeholder' => '例:カブ副長']) !!}<br>
-                期間:{!! Form::text('service_hist1_term', null, ['class' => 'form-control', 'placeholder' => '2019/4/1〜2020/3/31']) !!}
-                @error('service_hist1_role')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-                @error('service_hist1_term')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-            </td>
-        </tr>
-
         @for ($i = 1; $i <= 5; $i++)
             <tr>
                 <td>奉仕歴({{ $i }})</td>
@@ -402,6 +389,30 @@
         <tr>
             <td>健康上で不安なことなど特記事項をご記入ください</td>
             <td>{!! Form::textarea('health_memo', null, ['class' => 'form-control']) !!}</td>
+        </tr>
+
+        <tr>
+            <td>団承認</td>
+            <td>
+                年月日: {!! Form::text("gm_checked_at", null, ['class' => 'form-control']) !!}<br>
+                氏名: {!! Form::text("gm_name", null, ['class' => 'form-control']) !!}
+            </td>
+        </tr>
+
+        <tr>
+            <td>トレーナー認定(SC)</td>
+            <td>
+                年月日: {!! Form::text("trainer_sc_checked_at", null, ['class' => 'form-control']) !!}<br>
+                氏名: {!! Form::text("trainer_sc_name", null, ['class' => 'form-control']) !!}
+            </td>
+        </tr>
+
+        <tr>
+            <td>トレーナー認定(課程別)</td>
+            <td>
+                年月日: {!! Form::text("trainer_division_checked_at", null, ['class' => 'form-control']) !!}<br>
+                氏名: {!! Form::text("trainer_division_name", null, ['class' => 'form-control']) !!}
+            </td>
         </tr>
 
     </table>
