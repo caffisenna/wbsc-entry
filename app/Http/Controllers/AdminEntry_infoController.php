@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\File;
 use App\Http\Util\Slack\SlackPost;
 use App\Mail\AisAccepted;
 use Illuminate\Support\Facades\Log;
+use App\Models\course_list;
+use App\Models\division_list;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -188,7 +190,18 @@ class AdminEntry_infoController extends AppBaseController
             return redirect(route('admin_entryInfos.index'));
         }
 
-        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user', $user);
+        // スカウトコース取得
+        $courselists = course_list::all();
+
+        // 課程別研修取得
+        $dls = division_list::select('division', 'number')->get();
+        foreach ($dls as $dl) {
+            $divisionlists[] = $dl->division . $dl->number;
+        }
+
+        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user', $user)
+        ->with('courselists', $courselists)
+        ->with('divisionlists', $divisionlists);
     }
 
     /**

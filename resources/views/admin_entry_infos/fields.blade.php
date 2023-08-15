@@ -2,40 +2,64 @@
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
             <td>スカウトコースの期数</td>
-            <td>{!! Form::select(
-                'sc_number',
-                [
-                    '' => '',
-                    '29' => '29',
-                    '30' => '30',
-                ],
-                null,
-                [
-                    'class' => 'form-control custom-select',
-                ],
-            ) !!}
+            <td>
+                <select name="sc_number" class="form-control custom-select uk-form-width-small" id="sc_select"
+                    onchange="toggleTextbox()">
+                    <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
+                    </option>
+                    @foreach ($courselists as $courselist)
+                        <option value="{{ $courselist->number }}" @if (
+                            (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) ||
+                                old('sc_number') == $courselist->number) selected @endif>
+                            {{ $courselist->number }}期</option>
+                    @endforeach
+                    @isset($entryInfo->sc_number)
+                        <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
+                    @else
+                        <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
+                    @endisset
+                </select>
                 @error('sc_number')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
+                {{-- 既修了者入力ボックス --}}
+                <div id="textboxContainer" style="display:none;">
+                    <label for="myTextbox">修了コース名を入力してください</label>
+                    @isset($entryInfo->sc_number_done)
+                        <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
+                            placeholder="例: 東京15期"
+                            value="@if ($entryInfo->sc_number_done) {{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }} @endif">
+                    @else
+                        <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
+                            placeholder="例: 東京15期" value="{{ old('sc_number_done') }}">
+                    @endisset
+                    @error('sc_number_done')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- 既修了者入力ボックス --}}
             </td>
         </tr>
         <tr>
             <td>課程別研修の回数</td>
-            <td>{!! Form::select(
-                'division_number',
-                [
-                    '' => '',
-                    'BVS14' => 'BVS14',
-                    'CS14' => 'CS14',
-                    'BS14' => 'BS14',
-                    'VS14' => 'VS14',
-                    'etc' => 'それ以外',
-                ],
-                null,
-                [
-                    'class' => 'form-control custom-select',
-                ],
-            ) !!}
+            <td>
+                <select name="division_number" class="form-control custom-select uk-form-width-small">
+                    <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>選択してください
+                    </option>
+                    @foreach ($divisionlists as $divisionlist)
+                        <option value="{{ $divisionlist }}" @if (
+                            (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) ||
+                                old('division_number') == $divisionlist) selected @endif>
+                            {{ $divisionlist }}回</option>
+                    @endforeach
+
+                    {{-- その他対応 --}}
+                    @php
+                        $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
+                    @endphp
+                    <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
+                    {{-- その他対応 --}}
+                </select>
                 @error('division_number')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -394,24 +418,31 @@
         <tr>
             <td>団承認</td>
             <td>
-                年月日: {!! Form::text("gm_checked_at", null, ['class' => 'form-control']) !!}<br>
-                氏名: {!! Form::text("gm_name", null, ['class' => 'form-control']) !!}
+                年月日: {!! Form::text('gm_checked_at', null, ['class' => 'form-control']) !!}<br>
+                氏名: {!! Form::text('gm_name', null, ['class' => 'form-control']) !!}
             </td>
         </tr>
 
         <tr>
             <td>トレーナー認定(SC)</td>
             <td>
-                年月日: {!! Form::text("trainer_sc_checked_at", null, ['class' => 'form-control']) !!}<br>
-                氏名: {!! Form::text("trainer_sc_name", null, ['class' => 'form-control']) !!}
+                年月日: {!! Form::text('trainer_sc_checked_at', null, ['class' => 'form-control']) !!}<br>
+                氏名: {!! Form::text('trainer_sc_name', null, ['class' => 'form-control']) !!}
             </td>
         </tr>
 
         <tr>
             <td>トレーナー認定(課程別)</td>
             <td>
-                年月日: {!! Form::text("trainer_division_checked_at", null, ['class' => 'form-control']) !!}<br>
-                氏名: {!! Form::text("trainer_division_name", null, ['class' => 'form-control']) !!}
+                年月日: {!! Form::text('trainer_division_checked_at', null, ['class' => 'form-control']) !!}<br>
+                氏名: {!! Form::text('trainer_division_name', null, ['class' => 'form-control']) !!}
+            </td>
+        </tr>
+
+        <tr>
+            <td>地区コミ推薦日</td>
+            <td>
+                年月日: {!! Form::text('commi_checked_at', null, ['class' => 'form-control']) !!}<br>
             </td>
         </tr>
 
