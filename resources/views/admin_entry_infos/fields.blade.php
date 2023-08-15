@@ -418,7 +418,7 @@
         <tr>
             <td>団承認</td>
             <td>
-                年月日: {!! Form::text('gm_checked_at', null, ['class' => 'form-control']) !!}<br>
+                年月日: {!! Form::text('gm_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
                 氏名: {!! Form::text('gm_name', null, ['class' => 'form-control']) !!}
             </td>
         </tr>
@@ -426,16 +426,21 @@
         <tr>
             <td>トレーナー認定(SC)</td>
             <td>
-                年月日: {!! Form::text('trainer_sc_checked_at', null, ['class' => 'form-control']) !!}<br>
-                氏名: {!! Form::text('trainer_sc_name', null, ['class' => 'form-control']) !!}
+                年月日: {!! Form::text('trainer_sc_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
+                氏名: {!! Form::text('trainer_sc_name', null, ['class' => 'form-control']) !!}<br>
+                アップロード: {!! Form::text('assignment_sc', null, ['class' => 'form-control', 'placeholder' => 'アップ済みなら up と入力']) !!}
             </td>
         </tr>
 
         <tr>
             <td>トレーナー認定(課程別)</td>
             <td>
-                年月日: {!! Form::text('trainer_division_checked_at', null, ['class' => 'form-control']) !!}<br>
-                氏名: {!! Form::text('trainer_division_name', null, ['class' => 'form-control']) !!}
+                年月日: {!! Form::text('trainer_division_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
+                氏名: {!! Form::text('trainer_division_name', null, ['class' => 'form-control']) !!}<br>
+                アップロード: {!! Form::text('assignment_division', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'アップ済みなら up と入力',
+                ]) !!}
             </td>
         </tr>
 

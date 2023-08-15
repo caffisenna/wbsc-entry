@@ -128,6 +128,8 @@ class Entry_info extends Model
         'trainer_sc_name',
         'trainer_division_checked_at',
         'trainer_division_name',
+        'assignment_sc',
+        'assignment_division',
     ];
 
     /**
@@ -201,6 +203,8 @@ class Entry_info extends Model
         'order' => 'string',
         'sc_over_deadline' => 'string',
         'div_over_deadline' => 'string',
+        'assignment_sc'=> 'string:2',
+        'assignment_division'=> 'string:2',
     ];
 
     /**
