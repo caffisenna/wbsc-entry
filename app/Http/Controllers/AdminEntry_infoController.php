@@ -600,8 +600,10 @@ class AdminEntry_infoController extends AppBaseController
 
         if ($cat == 'sc') {
             $cat_name = 'スカウトコース';
+            $sc_number = $entryInfo->sc_number;
         } else {
             $cat_name = '課程別研修';
+            $division_number = $entryInfo->division_number;
         }
 
         if ($flag == 'accept') {
@@ -620,7 +622,7 @@ class AdminEntry_infoController extends AppBaseController
             if (config('app.env') !== 'local') {
                 $mail->cc('ais@scout.tokyo'); // local以外ならばais@にCCでメールを飛ばす
             }
-            $mail->queue(new AisAccepted($name, $flag));
+            $mail->queue(new AisAccepted($name, $flag, $sc_number ?? null, $division_number ?? null)); // $name, $flagと一緒に課程別のコースを送る必要あり
         }
 
 
