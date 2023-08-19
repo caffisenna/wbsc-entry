@@ -681,4 +681,16 @@ class AdminEntry_infoController extends AppBaseController
             return back();
         }
     }
+
+    public function email_not_verified()
+    {
+        // メール未認証リストを取得
+        $users = User::where('email_verified_at', null)
+            // admin、地区AIS、地区コミは除外
+            ->where(['is_admin' => 0, 'is_staff' => null, 'is_commi' => null])
+            ->get();
+
+        return view('admin_entry_infos.email_not_verified')
+            ->with('users', $users);
+    }
 }

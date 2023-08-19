@@ -91,6 +91,7 @@ Route::middleware('verified')->group(function () {
         Route::resource('divisionLists', App\Http\Controllers\division_listController::class); // 課程別研修設定
         Route::match(['get','post'],'/add_users/password_reset', [App\Http\Controllers\add_userController::class, 'pass_reset'])->name('pass_reset'); // passwordリセット
         Route::resource('add_users', App\Http\Controllers\add_userController::class); // ユーザー追加
+        Route::get('/email_not_verified', [App\Http\Controllers\AdminEntry_infoController::class, 'email_not_verified'])->name('email_not_verified'); // メール未認証
     });
 
     // 地区コミ用

@@ -54,6 +54,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="{{ route('email_not_verified') }}"
+                    class="nav-link {{ Request::is('admin/email_not_verified*') ? 'active' : '' }}">
+                    <p><span uk-icon="mail"></span>メール未認証</p>
+                </a>
+            </li>
+
+
             <h3 class="uk-text-warning">コース設定</h3>
             <li class="nav-item">
                 <a href="{{ route('courseLists.index') }}" class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
