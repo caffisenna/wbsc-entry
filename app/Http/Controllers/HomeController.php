@@ -50,7 +50,6 @@ class HomeController extends Controller
         } else {
             // 一般ユーザーがログインしたときに、申込情報にリダイレクト
             return redirect(route('entryInfos.index'));
-            // return view('home');
         }
     }
 }
