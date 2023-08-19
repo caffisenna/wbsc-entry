@@ -78,8 +78,8 @@ namespace App\Models{
  * @property string|null $service_hist5_role
  * @property string|null $service_hist5_term
  * @property string|null $additional_comment
- * @property string|null $assignment_sc
- * @property string|null $assignment_division
+ * @property mixed|null $assignment_sc
+ * @property mixed|null $assignment_division
  * @property string|null $face_picture
  * @property string $uuid
  * @property \Illuminate\Support\Carbon|null $trainer_sc_checked_at
