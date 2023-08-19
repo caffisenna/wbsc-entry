@@ -696,4 +696,15 @@ class AdminEntry_infoController extends AppBaseController
         return view('admin_entry_infos.email_not_verified')
             ->with('users', $users);
     }
+
+    public function health_memo()
+    {
+        // メール未認証リストを取得
+        $entryinfos = Entry_info::where('health_illness', '<>', '特になし')
+        ->where('health_memo', '<>', '特になし')->with('user')->get();
+
+        return view('admin_entry_infos.health_memo')
+            ->with('entryinfos', $entryinfos);
+    }
+
 }
