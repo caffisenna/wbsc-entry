@@ -200,8 +200,8 @@ class AdminEntry_infoController extends AppBaseController
         }
 
         return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user', $user)
-        ->with('courselists', $courselists)
-        ->with('divisionlists', $divisionlists);
+            ->with('courselists', $courselists)
+            ->with('divisionlists', $divisionlists);
     }
 
     /**
@@ -616,9 +616,11 @@ class AdminEntry_infoController extends AppBaseController
         if ($flag == 'accept' || $flag == 'reject') {
             $sendto = $user->email;
             $name = $user->name;
-            Mail::to($sendto)
-                ->cc('ais@scout.tokyo')
-                ->queue(new AisAccepted($name, $flag)); // メールをqueueで送信
+            $mail = Mail::to($sendto);
+            if (config('app.env') !== 'local') {
+                $mail->cc('ais@scout.tokyo'); // local以外ならばais@にCCでメールを飛ばす
+            }
+            $mail->queue(new AisAccepted($name, $flag));
         }
 
 
