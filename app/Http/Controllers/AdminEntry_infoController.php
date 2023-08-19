@@ -445,6 +445,9 @@ class AdminEntry_infoController extends AppBaseController
             'ふりがな',
             'ケータイ',
             'email',
+            '性別',
+            '生年月日',
+            '年齢',
         ];
 
         //以下で先ほど作成したExcelExportにデータを渡す。
