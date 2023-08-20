@@ -21,19 +21,27 @@
                 <table class="uk-table uk-table-divider uk-table-striped" id="entryInfos-table">
                     <thead>
                         <tr>
-                            <td>ID</td>
-                            <th>氏名</th>
-                            <th>所属</th>
-                            <th>現在治療中の病気</th>
-                            <th>健康上の特記事項</th>
+                            <th>申込ID</th>
+                            <th>氏名/所属</th>
+                            <th>SC</th>
+                            <th>治療中の病気</th>
+                            <th>特記事項</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($entryinfos as $entryinfo)
                             <tr>
                                 <td>{{ $entryinfo->id }}</td>
-                                <td>{{ $entryinfo->user->name }}</td>
-                                <td>{{ $entryinfo->district }}地区 {{ $entryinfo->dan }}団</td>
+                                <td class="uk-table-expand">
+                                    <a href="{{ route('admin_entryInfos.show', [$entryinfo->user_id]) }}"
+                                        class="uk-link">{{ $entryinfo->user->name }}</a><br>
+                                    <span class="uk-text-small">{{ $entryinfo->district }}地区<br>
+                                        {{ $entryinfo->dan }}<br>
+                                        {{ $entryinfo->troop }}<br>
+                                        {{ $entryinfo->troop_role }}
+                                    </span>
+                                </td>
+                                <td>SC{{ $entryinfo->sc_number }}</td>
                                 <td>{{ $entryinfo->health_illness }}</td>
                                 <td>{{ $entryinfo->health_memo }}</td>
                             </tr>
