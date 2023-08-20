@@ -30,11 +30,18 @@
                     </thead>
                     <tbody>
                         @foreach ($entryinfos as $entryinfo)
+                            @php
+                                $birthday = $entryinfo->birthday;
+                                $currentDate = now();
+                                $age = $currentDate->diff($birthday)->y + $currentDate->diff($birthday)->m / 12;
+                                $age = number_format($age, 1); // 少数第一位までフォーマット
+                            @endphp
                             <tr>
                                 <td>{{ $entryinfo->id }}</td>
                                 <td class="uk-table-expand">
                                     <a href="{{ route('admin_entryInfos.show', [$entryinfo->user_id]) }}"
                                         class="uk-link">{{ $entryinfo->user->name }}</a><br>
+                                    年齢: {{ $age }} 歳<br>
                                     <span class="uk-text-small">{{ $entryinfo->district }}地区<br>
                                         {{ $entryinfo->dan }}<br>
                                         {{ $entryinfo->troop }}<br>
