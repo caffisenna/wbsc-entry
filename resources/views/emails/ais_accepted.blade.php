@@ -14,7 +14,8 @@
             href="https://drive.google.com/file/d/1ceuZh1tsKWXnSwZ91SRPRwJO8waF8r0q/view?usp=drive_link">SC{{ $sc_number }}期の参加案内を表示する</a>
     @elseif($sc_number == 30)
         {{-- SC30のリンク --}}
-        <a href="#">SC{{ $sc_number }}期の参加案内を表示する</a>
+        <a href="https://drive.google.com/file/d/1YpsKgXc8BV4c5c6Yuq3KpQS5rpMF9OoU/view?usp=sharing">SC{{ $sc_number }}期の参加案内を表示する</a><br>
+        <a href="https://drive.google.com/file/d/19QyP6jOibHQSQNOc1lRuqE8zFFoTDVzn/view?usp=sharing">携行品一覧</a>
     @endif
 @endif
 
