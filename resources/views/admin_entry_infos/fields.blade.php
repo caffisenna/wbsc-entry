@@ -76,7 +76,7 @@
         </tr>
         <tr>
             <td>ふりがな</td>
-            <td>{!! Form::text('furigana', null, ['class' => 'form-control']) !!}
+            <td>{!! Form::text('furigana', null, ['class' => 'form-control uk-form-width-small']) !!}
                 @error('furigana')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -85,7 +85,7 @@
         <tr>
             <td>性別</td>
             <td>{!! Form::select('gender', ['' => '', '男' => '男', '女' => '女'], null, [
-                'class' => 'form-control custom-select',
+                'class' => 'form-control custom-select uk-form-width-small',
             ]) !!}
                 @error('gender')
                     <div class="error text-danger">{{ $message }}</div>
@@ -97,15 +97,15 @@
             <td>
                 {{-- {!! Form::date('birthday', null, ['class' => 'form-control', 'min'=>'1947-01-01', 'max'=>'2004-12-31']) !!} --}}
                 {!! Form::selectRange('bd_year', 1942, 2004, null, [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '年',
                 ]) !!}
                 {!! Form::selectrange('bd_month', 1, 12, null, [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '月',
                 ]) !!}
                 {!! Form::selectRange('bd_day', 1, 31, null, [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '日',
                 ]) !!}
                 @error('birthday')
@@ -116,7 +116,7 @@
         <tr>
             <td>登録番号</td>
             <td>{!! Form::text('bs_id', null, [
-                'class' => 'form-control',
+                'class' => 'form-control uk-form-width-small',
                 'placeholder' => '登録証を確認し10桁の登録番号を入力してください',
             ]) !!}
                 @error('bs_id')
@@ -178,8 +178,8 @@
                     '鹿児島' => '鹿児島',
                     '沖縄' => '沖縄',
                 ],
-                '東京',
-                ['class' => 'form-control custom-select'],
+                null,
+                ['class' => 'form-control custom-select uk-form-width-small'],
             ) !!}
                 @error('prefecture')
                     <div class="error text-danger">{{ $message }}</div>
@@ -209,7 +209,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                 ],
             ) !!}
                 @error('district')
@@ -219,7 +219,7 @@
         </tr>
         <tr>
             <td>団</td>
-            <td>{!! Form::text('dan', null, ['class' => 'form-control', 'placeholder' => '例:渋谷14']) !!}
+            <td>{!! Form::text('dan', null, ['class' => 'form-control uk-form-width-small', 'placeholder' => '例:渋谷14']) !!}
                 @error('dan')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -240,7 +240,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                 ],
             ) !!}
                 @error('troop')
@@ -268,7 +268,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select',
+                    'class' => 'form-control custom-select uk-form-width-small',
                 ],
             ) !!}
                 @error('troop_role')
