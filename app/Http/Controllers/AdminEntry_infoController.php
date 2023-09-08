@@ -448,6 +448,13 @@ class AdminEntry_infoController extends AppBaseController
             '性別',
             '生年月日',
             '年齢',
+            'BS講習会',
+            'スカキャン',
+            '研修歴(研)',
+            '研修歴(実)',
+            '奉仕歴',
+            '治療中',
+            '健康メモ'
         ];
 
         //以下で先ほど作成したExcelExportにデータを渡す。
