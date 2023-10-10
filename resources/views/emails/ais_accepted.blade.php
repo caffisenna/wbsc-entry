@@ -20,15 +20,16 @@
 @endif
 
 @if (isset($division_number))
-    【課程別】<br>
+    【課程別研修】<br>
     @if ($division_number == 'BVS14')
-        <a href="#">BVS14のPDFリンク</a>
+        <a href="https://drive.google.com/file/d/13zOJ4_Ak5jvthmUq-ztKLfGx5pvv3j5f/view?usp=drive_link">参加決定通知書(BVS課程東京第14回)</a>
     @elseif ($division_number == 'CS14')
-        <a href="#">CS14回のPDFリンク</a>
+        <a href="#">参加決定通知書(CS課程東京第14回)</a>
     @elseif ($division_number == 'BS14')
-        <a href="#">BS14回のPDFリンク</a>
+        <a href="https://drive.google.com/file/d/11IdLh6wqeo8xxcKSDdg7-AlfmQ4GZtdj/view?usp=drive_link">参加決定通知書(BS課程東京第14回)</a>
     @elseif ($division_number == 'VS14')
-        <a href="#">VS14回のPDFリンク</a>
+        <a href="https://drive.google.com/file/d/15vZdQ7LvOznTVw3wkjJB1fMz7bbQacZT/view?usp=drive_link">参加決定通知書(VS課程東京第14回)</a><br>
+        <a href="{{ url('/download/VS14_worksheet.docx') }}">事前課題(wordファイル)</a>
     @endif
 @endif
 
