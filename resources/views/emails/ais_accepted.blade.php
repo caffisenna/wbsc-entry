@@ -24,7 +24,7 @@
     @if ($division_number == 'BVS14')
         <a href="https://drive.google.com/file/d/13zOJ4_Ak5jvthmUq-ztKLfGx5pvv3j5f/view?usp=drive_link">参加決定通知書(BVS課程東京第14回)</a>
     @elseif ($division_number == 'CS14')
-        <a href="#">参加決定通知書(CS課程東京第14回)</a>
+        <a href="https://drive.google.com/drive/folders/1yRejlonJMk7mFF48TNj9ar3xHfJBoSgg?usp=sharing">参加決定通知書、関係資料(CS課程東京第14回)</a>
     @elseif ($division_number == 'BS14')
         <a href="https://drive.google.com/file/d/11IdLh6wqeo8xxcKSDdg7-AlfmQ4GZtdj/view?usp=drive_link">参加決定通知書(BS課程東京第14回)</a>
     @elseif ($division_number == 'VS14')
