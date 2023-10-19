@@ -100,10 +100,8 @@
                     </td>
                     <td>
                         @if ($_REQUEST['cat'] == 'sc' && isset($entryinfo->sc_fee_checked_at))
-                            済<br>
                             <span class="uk-small">{{ $entryinfo->sc_fee_checked_at }}</span>
                         @elseif ($_REQUEST['cat'] == 'div' && isset($entryinfo->div_fee_checked_at))
-                            済<br>
                             <span class="uk-small">{{ $entryinfo->div_fee_checked_at }}</span>
                         @else
                             <a href="{{ url('/admin/fee_check/?id=') }}{{ $entryinfo->id }}&cat={{ $_REQUEST['cat'] }}"
