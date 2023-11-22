@@ -28,6 +28,7 @@ use App\Mail\AisAccepted;
 use Illuminate\Support\Facades\Log;
 use App\Models\course_list;
 use App\Models\division_list;
+use Maatwebsite\Excel\Imports\EndRowFinder;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -704,14 +705,24 @@ class AdminEntry_infoController extends AppBaseController
             ->with('users', $users);
     }
 
-    public function health_memo()
+    public function health_memo(Request $request)
     {
-        // メール未認証リストを取得
-        $entryinfos = Entry_info::where('health_illness', '<>', '特になし')
-        ->orWhere('health_memo', '<>', '特になし')->with('user')->get();
+        if ($request['sc_number']) {
+            $entryinfos = Entry_info::where('sc_number', $request['sc_number'])
+                ->where(function ($query) {
+                    $query->where('health_illness', '<>', '特になし');
+                    $query->orWhere('health_memo', '<>', '特になし');
+                })
+                ->with('user')->get();
+        } else {
+            $entryinfos = Entry_info::where('health_illness', '<>', '特になし')
+                ->orWhere('health_memo', '<>', '特になし')->with('user')->get();
+        }
+
+        // 'done' 以外の sc_number を取得
+        $uniqueScNumbers = Entry_info::where('sc_number', '<>', 'done')->distinct()->pluck('sc_number')->toArray();
 
         return view('admin_entry_infos.health_memo')
-            ->with('entryinfos', $entryinfos);
+            ->with(compact(['entryinfos', 'uniqueScNumbers']));
     }
-
 }

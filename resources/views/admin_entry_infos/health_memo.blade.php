@@ -8,7 +8,12 @@
                     <h1>健康情報入力者</h1>
                 </div>
                 <div class="col-sm-8">
-                    <p class="uk-text uk-text-default"><span class="uk-text-warning">特になし</span>以外をピックアップしています</p>
+                    {{-- フィルター用にSC期数を表示 --}}
+                    <span uk-icon="database"></span>絞り込み:
+                    @foreach ($uniqueScNumbers as $sc_number)
+                        <a href="{{ route('health_memo', ['sc_number' => $sc_number]) }}"
+                            class="uk-button uk-button-primary">SC{{ $sc_number }}期</a>
+                    @endforeach
                 </div>
             </div>
         </div>
