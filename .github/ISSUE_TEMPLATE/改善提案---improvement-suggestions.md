@@ -2,7 +2,7 @@
 name: 改善提案 / Improvement Suggestions
 about: "「こうするともっとよくなる」といった提案はこちら"
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
