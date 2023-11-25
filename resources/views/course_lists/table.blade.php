@@ -8,6 +8,7 @@
                 <th>期間</th>
                 <th>説明会</th>
                 <th>締め切り</th>
+                <th>ドライブ</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
                         {{ $courseList->day_end->format('Y-m-d') }}</td>
                     <td>{{ $courseList->guidance_date->format('Y-m-d') }}</td>
                     <td>{{ $courseList->deadline->format('Y-m-d') }}</td>
+                    <td><a href="{{ $courseList->drive_url }}"><span uk-icon="cloud-upload"></span></a></td>
                     <td width="120">
                         {!! Form::open(['route' => ['courseLists.destroy', $courseList->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>

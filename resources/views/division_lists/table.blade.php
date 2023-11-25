@@ -9,6 +9,7 @@
                 <th>開催日</th>
                 <th>説明会日程</th>
                 <th>申込締切</th>
+                <th>ドライブ</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                     <td>{{ $divisionList->day_start->format('Y-m-d') }}</td>
                     <td>{{ $divisionList->guidance_date->format('Y-m-d') }}</td>
                     <td>{{ $divisionList->deadline->format('Y-m-d') }}</td>
+                    <td><a href="{{ $divisionList->drive_url }}"><span uk-icon="cloud-upload"></span></a></td>
                     <td width="120">
                         {!! Form::open(['route' => ['divisionLists.destroy', $divisionList->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>

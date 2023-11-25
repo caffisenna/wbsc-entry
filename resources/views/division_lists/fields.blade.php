@@ -54,3 +54,8 @@
         ['class' => 'form-control', 'required'],
     ) !!}
 </div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('drive_url', '共有フォルダURL:') !!}
+    {!! Form::text('drive_url', null, ['class' => 'form-control', 'required']) !!}
+</div>

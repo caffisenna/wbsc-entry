@@ -24,7 +24,8 @@ class course_listRepository extends BaseRepository
         'day_start',
         'day_end',
         'guidance_date',
-        'deadline'
+        'deadline',
+        'drive_url'
     ];
 
     /**

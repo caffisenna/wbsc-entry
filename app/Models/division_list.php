@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $day_start
  * @property string $guidance_date
  * @property string $deadline
+ * @property string $deadline
  */
 class division_list extends Model
 {
@@ -39,7 +40,8 @@ class division_list extends Model
         'place',
         'day_start',
         'guidance_date',
-        'deadline'
+        'deadline',
+        'drive_url'
     ];
 
     /**
@@ -55,7 +57,8 @@ class division_list extends Model
         'place' => 'string',
         'day_start' => 'date',
         'guidance_date' => 'date',
-        'deadline' => 'date'
+        'deadline' => 'date',
+        'drive_url' => 'string'
     ];
 
     /**
