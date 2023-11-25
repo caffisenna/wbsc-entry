@@ -106,13 +106,25 @@ class AdminEntry_infoController extends AppBaseController
 
         if ($request['q']) {
             $request['cat'] = 'sc';
+            $course_info = course_list::where('number', $request['q'])->first();
         } elseif ($request['div']) {
             $request['cat'] = 'div';
+
+            // 課程と回数を分離
+            preg_match('/([A-Za-z]+)([0-9]+)/', $request['div'], $matches);
+
+            // アルファベットと数字をそれぞれ変数に格納
+            $alphabetPart = $matches[1];
+            $numberPart = $matches[2];
+
+            // リストから取得
+            $course_info = division_list::where('division', $alphabetPart)->where('number', $numberPart)->first();
         }
 
-
         return view('admin_entry_infos.index')
-            ->with('entryInfos', $entryInfos)->with('request', $request);
+            ->with('entryInfos', $entryInfos)
+            ->with(isset($course_info) ? compact('course_info') : [])
+            ->with(compact('request'));
     }
 
     /**

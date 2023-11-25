@@ -19,7 +19,9 @@
                     </h1>
                 </div>
                 <div class="col-sm-6">
-
+                    @if (isset($course_info))
+                        申込締め切り: <span class="uk-text-danger">{{ $course_info->deadline->format('Y-m-d') }}</span><br>
+                    @endif
                 </div>
             </div>
         </div>
