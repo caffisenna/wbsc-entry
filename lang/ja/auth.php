@@ -16,5 +16,6 @@ return [
     'failed' => 'メールアドレスもしくはパスワードが一致しません',
     'password' => 'パスワードが正しくありません。',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'district' => '地区を選択してください',
 
 ];

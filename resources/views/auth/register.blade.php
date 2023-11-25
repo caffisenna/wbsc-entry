@@ -59,6 +59,39 @@
                     </div>
 
                     <div class="input-group mb-3">
+                        {!! Form::select(
+                            'district',
+                            [
+                                '' => '',
+                                '大都心' => '大都心',
+                                'さくら' => 'さくら',
+                                '城東' => '城東',
+                                '山手' => '山手',
+                                'つばさ' => 'つばさ',
+                                '世田谷' => '世田谷',
+                                'あすなろ' => 'あすなろ',
+                                '城北' => '城北',
+                                '練馬' => '練馬',
+                                '多摩西' => '多摩西',
+                                '新多磨' => '新多磨',
+                                '南武蔵野' => '南武蔵野',
+                                '町田' => '町田',
+                                '北多摩' => '北多摩',
+                            ],
+                            null,
+                            ['class' => 'form-control custom-select','required'],
+                        ) !!}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        @error('district')
+                            <span class="error invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="input-group mb-3">
                         <input type="email" name="email" value="{{ old('email') }}"
                             class="form-control @error('email') is-invalid @enderror" placeholder="Email">
                         <div class="input-group-append">
