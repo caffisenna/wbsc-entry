@@ -24,6 +24,7 @@ class CreateCourseListsTable extends Migration
             $table->date('day_end')->nullable();    // 終了日
             $table->date('guidance_date')->nullable();  // 説明会
             $table->date('deadline');       // 申込締め切り
+            $table->string('drive_url');    // 共有ドライブ
             $table->timestamps();
             $table->softDeletes();
         });

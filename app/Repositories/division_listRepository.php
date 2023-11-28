@@ -23,7 +23,8 @@ class division_listRepository extends BaseRepository
         'place',
         'day_start',
         'guidance_date',
-        'deadline'
+        'deadline',
+        'drive_url'
     ];
 
     /**

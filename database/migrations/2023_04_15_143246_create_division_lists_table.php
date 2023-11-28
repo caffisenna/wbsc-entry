@@ -23,6 +23,7 @@ class CreateDivisionListsTable extends Migration
             $table->date('day_start');
             $table->date('guidance_date')->nullable();
             $table->date('deadline');
+            $table->string('drive_url');    // 共有ドライブ
             $table->timestamps();
             $table->softDeletes();
         });
