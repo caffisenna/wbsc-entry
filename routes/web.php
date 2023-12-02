@@ -100,6 +100,7 @@ Route::middleware('verified')->group(function () {
         Route::resource('add_users', add_userController::class); // ユーザー追加
         Route::get('/email_not_verified', [AdminEntry_infoController::class, 'email_not_verified'])->name('email_not_verified'); // メール未認証
         Route::get('/health_memo', [AdminEntry_infoController::class, 'health_memo'])->name('health_memo'); // 健康上の特記事項
+        Route::post('/save_user_memo', [AdminEntry_infoController::class, 'save_user_memo'])->name('save_user_memo'); // 未認証者のメモ
     });
 
     // 地区コミ用

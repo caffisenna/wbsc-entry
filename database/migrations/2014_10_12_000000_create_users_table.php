@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('face_picture')->nullable();
             $table->string('district')->nullable();
+            $table->string('memo')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });

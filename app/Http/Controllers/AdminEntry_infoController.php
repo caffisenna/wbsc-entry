@@ -737,4 +737,16 @@ class AdminEntry_infoController extends AppBaseController
         return view('admin_entry_infos.health_memo')
             ->with(compact(['entryinfos', 'uniqueScNumbers']));
     }
+
+    public function save_user_memo(Request $request)
+    {
+        // メール未認証者のメモ保存
+        $id = $request->input('user_id');
+        $user = User::find($id);
+        $user->memo = $request->input('memo');
+        $user->save();
+
+        Flash::success($user->name . ' さんのユーザーメモを登録しました');
+        return redirect(route('email_not_verified'));
+    }
 }
