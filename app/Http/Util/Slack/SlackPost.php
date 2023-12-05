@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Util\Slack;
+namespace App\Http\Util;
 
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\SlackNotification;
+use App\Notifications\Slack;
 
 class SlackPost
 {
@@ -11,7 +11,7 @@ class SlackPost
 
     public function send($message)
     {
-        $this->notify(new SlackNotification($message));
+        $this->notify(new Slack($message));
     }
 
     protected function routeNotificationForSlack()
@@ -19,4 +19,3 @@ class SlackPost
         return config('slack.url');
     }
 }
-

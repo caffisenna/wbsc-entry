@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
 
@@ -19,7 +17,7 @@ class SlackNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct($message = null)
+    public function __construct($message)
     {
         $this->channel = config('slack.channel');
         $this->name = config('slack.name');
