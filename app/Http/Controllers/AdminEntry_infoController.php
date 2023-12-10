@@ -108,17 +108,36 @@ class AdminEntry_infoController extends AppBaseController
             $request['cat'] = 'sc';
             $course_info = course_list::where('number', $request['q'])->first();
         } elseif ($request['div']) {
-            $request['cat'] = 'div';
+            if ($request['div'] !== 'etc') {
+                $request['cat'] = 'div';
 
-            // 課程と回数を分離
-            preg_match('/([A-Za-z]+)([0-9]+)/', $request['div'], $matches);
+                // 課程と回数を分離
+                preg_match('/([A-Za-z]+)([0-9]+)/', $request['div'], $matches);
 
-            // アルファベットと数字をそれぞれ変数に格納
-            $alphabetPart = $matches[1];
-            $numberPart = $matches[2];
+                // アルファベットと数字をそれぞれ変数に格納
+                $alphabetPart = $matches[1];
+                $numberPart = $matches[2];
 
-            // リストから取得
-            $course_info = division_list::where('division', $alphabetPart)->where('number', $numberPart)->first();
+                // リストから取得
+                $course_info = division_list::where('division', $alphabetPart)->where('number', $numberPart)->first();
+            }
+        } elseif ($request['danken'] == 'true') {
+            // 団研申込者を抽出
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $query->where('danken', '<>', NULL)->where('district', Auth::user()->is_staff);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $query->where('danken', '<>', NULL);
+                    }
+                )->with('entry_info')->get();
+            }
         }
 
         return view('admin_entry_infos.index')
@@ -323,6 +342,24 @@ class AdminEntry_infoController extends AppBaseController
                     }
                 )->with('entry_info')->get();
             }
+        } elseif ($_REQUEST['cat'] == 'danken') {
+            // 団研 申込書地区別
+            if (Auth::user()->is_staff) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $query->whereNotNull('danken')->where('district', Auth::user()->is_staff);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                // 申込書全部
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $query->whereNotNull('danken');
+                    }
+                )->with('entry_info')->get();
+            }
         }
 
 
@@ -337,7 +374,11 @@ class AdminEntry_infoController extends AppBaseController
                 $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
                 $pdf->setPaper('A4');
                 $pdf = $pdf->output(); // PDF生成
-                $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
+                if (isset($entryInfo->entry_info->sc_number)) {
+                    $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
+                } elseif ($entryInfo->entry_info->danken) {
+                    $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
+                }
                 $fname = str_replace(' ', '_', $fname); // ファイル名のスペースを_に置換
                 Storage::put($tmpDirName . "/" . $fname . '.pdf', $pdf);
             }
@@ -345,7 +386,11 @@ class AdminEntry_infoController extends AppBaseController
             // 課題の一括DL
             foreach ($entryInfos as $entryInfo) {
                 $uuid = $entryInfo->entry_info->uuid;
-                $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
+                if (isset($entryInfo->entry_info->sc_number)) {
+                    $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
+                } elseif ($entryInfo->entry_info->danken) {
+                    $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
+                }
                 $fname = str_replace(' ', '_', $fname) . '.pdf'; // ファイル名のスペースを_に置換
                 if ($_REQUEST['cat'] == 'division') {
                     $srcPath = storage_path('app/public/assignment/division/') . $uuid . ".pdf";
@@ -431,7 +476,13 @@ class AdminEntry_infoController extends AppBaseController
             } else {
                 $data = Entry_info::with('user')->where('division_number', $request->division)->get();
             }
-        } else { // or 全県取得
+        } elseif (isset($request->cat) && $request->cat == 'danken') { // 一覧表から団研が指定されたとき
+            if (Auth::user()->is_staff) {
+                $data = Entry_info::with('user')->whereNotNull('danken')->where('district', Auth::user()->is_staff)->get();
+            } else {
+                $data = Entry_info::with('user')->whereNotNull('danken')->get();
+            }
+        } else { // or 全件取得
             $data = Entry_info::with('user')->get();
         }
 
@@ -441,34 +492,60 @@ class AdminEntry_infoController extends AppBaseController
         } elseif ($request->division) {
             $filename = '課程別研修申込一覧 ' . $request->division . '回.xlsx';
         } else {
-            $filename = '申込一覧.xlsx';
+            $filename = '団研申込一覧.xlsx';
         }
 
         //エクセルの見出しを以下で設定
-        $headings = [
-            '申込ID',
-            'SC期数',
-            '課程別回数',
-            '県連',
-            '地区',
-            '団名',
-            '隊',
-            '役務',
-            '氏名',
-            'ふりがな',
-            'ケータイ',
-            'email',
-            '性別',
-            '生年月日',
-            '年齢',
-            'BS講習会',
-            'スカキャン',
-            '研修歴(研)',
-            '研修歴(実)',
-            '奉仕歴',
-            '治療中',
-            '健康メモ'
-        ];
+        if ($request->cat == 'danken') {
+            $headings = [
+                '申込ID',
+                '団研期数',
+                '県連',
+                '地区',
+                '団名',
+                '隊',
+                '役務',
+                '氏名',
+                'ふりがな',
+                'ケータイ',
+                'email',
+                '性別',
+                '生年月日',
+                '年齢',
+                'BS講習会',
+                'スカキャン',
+                '研修歴(研)',
+                '研修歴(実)',
+                '奉仕歴',
+                '治療中',
+                '健康メモ'
+            ];
+        } else {
+            $headings = [
+                '申込ID',
+                'SC期数',
+                '課程別回数',
+                '県連',
+                '地区',
+                '団名',
+                '隊',
+                '役務',
+                '氏名',
+                'ふりがな',
+                'ケータイ',
+                'email',
+                '性別',
+                '生年月日',
+                '年齢',
+                'BS講習会',
+                'スカキャン',
+                '研修歴(研)',
+                '研修歴(実)',
+                '奉仕歴',
+                '治療中',
+                '健康メモ'
+            ];
+        }
 
         //以下で先ほど作成したExcelExportにデータを渡す。
         return Excel::download(new ExcelExport($data, $headings), $filename);
@@ -609,6 +686,17 @@ class AdminEntry_infoController extends AppBaseController
                 }
                 break;
 
+            case 'danken':
+                if ($flag == 'accept') {
+                    $entryInfo->danken_accepted_at = now();
+                } elseif ($flag == 'reject') {
+                    $entryInfo->danken_rejected_at = now();
+                } elseif ($revert == 'true') {
+                    $entryInfo->danken_accepted_at = null;
+                    $entryInfo->danken_rejected_at = null;
+                }
+                break;
+
             default:
                 # code...
                 break;
@@ -624,9 +712,12 @@ class AdminEntry_infoController extends AppBaseController
         if ($cat == 'sc') {
             $cat_name = 'スカウトコース';
             $sc_number = $entryInfo->sc_number;
-        } else {
+        } elseif ($cat == 'div') {
             $cat_name = '課程別研修';
             $division_number = $entryInfo->division_number;
+        } elseif ($cat = 'danken') {
+            $cat_name = '団委員研修所';
+            $danken_number = $entryInfo->danken;
         }
 
         if ($flag == 'accept') {
@@ -645,7 +736,7 @@ class AdminEntry_infoController extends AppBaseController
             if (config('app.env') !== 'local') {
                 $mail->cc('ais@scout.tokyo'); // local以外ならばais@にCCでメールを飛ばす
             }
-            $mail->queue(new AisAccepted($name, $flag, $sc_number ?? null, $division_number ?? null)); // $name, $flagと一緒に課程別のコースを送る必要あり
+            $mail->queue(new AisAccepted($name, $flag, $sc_number ?? null, $division_number ?? null, $danken_number ?? null)); // $name, $flagと一緒に課程別のコースを送る必要あり
         }
 
 

@@ -18,7 +18,8 @@ use App\Mail\InputRegisterd;
 use Storage;
 use App\Models\course_list;
 use App\Models\division_list;
-use App\Http\Util\Slack\SlackPost;
+use App\Models\DankenLists;
+use App\Http\Util\SlackPost;
 use Illuminate\Support\Facades\Log;
 
 class Entry_infoController extends AppBaseController
@@ -41,9 +42,10 @@ class Entry_infoController extends AppBaseController
     public function index(Request $request)
     {
         $entryInfo = Entry_info::where('user_id', Auth::user()->id)->with('user')->first();
+        $danken = DankenLists::firstorFail();
 
         return view('entry_infos.index')
-            ->with('entryInfo', $entryInfo);
+            ->with(compact(['entryInfo','danken']));
     }
 
     /**
@@ -51,7 +53,7 @@ class Entry_infoController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
         // 重複入力はブロック
         $entryInfo = Entry_info::where('user_id', Auth::user()->id)->first();
@@ -77,7 +79,14 @@ class Entry_infoController extends AppBaseController
             }
         }
 
-        return view('entry_infos.create', compact('courselists', 'divisionlists'));
+        // 団研
+        $danken = DankenLists::where('deadline', '>', now())->first();
+        if ($request->cat == 'danken') {
+            $danken->cat = 'danken';
+        }
+
+
+        return view('entry_infos.create', compact('courselists', 'divisionlists', 'danken'));
     }
 
     /**
@@ -104,8 +113,10 @@ class Entry_infoController extends AppBaseController
 
         // SC期数が現行の期数が選択されていて、かつ、修了済みのSC期数が入力されている場合
         // sc_number_doneをnull化する
-        if ($input['sc_number'] !== 'done') {
-            $input['sc_number_done'] = NULL;
+        if (isset($input['sc_number'])) {
+            if ($input['sc_number'] !== 'done') {
+                $input['sc_number_done'] = NULL;
+            }
         }
 
         // 病気項目の処理
@@ -133,11 +144,14 @@ class Entry_infoController extends AppBaseController
 
         // Slackアラート通知
         // スカウトコース総数
-        if ($request['sc_number'] != 'done') {
+        if (isset($request['sc_number']) && $request['sc_number'] != 'done') {
             $sc_count = Entry_info::where('sc_number', $request['sc_number'])->count();
         }
         // 課程別総数
         $div_count = Entry_info::where('division_number', $request['division_number'])->count();
+
+        // 団研総数
+        $danken_count = Entry_info::where('danken', 'true')->count();
 
         if (config('app.env') !== 'local') {
             // ローカル環境ではslackの通知を出さない
@@ -148,11 +162,17 @@ class Entry_infoController extends AppBaseController
                         "課程別研修のみ: " . $input['division_number'] . "回 (トータル: $div_count 人)"
                 );
             } else {
-                $slack->send(
-                    ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n" .
+                $message = ":new: " . $input['district'] . '地区 ' . $sendto->name . "さんが申込情報を入力しました\n";
+
+                if (isset($input['sc_number'])) {
+                    $message .=
                         "スカウトコース: " . $input['sc_number'] . "期 (トータル: $sc_count 人)\n" .
-                        "課程別研修: " . $input['division_number'] . "回 (トータル: $div_count 人)"
-                );
+                        "課程別研修: " . $input['division_number'] . "回 (トータル: $div_count 人)\n";
+                }
+
+                $message .= "団研: $danken_count 人)\n";
+
+                $slack->send($message);
             }
         } else {
             // dd(config('app.env'));

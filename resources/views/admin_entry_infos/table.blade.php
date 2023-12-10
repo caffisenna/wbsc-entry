@@ -67,14 +67,14 @@
 </script>
 <div class="table-responsive">
     <div class="uk-overflow-auto">
-        <table class="uk-table" id="entryInfos-table">
+        <table class="uk-table uk-table-striped" id="entryInfos-table">
             <thead>
                 <tr>
                     <th>氏名</th>
                     <th>写真</th>
                     <th>地区</th>
                     <th>団</th>
-                    <th>SC</th>
+                    <th>SC/団研</th>
                     <th>課程別</th>
                     <th>団委員長</th>
                     <th>トレーナー認定</th>
@@ -105,7 +105,14 @@
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
                             <td>
-                                @if ($entryInfo->entry_info->sc_number != 'done')
+                                @if ($entryInfo->entry_info->danken)
+                                    団研<br>
+                                    @if ($entryInfo->entry_info->assignment_danken)
+                                        <span class=" uk-text-success">課題済</span>
+                                    @else
+                                        <span class=" uk-text-danger">未提出</span>
+                                    @endif
+                                @elseif ($entryInfo->entry_info->sc_number !== 'done')
                                     {{ $entryInfo->entry_info->sc_number }}期<br>
                                     @if ($entryInfo->entry_info->assignment_sc)
                                         <span class=" uk-text-success">課題済</span>
@@ -118,40 +125,45 @@
                                 @endif
                             </td>
                             <td>
-                                @if ($entryInfo->entry_info->division_number == 'etc')
-                                    それ以外<br>
-                                @else
-                                    {{ $entryInfo->entry_info->division_number }}回<br>
-                                @endif
-                                @if ($entryInfo->entry_info->assignment_division)
-                                    <span class=" uk-text-success">課題済</span>
-                                @else
-                                    <span class=" uk-text-danger">未提出</span>
-                                @endif
+                                @unless ($entryInfo->entry_info->danken)
+                                    @if ($entryInfo->entry_info->division_number == 'etc')
+                                        それ以外<br>
+                                    @else
+                                        {{ $entryInfo->entry_info->division_number }}回<br>
+                                    @endif
+                                    @if ($entryInfo->entry_info->assignment_division)
+                                        <span class=" uk-text-success">課題済</span>
+                                    @else
+                                        <span class=" uk-text-danger">未提出</span>
+                                    @endif
+                                @endunless
                             </td>
                             <td>
                                 @if (isset($entryInfo->entry_info->gm_checked_at))
-                                    {{ $entryInfo->entry_info->gm_checked_at->format('Y-m-d') }}
+                                    {{ $entryInfo->entry_info->gm_checked_at->format('m-d') }}
                                 @else
                                     <span class=" uk-text-danger">未</span>
                                 @endif
                             </td>
                             <td>
-                                SC:@if (isset($entryInfo->entry_info->trainer_sc_checked_at))
+                                {{ $entryInfo->entry_info->danken ? '':'SC:'}}
+                                @if (isset($entryInfo->entry_info->trainer_sc_checked_at) || isset($entryInfo->entry_info->trainer_danken_checked_at))
                                     <span class=" uk-text-success">済</span>
                                 @else
                                     <span class=" uk-text-danger">未</span>
                                 @endif
-                                <br>
-                                課程別:@if (isset($entryInfo->entry_info->trainer_division_checked_at))
-                                    <span class=" uk-text-success">済</span>
-                                @else
-                                    <span class=" uk-text-danger">未</span>
-                                @endif
+                                @unless ($entryInfo->entry_info->danken)
+                                    <br>
+                                    課程別:@if (isset($entryInfo->entry_info->trainer_division_checked_at))
+                                        <span class=" uk-text-success">済</span>
+                                    @else
+                                        <span class=" uk-text-danger">未</span>
+                                    @endif
+                                @endunless
                             </td>
                             <td>
                                 @if (isset($entryInfo->entry_info->commi_checked_at))
-                                    {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
+                                    {{ $entryInfo->entry_info->commi_checked_at->format('m-d') }}
                                 @else
                                     <span class=" uk-text-danger">未</span>
                                 @endif

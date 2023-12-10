@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-8">
-                    <h1>WB研修所申込 参加承認</h1>
+                    <h1>指導者研修申込 参加承認</h1>
                 </div>
                 <div class="col-sm-6">
                 </div>
@@ -53,16 +53,21 @@
             <tr>
                 <th>参加コース</th>
                 <td>
-                    @if ($userinfo->sc_number == 'done')
-                        <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
+                    @if ($userinfo->danken == 'true')
+                        団委員研修所
                     @else
-                        スカウトコース {{ $userinfo->sc_number }}期<br>
+                        @if ($userinfo->sc_number == 'done')
+                            <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
+                        @else
+                            スカウトコース {{ $userinfo->sc_number }}期<br>
+                        @endif
+                        @unless ($userinfo->division_number == 'etc')
+                            課程別研修 {{ $userinfo->division_number }}回
+                        @else
+                            課程別研修 <span class="uk-text-warning">次回以降(開催予定以外)</span>
+                        @endunless
                     @endif
-                    @unless ($userinfo->division_number == 'etc')
-                        課程別研修 {{ $userinfo->division_number }}回
-                    @else
-                        課程別研修 <span class="uk-text-warning">次回以降(開催予定以外)</span>
-                    @endunless
+
                 </td>
             </tr>
             <tr>
@@ -179,30 +184,38 @@
                 <td>
                     @if (File::exists(storage_path('app/public/assignment/sc/') . $userinfo->uuid . '.pdf'))
                         <a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                                uk-icon="file-pdf"></span>スカウトコース課題を確認</a>
+                                uk-icon="file-pdf"></span>
+                            @if ($userinfo->danken == 'true')
+                                団委員研修所課題を確認
+                            @else
+                                スカウトコース課題を確認
+                            @endif
+                        </a>
                     @else
                         <span class="uk-text-danger">未提出</span>
                     @endif
                 </td>
             </tr>
-            <tr>
-                <th>課程別</th>
-                <td>
-                    @if (File::exists(storage_path('app/public/assignment/division/') . $userinfo->uuid . '.pdf'))
-                        <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                                uk-icon="file-pdf"></span>課程別研修課題を確認</a>
-                    @else
-                        <span class="uk-text-danger">未提出</span>
-                    @endif
-                </td>
-            </tr>
+            @unless ($userinfo->danken == 'true')
+                <tr>
+                    <th>課程別</th>
+                    <td>
+                        @if (File::exists(storage_path('app/public/assignment/division/') . $userinfo->uuid . '.pdf'))
+                            <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
+                                    uk-icon="file-pdf"></span>課程別研修課題を確認</a>
+                        @else
+                            <span class="uk-text-danger">未提出</span>
+                        @endif
+                    </td>
+                </tr>
+            @endunless
         </table>
 
         <div id="modal-confirm-gm" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
                     <h3 class="uk-card-title">団委員長の承認</h3>
-                    <p class="uk-text">スカウトコース/課程別研修への参加承認をします。お名前と認定日を入力してください。</p>
+                    <p class="uk-text">指導者訓練への参加承認をします。お名前と認定日を入力してください。</p>
                     <form method="POST" action="{{ route('gm_confirm_post') }}">
                         @csrf
                         <div class="uk-margin">

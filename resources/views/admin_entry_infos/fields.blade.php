@@ -212,7 +212,7 @@
                     'class' => 'form-control custom-select uk-form-width-small',
                 ],
             ) !!}
-                @error('district')
+                            @error('district')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
@@ -447,6 +447,18 @@
                 年月日: {!! Form::text('trainer_division_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
                 氏名: {!! Form::text('trainer_division_name', null, ['class' => 'form-control']) !!}<br>
                 アップロード: {!! Form::text('assignment_division', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'アップ済みなら up と入力',
+                ]) !!}
+            </td>
+        </tr>
+
+        <tr>
+            <td>トレーナー認定(団研)</td>
+            <td>
+                年月日: {!! Form::text('trainer_danken_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
+                氏名: {!! Form::text('trainer_danken_name', null, ['class' => 'form-control']) !!}<br>
+                アップロード: {!! Form::text('assignment_danken', null, [
                     'class' => 'form-control',
                     'placeholder' => 'アップ済みなら up と入力',
                 ]) !!}

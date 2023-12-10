@@ -22,7 +22,7 @@
 
     <div><img src="{{ url('/images/woggle.png') }}" class="uk-align-left" style="height:80px;"></div>
     <div class="uk-text-center">
-        <p class="uk-text-large">WB研修所スカウトコース参加申込書</p>
+        <p class="uk-text-large">指導者研修参加申込書</p>
     </div>
 
 
@@ -37,17 +37,21 @@
             <tr>
                 <td>申込コース</td>
                 <td>
-                    @if (isset($entryInfo->entry_info->sc_number))
-                        スカウトコース: {{ $entryInfo->entry_info->sc_number }}<br>
-                    @elseif(isset($entryInfo->entry_info->sc_number_done))
-                        スカウトコース: {{ $entryInfo->entry_info->sc_number_done }}(修了済み)<br>
-                    @endif
-
-                    @unless ($entryInfo->entry_info->division_number == 'etc')
-                        課程別研修: {{ $entryInfo->entry_info->division_number }}
+                    @if ($entryInfo->entry_info->danken)
+                        団委員研修所 東京第 {{ $entryInfo->entry_info->danken }} 期
                     @else
-                        課程別研修: それ以外
-                    @endunless
+                        @if (isset($entryInfo->entry_info->sc_number))
+                            スカウトコース: {{ $entryInfo->entry_info->sc_number }}<br>
+                        @elseif(isset($entryInfo->entry_info->sc_number_done))
+                            スカウトコース: {{ $entryInfo->entry_info->sc_number_done }}(修了済み)<br>
+                        @endif
+
+                        @unless ($entryInfo->entry_info->division_number == 'etc')
+                            課程別研修: {{ $entryInfo->entry_info->division_number }}
+                        @else
+                            課程別研修: それ以外
+                        @endunless
+                    @endif
                 </td>
             </tr>
             <tr>

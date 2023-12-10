@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-10">
-                    <h1>WB研修所申込一覧 @if (Auth::user()->is_staff)
+                    <h1>指導者研修申込一覧 @if (Auth::user()->is_staff)
                             {{ Auth::user()->is_staff }}地区
                         @endif
                         @if ($request['certificate'] == 'true')
@@ -14,7 +14,13 @@
                         @if ($request['q'])
                             <span class="uk-text-danger">SC{{ $request['q'] }}期</span>
                         @elseif($request['div'])
-                            <span class="uk-text-danger">課程別{{ $request['div'] }}回</span>
+                            @if ($request['div'] == 'etc')
+                                <span class="uk-text-danger">課程別研修(東京以外)</span>
+                            @else
+                                <span class="uk-text-danger">課程別{{ $request['div'] }}回</span>
+                            @endif
+                        @elseif($request['danken'] == 'true')
+                            <span class="uk-text-danger">団研</span>
                         @endif
                     </h1>
                 </div>

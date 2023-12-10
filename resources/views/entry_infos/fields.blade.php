@@ -1,71 +1,90 @@
 <script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
-        <tr>
-            <td>スカウトコースの期数</td>
-            <td>
-                <select name="sc_number" class="form-control custom-select uk-form-width-small" id="sc_select"
-                    onchange="toggleTextbox()">
-                    <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
-                    </option>
-                    @foreach ($courselists as $courselist)
-                        <option value="{{ $courselist->number }}" @if (
-                            (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) ||
-                                old('sc_number') == $courselist->number) selected @endif>
-                            {{ $courselist->number }}期</option>
-                    @endforeach
-                    @isset($entryInfo->sc_number)
-                        <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
-                    @else
-                        <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
-                    @endisset
-                </select>
-                @error('sc_number')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-                {{-- 既修了者入力ボックス --}}
-                <div id="textboxContainer" style="display:none;">
-                    <label for="myTextbox">修了コース名を入力してください</label>
-                    @isset($entryInfo->sc_number_done)
-                        <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
-                            placeholder="例: 東京15期"
-                            value="@if ($entryInfo->sc_number_done) {{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }} @endif">
-                    @else
-                        <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
-                            placeholder="例: 東京15期" value="{{ old('sc_number_done') }}">
-                    @endisset
-                    @error('sc_number_done')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                {{-- 既修了者入力ボックス --}}
-            </td>
-        </tr>
-        <tr>
-            <td>課程別研修の回数</td>
-            <td>
-                <select name="division_number" class="form-control custom-select uk-form-width-small">
-                    <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>選択してください
-                    </option>
-                    @foreach ($divisionlists as $divisionlist)
-                        <option value="{{ $divisionlist }}" @if (
-                            (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) ||
-                                old('division_number') == $divisionlist) selected @endif>
-                            {{ $divisionlist }}回</option>
-                    @endforeach
+        @if (empty($danken->cat))
+            @unless (isset($entryInfo) && $entryInfo->danken)
+                <tr>
+                    <td>スカウトコースの期数</td>
+                    <td>
+                        <select name="sc_number" class="form-control custom-select uk-form-width-small" id="sc_select"
+                            onchange="toggleTextbox()">
+                            <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
+                            </option>
+                            @foreach ($courselists as $courselist)
+                                <option value="{{ $courselist->number }}" @if (
+                                    (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) ||
+                                        old('sc_number') == $courselist->number) selected @endif>
+                                    {{ $courselist->number }}期</option>
+                            @endforeach
+                            @isset($entryInfo->sc_number)
+                                <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
+                            @else
+                                <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
+                            @endisset
+                        </select>
+                        @error('sc_number')
+                            <div class="error text-danger">{{ $message }}</div>
+                        @enderror
+                        {{-- 既修了者入力ボックス --}}
+                        <div id="textboxContainer" style="display:none;">
+                            <label for="myTextbox">修了コース名を入力してください</label>
+                            @isset($entryInfo->sc_number_done)
+                                <input type="text" id="myTextbox" name="sc_number_done"
+                                    class="form-control uk-form-width-medium" placeholder="例: 東京15期"
+                                    value="@if ($entryInfo->sc_number_done) {{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }} @endif">
+                            @else
+                                <input type="text" id="myTextbox" name="sc_number_done"
+                                    class="form-control uk-form-width-medium" placeholder="例: 東京15期"
+                                    value="{{ old('sc_number_done') }}">
+                            @endisset
+                            @error('sc_number_done')
+                                <div class="error text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        {{-- 既修了者入力ボックス --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>課程別研修の回数</td>
+                    <td>
+                        <select name="division_number" class="form-control custom-select uk-form-width-small">
+                            <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>
+                                選択してください
+                            </option>
+                            @foreach ($divisionlists as $divisionlist)
+                                <option value="{{ $divisionlist }}" @if (
+                                    (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) ||
+                                        old('division_number') == $divisionlist) selected @endif>
+                                    {{ $divisionlist }}回</option>
+                            @endforeach
 
-                    {{-- その他対応 --}}
-                    @php
-                        $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
-                    @endphp
-                    <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
-                    {{-- その他対応 --}}
-                </select>
-                @error('division_number')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-            </td>
-        </tr>
+                            {{-- その他対応 --}}
+                            @php
+                                $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
+                            @endphp
+                            <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
+                            {{-- その他対応 --}}
+                        </select>
+                        @error('division_number')
+                            <div class="error text-danger">{{ $message }}</div>
+                        @enderror
+                    </td>
+                </tr>
+            @else
+                <tr>
+                    <td>団委員研修所</td>
+                    <td>東京第{{ $entryInfo->danken }}期</td>
+                </tr>
+            @endunless
+        @endif
+
+        @if (isset($danken->cat))
+            <input type="hidden" name="danken" value="true">
+            <tr>
+                <td>団委員研修所</td>
+                <td>東京第{{ $danken->number }}期</td>
+            </tr>
+        @endif
         <tr>
             <td>お名前</td>
             <td>{{ Auth::user()->name }}</td>
@@ -116,6 +135,8 @@
             <td>{!! Form::text('bs_id', null, [
                 'class' => 'form-control uk-form-width-large',
                 'placeholder' => '団に確認し11桁の登録番号を入力してください',
+                'maxlength' => '11',
+                'oninput' => 'this.value = this.value.replace(/[^0-9]/g, "").substring(0, 11)',
             ]) !!}
                 @error('bs_id')
                     <div class="error text-danger">{{ $message }}</div>

@@ -51,30 +51,62 @@
                         <th>課題DL</th>
                     </tr>
                     @foreach ($div_count as $val)
+                        @unless ($val->division_number == null)
+                            <tr>
+                                <td>
+                                    @if ($val->division_number == 'etc')
+                                        <a href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">それ以外</a>
+                                    @else
+                                        <a
+                                            href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>
+                                    @endif
+                                </td>
+                                <td>{{ $val->count_division_number }}名</td>
+                                <td><a href="{{ route('admin_export') }}?division={{ $val->division_number }}"
+                                        class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
+                                </td>
+                                <td><a href="{{ url('/admin/multi_pdf?q=') . $val->division_number . '&assignment=false&cat=division' }}"
+                                        class="uk-button uk-button-primary"
+                                        onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
+                                            uk-icon="download"></span>一括DL</a></td>
+                                <td><a href="{{ url('/admin/multi_pdf?q=') . $val->division_number . '&assignment=true&cat=division' }}"
+                                        class="uk-button uk-button-primary"
+                                        onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
+                                            uk-icon="download"></span>一括DL</a></td>
+                            </tr>
+                        @endunless
+                    @endforeach
+                </table>
+
+                @if (isset($danken_count))
+                    <h2>団研申込状況</h2>
+                    <table class="uk-table uk-table-divider uk-table-striped">
                         <tr>
-                            <td>
-                                @if ($val->division_number == 'etc')
-                                    <a href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">それ以外</a>
-                                @else
-                                    <a
-                                        href="{{ url('admin/admin_entryInfos?div=' . $val->division_number) }}">{{ $val->division_number }}</a>
-                                @endif
+                            <th>人数</th>
+                            <th>一覧DL</th>
+                            <th>申込書DL</th>
+                            <th>課題DL</th>
+                        </tr>
+
+                        <tr>
+                            <td><a
+                                    href="{{ url('admin/admin_entryInfos?danken=true') }}">{{ $danken_count->count_danken }}名</a>
                             </td>
-                            <td>{{ $val->count_division_number }}名</td>
-                            <td><a href="{{ route('admin_export') }}?division={{ $val->division_number }}"
-                                    class="uk-button uk-button-primary"><span uk-icon="download"></span>Excel</a>
+                            <td><a href="{{ route('admin_export') }}?cat=danken" class="uk-button uk-button-primary"><span
+                                        uk-icon="download"></span>Excel</a>
                             </td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->division_number . '&assignment=false&cat=division' }}"
+                            <td><a href="{{ url('/admin/multi_pdf?q=danken') . '&assignment=false&cat=danken' }}"
                                     class="uk-button uk-button-primary"
                                     onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                         uk-icon="download"></span>一括DL</a></td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=') . $val->division_number . '&assignment=true&cat=division' }}"
+                            <td><a href="{{ url('/admin/multi_pdf?q=danken') . '&assignment=true&cat=danken' }}"
                                     class="uk-button uk-button-primary"
                                     onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                         uk-icon="download"></span>一括DL</a></td>
                         </tr>
-                    @endforeach
-                </table>
+
+                    </table>
+                @endif
             @endisset
         </div>
     </div>

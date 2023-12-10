@@ -67,6 +67,7 @@ class Entry_info extends Model
         'sc_number',
         'sc_number_done',
         'division_number',
+        'danken',
         'furigana',
         'gender',
         'bs_id',
@@ -130,6 +131,7 @@ class Entry_info extends Model
         'trainer_division_name',
         'assignment_sc',
         'assignment_division',
+        'assignment_danken',
     ];
 
     /**
@@ -143,6 +145,7 @@ class Entry_info extends Model
         'sc_number' => 'string',
         'sc_number_done' => 'string',
         'division_number' => 'string',
+        'danken' => 'string',
         'furigana' => 'string',
         'gender' => 'string',
         'bs_id' => 'string',
@@ -205,6 +208,7 @@ class Entry_info extends Model
         'div_over_deadline' => 'string',
         'assignment_sc'=> 'string:2',
         'assignment_division'=> 'string:2',
+        'assignment_danken' => 'string:2',
     ];
 
     /**
@@ -213,9 +217,8 @@ class Entry_info extends Model
      * @var array
      */
     public static $rules = [
-        'sc_number' => 'required',
-        'sc_number_done' => 'required_if:sc_number,done',
-        'division_number' => 'required',
+        'sc_number' => 'required_unless:danken,true',
+        'division_number' => 'required_unless:danken,true',
         'furigana' => 'required',
         'gender' => 'required',
         'bs_id' => 'required|digits:11',

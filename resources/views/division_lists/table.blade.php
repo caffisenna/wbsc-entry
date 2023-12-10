@@ -7,7 +7,6 @@
                 <th>主任所員</th>
                 <th>場所</th>
                 <th>開催日</th>
-                <th>説明会日程</th>
                 <th>申込締切</th>
                 <th>ドライブ</th>
                 <th>操作</th>
@@ -21,7 +20,6 @@
                     <td>{{ $divisionList->director }}</td>
                     <td>{{ $divisionList->place }}</td>
                     <td>{{ $divisionList->day_start->format('Y-m-d') }}</td>
-                    <td>{{ $divisionList->guidance_date->format('Y-m-d') }}</td>
                     <td>{{ $divisionList->deadline->format('Y-m-d') }}</td>
                     <td><a href="{{ $divisionList->drive_url }}"><span uk-icon="cloud-upload"></span></a></td>
                     <td width="120">

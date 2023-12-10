@@ -17,8 +17,12 @@
             @endphp
             <tr>
                 <td>{{ $val->id }}</td>
-                <td>{{ $val->sc_number }}</td>
-                <td>{{ $val->division_number }}</td>
+                @if ($val->danken)
+                    <td>{{ $val->danken }}</td>
+                @else
+                    <td>{{ $val->sc_number }}</td>
+                    <td>{{ $val->division_number }}</td>
+                @endif
                 <td>{{ $val->prefecture }}</td>
                 <td>{{ $val->district }}</td>
                 <td>{{ $val->dan }}</td>
