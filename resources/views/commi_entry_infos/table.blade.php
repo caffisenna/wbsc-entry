@@ -31,16 +31,25 @@
                             @endif
                         </td>
                         <td>
-                            @unless ($entryInfo->entry_info->sc_number == 'done')
-                                {{ $entryInfo->entry_info->sc_number }}期<br>
+
+                            @if ($entryInfo->entry_info->danken)
+                                {{-- 団研 --}}
+                                団研{{ $entryInfo->entry_info->danken }}期
                             @else
-                                <span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}期(済)</span><br>
-                            @endunless
-                            @unless ($entryInfo->entry_info->division_number == 'etc')
-                                {{ $entryInfo->entry_info->division_number }}回
-                            @else
-                                <span class="uk-text-warning">それ以外</span>
-                            @endunless
+                                {{-- スカウトコース --}}
+                                @if ($entryInfo->entry_info->sc_number == 'done')
+                                    <span
+                                        class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}期(済)</span><br>
+                                @else
+                                    SC{{ $entryInfo->entry_info->sc_number }}期<br>
+                                @endif
+                                {{-- 課程別研修 --}}
+                                @if ($entryInfo->entry_info->division_number == 'etc')
+                                    <span class="uk-text-warning">それ以外</span>
+                                @else
+                                    {{ $entryInfo->entry_info->division_number }}回
+                                @endif
+                            @endif
                         </td>
                         @if (empty($entryInfo->entry_info->trainer_sc_checked_at) ||
                                 empty($entryInfo->entry_info->trainer_sc_name) ||
