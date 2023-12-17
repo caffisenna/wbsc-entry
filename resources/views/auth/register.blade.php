@@ -62,7 +62,7 @@
                         {!! Form::select(
                             'district',
                             [
-                                '' => '',
+                                '' => '地区名を選択',
                                 '大都心' => '大都心',
                                 'さくら' => 'さくら',
                                 '城東' => '城東',
@@ -79,7 +79,7 @@
                                 '北多摩' => '北多摩',
                             ],
                             null,
-                            ['class' => 'form-control custom-select','required'],
+                            ['class' => 'form-control custom-select', 'required'],
                         ) !!}
                         <div class="input-group-append">
                             <div class="input-group-text">
