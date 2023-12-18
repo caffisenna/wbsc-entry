@@ -7,6 +7,8 @@
                 <div class="col-sm-6">
                     @if ($_REQUEST['cat'] == 'div')
                         <h1>入金チェック(課程別研修)</h1>
+                    @elseif ($_REQUEST['cat'] == 'danken')
+                        <h1>入金チェック(団研)</h1>
                     @else
                         <h1>入金チェック(スカウトコース)</h1>
                     @endif

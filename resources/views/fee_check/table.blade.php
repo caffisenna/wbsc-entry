@@ -70,8 +70,12 @@
     <table class="uk-table uk-table-divider" id="entryInfos-table">
         <thead>
             <tr>
-                <th>SC期数</th>
-                <th>課程別回数</th>
+                @unless ($_REQUEST['cat'] == 'danken')
+                    <th>SC期数</th>
+                    <th>課程別回数</th>
+                @else
+                    <th>団研期数</th>
+                @endunless
                 <th>氏名</th>
                 <th>地区</th>
                 <th>所属</th>
@@ -82,13 +86,16 @@
         <tbody>
             @foreach ($entryinfos as $entryinfo)
                 <tr>
-                    @unless ($entryinfo->sc_number == 'done')
-                        <td>SC{{ $entryinfo->sc_number }}期</td>
+                    @if ($_REQUEST['cat'] == 'danken')
+                        <td>団研{{ $entryinfo->danken }}期</td>
                     @else
-                        <td><span class="uk-text-danger uk-text-small">課程別のみ</span></td>
-                    @endunless
-
-                    <td>{{ $entryinfo->division_number }}回</td>
+                        @unless ($entryinfo->sc_number == 'done')
+                            <td>SC{{ $entryinfo->sc_number }}期</td>
+                        @else
+                            <td><span class="uk-text-danger uk-text-small">課程別のみ</span></td>
+                        @endunless
+                        <td>{{ $entryinfo->division_number }}回</td>
+                    @endif
                     <td>{{ $entryinfo->user->name }}<br><span class=" uk-text-small">{{ $entryinfo->furigana }}</span>
                     </td>
                     <td>{{ $entryinfo->district }}</td>

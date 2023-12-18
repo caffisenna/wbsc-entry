@@ -100,7 +100,12 @@
                     class="nav-link {{ request()->has('cat') && request()->query('cat') === 'div' ? 'active' : '' }}">
                     <p><span uk-icon="cart"></span>参加費確認(課程別)</p>
                 </a>
-
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('fee_check', ['cat' => 'danken']) }}"
+                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'danken' ? 'active' : '' }}">
+                    <p><span uk-icon="cart"></span>参加費確認(団研)</p>
+                </a>
             </li>
         @endunless
     @endif
