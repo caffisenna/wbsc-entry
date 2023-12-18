@@ -3,41 +3,45 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\SlackMessage;
 
-class SlackNotification extends Notification
+
+class Slack extends Notification
 {
     use Queueable;
-    protected $channel;
     protected $name;
+    protected $channel;
     protected $message;
-
 
     /**
      * Create a new notification instance.
+     *
+     * @return void
      */
-    public function __construct($message = null)
+    public function __construct($message)
     {
-        $this->channel = config('slack.channel');
         $this->name = config('slack.name');
+        $this->channel = config('slack.channel');
         $this->message = $message;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @return array<int, string>
+     * @param  mixed  $notifiable
+     * @return array
      */
-    public function via($notifiable): array
+    public function via($notifiable)
     {
         return ['slack'];
     }
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toSlack($notifiable)
     {
@@ -52,9 +56,10 @@ class SlackNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @return array<string, mixed>
+     * @param  mixed  $notifiable
+     * @return array
      */
-    public function toArray(object $notifiable): array
+    public function toArray($notifiable)
     {
         return [
             //

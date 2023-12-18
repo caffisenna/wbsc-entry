@@ -42,7 +42,15 @@ class HomeController extends Controller
             }
             $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
 
-            return view('home')->with('count', $count)->with('div_count', $div_count);
+            if (Auth::user()->is_staff) {
+                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->where('district', Auth::user()->is_staff)->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
+            } else {
+                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
+            }
+            // $danken_count = $danken_count; // 団研の人数カウント
+
+            // return view('home')->with('count', $count)->with('div_count', $div_count)->with('danken_count', $danken_count);
+            return view('home', compact('count', 'div_count', 'danken_count'));
         } elseif (Auth::user()->is_commi) {
             // 地区コミ
             // 地区の一覧にリダイレクト

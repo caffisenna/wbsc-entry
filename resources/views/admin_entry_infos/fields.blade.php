@@ -1,11 +1,16 @@
 <script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
             <td>スカウトコースの期数</td>
             <td>
-                <select name="sc_number" class="form-control custom-select uk-form-width-small" id="sc_select"
-                    onchange="toggleTextbox()">
+                <select name="sc_number" class="form-control custom-select uk-form-width-small" id="sc_number"
+                    onchange="checkSelection()">
                     <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
                     </option>
                     @foreach ($courselists as $courselist)
@@ -28,11 +33,11 @@
                     <label for="myTextbox">修了コース名を入力してください</label>
                     @isset($entryInfo->sc_number_done)
                         <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
-                            placeholder="例: 東京15期"
+                            placeholder="例: 東京15期" id="sc_number_done"
                             value="@if ($entryInfo->sc_number_done) {{ $entryInfo->sc_number_done }}@else{{ old('sc_number_done') }} @endif">
                     @else
                         <input type="text" id="myTextbox" name="sc_number_done" class="form-control uk-form-width-medium"
-                            placeholder="例: 東京15期" value="{{ old('sc_number_done') }}">
+                            placeholder="例: 東京15期" value="{{ old('sc_number_done') }}" id="sc_number_done">
                     @endisset
                     @error('sc_number_done')
                         <div class="error text-danger">{{ $message }}</div>
@@ -44,7 +49,8 @@
         <tr>
             <td>課程別研修の回数</td>
             <td>
-                <select name="division_number" class="form-control custom-select uk-form-width-small">
+                <select name="division_number" class="form-control custom-select uk-form-width-small"
+                    id="division_number" onchange="checkSelection()">
                     <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>選択してください
                     </option>
                     @foreach ($divisionlists as $divisionlist)
@@ -65,6 +71,16 @@
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
+        </tr>
+        <tr>
+            <td>団委員研修所</td>
+            <td>{!! Form::number('danken', null, [
+                'class' => 'form-control uk-form-width-small',
+                'placeholder' => '団研期数を半角で入力',
+                'id' => 'danken',
+                'oninput' => 'checkInput()',
+                'max' => '99',
+            ]) !!}</td>
         </tr>
         <tr>
             <td>お名前</td>
@@ -179,7 +195,11 @@
                     '沖縄' => '沖縄',
                 ],
                 null,
-                ['class' => 'form-control custom-select uk-form-width-small'],
+                [
+                    'class' => 'form-control custom-select uk-form-width-small',
+                    'id' => 'pref',
+                    'onchange' => 'updateDistrictOptions()',
+                ],
             ) !!}
                 @error('prefecture')
                     <div class="error text-danger">{{ $message }}</div>
@@ -210,8 +230,16 @@
                 null,
                 [
                     'class' => 'form-control custom-select uk-form-width-small',
+                    'id' => 'district',
+                    'onchange' => 'updateNonTokyo()',
                 ],
             ) !!}
+                <br>
+                {!! Form::text('district', null, [
+                    'class' => 'form-control uk-form-width-small',
+                    'placeholder' => '東連以外は地区名を入力',
+                    'id' => 'district-non-tokyo',
+                ]) !!}
                 @error('district')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -435,7 +463,10 @@
         <tr>
             <td>トレーナー認定(SC)</td>
             <td>
-                年月日: {!! Form::text('trainer_sc_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
+                年月日: {!! Form::text('trainer_sc_checked_at', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'YYYY-mm-dd hh:mm:ss',
+                ]) !!}<br>
                 氏名: {!! Form::text('trainer_sc_name', null, ['class' => 'form-control']) !!}<br>
                 アップロード: {!! Form::text('assignment_sc', null, ['class' => 'form-control', 'placeholder' => 'アップ済みなら up と入力']) !!}
             </td>
@@ -444,9 +475,27 @@
         <tr>
             <td>トレーナー認定(課程別)</td>
             <td>
-                年月日: {!! Form::text('trainer_division_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
+                年月日: {!! Form::text('trainer_division_checked_at', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'YYYY-mm-dd hh:mm:ss',
+                ]) !!}<br>
                 氏名: {!! Form::text('trainer_division_name', null, ['class' => 'form-control']) !!}<br>
                 アップロード: {!! Form::text('assignment_division', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'アップ済みなら up と入力',
+                ]) !!}
+            </td>
+        </tr>
+
+        <tr>
+            <td>トレーナー認定(団研)</td>
+            <td>
+                年月日: {!! Form::text('trainer_danken_checked_at', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'YYYY-mm-dd hh:mm:ss',
+                ]) !!}<br>
+                氏名: {!! Form::text('trainer_danken_name', null, ['class' => 'form-control']) !!}<br>
+                アップロード: {!! Form::text('assignment_danken', null, [
                     'class' => 'form-control',
                     'placeholder' => 'アップ済みなら up と入力',
                 ]) !!}
@@ -462,3 +511,66 @@
 
     </table>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeElements();
+        checkSelection(); // Check selection conditions on page load
+    });
+
+    function initializeElements() {
+        // Initialize sc_number
+        var scNumberSelect = document.getElementById("sc_number");
+        scNumberSelect.selectedIndex = 1;  // Select index 1 (Done)
+
+        // Initialize division_number
+        var divisionNumberSelect = document.getElementById("division_number");
+        setOptionByValue(divisionNumberSelect, "danken");  // Select the desired option by value
+
+        // Initialize danken input
+        var dankenInput = document.getElementById("danken");
+        if (dankenInput.value === "") {
+            dankenInput.value = "";  // Initialize if danken is empty
+        } else {
+            // If danken has a value, reset sc_number and division_number selections
+            scNumberSelect.selectedIndex = 0;  // Select index 0 (default)
+            divisionNumberSelect.selectedIndex = 0;  // Select index 0 (default)
+        }
+    }
+
+    function setOptionByValue(selectElement, value) {
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === value) {
+                selectElement.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    function checkSelection() {
+        var scNumberValue = document.getElementById("sc_number").value;
+
+        // Check sc_number selection
+        if (scNumberValue === "done") {
+            document.getElementById("textboxContainer").style.display = "block";
+        } else {
+            document.getElementById("textboxContainer").style.display = "none";
+        }
+
+        // Check danken input
+        checkInput();
+    }
+
+    function checkInput() {
+        var scNumberValue = document.getElementById("sc_number").value;
+        var divisionNumberValue = document.getElementById("division_number").value;
+        var dankenInput = document.getElementById("danken");
+
+        // Check sc_number or division_number input
+        if ((scNumberValue !== "" || divisionNumberValue !== "") && dankenInput.value !== "") {
+            // If danken has a value and either sc_number or division_number is selected, reset them
+            document.getElementById("sc_number").selectedIndex = 0;
+            document.getElementById("division_number").selectedIndex = 0;
+        }
+    }
+</script>

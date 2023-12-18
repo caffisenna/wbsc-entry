@@ -5,13 +5,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>WB研修所申込 {{ Auth::user()->name }}さん</h1>
+                    <h1>指導者研修申込 {{ Auth::user()->name }}さん</h1>
                 </div>
                 <div class="col-sm-6">
                     @if (empty($entryInfo))
-                        <a class="btn btn-primary float-right" href="{{ route('entryInfos.create') }}">
+                        {{-- <a class="btn btn-primary float-right" href="{{ route('entryInfos.create') }}">
                             申込書作成
-                        </a>
+                        </a> --}}
                     @endif
                 </div>
             </div>
@@ -31,10 +31,9 @@
 
                 <h3>参加を辞退する</h3>
                 <p class="uk-text-default">参加を取りやめる場合は地区コミッショナー、または各地区AIS委員長にお伝え下さい。<br>
-                    東京連盟の定めるキャンセルポリシーに準拠した対応を致します。</p>
-
+                    東京連盟の定めるキャンセルポリシーに準拠した対応を致します。<br>
+                    他県連に所属の方は<a href="mailto:ais@scout.tokyo">東京連盟事務局</a>までお問い合わせください。 </p>
             </div>
-
     </div>
     <div id="modal-delete-assignment-sc" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
@@ -59,5 +58,15 @@
             </p>
         </div>
     </div>
+@else
+    <h3>申込パターンを選択してください</h3>
+    <ul class="uk-list">
+        <li><a class="uk-button uk-button-large uk-button-primary uk-width-1-2"
+                href="{{ route('entryInfos.create') }}">スカウトコース / 課程別研修に申込</a></li>
+        @if ($danken->number)
+            <li><a class="uk-button uk-button-large uk-button-primary uk-width-1-2"
+                    href="{{ route('entryInfos.create') }}?cat=danken">団委員研修所(東京第{{ $danken->number }}期)に申込</a></li>
+        @endif
+    </ul>
     @endif
 @endsection

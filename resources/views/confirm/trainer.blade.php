@@ -4,10 +4,8 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-8">
-                    <h1>WB研修所申込 トレーナー認定</h1>
-                </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
+                    <h1>指導者研修申込 トレーナー認定</h1>
                 </div>
             </div>
         </div>
@@ -47,16 +45,20 @@
             <tr>
                 <th>参加コース</th>
                 <td>
-                    @if ($userinfo->sc_number == 'done')
-                        <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
+                    @if ($userinfo->danken)
+                        団委員研修所 東京第 {{ $userinfo->danken }} 期
                     @else
-                        スカウトコース {{ $userinfo->sc_number }}期<br>
+                        @if ($userinfo->sc_number == 'done')
+                            <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
+                        @else
+                            スカウトコース {{ $userinfo->sc_number }}期<br>
+                        @endif
+                        @unless ($userinfo->division_number == 'etc')
+                            課程別研修 {{ $userinfo->division_number }}回
+                        @else
+                            課程別研修 次回以降(開催予定以外)
+                        @endunless
                     @endif
-                    @unless ($userinfo->division_number == 'etc')
-                        課程別研修 {{ $userinfo->division_number }}回
-                    @else
-                        課程別研修 次回以降(開催予定以外)
-                    @endunless
                 </td>
             </tr>
         </table>
@@ -70,7 +72,13 @@
                 <th>課題</th>
             </tr>
             <tr>
-                <th>スカウトコース</th>
+                <th>
+                    @if ($userinfo->danken)
+                        団委員研修所
+                    @else
+                        スカウトコース
+                    @endif
+                </th>
                 @if (isset($userinfo->trainer_sc_checked_at))
                     <td><span class="uk-text-success">認定済み</span></td>
                 @else
@@ -89,60 +97,79 @@
                 <td>
                     @if (File::exists(storage_path('app/public/assignment/sc/') . $userinfo->uuid . '.pdf'))
                         <a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                                uk-icon="file-pdf"></span>スカウトコース課題を確認</a>
+                                uk-icon="file-pdf"></span>
+                            @if ($userinfo->danken)
+                                団委員研修所
+                            @else
+                                スカウトコース
+                            @endif
+                            課題を確認
+                        </a>
                     @else
                         <span class="uk-text-danger">未提出</span>
                     @endif
                 </td>
             </tr>
-            <tr>
-                <th>課程別</th>
-                @if (isset($userinfo->trainer_division_checked_at))
-                    <td><span class="uk-text-success">認定済み</span></td>
-                @else
-                    <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</a>
+            @unless ($userinfo->danken)
+                <tr>
+                    <th>課程別</th>
+                    @if (isset($userinfo->trainer_division_checked_at))
+                        <td><span class="uk-text-success">認定済み</span></td>
+                    @else
+                        <td><a href="#modal-confirm-assignment-division" uk-toggle class="uk-button uk-button-primary">認定する</a>
+                        </td>
+                    @endif
+                    @if (isset($userinfo->trainer_division_checked_at))
+                        <td>{{ $userinfo->trainer_division_checked_at->format('Y-m-d') }}</td>
+                    @else
+                        <td>---</td>
+                    @endif
+                    @if (isset($userinfo->trainer_division_name))
+                        <td>{{ $userinfo->trainer_division_name }}</td>
+                    @else
+                        <td>---</td>
+                    @endif
+                    <td>
+                        @if (File::exists(storage_path('app/public/assignment/division/') . $userinfo->uuid . '.pdf'))
+                            <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
+                                    uk-icon="file-pdf"></span>課程別研修課題を確認</a>
+                        @else
+                            <span class="uk-text-danger">未提出</span>
+                        @endif
                     </td>
-                @endif
-                @if (isset($userinfo->trainer_division_checked_at))
-                    <td>{{ $userinfo->trainer_division_checked_at->format('Y-m-d') }}</td>
-                @else
-                    <td>---</td>
-                @endif
-                @if (isset($userinfo->trainer_division_name))
-                    <td>{{ $userinfo->trainer_division_name }}</td>
-                @else
-                    <td>---</td>
-                @endif
-                <td>
-                    @if (File::exists(storage_path('app/public/assignment/division/') . $userinfo->uuid . '.pdf'))
-                        <a href="{{ url("/storage/assignment/division/$userinfo->uuid" . '.pdf') }}" target="_blank"><span
-                                uk-icon="file-pdf"></span>課程別研修課題を確認</a>
-                    @else
-                        <span class="uk-text-danger">未提出</span>
-                    @endif
-                </td>
-            </tr>
+                </tr>
+            @endunless
         </table>
 
+        @php
+            $course_name = '';
+            if ($userinfo->danken) {
+                $course_name = '団委員研修所';
+            } else {
+                $course_name = 'スカウトコース';
+            }
+
+        @endphp
         <div id="modal-confirm-assignment-sc" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
-                    <h3 class="uk-card-title">スカウトコース課題</h3>
-                    <p class="uk-text">スカウトコースの課題について認定サインをします。お名前と認定日を入力してください。</p>
+                    <h3 class="uk-card-title">{{ $course_name }}課題</h3>
+                    <p class="uk-text">{{ $course_name }}の課題について認定サインをします。お名前と認定日を入力してください。</p>
                     <form method="POST" action="{{ route('trainer_confirm_post') }}">
                         @csrf
                         <div class="uk-margin">
                             <label class="uk-form-label" for="form-stacked-text">トレーナー氏名</label>
                             <div class="uk-form-controls">
-                                <input class="uk-input" id="form-stacked-text" type="text" name="name_sc" required>
+                                <input class="uk-input" id="form-stacked-text" type="text"
+                                    name="{{ $userinfo->danken ? 'name_danken' : 'name_sc' }}" required>
                             </div>
                         </div>
 
                         <div class="uk-margin">
                             <label class="uk-form-label" for="form-stacked-text">認定日</label>
                             <div class="uk-form-controls">
-                                <input class="uk-input" id="form-stacked-text" type="date" name="confirm_date_sc"
-                                    required>
+                                <input class="uk-input" id="form-stacked-text" type="date"
+                                    name="{{ $userinfo->danken ? 'confirm_date_danken' : 'confirm_date_sc' }}" required>
                                 <p class="uk-text-small">認定日はカレンダーから選択するかYYYY-mm-ddの形式で入力してください</p>
                             </div>
                         </div>

@@ -4,8 +4,8 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>WB研修所申込 団委員長承認依頼</h1>
+                <div class="col-sm-8">
+                    <h1>指導者研修申込 団委員長承認依頼</h1>
                 </div>
                 <div class="col-sm-6">
                 </div>

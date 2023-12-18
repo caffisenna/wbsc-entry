@@ -62,8 +62,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('health_memo') }}"
-                    class="nav-link {{ Request::is('admin/health_memo*') ? 'active' : '' }}">
+                <a href="{{ route('health_memo') }}" class="nav-link {{ Request::is('admin/health_memo*') ? 'active' : '' }}">
                     <p><span uk-icon="lifesaver"></span>健康情報入力者</p>
                 </a>
             </li>
@@ -71,26 +70,41 @@
 
             <h3 class="uk-text-warning">コース設定</h3>
             <li class="nav-item">
-                <a href="{{ route('courseLists.index') }}" class="nav-link {{ Request::is('courseLists*') ? 'active' : '' }}">
+                <a href="{{ route('courseLists.index') }}"
+                    class="nav-link {{ Request::is('*courseLists*') ? 'active' : '' }}">
                     <p><span uk-icon="cog"></span>スカウトコース</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('divisionLists.index') }}"
-                    class="nav-link {{ Request::is('divisionLists*') ? 'active' : '' }}">
+                    class="nav-link {{ Request::is('*divisionLists*') ? 'active' : '' }}">
                     <p><span uk-icon="cog"></span>課程別研修</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('dankenLists.index') }}"
+                    class="nav-link {{ Request::is('*dankenLists*') ? 'active' : '' }}">
+                    <p><span uk-icon="cog"></span>団研</p>
                 </a>
             </li>
 
             <h3 class="uk-text-warning">事務局</h3>
             <li class="nav-item">
-                <a href="{{ route('fee_check') }}?cat=sc" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
+                <a href="{{ route('fee_check', ['cat' => 'sc']) }}"
+                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'sc' ? 'active' : '' }}">
                     <p><span uk-icon="cart"></span>参加費確認(SC)</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('fee_check') }}?cat=div" class="nav-link {{ Request::is('fee_check*') ? 'active' : '' }}">
+                <a href="{{ route('fee_check', ['cat' => 'div']) }}"
+                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'div' ? 'active' : '' }}">
                     <p><span uk-icon="cart"></span>参加費確認(課程別)</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('fee_check', ['cat' => 'danken']) }}"
+                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'danken' ? 'active' : '' }}">
+                    <p><span uk-icon="cart"></span>参加費確認(団研)</p>
                 </a>
             </li>
         @endunless

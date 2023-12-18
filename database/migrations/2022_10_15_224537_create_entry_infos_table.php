@@ -19,7 +19,8 @@ class CreateEntryInfosTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->string('sc_number')->nullable();                // スカウトコースX期
             $table->string('sc_number_done')->nullable();           // 修了済みスカウトコースX期
-            $table->string('division_number');   // 課程別X期
+            $table->string('division_number')->nullable();   // 課程別X期
+            $table->string('danken')->nullable();   // 団研
             $table->string('furigana');
             $table->string('gender');
             $table->string('bs_id',11);
@@ -72,12 +73,15 @@ class CreateEntryInfosTable extends Migration
             $table->string('additional_comment',500)->nullable();   // 地区コミからの副申請書
             $table->string('assignment_sc')->nullable();          // 課題研修SC
             $table->string('assignment_division')->nullable();    // 課題研修課程別
+            $table->string('assignment_danken')->nullable();    // 課題研修 団研
             $table->string('face_picture')->nullable();    // 顔写真
             $table->string('uuid')->unique();                   // UUID
             $table->date('trainer_sc_checked_at')->nullable();              // トレーナー認定SC
             $table->string('trainer_sc_name', 50)->nullable();                    // トレーナー認定氏名
             $table->date('trainer_division_checked_at')->nullable();        // トレーナー認定課程別
             $table->string('trainer_division_name', 50)->nullable();              // トレーナー認定氏名
+            $table->date('trainer_danken_checked_at')->nullable();              // トレーナー認定SC
+            $table->string('trainer_danken_name', 50)->nullable();                    // トレーナー認定氏名
             $table->date('gm_checked_at')->nullable();                      // 団委員長確認
             $table->string('gm_name', 50)->nullable();                         // 団委員長氏名
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認
@@ -86,10 +90,14 @@ class CreateEntryInfosTable extends Migration
             $table->date('sc_rejected_at')->nullable();                  // AIS委員委員長の参加認定
             $table->date('div_accepted_at')->nullable();                  // AIS委員委員長の参加認定
             $table->date('div_rejected_at')->nullable();                  // AIS委員委員長の参加認定
+            $table->date('danken_accepted_at')->nullable();                  // AIS委員委員長の参加認定
+            $table->date('danken_rejected_at')->nullable();                  // AIS委員委員長の参加認定
             $table->string('certification_sc', 5)->nullable();           // 修了認定ステータス pass or ng
             $table->string('certification_div', 5)->nullable();          // 修了認定ステータス pass or ng
+            $table->string('certification_danken', 5)->nullable();          // 修了認定ステータス pass or ng
             $table->date('sc_fee_checked_at')->nullable();                     // SC参加費確認
             $table->date('div_fee_checked_at')->nullable();                    // 課程別参加費確認
+            $table->date('danken_fee_checked_at')->nullable();                 // 団研参加費確認
             $table->string('order')->nullable();
             $table->timestamps();
             $table->softDeletes();

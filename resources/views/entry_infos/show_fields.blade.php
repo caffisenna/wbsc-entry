@@ -1,25 +1,32 @@
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
-        <tr>
-            <th>スカウトコースの期数</td>
-            <td>
-                @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
-                    スカウトコース{{ $entryInfo->sc_number }}期
-                @elseif($entryInfo->sc_number_done)
-                    スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
-                @endif
-            </td>
-        </tr>
-        <tr>
-            <th>課程別研修の回数</th>
-            <td>
-                @unless ($entryInfo->division_number == 'etc')
-                    {{ $entryInfo->division_number }}
-                @else
-                    それ以外
-                @endunless
-            </td>
-        </tr>
+        @if ($entryInfo->danken)
+            <tr>
+                <th>団委員研修所の期数</td>
+                <td>東京第{{ $entryInfo->danken }}期</td>
+            </tr>
+        @else
+            <tr>
+                <th>スカウトコースの期数</td>
+                <td>
+                    @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
+                        スカウトコース{{ $entryInfo->sc_number }}期
+                    @elseif($entryInfo->sc_number_done)
+                        スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th>課程別研修の回数</th>
+                <td>
+                    @unless ($entryInfo->division_number == 'etc')
+                        {{ $entryInfo->division_number }}
+                    @else
+                        それ以外
+                    @endunless
+                </td>
+            </tr>
+        @endif
         <tr>
             <th>お名前</th>
             <td>{{ Auth::user()->name }}</td>

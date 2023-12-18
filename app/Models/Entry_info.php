@@ -67,6 +67,7 @@ class Entry_info extends Model
         'sc_number',
         'sc_number_done',
         'division_number',
+        'danken',
         'furigana',
         'gender',
         'bs_id',
@@ -130,6 +131,7 @@ class Entry_info extends Model
         'trainer_division_name',
         'assignment_sc',
         'assignment_division',
+        'assignment_danken',
     ];
 
     /**
@@ -143,6 +145,7 @@ class Entry_info extends Model
         'sc_number' => 'string',
         'sc_number_done' => 'string',
         'division_number' => 'string',
+        'danken' => 'string',
         'furigana' => 'string',
         'gender' => 'string',
         'bs_id' => 'string',
@@ -203,8 +206,9 @@ class Entry_info extends Model
         'order' => 'string',
         'sc_over_deadline' => 'string',
         'div_over_deadline' => 'string',
-        'assignment_sc'=> 'string:2',
-        'assignment_division'=> 'string:2',
+        'assignment_sc' => 'string:2',
+        'assignment_division' => 'string:2',
+        'assignment_danken' => 'string:2',
     ];
 
     /**
@@ -213,9 +217,11 @@ class Entry_info extends Model
      * @var array
      */
     public static $rules = [
-        'sc_number' => 'required',
-        'sc_number_done' => 'required_if:sc_number,done',
-        'division_number' => 'required',
+        // 'sc_number' => 'required_unless:danken,true',
+        // 'sc_number' => 'required_unless:danken,',
+        // 'division_number' => 'required_unless:danken,',
+        'sc_number' => 'required_without:danken',
+        'division_number' => 'required_without:danken',
         'furigana' => 'required',
         'gender' => 'required',
         'bs_id' => 'required|digits:11',
@@ -242,9 +248,11 @@ class Entry_info extends Model
     ];
 
     public static $messages = [
+        'sc_number.required_without' => 'スカウトコースの期数を選択してください',
         'sc_number.required' => 'スカウトコースの期数を選択してください',
         'sc_number_done.required' => 'スカウトコースを修了済みの場合は期数を入力してください',
         'division_number.required' => '課程研修別の期数を選択してください',
+        'division_number.required_without' => '課程研修別の期数を選択してください',
         'furigana.required' => 'ふりがなを入力してください',
         'gender.required' => '性別を選択してください',
         'bs_id.required' => '登録番号を入力してください',

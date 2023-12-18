@@ -8,7 +8,7 @@ use Flash;
 use App\Mail\GmConfirm;
 use Mail;
 use App\Mail\TrainerConfirm;
-use App\Http\Util\Slack\SlackPost;
+use App\Http\Util\SlackPost;
 
 class ConfirmController extends Controller
 {
@@ -30,6 +30,8 @@ class ConfirmController extends Controller
         $confirm_date_sc = $request['confirm_date_sc'];
         $name_division = $request['name_division'];
         $confirm_date_division = $request['confirm_date_division'];
+        $name_danken = $request['name_danken'];
+        $confirm_date_danken = $request['confirm_date_danken'];
 
         // slack通知
         // disable slack notification from local
@@ -47,6 +49,13 @@ class ConfirmController extends Controller
                 // 課程別のセット
                 $userinfo->trainer_division_checked_at = $confirm_date_division;
                 $userinfo->trainer_division_name = $name_division;
+                $userinfo->save();
+                Flash::success($userinfo->user->name . 'さんの課程別課題研修についてトレーナー認定を行いました');
+                $slack->send(':white_check_mark:' . $userinfo->district . '地区 ' . $userinfo->user->name . ' さんの課程別研修課題についてトレーナー認定完了');
+            } elseif (isset($name_danken) && isset($confirm_date_danken)) {
+                // 課程別のセット
+                $userinfo->trainer_danken_checked_at = $confirm_date_danken;
+                $userinfo->trainer_danken_name = $name_danken;
                 $userinfo->save();
                 Flash::success($userinfo->user->name . 'さんの課程別課題研修についてトレーナー認定を行いました');
                 $slack->send(':white_check_mark:' . $userinfo->district . '地区 ' . $userinfo->user->name . ' さんの課程別研修課題についてトレーナー認定完了');
