@@ -90,10 +90,13 @@
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
                             {{-- 認定がpass、ngが入っていなければボタンを表示 --}}
-                            @unless ($entryInfo->entry_info->certification_sc || $entryInfo->entry_info->certification_div)
+                            @unless (
+                                $entryInfo->entry_info->certification_sc ||
+                                    $entryInfo->entry_info->certification_div ||
+                                    $entryInfo->entry_info->certification_danken)
                                 <td>
                                     {{-- 地区AIS委員長はボタンを隠す --}}
-                                    @if (Auth::user()->is_staff == null)
+                                    @if (Auth::user()->is_ais == null)
                                         <a href="{{ url('/admin/certificate/?status=pass&uuid=') }}{{ $entryInfo->entry_info->uuid }}&cat={{ $request['cat'] }}"
                                             class='uk-button uk-button-primary uk-button-small'
                                             onclick="return confirm('{{ $entryInfo->name }}さんを認定しますか?')">
@@ -103,7 +106,7 @@
                                 </td>
                                 <td>
                                     {{-- 地区AIS委員長はボタンを隠す --}}
-                                    @if (Auth::user()->is_staff == null)
+                                    @if (Auth::user()->is_ais == null)
                                         <a href="{{ url('/admin/certificate/?status=ng&uuid=') }}{{ $entryInfo->entry_info->uuid }}&cat={{ $request['cat'] }}"
                                             class='uk-button uk-button-danger uk-button-small'
                                             onclick="return confirm('{{ $entryInfo->name }}さんを否認しますか?')">
@@ -123,6 +126,12 @@
                                     <td><span class="uk-text-success">認定済み</span></td>
                                     <td></td>
                                 @elseif ($entryInfo->entry_info->certification_div == 'ng')
+                                    <td><span class="uk-text-danger">否認済み</span></td>
+                                    <td></td>
+                                @elseif ($entryInfo->entry_info->certification_danken == 'pass')
+                                    <td><span class="uk-text-success">認定済み</span></td>
+                                    <td></td>
+                                @elseif ($entryInfo->entry_info->certification_danken == 'ng')
                                     <td><span class="uk-text-danger">否認済み</span></td>
                                     <td></td>
                                 @endif

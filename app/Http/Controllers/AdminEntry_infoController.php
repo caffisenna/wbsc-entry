@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CertificateExport;
 use App\Http\Requests\CreateEntry_infoRequest;
 use App\Http\Requests\UpdateEntry_infoRequest;
 use App\Repositories\Entry_infoRepository;
@@ -27,6 +28,7 @@ use App\Http\Util\Slack\SlackPost;
 use App\Mail\AisAccepted;
 use Illuminate\Support\Facades\Log;
 use App\Models\course_list;
+use App\Models\DankenLists;
 use App\Models\division_list;
 use Maatwebsite\Excel\Imports\EndRowFinder;
 
@@ -50,12 +52,12 @@ class AdminEntry_infoController extends AppBaseController
     public function index(Request $request)
     {
         if (isset($request['q'])) { // スカウトコース 期数抽出
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q)->where('district', Auth::user()->is_staff);
+                        $query->where('sc_number', $q)->where('district', Auth::user()->is_ais);
                     }
                 )->with('entry_info')->get();
             } else {
@@ -68,12 +70,12 @@ class AdminEntry_infoController extends AppBaseController
                 )->with('entry_info')->get();
             }
         } elseif (isset($request['div'])) { // 課程別研修 回数抽出
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['div'];
-                        $query->where('division_number', $q)->where('district', Auth::user()->is_staff);
+                        $query->where('division_number', $q)->where('district', Auth::user()->is_ais);
                     }
                 )->with('entry_info')->get();
             } else {
@@ -85,20 +87,36 @@ class AdminEntry_infoController extends AppBaseController
                     }
                 )->with('entry_info')->get();
             }
+        } elseif (isset($request['danken'])) { // 団研抽出
+            if (Auth::user()->is_ais) {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $query->whereNotNull('danken')->where('district', Auth::user()->is_ais);
+                    }
+                )->with('entry_info')->get();
+            } else {
+                $entryInfos = User::wherehas(
+                    'entry_info',
+                    function ($query) {
+                        $query->whereNotNull('danken');
+                    }
+                )->with('entry_info')->get();
+            }
         } else {
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::with('entry_info')
                     ->where('is_admin', 0)
-                    ->where('is_staff', NULL)
+                    ->where('is_ais', NULL)
                     ->where('is_commi', NULL)
                     ->whereHas('entry_info', function ($query) {
-                        $query->where('district', Auth::user()->is_staff);
+                        $query->where('district', Auth::user()->is_ais);
                     })
                     ->get();
             } else {
                 $entryInfos = User::with('entry_info')
                     ->where('is_admin', 0)
-                    ->where('is_staff', NULL)
+                    ->where('is_ais', NULL)
                     ->where('is_commi', NULL)
                     ->get();
             }
@@ -121,13 +139,13 @@ class AdminEntry_infoController extends AppBaseController
                 // リストから取得
                 $course_info = division_list::where('division', $alphabetPart)->where('number', $numberPart)->first();
             }
-        } elseif ($request['danken'] == 'true') {
+        } elseif ($request['danken'] == 'danken') {
             // 団研申込者を抽出
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
-                        $query->where('danken', '<>', NULL)->where('district', Auth::user()->is_staff);
+                        $query->where('danken', '<>', NULL)->where('district', Auth::user()->is_ais);
                     }
                 )->with('entry_info')->get();
             } else {
@@ -138,6 +156,7 @@ class AdminEntry_infoController extends AppBaseController
                     }
                 )->with('entry_info')->get();
             }
+            $request['cat'] = 'danken';
         }
 
         return view('admin_entry_infos.index')
@@ -304,12 +323,12 @@ class AdminEntry_infoController extends AppBaseController
     {
         if ($_REQUEST['cat'] == 'division') {
             // 課程別研修 申込書地区別
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('division_number', $q)->where('district', Auth::user()->is_staff);
+                        $query->where('division_number', $q)->where('district', Auth::user()->is_ais);
                     }
                 )->with('entry_info')->get();
             } else {
@@ -324,12 +343,12 @@ class AdminEntry_infoController extends AppBaseController
             }
         } elseif ($_REQUEST['cat'] == 'sc') {
             // スカウトコース 申込書地区別
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q)->where('district', Auth::user()->is_staff);
+                        $query->where('sc_number', $q)->where('district', Auth::user()->is_ais);
                     }
                 )->with('entry_info')->get();
             } else {
@@ -344,11 +363,11 @@ class AdminEntry_infoController extends AppBaseController
             }
         } elseif ($_REQUEST['cat'] == 'danken') {
             // 団研 申込書地区別
-            if (Auth::user()->is_staff) {
+            if (Auth::user()->is_ais) {
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
-                        $query->whereNotNull('danken')->where('district', Auth::user()->is_staff);
+                        $query->whereNotNull('danken')->where('district', Auth::user()->is_ais);
                     }
                 )->with('entry_info')->get();
             } else {
@@ -465,20 +484,20 @@ class AdminEntry_infoController extends AppBaseController
     public function admin_export(Request $request)
     {
         if (isset($request->sc)) { // 一覧表からSC番号が指定されたとき
-            if (Auth::user()->is_staff) {
-                $data = Entry_info::with('user')->where('sc_number', $request->sc)->where('district', Auth::user()->is_staff)->get();
+            if (Auth::user()->is_ais) {
+                $data = Entry_info::with('user')->where('sc_number', $request->sc)->where('district', Auth::user()->is_ais)->get();
             } else {
                 $data = Entry_info::with('user')->where('sc_number', $request->sc)->get();
             }
         } elseif (isset($request->division)) { // 一覧表からSC番号が指定されたとき
-            if (Auth::user()->is_staff) {
-                $data = Entry_info::with('user')->where('division_number', $request->division)->where('district', Auth::user()->is_staff)->get();
+            if (Auth::user()->is_ais) {
+                $data = Entry_info::with('user')->where('division_number', $request->division)->where('district', Auth::user()->is_ais)->get();
             } else {
                 $data = Entry_info::with('user')->where('division_number', $request->division)->get();
             }
         } elseif (isset($request->cat) && $request->cat == 'danken') { // 一覧表から団研が指定されたとき
-            if (Auth::user()->is_staff) {
-                $data = Entry_info::with('user')->whereNotNull('danken')->where('district', Auth::user()->is_staff)->get();
+            if (Auth::user()->is_ais) {
+                $data = Entry_info::with('user')->whereNotNull('danken')->where('district', Auth::user()->is_ais)->get();
             } else {
                 $data = Entry_info::with('user')->whereNotNull('danken')->get();
             }
@@ -549,6 +568,44 @@ class AdminEntry_infoController extends AppBaseController
 
         //以下で先ほど作成したExcelExportにデータを渡す。
         return Excel::download(new ExcelExport($data, $headings), $filename);
+    }
+
+    public function certificate_export(Request $request)
+    {
+        // 履修者のexport
+        $cat = $request->cat;
+        $q = $request->q;
+        if ($cat == 'SC') {
+            $data = Entry_info::where('sc_number', $q)->with('user')
+                ->select('user_id', 'sc_number', 'dan', 'district', 'troop', 'troop_role')
+                ->get();
+            $prefix = 'SC' . $q;
+        } elseif ($cat == 'division') {
+            $data = Entry_info::where('division_number', $q)->with('user')
+                ->select('user_id', 'division_number', 'dan', 'district', 'troop', 'troop_role')
+                ->get();
+            $prefix = '課程別_' . $q;
+        } elseif ($cat == 'danken') {
+            $data = Entry_info::whereNotNull('danken')->with('user')->get();
+            $prefix = '団研';
+        }
+
+        // DLファイル名の指定
+        $filename = '履修者名簿_' . $prefix . '.xlsx';
+
+        //エクセルの見出しを以下で設定
+        $headings = [
+            'コース',
+            '氏名',
+            '団名',
+            '地区',
+            '隊',
+            '役務',
+        ];
+
+
+        //以下で先ほど作成したExcelExportにデータを渡す。
+        return Excel::download(new CertificateExport($data, $headings), $filename);
     }
 
     public function fee_check(Request $request)
@@ -764,7 +821,10 @@ class AdminEntry_infoController extends AppBaseController
             $div_count = Entry_info::select('division_number')->selectRaw('count(user_id) as count_division_number')->groupBy('division_number')->get();
             $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
 
-            return view('certificate')->with('count', $count)->with('div_count', $div_count);
+            // 団研をDBから取得
+            $danken_count = DankenLists::whereNotNull('number')->select('number')->first();
+
+            return view('certificate')->with(compact(['count', 'div_count', 'danken_count']));
         } else {
             // 修了認定
             $uuid = $request['uuid'];
@@ -778,6 +838,9 @@ class AdminEntry_infoController extends AppBaseController
                     break;
                 case 'div':
                     $entryInfo->certification_div = $status;
+                    break;
+                case 'danken':
+                    $entryInfo->certification_danken = $status;
                     break;
             }
 
@@ -803,7 +866,7 @@ class AdminEntry_infoController extends AppBaseController
         // メール未認証リストを取得
         $users = User::where('email_verified_at', null)
             // admin、地区AIS、地区コミは除外
-            ->where(['is_admin' => 0, 'is_staff' => null, 'is_commi' => null])
+            ->where(['is_admin' => 0, 'is_ais' => null, 'is_commi' => null])
             ->get();
 
         return view('admin_entry_infos.email_not_verified')
