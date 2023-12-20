@@ -5,8 +5,8 @@
         @include('flash::message')
         <div class="row">
             @isset($count)
-                <h2>スカウトコース申込状況 @if (Auth::user()->is_staff)
-                        {{ Auth::user()->is_staff }}地区
+                <h2>スカウトコース申込状況 @if (Auth::user()->is_ais)
+                        {{ Auth::user()->is_ais }}地区
                     @endif
                 </h2>
                 <table class="uk-table uk-table-divider uk-table-striped">

@@ -5,8 +5,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-10">
-                    <h1>指導者研修申込一覧 @if (Auth::user()->is_staff)
-                            {{ Auth::user()->is_staff }}地区
+                    <h1>指導者研修申込一覧 @if (Auth::user()->is_ais)
+                            {{ Auth::user()->is_ais }}地区
                         @endif
                         @if ($request['certificate'] == 'true')
                             <span class="uk-text-danger">修了認定</span>
@@ -19,7 +19,7 @@
                             @else
                                 <span class="uk-text-danger">課程別{{ $request['div'] }}回</span>
                             @endif
-                        @elseif($request['danken'] == 'true')
+                        @elseif($request['danken'] == 'danken')
                             <span class="uk-text-danger">団研</span>
                         @endif
                     </h1>

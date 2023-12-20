@@ -15,7 +15,7 @@ class add_user extends Model
         'district',
         'password',
         'is_admin',
-        'is_staff',
+        'is_ais',
         'is_commi',
     ];
 

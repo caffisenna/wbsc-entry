@@ -40,14 +40,19 @@ class AuthServiceProvider extends ServiceProvider
             return $user->is_admin;
         });
 
-        // staff
-        Gate::define('staff', function (\App\Models\User $user) {
-            return $user->is_staff;
+        // AIS委員
+        Gate::define('ais', function (\App\Models\User $user) {
+            return $user->is_ais;
         });
 
         // 県連
         Gate::define('commi', function (\App\Models\User $user) {
             return $user->is_commi;
+        });
+
+        // コーススタッフ
+        Gate::define('course_staff', function (\App\Models\User $user) {
+            return $user->is_course_staff;
         });
     }
 }

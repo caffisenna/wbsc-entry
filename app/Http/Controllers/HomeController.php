@@ -28,22 +28,22 @@ class HomeController extends Controller
         if (Auth::user()->is_admin) {
             // 管理者
             // 各コースの申込人数を集計してhome画面に渡す
-            if (Auth::user()->is_staff) { // 地区AIS委員用 地区名がis_staffにあればフィルタをかける
-                $count = Entry_info::where('district', Auth::user()->is_staff)->select('sc_number')->selectRaw('count(user_id) as count_sc_number')->groupBy('sc_number')->get();
+            if (Auth::user()->is_ais) { // 地区AIS委員用 地区名がis_aisにあればフィルタをかける
+                $count = Entry_info::where('district', Auth::user()->is_ais)->select('sc_number')->selectRaw('count(user_id) as count_sc_number')->groupBy('sc_number')->get();
             } else {
                 $count = Entry_info::select('sc_number')->selectRaw('count(user_id) as count_sc_number')->groupBy('sc_number')->get();
             }
             $count = $count->sortBy('sc_number'); // 期数毎にソート
 
-            if (Auth::user()->is_staff) {
-                $div_count = Entry_info::select('division_number')->where('district', Auth::user()->is_staff)->selectRaw('count(user_id) as count_division_number')->groupBy('division_number')->get();
+            if (Auth::user()->is_ais) {
+                $div_count = Entry_info::select('division_number')->where('district', Auth::user()->is_ais)->selectRaw('count(user_id) as count_division_number')->groupBy('division_number')->get();
             } else {
                 $div_count = Entry_info::select('division_number')->selectRaw('count(user_id) as count_division_number')->groupBy('division_number')->get();
             }
             $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
 
-            if (Auth::user()->is_staff) {
-                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->where('district', Auth::user()->is_staff)->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
+            if (Auth::user()->is_ais) {
+                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->where('district', Auth::user()->is_ais)->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
             } else {
                 $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
             }
@@ -51,6 +51,9 @@ class HomeController extends Controller
 
             // return view('home')->with('count', $count)->with('div_count', $div_count)->with('danken_count', $danken_count);
             return view('home', compact('count', 'div_count', 'danken_count'));
+        } elseif (Auth::user()->is_course_staff) {
+            // コーススタッフ
+            return redirect()->route('course_staff.index');
         } elseif (Auth::user()->is_commi) {
             // 地区コミ
             // 地区の一覧にリダイレクト
