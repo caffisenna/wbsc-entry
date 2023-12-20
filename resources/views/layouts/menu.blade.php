@@ -1,7 +1,7 @@
 {{-- 認証されてなければサイドメニューを表示しない --}}
 @auth
     {{-- 一般ユーザー --}}
-    @unless (Auth::user()->is_admin || Auth::user()->is_staff || Auth::user()->is_commi)
+    @unless (Auth::user()->is_admin || Auth::user()->is_ais || Auth::user()->is_commi)
         <p class="uk-text-warning">参加申込</p>
         <li class="nav-item">
             <a href="{{ route('entryInfos.index') }}" class="nav-link {{ Request::is('entryInfos*') ? 'active' : '' }}">
@@ -33,12 +33,12 @@
         </li>
 
         {{-- 地区AIS委員はエクスポートさせない --}}
-        @unless (Auth::user()->is_staff)
+        @unless (Auth::user()->is_ais)
             <li class="nav-item">
                 <a href="{{ url('/admin/certificate') }}?list=all"
-                    class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
-                    <p><span uk-icon="bolt"></span>修了認定</p>
-                </a>
+   class="nav-link {{ Request::is('admin/certificate*') || str_contains(request()->fullUrl(), 'certificate=true') ? 'active' : '' }}">
+    <p><span uk-icon="bolt"></span>修了認定</p>
+</a>
             </li>
 
             <li class="nav-item">
@@ -91,19 +91,22 @@
             <h3 class="uk-text-warning">事務局</h3>
             <li class="nav-item">
                 <a href="{{ route('fee_check', ['cat' => 'sc']) }}"
-                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'sc' ? 'active' : '' }}">
+                    class="nav-link {{ (request()->has('cat') && request()->query('cat') === 'sc') && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
+                    ">
                     <p><span uk-icon="cart"></span>参加費確認(SC)</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('fee_check', ['cat' => 'div']) }}"
-                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'div' ? 'active' : '' }}">
+                    class="nav-link {{ (request()->has('cat') && request()->query('cat') === 'div') && (str_contains(request()->url(), 'fee_check')) ? 'active' : '' }}
+                    ">
                     <p><span uk-icon="cart"></span>参加費確認(課程別)</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('fee_check', ['cat' => 'danken']) }}"
-                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'danken' ? 'active' : '' }}">
+                    class="nav-link {{ (request()->has('cat') && request()->query('cat') === 'danken') && (str_contains(request()->url(), 'fee_check')) ? 'active' : '' }}
+                    ">
                     <p><span uk-icon="cart"></span>参加費確認(団研)</p>
                 </a>
             </li>
