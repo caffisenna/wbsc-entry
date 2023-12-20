@@ -28,15 +28,15 @@ class add_userController extends AppBaseController
     {
         // $addUsers = $this->addUserRepository->paginate(10);
         $addUsers = User::where('is_admin',  1)
-            ->orWhere('is_staff', '<>', null)
+            ->orWhere('is_ais', '<>', null)
             ->orWhere('is_commi', '<>', null)
             ->get();
 
         foreach ($addUsers as $user) {
             if ($user->is_admin == 1) {
                 $user->role = "管理者";
-            } elseif ($user->is_staff !== null) {
-                $user->role = "AIS " . $user->is_staff;
+            } elseif ($user->is_ais !== null) {
+                $user->role = "AIS " . $user->is_ais;
             } elseif ($user->is_commi !== null) {
                 $user->role = "地区コミ " . $user->is_commi;
             }
@@ -68,15 +68,15 @@ class add_userController extends AppBaseController
         // 権限
         if ($input['role'] == 'admin') {
             $user->is_admin  = 1;
-            $user->is_staff = null;
+            $user->is_ais = null;
             $user->is_commi = null;
         } elseif ($input['role'] == 'AIS') {
             $user->is_admin  = 1;
-            $user->is_staff = $input['district'];
+            $user->is_ais = $input['district'];
             $user->is_commi = null;
         } elseif ($input['role'] == 'commi') {
             $user->is_admin  = 0;
-            $user->is_staff  = null;
+            $user->is_ais  = null;
             $user->is_commi = $input['district'];
         }
 

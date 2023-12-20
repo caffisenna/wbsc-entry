@@ -12,6 +12,7 @@ use App\Http\Controllers\division_listController;
 use App\Http\Controllers\ConfirmController;
 use App\Http\Controllers\Entry_infoController;
 use App\Http\Controllers\CommiEntry_infoController;
+use App\Http\Controllers\CourseStaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,13 +91,14 @@ Route::middleware('verified')->group(function () {
         Route::get('/multi_pdf', [AdminEntry_infoController::class, 'multi_pdf'])->name('multi_pdf');
         Route::get('/ais_check', [AdminEntry_infoController::class, 'ais_check'])->name('ais_check');
         Route::get('/admin_export', [AdminEntry_infoController::class, 'admin_export'])->name('admin_export');
+        Route::get('/certificate_export', [AdminEntry_infoController::class, 'certificate_export'])->name('certificate_export');
         Route::get('/fee_check', [AdminEntry_infoController::class, 'fee_check'])->name('fee_check');
         Route::get('/revert', [AdminEntry_infoController::class, 'revert'])->name('revert'); // 取り消し
         Route::get('/accept', [AdminEntry_infoController::class, 'accept'])->name('accept'); // 参加承認
         Route::get('/certificate', [AdminEntry_infoController::class, 'certificate'])->name('certificate'); // 修了認定
         Route::resource('courseLists', course_listController::class); // スカウトコース設定
         Route::resource('divisionLists', division_listController::class); // 課程別研修設定
-        Route::match(['get','post'],'/add_users/password_reset', [add_userController::class, 'pass_reset'])->name('pass_reset'); // passwordリセット
+        Route::match(['get', 'post'], '/add_users/password_reset', [add_userController::class, 'pass_reset'])->name('pass_reset'); // passwordリセット
         Route::resource('add_users', add_userController::class); // ユーザー追加
         Route::get('/email_not_verified', [AdminEntry_infoController::class, 'email_not_verified'])->name('email_not_verified'); // メール未認証
         Route::get('/health_memo', [AdminEntry_infoController::class, 'health_memo'])->name('health_memo'); // 健康上の特記事項
@@ -119,5 +121,10 @@ Route::middleware('verified')->group(function () {
         Route::get('/priority', [CommiEntry_infoController::class, 'priority'])->name('priority');
         Route::post('/priority_sortable', [CommiEntry_infoController::class, 'priority_sortable'])->name('priority_sortable');
     });
-});
 
+    // コーススタッフ用
+    Route::prefix('course_staff')->middleware('can:course_staff')->group(function () {
+        Route::resource('course_staff', CourseStaffController::class);
+        Route::get('/pdf', [CourseStaffController::class, 'pdf']);
+    });
+});
