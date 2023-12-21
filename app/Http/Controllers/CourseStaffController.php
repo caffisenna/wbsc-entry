@@ -66,6 +66,7 @@ class CourseStaffController extends AppBaseController
 
         // 平均年齢を計算
         $averageAge = $ages->average();
+        $averageAge = number_format($averageAge, 2);
         // 平均年齢計算
 
         // 男女別の個数を取得
