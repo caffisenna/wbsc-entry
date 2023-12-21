@@ -17,6 +17,7 @@ class add_user extends Model
         'is_admin',
         'is_ais',
         'is_commi',
+        'is_course_staff',
     ];
 
     protected $casts = [
