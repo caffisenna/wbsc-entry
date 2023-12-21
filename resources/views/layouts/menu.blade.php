@@ -1,7 +1,7 @@
 {{-- 認証されてなければサイドメニューを表示しない --}}
 @auth
     {{-- 一般ユーザー --}}
-    @unless (Auth::user()->is_admin || Auth::user()->is_ais || Auth::user()->is_commi)
+    @unless (Auth::user()->is_admin || Auth::user()->is_ais || Auth::user()->is_commi || Auth::user()->is_course_staff)
         <p class="uk-text-warning">参加申込</p>
         <li class="nav-item">
             <a href="{{ route('entryInfos.index') }}" class="nav-link {{ Request::is('entryInfos*') ? 'active' : '' }}">
@@ -131,6 +131,22 @@
         <li class="nav-item">
             <a href="{{ url('/howto_commi') }}" class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
                 <p><span uk-icon="file-text"></span>使い方ガイド</p>
+            </a>
+        </li>
+    @endif
+
+    @if (Auth::user()->is_course_staff)
+        <h3 class="uk-text-warning">コーススタッフ</h3>
+        <li class="nav-item">
+            <a href="{{ route('course_staff.index') }}"
+                class="nav-link {{ Request::is('course_staff*') ? 'active' : '' }}">
+                <p><span uk-icon="list"></span>申込一覧</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('course_staff_export') }}"
+                class="nav-link {{ Request::is('course_staff/export') ? 'active' : '' }}">
+                <p><span uk-icon="download"></span>申込一覧DL</p>
             </a>
         </li>
     @endif

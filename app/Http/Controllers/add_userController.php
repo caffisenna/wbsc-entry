@@ -30,6 +30,7 @@ class add_userController extends AppBaseController
         $addUsers = User::where('is_admin',  1)
             ->orWhere('is_ais', '<>', null)
             ->orWhere('is_commi', '<>', null)
+            ->orWhere('is_course_staff', '<>', null)
             ->get();
 
         foreach ($addUsers as $user) {
@@ -39,6 +40,8 @@ class add_userController extends AppBaseController
                 $user->role = "AIS " . $user->is_ais;
             } elseif ($user->is_commi !== null) {
                 $user->role = "地区コミ " . $user->is_commi;
+            }elseif ($user->is_course_staff !== null) {
+                $user->role = "コーススタッフ " . $user->is_course_staff;
             }
         }
 
@@ -61,26 +64,34 @@ class add_userController extends AppBaseController
     {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = new User();
+        // $user = new User();
+
+        // 権限セット
+        if ($input['role'] == 'admin') {
+            $input['is_admin']  = 1;
+            $input['is_ais'] = null;
+            $input['is_commi'] = null;
+            $input['is_course_staff'] = null;
+        } elseif ($input['role'] == 'AIS') {
+            $input['is_admin']  = 1;
+            $input['is_ais'] = $input['district'];
+            $input['is_commi'] = null;
+            $input['is_course_staff'] = null;
+        } elseif ($input['role'] == 'commi') {
+            $input['is_admin']  = 0;
+            $input['is_ais']  = null;
+            $input['is_commi'] = $input['district'];
+            $input['is_course_staff'] = null;
+        } elseif ($input['role'] == 'course_staff') {
+            $input['is_admin']  = 0;
+            $input['is_ais']  = null;
+            $input['is_commi'] = null;
+            $input['is_course_staff'] = $input['course_staff'];
+        }
+        // メール認証を'済み'にセット
+        $input['email_verified_at'] = now();
 
         $user = User::create($input);
-
-        // 権限
-        if ($input['role'] == 'admin') {
-            $user->is_admin  = 1;
-            $user->is_ais = null;
-            $user->is_commi = null;
-        } elseif ($input['role'] == 'AIS') {
-            $user->is_admin  = 1;
-            $user->is_ais = $input['district'];
-            $user->is_commi = null;
-        } elseif ($input['role'] == 'commi') {
-            $user->is_admin  = 0;
-            $user->is_ais  = null;
-            $user->is_commi = $input['district'];
-        }
-
-        $user->save();
 
         Flash::success('アカウントを作成しました。対象者に通知をしてください。');
 
