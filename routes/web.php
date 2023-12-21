@@ -125,6 +125,7 @@ Route::middleware('verified')->group(function () {
     // コーススタッフ用
     Route::prefix('course_staff')->middleware('can:course_staff')->group(function () {
         Route::resource('course_staff', CourseStaffController::class);
+        Route::get('/export', [CourseStaffController::class, 'export'])->name('course_staff_export');
         Route::get('/pdf', [CourseStaffController::class, 'pdf']);
     });
 });

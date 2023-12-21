@@ -11,6 +11,8 @@ use Response;
 use Auth;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Exports\ExcelExport; // excel export用
+use Maatwebsite\Excel\Facades\Excel; // excel export用
 
 class CourseStaffController extends AppBaseController
 {
@@ -76,7 +78,7 @@ class CourseStaffController extends AppBaseController
             return $group->count();
         });
 
-        return view('course_staff.index', compact(['entryInfos', 'averageAge', 'genderCounts','troopCounts']));
+        return view('course_staff.index', compact(['entryInfos', 'averageAge', 'genderCounts', 'troopCounts']));
     }
 
     /**
@@ -110,5 +112,93 @@ class CourseStaffController extends AppBaseController
         // $pdf->setPaper('A4');
         return $pdf->download($filename);
         // return $pdf->stream();
+    }
+
+    public function export(Request $request)
+    {
+        $q = Auth::user()->is_course_staff; // どのコース権限か
+
+        // 課程と回数を分離
+        preg_match('/([A-Za-z]+)([0-9]+)/', $q, $matches);
+        // アルファベットと数字をそれぞれ変数に格納
+        @$alphabetPart = $matches[1];
+        @$numberPart = $matches[2];
+
+        // 分割したパートでどのコースか判定
+        if ($alphabetPart == 'SC') {
+            // スカウトコース
+            $data = Entry_info::with('user')->where('sc_number', $numberPart)->get();
+        } elseif ($q == '団研') {
+            // 団研
+            $data = Entry_info::with('user')->whereNotNull('danken')->get();
+        } else {
+            // 課程別研修
+            $data = Entry_info::with('user')->where('division_number', $q)->get();
+        }
+
+
+        // DLファイル名の指定
+        if ($alphabetPart == 'SC') {
+            $filename = 'スカウトコース申込一覧 ' . $q . '期.xlsx';
+        } elseif ($q == '団研') {
+            $filename = '団研申込一覧.xlsx';
+        } else {
+            $filename = '課程別研修申込一覧 ' . $q . '回.xlsx';
+        }
+
+        //エクセルの見出しを以下で設定
+        if ($q == '団研') {
+            $headings = [
+                '申込ID',
+                '団研期数',
+                '県連',
+                '地区',
+                '団名',
+                '隊',
+                '役務',
+                '氏名',
+                'ふりがな',
+                'ケータイ',
+                'email',
+                '性別',
+                '生年月日',
+                '年齢',
+                'BS講習会',
+                'スカキャン',
+                '研修歴(研)',
+                '研修歴(実)',
+                '奉仕歴',
+                '治療中',
+                '健康メモ'
+            ];
+        } else {
+            $headings = [
+                '申込ID',
+                'SC期数',
+                '課程別回数',
+                '県連',
+                '地区',
+                '団名',
+                '隊',
+                '役務',
+                '氏名',
+                'ふりがな',
+                'ケータイ',
+                'email',
+                '性別',
+                '生年月日',
+                '年齢',
+                'BS講習会',
+                'スカキャン',
+                '研修歴(研)',
+                '研修歴(実)',
+                '奉仕歴',
+                '治療中',
+                '健康メモ'
+            ];
+        }
+
+        //以下で先ほど作成したExcelExportにデータを渡す。
+        return Excel::download(new ExcelExport($data, $headings), $filename);
     }
 }
