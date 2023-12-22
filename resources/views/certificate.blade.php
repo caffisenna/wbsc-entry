@@ -37,15 +37,17 @@
                         <th>export</th>
                     </tr>
                     @foreach ($div_count as $val)
-                        <tr>
-                            <td>課程別研修 {{ $val->division_number }} 回</td>
-                            <td><a
-                                    href="{{ url('admin/admin_entryInfos?certificate=true&div=' . $val->division_number) }}">修了認定</a>
-                            </td>
-                            <td><a
-                                    href="{{ route('certificate_export', ['cat' => 'division', 'q' => $val->division_number]) }}">export</a>
-                            </td>
-                        </tr>
+                        @if ($val->division_number != '' && $val->division_number != 'etc')
+                            <tr>
+                                <td>課程別研修 {{ $val->division_number }} 回</td>
+                                <td><a
+                                        href="{{ url('admin/admin_entryInfos?certificate=true&div=' . $val->division_number) }}">修了認定</a>
+                                </td>
+                                <td><a
+                                        href="{{ route('certificate_export', ['cat' => 'division', 'q' => $val->division_number]) }}">export</a>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </table>
 
