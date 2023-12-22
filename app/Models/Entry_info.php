@@ -49,6 +49,8 @@ use App\Models\User;
  * @property string $certification_div
  * @property string $sc_over_deadline
  * @property string $div_over_deadline
+ * @property string $cancel
+ * @property string $cancel_div
  */
 class Entry_info extends Model
 {
@@ -132,6 +134,9 @@ class Entry_info extends Model
         'assignment_sc',
         'assignment_division',
         'assignment_danken',
+        'cancel',
+        'cancel_div',
+
     ];
 
     /**
@@ -209,6 +214,8 @@ class Entry_info extends Model
         'assignment_sc' => 'string:2',
         'assignment_division' => 'string:2',
         'assignment_danken' => 'string:2',
+        'cancel' => 'string',
+        'cancel_div' => 'string',
     ];
 
     /**
