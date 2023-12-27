@@ -82,6 +82,7 @@
                     <h2>団研申込状況</h2>
                     <table class="uk-table uk-table-divider uk-table-striped">
                         <tr>
+                            <th>団研</th>
                             <th>人数</th>
                             <th>一覧DL</th>
                             <th>申込書DL</th>
@@ -89,6 +90,7 @@
                         </tr>
 
                         <tr>
+                            <td>団研</td>
                             <td><a
                                     href="{{ url('admin/admin_entryInfos?danken=true') }}">{{ $danken_count->count_danken }}名</a>
                             </td>

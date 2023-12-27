@@ -82,11 +82,28 @@
                     {{-- 申込情報がブランクなら無視 --}}
                     @if (isset($entryInfo->entry_info))
                         <tr>
-                            <td>
-                                <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}"
-                                    class='uk-link'>{{ $entryInfo->name }}
-                                </a>
-                            </td>
+                            @if (isset($_REQUEST['q']) || isset($_REQUEST['danken']))
+                                <td
+                                    @if ($entryInfo->entry_info->cancel) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel }}" @endif>
+                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}" class='uk-link'>
+                                        @if ($entryInfo->entry_info->cancel)
+                                            <span class="uk-text-danger">[欠]</span>
+                                        @endif
+                                        {{ $entryInfo->name }}
+                                    </a>
+                                </td>
+                            @elseif(isset($_REQUEST['div']))
+                                <td
+                                    @if ($entryInfo->entry_info->cancel_div) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel_div }}" @endif>
+                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}" class='uk-link'>
+                                        @if ($entryInfo->entry_info->cancel_div)
+                                            <span class="uk-text-danger">[欠]</span>
+                                        @endif
+                                        {{ $entryInfo->name }}
+                                    </a>
+                                </td>
+                            @endif
+
                             <td>{{ $entryInfo->entry_info->district }}</td>
                             <td>{{ $entryInfo->entry_info->dan }}</td>
                             {{-- 認定がpass、ngが入っていなければボタンを表示 --}}

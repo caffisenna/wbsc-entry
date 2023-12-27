@@ -509,6 +509,14 @@
             </td>
         </tr>
 
+        <tr>
+            <td>欠席情報</td>
+            <td>
+                SC&団研: {!! Form::text('cancel', null, ['class' => 'form-control']) !!}<br>
+                課程別: {!! Form::text('cancel_div', null, ['class' => 'form-control']) !!}
+            </td>
+        </tr>
+
     </table>
 </div>
 

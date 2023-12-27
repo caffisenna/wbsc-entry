@@ -99,6 +99,8 @@ class CreateEntryInfosTable extends Migration
             $table->date('div_fee_checked_at')->nullable();                    // 課程別参加費確認
             $table->date('danken_fee_checked_at')->nullable();                 // 団研参加費確認
             $table->string('order')->nullable();
+            $table->string('cancel')->nullable();                        // 欠席情報(SC & 団研)
+            $table->string('cancel_div')->nullable();                    // 欠席情報(課程別)
             $table->timestamps();
             $table->softDeletes();
         });

@@ -96,8 +96,31 @@
                         @endunless
                         <td>{{ $entryinfo->division_number }}回</td>
                     @endif
-                    <td>{{ $entryinfo->user->name }}<br><span class=" uk-text-small">{{ $entryinfo->furigana }}</span>
-                    </td>
+                    @if ($_REQUEST['cat'] == 'sc' || $_REQUEST['cat'] == 'danken')
+                        @if (isset($entryinfo->cancel))
+                            <td bgcolor="#ccc" uk-tooltip="{{ $entryinfo->cancel }}">
+                                <span class="uk-text-danger">[欠]{{ $entryinfo->user->name }}<br>
+                                    <span class=" uk-text-small">{{ $entryinfo->furigana }}</span>
+                            </td>
+                        @else
+                            <td>
+                                {{ $entryinfo->user->name }}<br><span
+                                    class=" uk-text-small">{{ $entryinfo->furigana }}</span>
+                            </td>
+                        @endif
+                    @else
+                        @if ($entryinfo->cancel_div)
+                            <td bgcolor="#ccc" uk-tooltip="{{ $entryinfo->cancel_div }}">
+                                <span class="uk-text-danger">[欠]{{ $entryinfo->user->name }}<br>
+                                    <span class=" uk-text-small">{{ $entryinfo->furigana }}</span>
+                            </td>
+                        @else
+                            <td>
+                                {{ $entryinfo->user->name }}<br><span
+                                    class=" uk-text-small">{{ $entryinfo->furigana }}</span>
+                            </td>
+                        @endif
+                    @endif
                     <td>{{ $entryinfo->district }}</td>
                     <td>{{ $entryinfo->dan }}</td>
                     <td>
