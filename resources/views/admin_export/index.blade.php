@@ -18,9 +18,10 @@
             <tr>
                 <td>{{ $val->id }}</td>
                 @if ($val->danken)
-                    <td>{{ $val->danken }}</td>
+                    <td>団研{{ $val->danken }}</td>
+                    <td>{{ $val->division_number }}</td>
                 @else
-                    <td>{{ $val->sc_number }}</td>
+                    <td>SC{{ $val->sc_number == 'done' ? '修了済み' : $val->sc_number }}</td>
                     <td>{{ $val->division_number }}</td>
                 @endif
                 <td>{{ $val->prefecture }}</td>

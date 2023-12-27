@@ -501,7 +501,7 @@ class AdminEntry_infoController extends AppBaseController
             } else {
                 $data = Entry_info::with('user')->whereNotNull('danken')->get();
             }
-        } else { // or 全件取得
+        } elseif ($_REQUEST['q'] == 'all') { // or 全件取得
             $data = Entry_info::with('user')->get();
         }
 
@@ -510,6 +510,8 @@ class AdminEntry_infoController extends AppBaseController
             $filename = 'スカウトコース申込一覧 ' . $request->sc . '期.xlsx';
         } elseif ($request->division) {
             $filename = '課程別研修申込一覧 ' . $request->division . '回.xlsx';
+        } elseif ($_REQUEST['q'] == 'all') {
+            $filename = '指導者研修申込一覧.xlsx';
         } else {
             $filename = '団研申込一覧.xlsx';
         }

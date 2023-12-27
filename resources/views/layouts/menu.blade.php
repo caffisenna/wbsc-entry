@@ -42,7 +42,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('admin_export') }}" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
+                <a href="{{ route('admin_export') }}?q=all" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
                     <p><span uk-icon="pull"></span>エクスポート(xlsx)</p>
                 </a>
             </li>
