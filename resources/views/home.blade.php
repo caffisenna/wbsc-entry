@@ -88,25 +88,23 @@
                             <th>申込書DL</th>
                             <th>課題DL</th>
                         </tr>
-
-                        <tr>
-                            <td>団研</td>
-                            <td><a
-                                    href="{{ url('admin/admin_entryInfos?danken=true') }}">{{ $danken_count->count_danken }}名</a>
-                            </td>
-                            <td><a href="{{ route('admin_export') }}?cat=danken" class="uk-button uk-button-primary"><span
-                                        uk-icon="download"></span>Excel</a>
-                            </td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=danken') . '&assignment=false&cat=danken' }}"
-                                    class="uk-button uk-button-primary"
-                                    onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
-                                        uk-icon="download"></span>一括DL</a></td>
-                            <td><a href="{{ url('/admin/multi_pdf?q=danken') . '&assignment=true&cat=danken' }}"
-                                    class="uk-button uk-button-primary"
-                                    onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
-                                        uk-icon="download"></span>一括DL</a></td>
-                        </tr>
-
+                        @foreach ($danken_count as $val)
+                            <tr>
+                                <td><a href="{{ url('admin/admin_entryInfos?danken=true') }}">団研{{ $val->danken }}</a></td>
+                                <td>{{ $val->count_danken }}名</td>
+                                <td><a href="{{ route('admin_export') }}?cat=danken" class="uk-button uk-button-primary"><span
+                                            uk-icon="download"></span>Excel</a>
+                                </td>
+                                <td><a href="{{ url('/admin/multi_pdf?q=danken') . '&assignment=false&cat=danken' }}"
+                                        class="uk-button uk-button-primary"
+                                        onclick="return confirm('申込書を一括ダウンロードします。時間がかかるので連打しないでください')"><span
+                                            uk-icon="download"></span>一括DL</a></td>
+                                <td><a href="{{ url('/admin/multi_pdf?q=danken') . '&assignment=true&cat=danken' }}"
+                                        class="uk-button uk-button-primary"
+                                        onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
+                                            uk-icon="download"></span>一括DL</a></td>
+                            </tr>
+                        @endforeach
                     </table>
                 @endif
             @endisset

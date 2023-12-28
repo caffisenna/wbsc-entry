@@ -43,9 +43,9 @@ class HomeController extends Controller
             $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
 
             if (Auth::user()->is_ais) {
-                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->where('district', Auth::user()->is_ais)->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
+                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->where('district', Auth::user()->is_ais)->selectRaw('count(user_id) as count_danken')->groupBy('danken')->get();
             } else {
-                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->selectRaw('count(user_id) as count_danken')->groupBy('danken')->first();
+                $danken_count = Entry_info::where('danken', '<>', NULL)->select('danken')->selectRaw('count(user_id) as count_danken')->groupBy('danken')->get();
             }
             // $danken_count = $danken_count; // 団研の人数カウント
 

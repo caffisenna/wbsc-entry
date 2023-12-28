@@ -117,7 +117,7 @@
                         <td>{{ $entryInfo->entry_info->dan }}</td>
                         <td>
                             @if ($entryInfo->entry_info->danken)
-                                団研<br>
+                                団研{{ $entryInfo->entry_info->danken }}<br>
                                 @if ($entryInfo->entry_info->assignment_danken)
                                     <span class=" uk-text-success">課題済</span>
                                 @else
