@@ -15,7 +15,7 @@ Zend Engine v4.2.1, Copyright (c) Zend Technologies<br>
 Server version: 8.0.31-0ubuntu0.20.04.2 (Ubuntu)
 
 ### Homestead
-* Homestead v14.2.0 | Thanks for using Homestead
+* Homestead v14.2.0
 * Settler v13.0.0
 
 ## System Requirements
