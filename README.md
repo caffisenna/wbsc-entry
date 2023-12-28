@@ -32,6 +32,9 @@ Server version: 8.0.31-0ubuntu0.20.04.2 (Ubuntu)
 No docs avaliable.
 
 ## Contributor
-taichi.tadano@gmail.com
+- PM: 平田恭一
+- User Guide Editor: 谷道龍彦
+- 東京連盟事務局: 竹内奈穂子 小松泰子
+- Coder: taichi.tadano@gmail.com
 
 ## Disclaimer
