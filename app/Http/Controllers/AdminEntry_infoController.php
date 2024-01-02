@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AisChecked;
+use App\Mail\sendReminderEmailForFee;
 use Illuminate\Support\Facades\DB; // excel export用
 use App\Exports\ExcelExport; // excel export用
 use Maatwebsite\Excel\Facades\Excel; // excel export用
@@ -906,5 +907,34 @@ class AdminEntry_infoController extends AppBaseController
 
         Flash::success($user->name . ' さんのユーザーメモを登録しました');
         return redirect(route('email_not_verified'));
+    }
+
+    public function sendReminderEmailForFee(Request $request)
+    {
+        // dd($_REQUEST['cat']);
+        // 参加督促ルール
+        $id = $request['uuid'];
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
+        // $entryInfo->cat = $_REQUEST['cat'];
+        $cat = $_REQUEST['cat'];
+
+        // 氏名取得
+        $user = User::where('id', $entryInfo->user_id)->first();
+
+        // 確認メール送信
+        $sendto = $entryInfo->user->email;
+
+        // 2023/07/08 地区AIS委員長のチェック結果は参加者に通知しないように仕様変更
+        Mail::to($sendto)->queue(new sendReminderEmailForFee($entryInfo, $cat)); // メールをqueueで送信
+
+
+        // 名前+flashメッセージを返して戻る
+        Flash::success($user->name . 'さん 参加費督促メールを送信しました。');
+
+        // slack通知
+        // $slack = new SlackPost();
+        // $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区AIS委員長確認が完了しました');
+
+        return back();
     }
 }

@@ -81,6 +81,7 @@
                 <th>所属</th>
                 <th>AIS委員会確認</th>
                 <th>参加費確認</th>
+                <th>督促</th>
             </tr>
         </thead>
         <tbody>
@@ -135,8 +136,22 @@
                             <span class="uk-small">{{ $entryinfo->div_fee_checked_at }}</span>
                         @else
                             <a href="{{ url('/admin/fee_check/?id=') }}{{ $entryinfo->id }}&cat={{ $_REQUEST['cat'] }}"
-                                class=" uk-button uk-button-primary"
-                                onclick="return confirm('{{ $entryinfo->user->name }}さんの入金をチェックします?')">入金確認</a>
+                                class=" uk-button uk-button-primary uk-button-small"
+                                onclick="return confirm('{{ $entryinfo->user->name }}さんの入金をチェックします?')">確認</a>
+                        @endif
+                    </td>
+                    <td>
+                        @php
+                            $cat = $_REQUEST['cat'];
+                            $fee_checked_at = $entryinfo->{$cat . '_fee_checked_at'};
+                        @endphp
+
+                        @if (empty($fee_checked_at))
+                            <a href="{{ route('sendReminderEmailForFee', ['uuid' => $entryinfo->uuid, 'cat' => $cat]) }}"
+                                class="uk-text-warning">
+                                <span uk-icon="icon: mail; ratio:2"
+                                    onclick="return confirm('{{ $entryinfo->user->name }}さんに督促メールを送信します?')"></span>
+                            </a>
                         @endif
                     </td>
                 </tr>
