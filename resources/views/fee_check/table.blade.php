@@ -134,6 +134,8 @@
                             <span class="uk-small">{{ $entryinfo->sc_fee_checked_at }}</span>
                         @elseif ($_REQUEST['cat'] == 'div' && isset($entryinfo->div_fee_checked_at))
                             <span class="uk-small">{{ $entryinfo->div_fee_checked_at }}</span>
+                        @elseif ($_REQUEST['cat'] == 'danken' && isset($entryinfo->danken_fee_checked_at))
+                            <span class="uk-small">{{ $entryinfo->danken_fee_checked_at }}</span>
                         @else
                             <a href="{{ url('/admin/fee_check/?id=') }}{{ $entryinfo->id }}&cat={{ $_REQUEST['cat'] }}"
                                 class=" uk-button uk-button-primary uk-button-small"
