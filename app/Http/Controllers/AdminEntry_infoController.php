@@ -655,9 +655,9 @@ class AdminEntry_infoController extends AppBaseController
             } elseif ($cat == 'danken') {
                 // 団研
                 $entryinfos = Entry_info::whereNotNull('danken')->with('user')->orderby('furigana')->get();
-            } else {
-                // 修了済みスカウトコースの期数がブランクを拾う
-                $entryinfos = Entry_info::where('sc_number_done', null)->with('user')->orderby('furigana')->get();
+            } elseif ($cat == 'sc') {
+                // スカウトコース
+                $entryinfos = Entry_info::where('sc_number', '<>', 'done')->with('user')->orderby('furigana')->get();
             }
             return view('fee_check.index')
                 ->with('entryinfos', $entryinfos);
