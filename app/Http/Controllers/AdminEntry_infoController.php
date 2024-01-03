@@ -920,21 +920,18 @@ class AdminEntry_infoController extends AppBaseController
         $cat = $_REQUEST['cat'];
 
         // 氏名取得
-        $user = User::where('id', $entryInfo->user_id)->first();
+        $user = $entryInfo->user->name;
 
         // 確認メール送信
         $sendto = $entryInfo->user->email;
-
-        // 2023/07/08 地区AIS委員長のチェック結果は参加者に通知しないように仕様変更
         Mail::to($sendto)->queue(new sendReminderEmailForFee($entryInfo, $cat)); // メールをqueueで送信
 
 
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name . 'さん 参加費督促メールを送信しました。');
+        Flash::success($user . 'さん 参加費督促メールを送信しました。');
 
-        // slack通知
-        // $slack = new SlackPost();
-        // $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区AIS委員長確認が完了しました');
+        // Log
+        Log::channel('user_action')->info($user . 'さん 参加費督促メールを送信しました。');
 
         return back();
     }
@@ -961,21 +958,17 @@ class AdminEntry_infoController extends AppBaseController
         $entryInfo->save();
 
         // 氏名取得
-        $user = User::where('id', $entryInfo->user_id)->first();
+        $user = $entryInfo->user->name;
 
         // 確認メール送信
         $sendto = $entryInfo->user->email;
-
-        // 2023/07/08 地区AIS委員長のチェック結果は参加者に通知しないように仕様変更
         Mail::to($sendto)->queue(new resetNoticeEmailForFee($entryInfo, $cat)); // メールをqueueで送信
 
-
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name . 'さん 参加費確認のリセットメールを送信しました。');
+        Flash::success($user . 'さん 参加費確認のリセットメールを送信しました。');
 
-        // slack通知
-        // $slack = new SlackPost();
-        // $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区AIS委員長確認が完了しました');
+        // Log
+        Log::channel('user_action')->info($user . 'さん 参加費確認リセットメールを送信しました。');
 
         return back();
     }
