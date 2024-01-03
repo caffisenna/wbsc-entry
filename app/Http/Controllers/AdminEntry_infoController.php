@@ -962,7 +962,8 @@ class AdminEntry_infoController extends AppBaseController
 
         // 確認メール送信
         $sendto = $entryInfo->user->email;
-        Mail::to($sendto)->queue(new resetNoticeEmailForFee($entryInfo, $cat)); // メールをqueueで送信
+        // メールをqueueで送信
+        Mail::to($sendto)->queue(new resetNoticeEmailForFee($entryInfo, $cat));
 
         // 名前+flashメッセージを返して戻る
         Flash::success($user . 'さん 参加費確認のリセットメールを送信しました。');
