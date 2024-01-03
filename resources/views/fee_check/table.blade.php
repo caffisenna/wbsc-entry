@@ -130,15 +130,13 @@
                         @endif
                     </td>
                     <td>
-                        @if ($_REQUEST['cat'] == 'sc' && isset($entryinfo->sc_fee_checked_at))
-                            <span class="uk-small">{{ $entryinfo->sc_fee_checked_at }}</span>
-                        @elseif ($_REQUEST['cat'] == 'div' && isset($entryinfo->div_fee_checked_at))
-                            <span class="uk-small">{{ $entryinfo->div_fee_checked_at }}</span>
-                        @elseif ($_REQUEST['cat'] == 'danken' && isset($entryinfo->danken_fee_checked_at))
-                            <span class="uk-small">{{ $entryinfo->danken_fee_checked_at }}</span>
-                            <br><a href="{{ route('resetFeeCheckDate', ['uuid' => $entryinfo->uuid, 'cat' => $_REQUEST['cat']]) }}"
+                        @if (isset($entryinfo->{$_REQUEST['cat'] . '_fee_checked_at'}))
+                            <span class="uk-small">{{ $entryinfo->{$_REQUEST['cat'] . '_fee_checked_at'} }}</span>
+                            <br>
+                            <a href="{{ route('resetFeeCheckDate', ['uuid' => $entryinfo->uuid, 'cat' => $_REQUEST['cat']]) }}"
                                 onclick="return confirm('{{ $entryinfo->user->name }}さんの入金記録を取り消しますか?')">
-                                <span uk-icon="icon: ban" class="uk-text-danger"></span></a>
+                                <span uk-icon="icon: ban" class="uk-text-danger"></span>
+                            </a>
                         @else
                             <a href="{{ url('/admin/fee_check/?id=') }}{{ $entryinfo->id }}&cat={{ $_REQUEST['cat'] }}"
                                 class=" uk-button uk-button-primary uk-button-small"
