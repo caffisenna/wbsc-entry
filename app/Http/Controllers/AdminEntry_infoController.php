@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AisChecked;
 use App\Mail\sendReminderEmailForFee;
+use App\Mail\resetNoticeEmailForFee;
 use Illuminate\Support\Facades\DB; // excel export用
 use App\Exports\ExcelExport; // excel export用
 use Maatwebsite\Excel\Facades\Excel; // excel export用
@@ -930,6 +931,47 @@ class AdminEntry_infoController extends AppBaseController
 
         // 名前+flashメッセージを返して戻る
         Flash::success($user->name . 'さん 参加費督促メールを送信しました。');
+
+        // slack通知
+        // $slack = new SlackPost();
+        // $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区AIS委員長確認が完了しました');
+
+        return back();
+    }
+
+    public function resetFeeCheckDate(Request $request)
+    {
+        // 入金日リセット
+        $id = $request['uuid'];
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
+        // $entryInfo->cat = $_REQUEST['cat'];
+        $cat = $_REQUEST['cat'];
+
+
+        // リセット処理
+        if ($cat == 'sc') {
+            $entryInfo->sc_fee_checked_at = NULL;
+        } elseif ($cat == 'div') {
+            $entryInfo->div_fee_checked_at = NULL;
+        } elseif ($cat == 'danken') {
+            $entryInfo->danken_fee_checked_at = NULL;
+        }
+
+        // DB更新
+        $entryInfo->save();
+
+        // 氏名取得
+        $user = User::where('id', $entryInfo->user_id)->first();
+
+        // 確認メール送信
+        $sendto = $entryInfo->user->email;
+
+        // 2023/07/08 地区AIS委員長のチェック結果は参加者に通知しないように仕様変更
+        Mail::to($sendto)->queue(new resetNoticeEmailForFee($entryInfo, $cat)); // メールをqueueで送信
+
+
+        // 名前+flashメッセージを返して戻る
+        Flash::success($user->name . 'さん 参加費確認のリセットメールを送信しました。');
 
         // slack通知
         // $slack = new SlackPost();
