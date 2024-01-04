@@ -660,7 +660,7 @@ class AdminEntry_infoController extends AppBaseController
                 $entryinfos = Entry_info::where('sc_number', '<>', 'done')->with('user')->orderby('furigana')->get();
             }
             return view('fee_check.index')
-                ->with('entryinfos', $entryinfos);
+                ->with(compact('entryinfos'));
         }
     }
 
