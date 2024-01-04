@@ -202,4 +202,38 @@ class CourseStaffController extends AppBaseController
         //以下で先ほど作成したExcelExportにデータを渡す。
         return Excel::download(new ExcelExport($data, $headings), $filename);
     }
+
+    public function cancel(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            // getの時はページ遷移
+            $uuid = $request['uuid'];
+            $entryInfo = Entry_info::where('uuid', $uuid)->with('user')->firstOrFail();
+
+            return view('course_staff.cancel')->with(compact('entryInfo'));
+        } elseif ($request->isMethod('post')) {
+            // postの時はDB更新処理
+
+            // ユーザーを取得
+            $user = Entry_info::where('uuid',$request['uuid'])->with('user')->firstOrFail();
+
+            // 値をセット
+            if(isset($request['cancel_sc'])){
+                $user->cancel = $request['cancel_sc'];
+            }
+
+            if(isset($request['cancel_div'])){
+                $user->cancel_div = $request['cancel_div'];
+            }
+
+            // DB保存
+            $user->save();
+
+            // flash
+            $name = $user->user->name;
+            Flash::success($name . 'さんのキャンセル情報を登録しました');
+
+            return back();
+        }
+    }
 }

@@ -228,7 +228,11 @@
                 <td>{{ $entryInfo->additional_comment }}</td>
             </tr>
         @endif
-
+        <tr>
+            <th>キャンセル</th>
+            <td><a href="{{ route('cancel', ['uuid' => $entryInfo->uuid]) }}"
+                    class="uk-button uk-button-danger">キャンセル入力</a></td>
+        </tr>
 
     </table>
 </div>

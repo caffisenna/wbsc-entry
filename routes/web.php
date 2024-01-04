@@ -129,5 +129,6 @@ Route::middleware('verified')->group(function () {
         Route::resource('course_staff', CourseStaffController::class);
         Route::get('/export', [CourseStaffController::class, 'export'])->name('course_staff_export');
         Route::get('/pdf', [CourseStaffController::class, 'pdf']);
+        Route::match(['get', 'post'], '/cancel', [CourseStaffController::class, 'cancel'])->name('cancel'); // 参加キャンセル
     });
 });

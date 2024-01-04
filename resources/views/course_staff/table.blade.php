@@ -22,14 +22,20 @@
                 @endphp
                 @if (isset($entryInfo->entry_info))
                     <tr>
-                        <td><a
-                                href="{{ route('course_staff.show', [$entryInfo->entry_info->uuid]) }}">{{ $entryInfo->name }}</a>
-                            @if ($entryInfo->entry_info->additional_comment)
-                                <span uk-icon="comment" class="uk-text-danger"></span>
-                            @endif
-                            <br>
-                            {{ $entryInfo->entry_info->district }} {{ $entryInfo->entry_info->dan }}<br>
-                            {{ $entryInfo->entry_info->troop }} {{ $entryInfo->entry_info->troop_role }}
+                        @if (isset($entryInfo->entry_info->cancel) || isset($entryInfo->entry_info->cancel_div))
+                            <td bgcolor="#ccc"
+                                uk-tooltip="{{ $entryInfo->entry_info->cancel }}<br>{{ $entryInfo->entry_info->cancel_div }}">
+                            @else
+                            <td>
+                        @endif
+                        <a
+                            href="{{ route('course_staff.show', [$entryInfo->entry_info->uuid]) }}">{{ $entryInfo->name }}</a>
+                        @if ($entryInfo->entry_info->additional_comment)
+                            <span uk-icon="comment" class="uk-text-danger"></span>
+                        @endif
+                        <br>
+                        {{ $entryInfo->entry_info->district }} {{ $entryInfo->entry_info->dan }}<br>
+                        {{ $entryInfo->entry_info->troop }} {{ $entryInfo->entry_info->troop_role }}
                         </td>
                         <td>
                             @if ($entryInfo->face_picture)
