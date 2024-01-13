@@ -41,6 +41,17 @@
             </tr>
         @endif
         <tr>
+            <th>健康調査</th>
+            <td>
+                @if ($healthInfo)
+                    <span class="uk-text-default">入力済み</span> <a href="{{ route('health_info') }}">[確認]</a>
+                @else
+                    <a href="{{ route('health_info') }}" class="uk-button uk-button-primary uk-button-small"><span
+                            uk-icon="file-text"></span>入力する</a>
+                @endif
+            </td>
+        </tr>
+        <tr>
             <th>
                 {{ $entryInfo->danken ? '課題提出' : 'スカウトコース課題' }}
             </th>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Entry_info;
+use App\Models\HealthInfo;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -53,5 +54,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function entry_info() {
         return $this->hasOne(entry_info::class);
+    }
+
+    public function health_info() {
+        return $this->hasOne(HealthInfo::class);
     }
 }

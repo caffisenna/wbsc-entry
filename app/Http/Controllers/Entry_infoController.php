@@ -6,6 +6,7 @@ use App\Http\Requests\CreateEntry_infoRequest;
 use App\Http\Requests\UpdateEntry_infoRequest;
 use App\Repositories\Entry_infoRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\CreateHealth_infoRequest;
 use App\Models\Entry_info;
 use Illuminate\Http\Request;
 use Flash;
@@ -20,6 +21,7 @@ use App\Models\course_list;
 use App\Models\division_list;
 use App\Models\DankenLists;
 use App\Http\Util\SlackPost;
+use App\Models\HealthInfo;
 use Illuminate\Support\Facades\Log;
 
 class Entry_infoController extends AppBaseController
@@ -43,9 +45,10 @@ class Entry_infoController extends AppBaseController
     {
         $entryInfo = Entry_info::where('user_id', Auth::user()->id)->with('user')->first();
         $danken = DankenLists::firstorFail();
+        $healthInfo = HealthInfo::where('user_id', Auth::user()->id)->first();
 
         return view('entry_infos.index')
-            ->with(compact(['entryInfo','danken']));
+            ->with(compact(['entryInfo', 'danken', 'healthInfo']));
     }
 
     /**
@@ -359,5 +362,61 @@ class Entry_infoController extends AppBaseController
         Log::channel('user_action')->info($entryinfo->district . '地区 ' . $user->name . ' ' . $cat . 'を削除しました');
 
         return redirect(route('entryInfos.index'));
+    }
+
+    public function health_info(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            // getの時はページ遷移
+            $user = user::where('email', auth::user()->email)->with('health_info')->firstOrFail();
+
+            return view('entry_infos.health_info')->with(compact('user'));
+        } elseif ($request->isMethod('post')) {
+            // postの時はDB更新処理
+            $input = $request->all();
+
+            // 既存データを取得
+            $health_info = HealthInfo::where('user_id', $input['id'])->first();
+
+            if ($health_info) {
+                // レコードが存在する場合は更新
+                $health_info->update([
+                    'treating_disease' => $input['treating_disease'],
+                    'carried_medications' => $input['carried_medications'],
+                    'health_status_last_3_months' => $input['health_status_last_3_months'],
+                    'recent_health_status' => $input['recent_health_status'],
+                    'doctor_advice' => $input['doctor_advice'],
+                    'medical_history' => $input['medical_history'],
+                    'food_allergies' => $input['food_allergies'],
+                    'allergen' => $input['allergen'],
+                    'reaction_to_allergen' => $input['reaction_to_allergen'],
+                    'usual_response_to_reaction' => $input['usual_response_to_reaction'],
+                ]);
+            } else {
+                // レコードが存在しない場合は新規作成
+                HealthInfo::create([
+                    'user_id' => $input['id'], // user_id指定
+                    'treating_disease' => $input['treating_disease'],
+                    'carried_medications' => $input['carried_medications'],
+                    'health_status_last_3_months' => $input['health_status_last_3_months'],
+                    'recent_health_status' => $input['recent_health_status'],
+                    'doctor_advice' => $input['doctor_advice'],
+                    'medical_history' => $input['medical_history'],
+                    'food_allergies' => $input['food_allergies'],
+                    'allergen' => $input['allergen'],
+                    'reaction_to_allergen' => $input['reaction_to_allergen'],
+                    'usual_response_to_reaction' => $input['usual_response_to_reaction'],
+                ]);
+            }
+
+            // DB保存
+            // $health_info->save();
+
+            // flash
+            $name = Auth::user()->name;
+            Flash::success($name . '健康情報を登録しました');
+
+            return back();
+        }
     }
 }

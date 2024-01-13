@@ -9,12 +9,11 @@
             </a>
         </li>
 
-        {{-- <p class="uk-text-warning">写真アップロード</p>
         <li class="nav-item">
-            <a href="{{ route('face_upload.index') }}" class="nav-link {{ Request::is('face_upload*') ? 'active' : '' }}">
-                <p>顔写真</p>
+            <a href="{{ route('health_info') }}" class="nav-link {{ Request::is('entryInfos/health_info') ? 'active' : '' }}">
+                <p>健康情報</p>
             </a>
-        </li> --}}
+        </li>
     @endunless
 
     {{-- 管理者 --}}

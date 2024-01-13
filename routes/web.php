@@ -83,6 +83,7 @@ Route::middleware('verified')->group(function () {
         Route::resource('upload', UploadController::class);
         Route::resource('face_upload', FaceUploadController::class);
         Route::get('/delete_file', [Entry_infoController::class, 'delete_file'])->name('delete_file'); // ファイルの削除
+        Route::match(['get', 'post'], '/health_info', [Entry_infoController::class, 'health_info'])->name('health_info'); // 健康情報
     });
     // 管理ユーザ用
     Route::prefix('admin')->middleware('can:admin')->group(function () {
