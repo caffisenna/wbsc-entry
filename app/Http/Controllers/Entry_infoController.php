@@ -108,7 +108,12 @@ class Entry_infoController extends AppBaseController
 
         $input = $request->all();
 
-        $input['user_id'] = Auth::user()->id;
+        if (isset($input['create_id'])) {
+            $input['user_id'] = $input['create_id'];
+        }else{
+            $input['user_id'] = Auth::user()->id;
+        }
+
         $input['uuid'] = Uuid::uuid4();
 
         // SC期数が現行の期数が選択されていて、かつ、修了済みのSC期数が入力されている場合

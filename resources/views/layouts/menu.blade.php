@@ -67,6 +67,12 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="{{ route('create_user_data') }}" class="nav-link {{ Request::is('admin/create_user_data*') ? 'active' : '' }}">
+                    <p><span uk-icon="pencil"></span>参加者データ作成</p>
+                </a>
+            </li>
+
 
             <h3 class="uk-text-warning">コース設定</h3>
             <li class="nav-item">

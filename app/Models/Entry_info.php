@@ -136,7 +136,6 @@ class Entry_info extends Model
         'assignment_danken',
         'cancel',
         'cancel_div',
-
     ];
 
     /**
@@ -216,6 +215,7 @@ class Entry_info extends Model
         'assignment_danken' => 'string:2',
         'cancel' => 'string',
         'cancel_div' => 'string',
+        'create_id' => 'string',
     ];
 
     /**

@@ -416,6 +416,19 @@
 
                 </td>
             </tr>
+            <tr>
+                <th>アップロード</th>
+                <td>
+                    <ul class="uk-list">
+                        <li><a
+                                href="{{ route('face_upload.index', ['uuid' => $entryInfo->entry_info->uuid]) }}">顔写真</a>
+                        </li>
+                        <li><a href="{{ route('upload.index', ['uuid' => $entryInfo->entry_info->uuid, 'q' => 'sc']) }}">課題研修(スカウトコース
+                                or 団研)</a></li>
+                        <li><a href="{{ route('upload.index', ['uuid' => $entryInfo->entry_info->uuid, 'q' => 'division']) }}">課題研修(課程別)</a></li>
+                    </ul>
+                </td>
+            </tr>
         @endif
 
     </table>

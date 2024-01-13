@@ -8,7 +8,7 @@ use App\Models\Entry_info;
 use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Util\Slack\SlackPost;
+use App\Http\Util\SlackPost;
 
 class UploadController extends Controller
 {
