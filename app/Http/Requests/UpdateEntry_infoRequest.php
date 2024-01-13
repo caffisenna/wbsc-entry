@@ -38,7 +38,7 @@ class UpdateEntry_infoRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Entry_info::$rules;
+        $rules = Entry_info::rules();
 
         return $rules;
     }

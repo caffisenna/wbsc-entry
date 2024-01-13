@@ -33,9 +33,9 @@ class CreateEntryInfosTable extends Migration
             $table->string('cell_phone');
             $table->string('zip');
             $table->string('address');
-            $table->string('emer_name',20);                // 緊急連絡先
-            $table->string('emer_relation',20);
-            $table->string('emer_phone',20);
+            $table->string('emer_name',20)->nullable();                // 緊急連絡先
+            $table->string('emer_relation',20)->nullable();
+            $table->string('emer_phone',20)->nullable();
             $table->string('district_role')->nullable();
             $table->string('prefecture_role')->nullable();
             $table->string('scout_camp');               // スカキャン

@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
+use Illuminate\Validation\Rule;
 
 /**
  * Class Entry_info
@@ -223,36 +224,48 @@ class Entry_info extends Model
      *
      * @var array
      */
-    public static $rules = [
-        // 'sc_number' => 'required_unless:danken,true',
-        // 'sc_number' => 'required_unless:danken,',
-        // 'division_number' => 'required_unless:danken,',
-        'sc_number' => 'required_without:danken',
-        'division_number' => 'required_without:danken',
-        'furigana' => 'required',
-        'gender' => 'required',
-        'bs_id' => 'required|digits:11',
-        'birthday' => 'required|date',
-        'prefecture' => 'required',
-        'district' => 'required',
-        'dan' => 'required',
-        'troop' => 'required',
-        'troop_role' => 'required',
-        'cell_phone' => 'required',
-        'zip' => 'required|digits:7',
-        'address' => 'required',
-        'emer_name' => 'required',
-        'emer_relation' => 'required',
-        'emer_phone' => 'required',
-        'scout_camp' => 'required',
-        'bs_basic_course' => 'required',
-        'service_hist1_role' => "required_unless:troop_role,スカウト",
-        'service_hist1_term' => "required_unless:troop_role,スカウト",
-        'health_illness_none' => 'required_if:health_illness,null',
-        'health_memo_none' => 'required_if:health_memo,null',
-        'sc_over_deadline' => 'string|in:false',
-        'div_over_deadline' => 'string|in:false',
-    ];
+    public static function rules()
+    {
+        return [
+            'sc_number' => 'required_without:danken',
+            'division_number' => 'required_without:danken',
+            'furigana' => 'required',
+            'gender' => 'required',
+            'bs_id' => 'required|digits:11',
+            'birthday' => 'required|date',
+            'prefecture' => 'required',
+            'district' => 'required',
+            'dan' => 'required',
+            'troop' => 'required',
+            'troop_role' => 'required',
+            'cell_phone' => 'required',
+            'zip' => 'required|digits:7',
+            'address' => 'required',
+            'emer_name' => [
+                Rule::requiredIf(function () {
+                    return request('sc_number') !== 'done' || request('division_number') === 'etc';
+                }),
+            ],
+            'emer_relation' => [
+                Rule::requiredIf(function () {
+                    return request('sc_number') !== 'done' || request('division_number') === 'etc';
+                }),
+            ],
+            'emer_phone' => [
+                Rule::requiredIf(function () {
+                    return request('sc_number') !== 'done' || request('division_number') === 'etc';
+                }),
+            ],
+            'scout_camp' => 'required',
+            'bs_basic_course' => 'required',
+            'service_hist1_role' => "required_unless:troop_role,スカウト",
+            'service_hist1_term' => "required_unless:troop_role,スカウト",
+            'health_illness_none' => 'required_if:health_illness,null',
+            'health_memo_none' => 'required_if:health_memo,null',
+            'sc_over_deadline' => 'string|in:false',
+            'div_over_deadline' => 'string|in:false',
+        ];
+    }
 
     public static $messages = [
         'sc_number.required_without' => 'スカウトコースの期数を選択してください',

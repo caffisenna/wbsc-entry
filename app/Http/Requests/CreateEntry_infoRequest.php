@@ -89,7 +89,7 @@ class CreateEntry_infoRequest extends FormRequest
      */
     public function rules()
     {
-        return Entry_info::$rules;
+        return Entry_info::rules();
     }
 
     public function messages()
