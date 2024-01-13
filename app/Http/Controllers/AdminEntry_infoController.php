@@ -172,9 +172,40 @@ class AdminEntry_infoController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
-    {
-        return view('admin_entry_infos.create');
+    public function create(Request $request)
+    {// スカウトコース取得
+        // SCはDBの取得結果がゼロでも問題ない
+        $courselists = course_list::where('deadline', '>', now())->get();
+
+        // 課程別研修取得
+        $dls = division_list::select('division', 'number')->where('deadline', '>', now())->get();
+        if (count($dls) == 0) {
+            // 申込可能な課程別研修がなければ flashメッセージを表示してindexへリダイレクト
+            flash::error('現在申し込める課程別研修がありません。管理者へお問い合わせ下さい。');
+            return redirect()->route('entryInfos.index');
+        } else {
+            // 申込可能な課程別研修があれば配列化
+            foreach ($dls as $dl) {
+                $divisionlists[] = $dl->division . $dl->number;
+            }
+        }
+
+        // 団研
+        $danken = DankenLists::where('deadline', '>', now())->first();
+        // if ($request->cat == 'danken') {
+        //     $danken->cat = 'danken';
+        // }
+
+        // 作成するユーザーデータ
+        $id = $request->id;
+        // dd($id);
+        // $user = User::find($id)->first();
+        $user = User::where('id',$id)->first();
+        // dd($user);
+
+
+
+        return view('admin_entry_infos.create', compact('courselists', 'divisionlists', 'danken','user'));
     }
 
     /**
@@ -972,5 +1003,29 @@ class AdminEntry_infoController extends AppBaseController
         Log::channel('user_action')->info($user . 'さん 参加費確認リセットメールを送信しました。');
 
         return back();
+    }
+
+    public function create_user_data(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            // getの時はページ遷移
+            // 参加データ未作成のレコードを抽出
+            $users = User::where([
+                ['is_admin', '=', 0],
+                ['is_ais', '=', null],
+                ['is_commi', '=', null],
+                ['is_course_staff', '=', null],
+            ])->whereDoesntHave('entry_info')->get();
+
+            return view('admin_entry_infos.select_user')->with(compact('users'));
+        } elseif ($request->isMethod('post')) {
+
+
+            // flash
+            // $name = $user->user->name;
+            // Flash::success($name . 'さんのキャンセル情報を登録しました');
+
+            return back();
+        }
     }
 }

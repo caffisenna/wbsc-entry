@@ -10,7 +10,7 @@ use Laracasts\Flash\Flash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Util\Slack\SlackPost;
+use App\Http\Util\SlackPost;
 use Illuminate\Support\Facades\Log;
 
 class FaceUploadController extends Controller
@@ -40,7 +40,6 @@ class FaceUploadController extends Controller
         }
 
         // 申込書IDからUUIDを引っ張るのが必要!!
-        // $uuid = $request['uuid'];
         $file = $request->file('file');
         $name = $file->hashName();
 
@@ -56,7 +55,12 @@ class FaceUploadController extends Controller
         // $extension = $file->extension();
 
         // ユーザーテーブルにファイル名を保存
-        $user = User::where('id', Auth::id())->with('entry_info')->first(); // DB取得
+        if($request['uuid']){
+            $user_info = Entry_info::where('uuid', $request['uuid'])->with('user')->first(); // DB取得
+            $user = User::where('id', $user_info->user_id)->with('entry_info')->first(); // DB取得
+        }else{
+            $user = User::where('id', Auth::id())->with('entry_info')->first(); // DB取得
+        }
         $user->face_picture = $name;
         $user->save();
 

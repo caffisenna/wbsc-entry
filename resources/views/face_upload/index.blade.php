@@ -26,6 +26,9 @@
                 <form method="POST" action="/user/face_upload" enctype="multipart/form-data">
 
                     {{ csrf_field() }}
+                    @if (isset($_REQUEST['uuid']))
+                        <input type="hidden" name="uuid" value="{{ $_REQUEST['uuid'] }}">
+                    @endif
 
                     <input type="file" id="file" name="file" class="form-control">
                     <button type="submit" class="uk-button uk-button-primary">アップロード</button>

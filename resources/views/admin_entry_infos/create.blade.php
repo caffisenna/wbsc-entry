@@ -22,7 +22,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    @include('entry_infos.fields')
+                    @include('admin_entry_infos.fields')
                 </div>
 
             </div>

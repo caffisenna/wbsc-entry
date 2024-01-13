@@ -107,6 +107,7 @@ Route::middleware('verified')->group(function () {
         Route::resource('dankenLists', App\Http\Controllers\DankenListsController::class);
         Route::get('/sendReminderEmailForFee', [AdminEntry_infoController::class, 'sendReminderEmailForFee'])->name('sendReminderEmailForFee'); // 督促メール
         Route::get('/resetFeeCheckDate', [AdminEntry_infoController::class, 'resetFeeCheckDate'])->name('resetFeeCheckDate'); // 入金日リセット
+        Route::match(['get', 'post'], '/create_user_data', [AdminEntry_infoController::class, 'create_user_data'])->name('create_user_data'); // 参加者データ作成
     });
 
     // 地区コミ用
