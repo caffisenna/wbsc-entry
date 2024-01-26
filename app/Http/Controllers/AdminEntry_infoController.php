@@ -173,7 +173,7 @@ class AdminEntry_infoController extends AppBaseController
      * @return Response
      */
     public function create(Request $request)
-    {// スカウトコース取得
+    { // スカウトコース取得
         // SCはDBの取得結果がゼロでも問題ない
         $courselists = course_list::where('deadline', '>', now())->get();
 
@@ -200,12 +200,12 @@ class AdminEntry_infoController extends AppBaseController
         $id = $request->id;
         // dd($id);
         // $user = User::find($id)->first();
-        $user = User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         // dd($user);
 
 
 
-        return view('admin_entry_infos.create', compact('courselists', 'divisionlists', 'danken','user'));
+        return view('admin_entry_infos.create', compact('courselists', 'divisionlists', 'danken', 'user'));
     }
 
     /**
@@ -700,6 +700,7 @@ class AdminEntry_infoController extends AppBaseController
         // 取り消し機能
         $uuid = $request['uuid'];
         $cat = $request['cat'];
+        $target = $request['target'];
         $entryInfo = Entry_info::where('uuid', $uuid)->first();
 
         // カテゴリによってnull化
@@ -710,12 +711,15 @@ class AdminEntry_infoController extends AppBaseController
                 $cat_name = '団承認';
                 break;
             case 'trainer':
-                $entryInfo->trainer_sc_checked_at = null;
-                $entryInfo->trainer_sc_name = null;
-                $entryInfo->trainer_division_checked_at = null;
-                $entryInfo->trainer_division_name = null;
-                // $entryInfo->assignment_sc = null;
-                // $entryInfo->assignment_division = null;
+                if ($target == 'sc') {
+                    $entryInfo->trainer_sc_checked_at = null;
+                    $entryInfo->trainer_sc_name = null;
+                    $entryInfo->trainer_danken_checked_at = null;
+                    $entryInfo->trainer_danken_name = null;
+                } elseif ($target == 'div') {
+                    $entryInfo->trainer_division_checked_at = null;
+                    $entryInfo->trainer_division_name = null;
+                }
                 $cat_name = 'トレーナー認定';
                 break;
             case 'commi':

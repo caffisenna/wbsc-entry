@@ -78,12 +78,14 @@
             <td>{{ $entryInfo->entry_info->zip }}<br>{{ $entryInfo->entry_info->address }}</td>
         </tr>
 
-        <tr>
-            <th>緊急連絡先</th>
-            <td>【氏名:】 {{ $entryInfo->entry_info->emer_name }}({{ $entryInfo->entry_info->emer_relation }})<br>
-                【連絡先】 {{ $entryInfo->entry_info->emer_phone }}
-            </td>
-        </tr>
+        @if ($entryInfo->entry_info->emer_name)
+            <tr>
+                <th>緊急連絡先</th>
+                <td>【氏名:】 {{ $entryInfo->entry_info->emer_name }}({{ $entryInfo->entry_info->emer_relation }})<br>
+                    【連絡先】 {{ $entryInfo->entry_info->emer_phone }}
+                </td>
+            </tr>
+        @endif
 
         @if (isset($entryInfo->entry_info->district_role))
             <tr>
@@ -169,50 +171,55 @@
                     @if (isset($entryInfo->entry_info->gm_checked_at))
                         <a href="{{ url('admin/revert?cat=dan') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-danger"
-                            onclick="return confirm('{{ $entryInfo->name }}さんの団承認を取り消しますか?')">取り消し</a>
+                            onclick="return confirm('{{ $entryInfo->name }}さんの団承認を取り消しますか?')">取消</a>
                         {{ $entryInfo->entry_info->gm_checked_at->format('Y-m-d') }}
                     @else
-                        未確認
+                        <span class="uk-text-danger">未承認</span>
                     @endif
                 </td>
             </tr>
             <tr>
                 <th><span class="uk-text-danger">トレーナー認定取消</th>
                 <td>
-                    @if (
-                        $entryInfo->entry_info->trainer_sc_checked_at ||
-                            $entryInfo->entry_info->trainer_division_checked_at ||
-                            $entryInfo->entry_info->trainer_danken_checked_at)
-                        <a href="{{ url('admin/revert?cat=trainer') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                    @if ($entryInfo->entry_info->trainer_sc_checked_at || $entryInfo->entry_info->trainer_danken_checked_at)
+                        <a href="{{ route('revert', ['cat' => 'trainer', 'uuid' => $entryInfo->entry_info->uuid, 'target' => 'sc']) }}"
                             class="uk-button uk-button-danger"
-                            onclick="return confirm('{{ $entryInfo->name }}さんのトレーナー認定を取り消しますか?\n(スカウトコース、課程別両方の認定が取り消されます。)')">取り消し</a>
-                        <ul>
-                            @unless ($entryInfo->entry_info->danken)
-                                <li>スカウトコース: @if ($entryInfo->entry_info->trainer_sc_name)
-                                        {{ $entryInfo->entry_info->trainer_sc_name }}
-                                    @else
-                                        未認定
-                                    @endif
-                                </li>
-                                <li>課程別研修: @if ($entryInfo->entry_info->trainer_division_name)
-                                        {{ $entryInfo->entry_info->trainer_division_name }}
-                                    @else
-                                        未認定
-                                    @endif
-                                </li>
+                            onclick="return confirm('{{ $entryInfo->name }} さんのトレーナー認定(SC/団研)を取り消しますか?)')">
+                            取消
+                        </a>
+                        @unless ($entryInfo->entry_info->danken)
+                            スカウトコース: @if ($entryInfo->entry_info->trainer_sc_name)
+                                {{ $entryInfo->entry_info->trainer_sc_name }}
                             @else
-                                <li>団研: @if ($entryInfo->entry_info->trainer_danken_name)
-                                        {{ $entryInfo->entry_info->trainer_danken_name }}
-                                    @else
-                                        未認定
-                                    @endif
-                                </li>
-                            @endunless
-                        </ul>
-                    @elseif(empty($entryInfo->entry_info->trainer_sc_checked_at) && empty($entryInfo->entry_info->trainer_division_checked_at))
-                        未認定
+                                <span class="uk-text-danger">未認定(SC)</span>
+                            @endif
+                        @else
+                            団研: @if ($entryInfo->entry_info->trainer_danken_name)
+                                {{ $entryInfo->entry_info->trainer_danken_name }}
+                            @else
+                                <span class="uk-text-danger">未認定(団研)</span>
+                            @endif
+                        @endunless
+                    @elseif(empty($entryInfo->entry_info->trainer_sc_checked_at))
+                        <span class="uk-text-danger">未認定</span>
                     @endif
 
+                    {{-- 課程別 --}}
+                    @if (empty($entryInfo->entry_info->danken))
+                        <hr>
+                        @if ($entryInfo->entry_info->trainer_division_checked_at)
+                            <a href="{{ route('revert', ['cat' => 'trainer', 'uuid' => $entryInfo->entry_info->uuid, 'target' => 'div']) }}"
+                                class="uk-button uk-button-danger"
+                                onclick="return confirm('{{ $entryInfo->name }} さんのトレーナー認定(課程別研修)を取り消しますか?)')">
+                                取消
+                            </a>
+                            課程別研修: @if ($entryInfo->entry_info->trainer_division_name)
+                                {{ $entryInfo->entry_info->trainer_division_name }}
+                            @endif
+                        @elseif(empty($entryInfo->entry_info->trainer_division_checked_at))
+                            <span class="uk-text-danger">未認定(課程別研修)</span>
+                        @endif
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -221,10 +228,10 @@
                     @if ($entryInfo->entry_info->commi_checked_at)
                         <a href="{{ url('admin/revert?cat=commi') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-danger"
-                            onclick="return confirm('{{ $entryInfo->name }}さんの地区コミ推薦を取り消しますか?')">取り消し</a>
+                            onclick="return confirm('{{ $entryInfo->name }}さんの地区コミ推薦を取り消しますか?')">取消</a>
                         {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
                     @else
-                        未推薦
+                        <span class="uk-text-danger">未推薦</span>
                     @endif
                 </td>
             </tr>
@@ -234,10 +241,10 @@
                     @if (isset($entryInfo->entry_info->ais_checked_at))
                         <a href="{{ url('admin/revert?cat=ais') }}&uuid={{ $entryInfo->entry_info->uuid }}"
                             class="uk-button uk-button-danger"
-                            onclick="return confirm('{{ $entryInfo->name }}さんの地区AIS確認を取り消しますか?')">取り消し</a>
+                            onclick="return confirm('{{ $entryInfo->name }}さんの地区AIS確認を取り消しますか?')">取消</a>
                         {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}
                     @else
-                        未確認
+                        <span class="uk-text-danger">未確認</span>
                     @endif
                 </td>
             </tr>
@@ -281,12 +288,12 @@
                 @if ($entryInfo->entry_info->gm_name)
                     {{ $entryInfo->entry_info->gm_name }}
                 @else
-                    未承認
+                    <span class="uk-text-danger">未承認</span>
                 @endif
             </td>
         </tr>
         <tr>
-            <td>課題</td>
+            <th>課題</th>
             <td>
                 @if (File::exists(storage_path('app/public/assignment/sc/') . $entryInfo->entry_info->uuid . '.pdf'))
                     <a href="{{ url('/storage/assignment/sc/') . '/' . $entryInfo->entry_info->uuid . '.pdf' }}"
@@ -423,9 +430,12 @@
                         <li><a
                                 href="{{ route('face_upload.index', ['uuid' => $entryInfo->entry_info->uuid]) }}">顔写真</a>
                         </li>
-                        <li><a href="{{ route('upload.index', ['uuid' => $entryInfo->entry_info->uuid, 'q' => 'sc']) }}">課題研修(スカウトコース
+                        <li><a
+                                href="{{ route('upload.index', ['uuid' => $entryInfo->entry_info->uuid, 'q' => 'sc']) }}">課題研修(スカウトコース
                                 or 団研)</a></li>
-                        <li><a href="{{ route('upload.index', ['uuid' => $entryInfo->entry_info->uuid, 'q' => 'division']) }}">課題研修(課程別)</a></li>
+                        <li><a
+                                href="{{ route('upload.index', ['uuid' => $entryInfo->entry_info->uuid, 'q' => 'division']) }}">課題研修(課程別)</a>
+                        </li>
                     </ul>
                 </td>
             </tr>
