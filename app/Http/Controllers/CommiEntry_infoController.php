@@ -228,6 +228,11 @@ class CommiEntry_infoController extends AppBaseController
         // 確認メール送信
         Mail::to($sendto)->queue(new TrainerRequest($name, $uuid, $trainer_name)); // メールをqueueで送信
 
+        // 送信日打刻
+        $ef = Entry_info::where('uuid', $uuid)->first();
+        $ef->trainer_sent_at = now();
+        $ef->save();
+
         Flash::success($trainer_name . 'さんにトレーナー認定依頼メールを発送しました');
         return back();
     }
@@ -250,6 +255,11 @@ class CommiEntry_infoController extends AppBaseController
         $gm_name = $request['name'];
         // 確認メール送信
         Mail::to($sendto)->queue(new GmRequest($gm_name, $uuid, $name)); // メールをqueueで送信
+
+        // 送信日打刻
+        $ef = Entry_info::where('uuid', $uuid)->first();
+        $ef->gm_sent_at = now();
+        $ef->save();
 
         Flash::success($gm_name . 'さんに参加承認の依頼メールを発送しました');
         return back();

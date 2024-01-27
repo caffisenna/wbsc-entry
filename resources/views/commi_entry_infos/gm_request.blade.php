@@ -41,10 +41,13 @@
                 </div>
 
                 <input type="hidden" name="uuid" value="{{ $userinfo->uuid }}">
-                <input type="submit" value="依頼する" class="uk-button uk-button-primary uk-width-1-1@m">
+                @if($userinfo->gm_sent_at)
+                <span class="uk-text-warning uk-text-small">{{ $userinfo->gm_sent_at }}に送信済み</span>
+                @endif
+                <input type="submit" value="{{ $userinfo->gm_sent_at ? "再度依頼する" : '依頼する' }}"
+                    class="uk-button uk-button-primary uk-width-1-1@m">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button"
                     onclick="history.back()">キャンセル</button>
-
             </form>
         </div>
 
