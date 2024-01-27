@@ -287,6 +287,10 @@
             <td>
                 @if ($entryInfo->entry_info->gm_name)
                     {{ $entryInfo->entry_info->gm_name }}
+                    @if ($gm_email)
+                        <br>
+                        <span class="uk-text-small">参加決定通知先: {{ $gm_email->name }} ({{ $gm_email->email }})</span>
+                    @endif
                 @else
                     <span class="uk-text-danger">未承認</span>
                 @endif

@@ -232,6 +232,14 @@
                                 <p class="uk-text-small">認定日はカレンダーから選択するかYYYY-mm-ddの形式で入力してください</p>
                             </div>
                         </div>
+                        <h3>参加確定通知を受け取る</h3>
+                        <span class="uk-text-small">参加確定の通知を希望される方は、以下のフォームにメールアドレスをご入力ください。参加が確定した際には、同時にお知らせいたします。</span>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-text">メールアドレス</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="form-stacked-text" type="email" name="gm_email">
+                            </div>
+                        </div>
 
                         <input type="hidden" name="uuid" value="{{ $userinfo->uuid }}">
                         <input type="submit" value="承認する" class="uk-button uk-button-primary uk-width-1-1@m">

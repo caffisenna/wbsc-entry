@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\course_list;
 use App\Models\DankenLists;
 use App\Models\division_list;
+use App\Models\GmAddress;
 use Maatwebsite\Excel\Imports\EndRowFinder;
 
 class AdminEntry_infoController extends AppBaseController
@@ -249,7 +250,10 @@ class AdminEntry_infoController extends AppBaseController
         $user = $entryInfo->entry_info->district . '地区 ' . $entryInfo->name;
         Log::channel('user_action')->info(Auth::user()->name . 'が ' . $user . 'の情報を表示しました');
 
-        return view('admin_entry_infos.show')->with('entryInfo', $entryInfo);
+        // 通知メールCC送信先取得
+        $gm_email = GmAddress::where('uuid',$entryInfo->entry_info->uuid)->first();
+
+        return view('admin_entry_infos.show', compact('entryInfo','gm_email'));
     }
 
     /**
@@ -760,6 +764,7 @@ class AdminEntry_infoController extends AppBaseController
         $flag = $request['flag'];
         $revert = $request['revert'];
         $entryInfo = Entry_info::where('uuid', $uuid)->first();
+        $gm_email = GmAddress::where('uuid', $uuid)->value('email'); // 団委員長CC送信用
 
         switch ($cat) {
             case 'sc':
@@ -831,9 +836,19 @@ class AdminEntry_infoController extends AppBaseController
             $sendto = $user->email;
             $name = $user->name;
             $mail = Mail::to($sendto);
+            $ccRecipients = []; // CC送信先(配列で持つ必要あり)
+
             if (config('app.env') !== 'local') {
-                $mail->cc('ais@scout.tokyo'); // local以外ならばais@にCCでメールを飛ばす
+                $ccRecipients[] = 'ais@scout.tokyo'; // 最初のCC
             }
+
+            // 団委員長CC用
+            if ($gm_email !== null) {
+                $ccRecipients[] = $gm_email; // 2番目のCC
+            }
+
+            $mail->cc($ccRecipients);
+
             $mail->queue(new AisAccepted($name, $flag, $sc_number ?? null, $division_number ?? null, $danken_number ?? null)); // $name, $flagと一緒に課程別のコースを送る必要あり
         }
 

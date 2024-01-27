@@ -9,6 +9,7 @@ use App\Mail\GmConfirm;
 use Mail;
 use App\Mail\TrainerConfirm;
 use App\Http\Util\SlackPost;
+use App\Models\GmAddress;
 
 class ConfirmController extends Controller
 {
@@ -81,12 +82,14 @@ class ConfirmController extends Controller
 
     public function gm_confirm_post(Request $request)
     {
-        // 認定ボタンが押されたときの処理
+        // 承認ボタンが押されたときの処理
         $uuid = $request['uuid'];
         $userinfo = Entry_info::where('uuid', $uuid)->with('user')->firstOrFail();
 
         $gm_name = $request['gm_name'];
         $gm_checked_at = $request['gm_checked_at'];
+        $gm_email = $request['gm_email'];
+        // dd($gm_email);
 
         if (isset($gm_name) && isset($gm_checked_at)) {
             $userinfo->gm_checked_at = $gm_checked_at;
@@ -104,6 +107,15 @@ class ConfirmController extends Controller
             if (config('app.env') !== 'local') {
                 $slack = new SlackPost();
                 $slack->send(':white_check_mark:' . $userinfo->district . '地区 ' . $userinfo->user->name . ' さんの団承認が完了しました');
+            }
+
+            // 団委員長のメアド登録
+            if ($gm_email !== null) {
+                GmAddress::create([
+                    'uuid' => $uuid,
+                    'name' => $name,
+                    'email' => $gm_email,
+                ]);
             }
         }
 
