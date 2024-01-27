@@ -23,19 +23,19 @@ class CreateEntryInfosTable extends Migration
             $table->string('danken')->nullable();   // 団研
             $table->string('furigana');
             $table->string('gender');
-            $table->string('bs_id',11);
+            $table->string('bs_id', 11);
             $table->date('birthday');
-            $table->string('prefecture',50);
-            $table->string('district',50);
+            $table->string('prefecture', 50);
+            $table->string('district', 50);
             $table->string('dan');
             $table->string('troop');
             $table->string('troop_role');               // 団内役務
             $table->string('cell_phone');
             $table->string('zip');
             $table->string('address');
-            $table->string('emer_name',20)->nullable();                // 緊急連絡先
-            $table->string('emer_relation',20)->nullable();
-            $table->string('emer_phone',20)->nullable();
+            $table->string('emer_name', 20)->nullable();                // 緊急連絡先
+            $table->string('emer_relation', 20)->nullable();
+            $table->string('emer_phone', 20)->nullable();
             $table->string('district_role')->nullable();
             $table->string('prefecture_role')->nullable();
             $table->string('scout_camp');               // スカキャン
@@ -70,7 +70,7 @@ class CreateEntryInfosTable extends Migration
             $table->string('service_hist5_term')->nullable();
             $table->string('health_illness')->nullable();       // 病気など
             $table->string('health_memo')->nullable();          // 健康上の留意点
-            $table->string('additional_comment',500)->nullable();   // 地区コミからの副申請書
+            $table->string('additional_comment', 500)->nullable();   // 地区コミからの副申請書
             $table->string('assignment_sc')->nullable();          // 課題研修SC
             $table->string('assignment_division')->nullable();    // 課題研修課程別
             $table->string('assignment_danken')->nullable();    // 課題研修 団研
@@ -85,6 +85,8 @@ class CreateEntryInfosTable extends Migration
             $table->date('gm_checked_at')->nullable();                      // 団委員長確認
             $table->string('gm_name', 50)->nullable();                         // 団委員長氏名
             $table->date('commi_checked_at')->nullable();                   // 地区コミ確認
+            $table->date('gm_sent_at')->nullable();                         // 団委員長依頼送信
+            $table->date('trainer_sent_at')->nullable();                    // トレーナー送信
             $table->date('ais_checked_at')->nullable();                     // AIS委員会確認
             $table->date('sc_accepted_at')->nullable();                  // AIS委員委員長の参加認定
             $table->date('sc_rejected_at')->nullable();                  // AIS委員委員長の参加認定
