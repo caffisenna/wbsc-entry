@@ -59,6 +59,7 @@
         </div>
     </div>
 @else
+    @include('flash::message')
     <h3>申込パターンを選択してください</h3>
     <ul class="uk-list">
         <li><a class="uk-button uk-button-large uk-button-primary uk-width-1-2"

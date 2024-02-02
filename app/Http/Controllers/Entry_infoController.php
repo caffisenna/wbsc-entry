@@ -113,7 +113,7 @@ class Entry_infoController extends AppBaseController
 
         if (isset($input['create_id'])) {
             $input['user_id'] = $input['create_id'];
-        }else{
+        } else {
             $input['user_id'] = Auth::user()->id;
         }
 
@@ -373,7 +373,12 @@ class Entry_infoController extends AppBaseController
     {
         if ($request->isMethod('get')) {
             // getの時はページ遷移
-            $user = user::where('email', auth::user()->email)->with('health_info')->firstOrFail();
+            $user = user::where('email', auth::user()->email)->with('entry_info')->with('health_info')->firstOrFail();
+
+            if ($user->entry_info === null) {
+                flash::error('<span uk-icon="icon: warning"></span>申込データがありません。最初に申込データを作成してください');
+                return redirect(route('entryInfos.index'));
+            }
 
             return view('entry_infos.health_info')->with(compact('user'));
         } elseif ($request->isMethod('post')) {
