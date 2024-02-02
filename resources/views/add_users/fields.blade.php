@@ -21,7 +21,14 @@
     {!! Form::label('role', 'アカウント種類', ['class' => 'form-role-label']) !!}
     {!! Form::select(
         'role',
-        ['' => '', 'admin' => '管理者', 'AIS' => '地区AIS委員', 'commi' => '地区コミ', 'course_staff' => 'コーススタッフ'],
+        [
+            '' => '',
+            'admin' => '管理者',
+            'AIS' => '地区AIS委員',
+            'commi' => '地区コミ',
+            'course_staff' => 'コーススタッフ',
+            'participant' => '参加者',
+        ],
         null,
         [
             'class' => 'form-control custom-select',
