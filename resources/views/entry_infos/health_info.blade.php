@@ -16,7 +16,7 @@
     <div class="content">
 
         @include('flash::message')
-
+        @include('adminlte-templates::common.errors')
         <div class="clearfix"></div>
         <p class="uk-text">健康情報を入力してください</p>
 
@@ -36,9 +36,12 @@
                     <input type="text" name="treating_disease" class="uk-input" placeholder=""
                         value="@if ($user->health_info && $user->health_info->treating_disease) {{ $user->health_info->treating_disease }} @endif"
                         id="treating_disease">
+                    @error('treating_disease')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <div class="form-controls uk-margin">
+                {{-- <div class="form-controls uk-margin">
                     <h3>携行持薬</h3>
                     <label>
                         {!! Form::checkbox('carried_medications', 1, optional($user->health_info)->carried_medications == 1, [
@@ -49,7 +52,7 @@
                     <input type="text" name="carried_medications" class="uk-input" placeholder=""
                         value="@if ($user->health_info && $user->health_info->carried_medications) {{ $user->health_info->carried_medications }} @endif"
                         id="carried_medications">
-                </div>
+                </div> --}}
 
                 <div class="form-controls uk-margin">
                     <h3>直近3ヶ月の健康状態</h3>
@@ -80,6 +83,9 @@
                     <input type="text" name="recent_health_status" class="uk-input" placeholder=""
                         value="@if ($user->health_info && $user->health_info->recent_health_status) {{ $user->health_info->recent_health_status }} @endif"
                         id="recent_health_status">
+                    @error('recent_health_status')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
 
@@ -99,6 +105,9 @@
                             'id' => 'doctor_advice',
                         ],
                     ) !!}
+                    @error('doctor_advice')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
 
                 </div>
 
@@ -118,6 +127,9 @@
                             'id' => 'medical_history',
                         ],
                     ) !!}
+                    @error('medical_history')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-controls uk-margin">
                     <h3>食物アレルギー</h3>

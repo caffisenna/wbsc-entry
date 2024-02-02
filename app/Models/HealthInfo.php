@@ -50,9 +50,19 @@ class HealthInfo extends Model
      *
      * @var array
      */
-    public static $rules = [];
+    public static $rules = [
+        'treating_disease' => 'required_unless:treating_disease_cb,',
+        'recent_health_status' => 'required_unless:recent_health_status_cb,',
+        'doctor_advice' => 'required_unless:doctor_advice_cb,',
+        'medical_history' => 'required_unless:medical_history_cb,',
+    ];
 
-    public static $messages = [];
+    public static $messages = [
+        'treating_disease.required_unless' => '治療中の病気を記入してください。治療中のものがなければ「特になし」にチェックをしてください。',
+        'recent_health_status.required_unless' => '最近の体調を記入してください。異常がなければ「特に異常なし」にチェックをしてください。',
+        'doctor_advice.required_unless' => '医師からの注意を記入してください。医師からの注意がなければ「特になし」にチェックをしてください。',
+        'medical_history.required_unless' => '特記事項、過去の傷病等を記入してください。特になければ「特になし」にチェックをしてください。',
+    ];
 
     public function user()
     {

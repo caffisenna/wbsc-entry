@@ -23,6 +23,7 @@ use App\Models\DankenLists;
 use App\Http\Util\SlackPost;
 use App\Models\HealthInfo;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class Entry_infoController extends AppBaseController
 {
@@ -373,7 +374,7 @@ class Entry_infoController extends AppBaseController
     {
         if ($request->isMethod('get')) {
             // getの時はページ遷移
-            $user = user::where('email', auth::user()->email)->with('entry_info')->with('health_info')->firstOrFail();
+            $user = User::where('email', auth::user()->email)->with('entry_info')->with('health_info')->firstOrFail();
 
             if ($user->entry_info === null) {
                 flash::error('<span uk-icon="icon: warning"></span>申込データがありません。最初に申込データを作成してください');
@@ -385,29 +386,28 @@ class Entry_infoController extends AppBaseController
             // postの時はDB更新処理
             $input = $request->all();
 
+            // バリデーションの実行
+            $validator = Validator::make($input, HealthInfo::$rules, HealthInfo::$messages);
+
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
             // 既存データを取得
             $health_info = HealthInfo::where('user_id', $input['id'])->first();
 
             if ($health_info) {
                 // レコードが存在する場合は更新
-                $health_info->update([
-                    'treating_disease' => $input['treating_disease'],
-                    'carried_medications' => $input['carried_medications'],
-                    'health_status_last_3_months' => $input['health_status_last_3_months'],
-                    'recent_health_status' => $input['recent_health_status'],
-                    'doctor_advice' => $input['doctor_advice'],
-                    'medical_history' => $input['medical_history'],
-                    'food_allergies' => $input['food_allergies'],
-                    'allergen' => $input['allergen'],
-                    'reaction_to_allergen' => $input['reaction_to_allergen'],
-                    'usual_response_to_reaction' => $input['usual_response_to_reaction'],
-                ]);
+                $health_info->update($input);
             } else {
                 // レコードが存在しない場合は新規作成
                 HealthInfo::create([
                     'user_id' => $input['id'], // user_id指定
                     'treating_disease' => $input['treating_disease'],
-                    'carried_medications' => $input['carried_medications'],
+                    // 'carried_medications' => $input['carried_medications'],
                     'health_status_last_3_months' => $input['health_status_last_3_months'],
                     'recent_health_status' => $input['recent_health_status'],
                     'doctor_advice' => $input['doctor_advice'],
