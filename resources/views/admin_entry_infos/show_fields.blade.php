@@ -443,6 +443,10 @@
                     </ul>
                 </td>
             </tr>
+            <tr>
+                <th>最終ログイン</th>
+                <td>{{ $entryInfo->last_login_at }}</td>
+            </tr>
         @endif
 
     </table>
