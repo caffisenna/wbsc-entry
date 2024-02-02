@@ -443,6 +443,18 @@
                     </ul>
                 </td>
             </tr>
+            @if ($entryInfo->entry_info->cancel)
+                <tr>
+                    <th>欠席(SC/団研)</th>
+                    <td>{{ $entryInfo->entry_info->cancel }}</td>
+                </tr>
+            @endif
+            @if ($entryInfo->entry_info->cancel_div)
+                <tr>
+                    <th>欠席(課程別)</th>
+                    <td>{{ $entryInfo->entry_info->cancel_div }}</td>
+                </tr>
+            @endif
             <tr>
                 <th>最終ログイン</th>
                 <td>{{ $entryInfo->last_login_at }}</td>
