@@ -173,7 +173,7 @@
             </div>
             <div class="uk-text-center">
                 <p class="uk-text-large uk-text-emphasis txt-bg">ボーイスカウト東京連盟 {{ config('app.name') }}</p><br>
-                {{-- <p class="uk-text-large uk-text-emphasis txt-bg uk-text-danger">テスト運用中(テスト中に入力されたデータは全て破棄されます)</p> --}}
+                <p class="uk-text-large uk-text-emphasis txt-bg uk-text-danger">テスト運用中(テスト中に入力されたデータは全て破棄されます)</p>
             </div>
         </div>
     </div>
