@@ -232,8 +232,8 @@
                                 <p class="uk-text-small">認定日はカレンダーから選択するかYYYY-mm-ddの形式で入力してください</p>
                             </div>
                         </div>
-                        <h3>参加確定通知を受け取る</h3>
-                        <span class="uk-text-small">参加確定の通知を希望される方は、以下のフォームにメールアドレスをご入力ください。参加が確定した際には、同時にお知らせいたします。</span>
+                        <h3><span uk-icon="icon: mail"></span>控えのメールを受け取る</h3>
+                        <span class="uk-text-small">参加者に通知されるメールを控えとして受信を希望する方は、以下のフォームにメールアドレスを入力してください。(団承認、参加確定の際にメールをお送りします。)</span>
                         <div class="uk-margin">
                             <label class="uk-form-label" for="form-stacked-text">メールアドレス</label>
                             <div class="uk-form-controls">

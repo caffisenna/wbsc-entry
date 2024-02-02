@@ -99,7 +99,15 @@ class ConfirmController extends Controller
             // 確認メール送信
             $sendto = $userinfo->user->email;
             $name = $userinfo->user->name;
-            Mail::to($sendto)->queue(new GmConfirm($uuid, $name)); // メールをqueueで送信
+
+            $mail = Mail::to($sendto);
+
+            // CCの処理(団委員長への控えメール)
+            if ($gm_email !== null) {
+                $mail->cc($gm_email);
+            }
+
+            $mail->queue(new GmConfirm($uuid, $name));
             Flash::success($userinfo->user->name . 'さんの参加承認を行いました');
 
             // slack通知
