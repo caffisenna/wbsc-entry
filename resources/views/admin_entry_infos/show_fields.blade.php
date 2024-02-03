@@ -179,7 +179,7 @@
                 </td>
             </tr>
             <tr>
-                <th><span class="uk-text-danger">トレーナー認定取消</th>
+                <th class="uk-table-middle"><span class="uk-text-danger">トレーナー認定取消</th>
                 <td>
                     @if ($entryInfo->entry_info->trainer_sc_checked_at || $entryInfo->entry_info->trainer_danken_checked_at)
                         <a href="{{ route('revert', ['cat' => 'trainer', 'uuid' => $entryInfo->entry_info->uuid, 'target' => 'sc']) }}"
