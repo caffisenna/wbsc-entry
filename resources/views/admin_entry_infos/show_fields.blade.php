@@ -252,17 +252,13 @@
         <tr>
             <th>団承認URL</th>
             <td>
-                <a
-                    href="{{ url('/confirm/gm?uuid=') }}{{ $entryInfo->entry_info->uuid }}">{{ url('/confirm/gm?uuid=') }}{{ $entryInfo->entry_info->uuid }}</a><br>
-                <span class="uk-text-warning uk-text-small">このURLから団承認を行うことができます</span>
+                <a href="{{ route('gm_confirm', ['uuid' => $entryInfo->entry_info->uuid]) }}">団承認をする</a>
             </td>
         </tr>
         <tr>
             <th>トレーナー認定URL</th>
             <td>
-                <a
-                    href="{{ url('/confirm/trainer?uuid=') }}{{ $entryInfo->entry_info->uuid }}">{{ url('/confirm/trainer?uuid=') }}{{ $entryInfo->entry_info->uuid }}</a><br>
-                <span class="uk-text-warning uk-text-small">このURLから課題のトレーナー認定を行うことができます</span>
+                <a href="{{ route('trainer_confirm', ['uuid' => $entryInfo->entry_info->uuid]) }}">トレーナー認定をする</a>
             </td>
         </tr>
         <tr>
