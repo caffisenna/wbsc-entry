@@ -34,6 +34,7 @@ use App\Models\DankenLists;
 use App\Models\division_list;
 use App\Models\GmAddress;
 use Maatwebsite\Excel\Imports\EndRowFinder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AdminEntry_infoController extends AppBaseController
 {
@@ -251,9 +252,9 @@ class AdminEntry_infoController extends AppBaseController
         Log::channel('user_action')->info(Auth::user()->name . 'が ' . $user . 'の情報を表示しました');
 
         // 通知メールCC送信先取得
-        $gm_email = GmAddress::where('uuid',$entryInfo->entry_info->uuid)->first();
+        $gm_email = GmAddress::where('uuid', $entryInfo->entry_info->uuid)->first();
 
-        return view('admin_entry_infos.show', compact('entryInfo','gm_email'));
+        return view('admin_entry_infos.show', compact('entryInfo', 'gm_email'));
     }
 
     /**
@@ -1044,6 +1045,35 @@ class AdminEntry_infoController extends AppBaseController
             // $name = $user->user->name;
             // Flash::success($name . 'さんのキャンセル情報を登録しました');
 
+            return back();
+        }
+    }
+
+    public function revert_cancel(Request $request)
+    {
+        // 欠席情報取消機能
+        $input = $request->all();
+        $uuid = $input['uuid'];
+
+        try {
+            $user = Entry_info::where('uuid', $uuid)->firstOrFail();
+            switch ($input['cat']) {
+                case 'sc':
+                    $user->update(['cancel' => null]);
+                    break;
+                case 'div':
+                    $user->update(['cancel_div' => null]);
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            flash::success('欠席情報を削除しました');
+            return back();
+        } catch (ModelNotFoundException $e) {
+            // 該当するUUIDが見つからないときの処理
+            Flash::error('当該レコードがありません');
             return back();
         }
     }

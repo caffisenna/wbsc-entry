@@ -446,13 +446,19 @@
             @if ($entryInfo->entry_info->cancel)
                 <tr>
                     <th>欠席(SC/団研)</th>
-                    <td>{{ $entryInfo->entry_info->cancel }}</td>
+                    <td>{{ $entryInfo->entry_info->cancel }} <a
+                            href="{{ route('revert_cancel', ['uuid' => $entryInfo->entry_info->uuid, 'cat' => 'sc']) }}"
+                            onclick="return confirm('欠席情報を消去しますか?')"><span uk-icon="icon: ban"
+                                class="uk-text-danger"></span></a></td>
                 </tr>
             @endif
             @if ($entryInfo->entry_info->cancel_div)
                 <tr>
                     <th>欠席(課程別)</th>
-                    <td>{{ $entryInfo->entry_info->cancel_div }}</td>
+                    <td>{{ $entryInfo->entry_info->cancel_div }} <a
+                            href="{{ route('revert_cancel', ['uuid' => $entryInfo->entry_info->uuid, 'cat' => 'div']) }}"
+                            onclick="return confirm('欠席情報を消去しますか?')"><span uk-icon="icon: ban"
+                                class="uk-text-danger"></span></a></td>
                 </tr>
             @endif
             <tr>
