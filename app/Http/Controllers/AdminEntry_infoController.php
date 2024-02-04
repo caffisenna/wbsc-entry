@@ -1077,4 +1077,44 @@ class AdminEntry_infoController extends AppBaseController
             return back();
         }
     }
+
+    public function approve_participation(Request $request)
+    {
+        $input = $request->all();
+
+        if (isset($input['cat'])) {
+            $cat  = $input['cat'];
+            $number = $input['number'];
+        }
+
+        if (empty($cat)) {
+            $count = Entry_info::select('sc_number')->selectRaw('count(user_id) as count_sc_number')->groupBy('sc_number')->get();
+            $count = $count->sortBy('sc_number'); // 期数毎にソート
+
+            $div_count = Entry_info::select('division_number')->selectRaw('count(user_id) as count_division_number')->groupBy('division_number')->get();
+            $div_count = $div_count->sortBy('division_number'); // 回数毎にソート
+
+            // 団研をDBから取得
+            $danken_count = DankenLists::whereNotNull('number')->select('number')->first();
+
+            return view('approve_participation.index')->with(compact(['count', 'div_count', 'danken_count']));
+        } else {
+            switch ($cat) {
+                case 'sc':
+                    $members = Entry_info::where('sc_number', $number)->whereNull('cancel')->with('user')->get();
+                    return view('approve_participation.sc', compact('members'));
+                    break;
+                case 'div':
+                    $members = Entry_info::where('division_number', $number)->whereNull('cancel_div')->with('user')->get();
+                    return view('approve_participation.div', compact('members'));
+                    break;
+                case 'danken':
+                    $members = Entry_info::whereNotNull('danken')->whereNull('cancel')->with('user')->get();
+                    return view('approve_participation.danken', compact('members'));
+                    break;
+                default:
+                    abort(404);
+            }
+        }
+    }
 }

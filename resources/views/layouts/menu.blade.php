@@ -34,22 +34,8 @@
         {{-- 地区AIS委員はエクスポートさせない --}}
         @unless (Auth::user()->is_ais)
             <li class="nav-item">
-                <a href="{{ url('/admin/certificate') }}?list=all"
-                    class="nav-link {{ Request::is('admin/certificate*') || str_contains(request()->fullUrl(), 'certificate=true') ? 'active' : '' }}">
-                    <p><span uk-icon="bolt"></span>修了認定</p>
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a href="{{ route('admin_export') }}?q=all" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
                     <p><span uk-icon="pull"></span>全件エクスポート</p>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
-                    {{-- <i class="nav-icon fas fa-user"></i> --}}
-                    <p><span uk-icon="users"></span>アカウント管理</p>
                 </a>
             </li>
 
@@ -67,8 +53,30 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('create_user_data') }}" class="nav-link {{ Request::is('admin/create_user_data*') ? 'active' : '' }}">
-                    <p><span uk-icon="pencil"></span>参加者データ作成</p>
+                <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
+                    {{-- <i class="nav-icon fas fa-user"></i> --}}
+                    <p><span uk-icon="users"></span>アカウント管理</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('create_user_data') }}"
+                    class="nav-link {{ Request::is('admin/create_user_data*') ? 'active' : '' }}">
+                    <p><span uk-icon="pencil"></span>参加者データ入力</p>
+                </a>
+            </li>
+
+            <h3 class="uk-text-warning">参加・修了認定</h3>
+            <li class="nav-item">
+                <a href="{{ route('approve_participation') }}"
+                    class="nav-link {{ Request::is('admin/approve_participation') ? 'active' : '' }}">
+                    <p><span uk-icon="bolt"></span>参加認定</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/admin/certificate') }}?list=all"
+                    class="nav-link {{ Request::is('admin/certificate*') || str_contains(request()->fullUrl(), 'certificate=true') ? 'active' : '' }}">
+                    <p><span uk-icon="bolt"></span>修了認定</p>
                 </a>
             </li>
 

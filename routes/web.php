@@ -109,6 +109,7 @@ Route::middleware('verified')->group(function () {
         Route::get('/resetFeeCheckDate', [AdminEntry_infoController::class, 'resetFeeCheckDate'])->name('resetFeeCheckDate'); // 入金日リセット
         Route::match(['get', 'post'], '/create_user_data', [AdminEntry_infoController::class, 'create_user_data'])->name('create_user_data'); // 参加者データ作成
         Route::get('/revert_cancel', [AdminEntry_infoController::class, 'revert_cancel'])->name('revert_cancel'); // 欠席情報取消
+        Route::get('/approve_participation', [AdminEntry_infoController::class, 'approve_participation'])->name('approve_participation'); // 参加認定リスト
     });
 
     // 地区コミ用
