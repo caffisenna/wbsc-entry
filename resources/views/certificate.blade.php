@@ -15,8 +15,9 @@
                         @if (isset($val->sc_number))
                             @unless ($val->sc_number == 'done')
                                 <tr>
-                                    <td><a
-                                            href="{{ url('admin/admin_entryInfos?certificate=true&q=' . $val->sc_number) }}">スカウトコース {{ $val->sc_number }}期</a>
+                                    <td><a {{-- href="{{ url('admin/admin_entryInfos?certificate=true&q=' . $val->sc_number) }}">スカウトコース {{ $val->sc_number }}期</a> --}}
+                                            href="{{ route('admin_entryInfos.index', ['certificate' => 'true', 'q' => $val->sc_number]) }}">スカウトコース
+                                            {{ $val->sc_number }}期</a>
                                     </td>
                                     <td><a
                                             href="{{ route('certificate_export', ['cat' => 'SC', 'q' => $val->sc_number]) }}">export</a>
@@ -36,7 +37,11 @@
                     @foreach ($div_count as $val)
                         @if ($val->division_number != '' && $val->division_number != 'etc')
                             <tr>
-                                <td><a href="{{ url('admin/admin_entryInfos?certificate=true&div=' . $val->division_number) }}">課程別研修
+                                <td><a
+                                        href="{{ route('admin_entryInfos.index', [
+                                            'certificate' => 'true',
+                                            'div' => $val->division_number,
+                                        ]) }}">課程別研修
                                         {{ $val->division_number }}回</a>
                                 </td>
                                 <td><a
@@ -54,8 +59,8 @@
                         <th>excel</th>
                     </tr>
                     <tr>
-                        <td><a
-                                href="{{ url('admin/admin_entryInfos?certificate=true&danken=danken') }}">団委員研修所 {{ $danken_count->number }}期</a>
+                        <td><a href="{{ route('admin_entryInfos.index', ['certificate' => 'true', 'danken' => 'danken']) }}">団委員研修所
+                                {{ $danken_count->number }}期</a>
                         </td>
                         <td><a href="{{ route('certificate_export', ['cat' => 'danken']) }}">export</a></td>
                     </tr>
