@@ -81,7 +81,7 @@
                         </td>
                         <td>
                             <div class='btn-group'>
-                                <a href="{{ url('/course_staff/pdf/?id=') }}{{ $entryInfo->entry_info->user_id }}"
+                                <a href="{{ route('course_staff_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
                                     class='btn btn-default'>
                                     <span uk-icon="download"></span>PDF
                                 </a>

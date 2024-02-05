@@ -114,7 +114,7 @@
                                 <td>
                                     {{-- 地区AIS委員長はボタンを隠す --}}
                                     @if (Auth::user()->is_ais == null)
-                                        <a href="{{ url('/admin/certificate/?status=pass&uuid=') }}{{ $entryInfo->entry_info->uuid }}&cat={{ $request['cat'] }}"
+                                        <a href="{{ route('certificate', ['status' => 'pass', 'uuid' => $entryInfo->entry_info->uuid, 'cat' => $request['cat']]) }}"
                                             class='uk-button uk-button-primary uk-button-small'
                                             onclick="return confirm('{{ $entryInfo->name }}さんを認定しますか?')">
                                             <span uk-icon="check"></span>認定
@@ -124,7 +124,7 @@
                                 <td>
                                     {{-- 地区AIS委員長はボタンを隠す --}}
                                     @if (Auth::user()->is_ais == null)
-                                        <a href="{{ url('/admin/certificate/?status=ng&uuid=') }}{{ $entryInfo->entry_info->uuid }}&cat={{ $request['cat'] }}"
+                                        <a href="{{ route('certificate', ['status' => 'ng', 'uuid' => $entryInfo->entry_info->uuid, 'cat' => $request['cat']]) }}"
                                             class='uk-button uk-button-danger uk-button-small'
                                             onclick="return confirm('{{ $entryInfo->name }}さんを否認しますか?')">
                                             <span uk-icon="close"></span>非認定

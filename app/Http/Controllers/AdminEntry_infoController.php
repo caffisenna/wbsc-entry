@@ -26,7 +26,7 @@ use Storage;
 use App\Mail\FeeChecked;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Util\Slack\SlackPost;
+use App\Http\Util\SlackPost;
 use App\Mail\AisAccepted;
 use Illuminate\Support\Facades\Log;
 use App\Models\course_list;

@@ -138,7 +138,7 @@
                                 <span uk-icon="icon: ban" class="uk-text-danger"></span>
                             </a>
                         @else
-                            <a href="{{ url('/admin/fee_check/?id=') }}{{ $entryinfo->id }}&cat={{ $_REQUEST['cat'] }}"
+                            <a href="{{ route('fee_check', ['id' => $entryinfo->id, 'cat' => $_REQUEST['cat']]) }}"
                                 class=" uk-button uk-button-primary uk-button-small"
                                 onclick="return confirm('{{ $entryinfo->user->name }}さんの入金をチェックしますか?')">確認</a>
                         @endif

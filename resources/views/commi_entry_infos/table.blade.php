@@ -56,7 +56,7 @@
                                 empty($entryInfo->entry_info->trainer_division_checked_at) ||
                                 empty($entryInfo->entry_info->trainer_division_name))
                             <td>
-                                <a href="{{ url('/commi/trainer_request?id=') }}{{ $entryInfo->entry_info->uuid }}"
+                                <a href="{{ route('trainer_request', ['id' => $entryInfo->entry_info->uuid]) }}"
                                     class="uk-link uk-button uk-button-primary uk-button-small">認定依頼</a>
                             </td>
                         @else
@@ -68,7 +68,7 @@
                             @if (isset($entryInfo->entry_info->gm_checked_at))
                                 {{ $entryInfo->entry_info->gm_checked_at->format('Y-m-d') }}
                             @else
-                                <a href="{{ url('/commi/gm_request?id=') }}{{ $entryInfo->entry_info->uuid }}"
+                                <a href="{{ route('gm_request', ['id' => $entryInfo->entry_info->uuid]) }}"
                                     class="uk-link uk-button uk-button-primary uk-button-small">承認依頼</a>
                             @endif
                         </td>
@@ -76,16 +76,16 @@
                             @if (isset($entryInfo->entry_info->commi_checked_at))
                                 {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
                             @else
-                                <a href="{{ url('/commi/commi_check/?id=') }}{{ $entryInfo->entry_info->id }}"
+                                <a href="{{ route('commi_check', ['id' => $entryInfo->entry_info->id]) }}"
                                     class=" uk-button uk-button-primary uk-button-small"
                                     onclick="return confirm('{{ $entryInfo->name }}さんを推薦しますか?')">推薦する</a>
                             @endif
                         </td>
-                        <td><a href="{{ url("/commi/commi_comment?id=$entryInfo->id") }}"
+                        <td><a href="{{ route('commi_comment', ['id' => $entryInfo->id]) }}"
                                 class="uk-button uk-button-small uk-button-primary">副申請書</a></td>
                         <td>
                             <div class='btn-group'>
-                                <a href="{{ url('/commi/pdf/?id=') }}{{ $entryInfo->entry_info->user_id }}"
+                                <a href="{{ route('commi_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
                                     class='btn btn-default'>
                                     <span uk-icon="download"></span>PDF
                                 </a>

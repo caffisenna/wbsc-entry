@@ -93,7 +93,8 @@
                             <tr>
                         @endif
                         @if (isset($entryInfo->entry_info->cancel) || isset($entryInfo->entry_info->cancel_div))
-                            <td bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel }}<br>{{ $entryInfo->entry_info->cancel_div }}">
+                            <td bgcolor="#ccc"
+                                uk-tooltip="{{ $entryInfo->entry_info->cancel }}<br>{{ $entryInfo->entry_info->cancel_div }}">
                             @else
                             <td>
                         @endif
@@ -183,7 +184,7 @@
                             @if (isset($entryInfo->entry_info->ais_checked_at))
                                 {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}
                             @else
-                                <a href="{{ url('/admin/ais_check/?id=') }}{{ $entryInfo->entry_info->id }}"
+                                <a href="{{ route('ais_check', ['id' => $entryInfo->entry_info->id]) }}"
                                     class=" uk-button uk-button-primary uk-button-small"
                                     onclick="return confirm('{{ $entryInfo->name }}さん 地区AIS委員長として確認OKですか?')">確認</a>
                             @endif
@@ -191,7 +192,7 @@
                         <td>
                             {!! Form::open(['route' => ['admin_entryInfos.destroy', $entryInfo->entry_info->id], 'method' => 'delete']) !!}
                             <div class='btn-group'>
-                                <a href="{{ url('/admin/pdf/?id=') }}{{ $entryInfo->entry_info->user_id }}"
+                                <a href="{{ route('admin_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
                                     class='uk-button uk-button-default uk-button-small'>
                                     <span uk-icon="download"></span>PDF
                                 </a>

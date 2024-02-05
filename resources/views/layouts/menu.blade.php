@@ -74,7 +74,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/admin/certificate') }}?list=all"
+                <a href="{{ route('certificate', ['list' => 'all']) }}"
                     class="nav-link {{ Request::is('admin/certificate*') || str_contains(request()->fullUrl(), 'certificate=true') ? 'active' : '' }}">
                     <p><span uk-icon="bolt"></span>修了認定</p>
                 </a>
@@ -136,7 +136,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('/commi/priority') }}"
+            <a href="{{ route('priority') }}"
                 class="nav-link {{ Request::is('/commi_entryInfos.priority') ? 'active' : '' }}">
                 <p><span uk-icon="arrow-up"></span>優先順位</p>
             </a>

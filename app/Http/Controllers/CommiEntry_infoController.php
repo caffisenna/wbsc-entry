@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\CommiChecked;
 use App\Mail\TrainerRequest;
 use App\Mail\GmRequest;
-use App\Http\Util\Slack\SlackPost;
+use App\Http\Util\SlackPost;
 
 class CommiEntry_infoController extends AppBaseController
 {

@@ -252,7 +252,7 @@
                 <th>操作</th>
                 <td>
                     <div class='btn-group'>
-                        <a href="{{ url('/user/pdf') }}" class='btn btn-default'>
+                        <a href="{{ route('pdf') }}" class='btn btn-default'>
                             <span uk-icon="download"></span>PDFでダウンロード
                         </a>
                         <a href="{{ route('entryInfos.show', [$entryInfo->id]) }}"
@@ -282,7 +282,7 @@
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                 <a class="uk-button uk-button-danger uk-width-1-1@m"
-                    href="{{ url('/') }}/user/delete_file/?id={{ $entryInfo->uuid }}&q=face">削除する</a>
+                    href="{{ route('delete_file', ['id' => $entryInfo->uuid, 'q' => 'face']) }}">削除する</a>
             </p>
         </div>
     </div>
@@ -294,7 +294,7 @@
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                 <a class="uk-button uk-button-danger uk-width-1-1@m"
-                    href="{{ url('/') }}/user/delete_file/?id={{ $entryInfo->uuid }}&q=sc">削除する</a>
+                    href="{{ route('delete_file', ['id' => $entryInfo->uuid, 'q' => 'sc']) }}">削除する</a>
             </p>
         </div>
     </div>
@@ -306,7 +306,7 @@
             <p class="uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close uk-width-1-1@m" type="button">キャンセル</button>
                 <a class="uk-button uk-button-danger uk-width-1-1@m"
-                    href="{{ url('/') }}/user/delete_file/?id={{ $entryInfo->uuid }}&q=division">削除する</a>
+                    href="{{ route('delete_file', ['id' => $entryInfo->uuid, 'q' => 'division']) }}">削除する</a>
             </p>
         </div>
     </div>

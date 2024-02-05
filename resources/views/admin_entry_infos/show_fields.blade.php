@@ -169,7 +169,7 @@
                 <th><span class="uk-text-danger">団承認取消</th>
                 <td>
                     @if (isset($entryInfo->entry_info->gm_checked_at))
-                        <a href="{{ url('admin/revert?cat=dan') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                        <a href="{{ route('revert', ['cat' => 'dan', 'uuid' => $entryInfo->entry_info->uuid]) }}"
                             class="uk-button uk-button-danger"
                             onclick="return confirm('{{ $entryInfo->name }}さんの団承認を取り消しますか?')">取消</a>
                         {{ $entryInfo->entry_info->gm_checked_at->format('Y-m-d') }}
@@ -226,7 +226,7 @@
                 <th><span class="uk-text-danger">地区コミ推薦取消</th>
                 <td>
                     @if ($entryInfo->entry_info->commi_checked_at)
-                        <a href="{{ url('admin/revert?cat=commi') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                        <a href="{{ route('revert', ['cat' => 'commi', 'uuid' => $entryInfo->entry_info->uuid]) }}"
                             class="uk-button uk-button-danger"
                             onclick="return confirm('{{ $entryInfo->name }}さんの地区コミ推薦を取り消しますか?')">取消</a>
                         {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
@@ -239,7 +239,7 @@
                 <th><span class="uk-text-danger">地区AIS確認取消</th>
                 <td>
                     @if (isset($entryInfo->entry_info->ais_checked_at))
-                        <a href="{{ url('admin/revert?cat=ais') }}&uuid={{ $entryInfo->entry_info->uuid }}"
+                        <a href="{{ route('revert', ['cat' => 'ais', 'uuid' => $entryInfo->entry_info->uuid]) }}"
                             class="uk-button uk-button-danger"
                             onclick="return confirm('{{ $entryInfo->name }}さんの地区AIS確認を取り消しますか?')">取消</a>
                         {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}
@@ -331,7 +331,7 @@
         @if (Auth::user()->is_admin && Auth::user()->is_staff == null)
             @unless ($entryInfo->entry_info->danken)
                 @unless ($entryInfo->entry_info->sc_number == 'done')
-                    <tr>
+                    {{-- <tr>
                         <th>参加認定(SC)</th>
                         <td>
                             @if (empty($entryInfo->entry_info->sc_accepted_at) && empty($entryInfo->entry_info->sc_rejected_at))
@@ -353,9 +353,9 @@
                                     onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                 @endunless
-                <tr>
+                {{-- <tr>
                     <th>参加認定(課程別)</th>
                     <td>
                         @if (empty($entryInfo->entry_info->div_accepted_at) && empty($entryInfo->entry_info->div_rejected_at))
@@ -377,11 +377,11 @@
                                 onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
                         @endif
                     </td>
-                </tr>
+                </tr> --}}
             @else
-                <tr>
-                    {{-- 団研参加認定 --}}
-                    <th>参加認定</th>
+                {{-- <tr> --}}
+                {{-- 団研参加認定 --}}
+                {{-- <th>参加認定</th>
                     <td>
                         @if (empty($entryInfo->entry_info->danken_accepted_at) && empty($entryInfo->entry_info->danken_rejected_at))
                             <a href="{{ url('admin/accept?cat=danken&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
@@ -402,22 +402,21 @@
                                 onclick="return confirm('{{ $entryInfo->name }}さんの団委員研修所の参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
                         @endif
                     </td>
-                </tr>
+                </tr> --}}
             @endunless
             <tr>
                 <th>地区コミ機能</th>
                 <td>
                     <ul class="uk-list">
-                        <li><a
-                                href="{{ url('/commi/gm_request?id=') }}{{ $entryInfo->entry_info->uuid }}">団委員長へ承認依頼</a>
+                        <li><a href="{{ route('gm_request', ['id' => $entryInfo->entry_info->uuid]) }}">団委員長へ承認依頼</a>
                         </li>
                         <li><a
-                                href="{{ url('/commi/trainer_request?id=') }}{{ $entryInfo->entry_info->uuid }}">トレーナーへ認定依頼</a>
+                                href="{{ route('trainer_request', ['id' => $entryInfo->entry_info->uuid]) }}">トレーナーへ認定依頼</a>
                         </li>
-                        <li><a href="{{ url('/commi/commi_check?id=') }}{{ $entryInfo->entry_info->id }}"
+                        <li><a href="{{ route('commi_check', ['id' => $entryInfo->entry_info->id]) }}"
                                 onclick="return confirm('{{ $entryInfo->name }}さんを推薦しますか?')">地区コミ推薦をする</a></li>
                         <li><a
-                                href="{{ url('/commi/commi_comment?id=') }}{{ $entryInfo->entry_info->user_id }}">副申請書を作成する</a>
+                                href="{{ route('commi_comment', ['id' => $entryInfo->entry_info->user_id]) }}">副申請書を作成する</a>
                         </li>
                     </ul>
 
