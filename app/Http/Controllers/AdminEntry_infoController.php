@@ -548,9 +548,9 @@ class AdminEntry_infoController extends AppBaseController
             $filename = 'スカウトコース申込一覧 ' . $request->sc . '期.xlsx';
         } elseif ($request->division) {
             $filename = '課程別研修申込一覧 ' . $request->division . '回.xlsx';
-        } elseif ($_REQUEST['q'] == 'all') {
+        } elseif (isset($_REQUEST['q']) && $_REQUEST['q'] == 'all') {
             $filename = '指導者研修申込一覧.xlsx';
-        } else {
+        } elseif ($request['cat'] == 'danken') {
             $filename = '団研申込一覧.xlsx';
         }
 
