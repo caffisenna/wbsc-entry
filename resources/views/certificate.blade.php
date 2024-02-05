@@ -15,7 +15,7 @@
                         @if (isset($val->sc_number))
                             @unless ($val->sc_number == 'done')
                                 <tr>
-                                    <td><a {{-- href="{{ url('admin/admin_entryInfos?certificate=true&q=' . $val->sc_number) }}">スカウトコース {{ $val->sc_number }}期</a> --}}
+                                    <td><a
                                             href="{{ route('admin_entryInfos.index', ['certificate' => 'true', 'q' => $val->sc_number]) }}">スカウトコース
                                             {{ $val->sc_number }}期</a>
                                     </td>
