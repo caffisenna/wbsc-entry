@@ -145,7 +145,7 @@
             </td>
         </tr>
 
-        <tr>
+        {{-- <tr>
             <th>現在治療中の病気</th>
             <td>{{ $entryInfo->health_illness }}</td>
         </tr>
@@ -153,7 +153,7 @@
         <tr>
             <th>健康上で不安なことなど</th>
             <td>{{ $entryInfo->health_memo }}</td>
-        </tr>
+        </tr> --}}
 
     </table>
 </div>

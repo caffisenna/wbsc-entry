@@ -410,7 +410,7 @@
             </tr>
         @endfor
 
-        <tr>
+        {{-- <tr>
             <td>現在治療中の病気(病名などをご記入ください)<br>
                 <a href="#modal-health_illness" uk-toggle>入力上の注意事項</a>
             </td>
@@ -451,7 +451,7 @@
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
-        </tr>
+        </tr> --}}
 
     </table>
 </div>
