@@ -34,7 +34,7 @@
             <ul>
                 <li><a href="{{ route('approve_participation', ['cat' => 'danken', 'number' => $danken_count->number]) }}">団委員研修所
                         {{ $danken_count->number }}
-                        回</a></li>
+                        期</a></li>
             </ul>
         @endisset
     </div>
