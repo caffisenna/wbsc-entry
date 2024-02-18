@@ -817,12 +817,21 @@ class AdminEntry_infoController extends AppBaseController
         if ($cat == 'sc') {
             $cat_name = 'スカウトコース';
             $sc_number = $entryInfo->sc_number;
+            $drive_url = course_list::where('number', $sc_number)->value('drive_url');
         } elseif ($cat == 'div') {
             $cat_name = '課程別研修';
             $division_number = $entryInfo->division_number;
+
+            // 課程別研修の期数を取得
+            preg_match('/([A-Za-z]+)([0-9]+)/', $entryInfo->division_number, $matches);
+            // アルファベットと数字をそれぞれ変数に格納
+            $alphabetPart = $matches[1];
+            $numberPart = $matches[2];
+            $drive_url = division_list::where('division', $alphabetPart)->where('number', $numberPart)->value('drive_url');
         } elseif ($cat = 'danken') {
             $cat_name = '団委員研修所';
             $danken_number = $entryInfo->danken;
+            $drive_url = DankenLists::where('number', $danken_number)->value('drive_url');
         }
 
         if ($flag == 'accept') {
@@ -851,7 +860,14 @@ class AdminEntry_infoController extends AppBaseController
 
             $mail->cc($ccRecipients);
 
-            $mail->queue(new AisAccepted($name, $flag, $sc_number ?? null, $division_number ?? null, $danken_number ?? null)); // $name, $flagと一緒に課程別のコースを送る必要あり
+            $mail->queue(new AisAccepted(
+                $name,
+                $flag,
+                $sc_number ?? null,
+                $division_number ?? null,
+                $danken_number ?? null,
+                $drive_url ?? null
+            )); // $name, $flagと一緒に課程別のコースを送る必要あり
         }
 
 

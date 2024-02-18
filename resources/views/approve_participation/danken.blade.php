@@ -35,21 +35,21 @@
                         <td><a href="{{ route('admin_entryInfos.show', $member->user_id) }}">{{ $member->user->name }}</a>
                             ({{ $age }}才)
                             <br>
-                            @if (empty($member->sc_accepted_at) && empty($member->sc_rejected_at))
-                                <a href="{{ route('accept', ['cat' => 'sc', 'flag' => 'accept', 'uuid' => $member->uuid]) }}"
+                            @if (empty($member->danken_accepted_at) && empty($member->danken_rejected_at))
+                                <a href="{{ route('accept', ['cat' => 'danken', 'flag' => 'accept', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-primary"
                                     onclick="return confirm('{{ $member->user->name }}さんのスカウトコースの参加を承認しますか?')">承認</a>
-                                <a href="{{ route('accept', ['cat' => 'sc', 'flag' => 'reject', 'uuid' => $member->uuid]) }}"
+                                <a href="{{ route('accept', ['cat' => 'danken', 'flag' => 'reject', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-danger"
                                     onclick="return confirm('{{ $member->user->name }}さんのスカウトコースの参加を否認しますか?')">否認</a>
                             @else
-                                @isset($member->sc_accepted_at)
-                                    {{ $member->sc_accepted_at }} 参加承認済み
+                                @isset($member->danken_accepted_at)
+                                    {{ $member->danken_accepted_at }} 参加承認済み
                                 @endisset
-                                @isset($member->sc_rejected_at)
-                                    {{ $member->sc_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
+                                @isset($member->danken_rejected_at)
+                                    {{ $member->danken_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
                                 @endisset
-                                <a href="{{ route('accept', ['cat' => 'sc', 'revert' => 'true', 'uuid' => $member->uuid]) }}"
+                                <a href="{{ route('accept', ['cat' => 'danken', 'revert' => 'true', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-danger"
                                     onclick="return confirm('{{ $member->user->name }}さんのスカウトコースの参加承認・否認を初期化しますか?')">承認・否認クリアー</a>
                             @endif

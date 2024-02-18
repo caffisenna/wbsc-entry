@@ -37,10 +37,10 @@
                             ({{ $age }}才)
                             <br>
                             @if (empty($member->div_accepted_at) && empty($member->div_rejected_at))
-                                <a href="{{ route('accept', ['cat' => 'sc', 'flag' => 'accept', 'uuid' => $member->uuid]) }}"
+                                <a href="{{ route('accept', ['cat' => 'div', 'flag' => 'accept', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-primary"
                                     onclick="return confirm('{{ $member->user->name }}さんの課程別研修の参加を承認しますか?')">承認</a>
-                                <a href="{{ route('accept', ['cat' => 'sc', 'flag' => 'reject', 'uuid' => $member->uuid]) }}"
+                                <a href="{{ route('accept', ['cat' => 'div', 'flag' => 'reject', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-danger"
                                     onclick="return confirm('{{ $member->user->name }}さんの課程別研修の参加を否認しますか?')">否認</a>
                             @else
@@ -50,7 +50,7 @@
                                 @isset($member->div_rejected_at)
                                     {{ $member->div_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
                                 @endisset
-                                <a href="{{ route('accept', ['cat' => 'sc', 'revert' => 'true', 'uuid' => $member->uuid]) }}"
+                                <a href="{{ route('accept', ['cat' => 'div', 'revert' => 'true', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-danger"
                                     onclick="return confirm('{{ $member->user->name }}さんの課程別研修の参加承認・否認を初期化しますか?')">承認・否認クリアー</a>
                             @endif
