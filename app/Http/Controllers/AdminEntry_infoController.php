@@ -33,6 +33,7 @@ use App\Models\course_list;
 use App\Models\DankenLists;
 use App\Models\division_list;
 use App\Models\GmAddress;
+use App\Models\HealthInfo;
 use Maatwebsite\Excel\Imports\EndRowFinder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -930,17 +931,35 @@ class AdminEntry_infoController extends AppBaseController
 
     public function health_memo(Request $request)
     {
-        if ($request['sc_number']) {
-            $entryinfos = Entry_info::where('sc_number', $request['sc_number'])
-                ->where(function ($query) {
-                    $query->where('health_illness', '<>', '特になし');
-                    $query->orWhere('health_memo', '<>', '特になし');
-                })
-                ->with('user')->get();
-        } else {
-            $entryinfos = Entry_info::where('health_illness', '<>', '特になし')
-                ->orWhere('health_memo', '<>', '特になし')->with('user')->get();
-        }
+        // if ($request['sc_number']) {
+        //     $entryinfos = Entry_info::where('sc_number', $request['sc_number'])
+        //         ->where(function ($query) {
+        //             $query->where('health_illness', '<>', '特になし');
+        //             $query->orWhere('health_memo', '<>', '特になし');
+        //         })
+        //         ->with('user')->get();
+        // } else {
+        //     $entryinfos = Entry_info::where('health_illness', '<>', '特になし')
+        //         ->orWhere('health_memo', '<>', '特になし')->with('user')->get();
+        // }
+
+        $entryinfos = HealthInfo::where(function ($query) {
+            $query->whereNotNull('treating_disease')
+                ->orWhereNotNull('carried_medications')
+                ->orWhere('health_status_last_3_months', '病気のため休んだ')
+                ->orWhereNotNull('recent_health_status')
+                ->orWhereNotNull('doctor_advice')
+                ->orWhereNotNull('medical_history')
+                ->orWhere('food_allergies', '食物アレルギーがある');
+        })
+            // SC指定の場合のみ
+            ->when($request['sc_number'], function ($query) use ($request) {
+                $query->whereHas('entry_Info', function ($subQuery) use ($request) {
+                    $subQuery->where('sc_number', $request['sc_number']);
+                });
+            })
+            ->with(['user', 'entry_Info'])
+            ->get();
 
         // 'done' 以外の sc_number を取得
         $uniqueScNumbers = Entry_info::where('sc_number', '<>', 'done')->distinct()->pluck('sc_number')->toArray();

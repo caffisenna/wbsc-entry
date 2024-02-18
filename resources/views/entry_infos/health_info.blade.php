@@ -121,7 +121,7 @@
                     </label>
                     {!! Form::textarea(
                         'medical_history',
-                        $user->health_info && $user->health_info->medical_history ? $user->health_info->doctor_advice : null,
+                        $user->health_info && $user->health_info->medical_history ? $user->health_info->medical_history : null,
                         [
                             'class' => 'uk-textarea',
                             'id' => 'medical_history',

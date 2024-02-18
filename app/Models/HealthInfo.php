@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Entry_info;
 
 class HealthInfo extends Model
 {
@@ -67,5 +68,10 @@ class HealthInfo extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function entry_info()
+    {
+        return $this->hasOne(Entry_Info::class, 'user_id', 'user_id');
     }
 }
