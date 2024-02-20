@@ -56,7 +56,11 @@ class UploadController extends Controller
         $entryinfo = Entry_info::where('uuid', $uuid)->with('user')->first(); // DB取得
         if ($q == 'sc') {
             $path = 'public/assignment/sc';
-            $entryinfo->assignment_sc = 'up';
+            if (empty($entryinfo->danken)) {
+                $entryinfo->assignment_sc = 'up';
+            } elseif ($entryinfo->danken) {
+                $entryinfo->assignment_danken = 'up';
+            }
         } elseif ($q == 'division') {
             $path = 'public/assignment/division';
             $entryinfo->assignment_division = 'up';
