@@ -60,10 +60,10 @@
                         <td>{{ $member->wb_basic1_category }}<br>
                             {{ $member->wb_basic1_number }}</td>
                         <td>
-                            {!! $member->assignment_sc
+                            {!! $member->assignment_danken
                                 ? '<span class="uk-text-success">UP済み</span>'
                                 : '<span class="uk-text-warning">未UP</span>' !!}<br>
-                            {!! $member->trainer_sc_checked_at
+                            {!! $member->trainer_danken_checked_at
                                 ? '<span class="uk-text-success">認定済み</span>'
                                 : '<span class="uk-text-warning">未認定</span>' !!}
                         </td>
