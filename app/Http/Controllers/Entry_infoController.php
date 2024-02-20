@@ -345,8 +345,9 @@ class Entry_infoController extends AppBaseController
         if ($q == 'sc') {
             $path = "assignment/sc/$id.pdf";
             $entryinfo->assignment_sc = NULL;
+            $entryinfo->assignment_danken = NULL;
             $entryinfo->save();
-            $cat = 'スカウトコース課題';
+            $cat = 'スカウトコース課題/団研課題';
         } elseif ($q == 'division') {
             $path = "assignment/division/$id.pdf";
             $entryinfo->assignment_division = NULL;
