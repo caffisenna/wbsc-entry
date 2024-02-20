@@ -79,7 +79,7 @@
         @endif
 
         @if (isset($danken->cat))
-            <input type="hidden" name="danken" value="true">
+            <input type="hidden" name="danken" value="37">
             <tr>
                 <td>団委員研修所</td>
                 <td>東京第{{ $danken->number }}期</td>
