@@ -22,6 +22,7 @@
             <div class="card-body">
                 <p class="uk-text-danger">私、{{ Auth::user()->name }}は参加者説明会が開催される場合は参加義務があることを承知の上で研修に申し込みます。</p>
                 <p class=""><a href="#modal-personal_info" uk-toggle><span uk-icon="icon: info"></span>個人情報の取り扱いについて</a>
+                <p class=""><a href="#modal-bvs_exception" uk-toggle><span uk-icon="icon: info"></span>ビーバー課程特例について</a>
                 </p>
 
                 <div class="row">
@@ -56,6 +57,21 @@
                 <li>東京連盟事務局で履修者名簿を保管します</li>
                 <li>東京連盟年次総会に履修者名を掲載します</li>
                 <li>コース修了後一定期間の後、入力データ及びアップロードされたファイルを事前の告知なく削除します</li>
+            </ul>
+            <p class="uk-text-right">
+                <button class="uk-button uk-button-primary uk-modal-close" type="button">閉じる</button>
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-bvs_exception" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h3 class="uk-modal-title">ビーバー課程特例について</h3>
+            以下の条件に該当する場合、ビーバー課程の特例を認める
+            <ul>
+                <li>dsokfsdfklj</li>
+                <li>dsokfsdfklj</li>
+                <li>dsokfsdfklj</li>
             </ul>
             <p class="uk-text-right">
                 <button class="uk-button uk-button-primary uk-modal-close" type="button">閉じる</button>

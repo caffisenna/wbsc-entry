@@ -36,6 +36,7 @@
                         それ以外
                     @elseif ($entryInfo->division_number)
                         {{ $entryInfo->division_number }}回
+                        {{ $entryInfo->bvs_exception ? '(ビーバー特例)' : '' }}
                     @endif
                 </td>
             </tr>
@@ -51,62 +52,64 @@
                 @endif
             </td>
         </tr>
-        <tr>
-            <th>
-                {{ $entryInfo->danken ? '課題提出' : 'スカウトコース課題' }}
-            </th>
-            <td>
-                @if (isset($entryInfo->danken))
-                    @if ($entryInfo->assignment_danken == 'up')
-                        <span class="uk-text-default">アップロード完了</span>
-                        <a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf"
-                            class="uk-button uk-button-primary uk-button-small"><span uk-icon="file-text"></span>確認</a>
-                        @unless ($entryInfo->trainer_sc_name)
-                            <a href="#modal-delete-assignment-sc" uk-toggle
-                                class="uk-link uk-button uk-button-danger uk-button-small"><span
-                                    uk-icon="trash"></span>削除</a>
+        @unless ($entryInfo->bvs_exception)
+            <tr>
+                <th>
+                    {{ $entryInfo->danken ? '課題提出' : 'スカウトコース課題' }}
+                </th>
+                <td>
+                    @if (isset($entryInfo->danken))
+                        @if ($entryInfo->assignment_danken == 'up')
+                            <span class="uk-text-default">アップロード完了</span>
+                            <a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf"
+                                class="uk-button uk-button-primary uk-button-small"><span uk-icon="file-text"></span>確認</a>
+                            @unless ($entryInfo->trainer_sc_name)
+                                <a href="#modal-delete-assignment-sc" uk-toggle
+                                    class="uk-link uk-button uk-button-danger uk-button-small"><span
+                                        uk-icon="trash"></span>削除</a>
+                            @else
+                                <button class="uk-button uk-button-default uk-button-small" disabled
+                                    uk-tooltip="トレーナー認定が完了した後は課題の削除ができません。"><span uk-icon="trash"></span>削除</button>
+                            @endunless
+                            <br>
+                            @if ($entryInfo->trainer_danken_checked_at)
+                                <span class="uk-text-success">トレーナー認定済み {{ $entryInfo->trainer_danken_name }}</span>
+                            @else
+                                <span class="uk-text-danger"><span uk-icon="comment"></span>トレーナー未認定(認定をお待ちください)</span>
+                            @endif
                         @else
-                            <button class="uk-button uk-button-default uk-button-small" disabled
-                                uk-tooltip="トレーナー認定が完了した後は課題の削除ができません。"><span uk-icon="trash"></span>削除</button>
-                        @endunless
-                        <br>
-                        @if ($entryInfo->trainer_danken_checked_at)
-                            <span class="uk-text-success">トレーナー認定済み {{ $entryInfo->trainer_danken_name }}</span>
-                        @else
-                            <span class="uk-text-danger"><span uk-icon="comment"></span>トレーナー未認定(認定をお待ちください)</span>
+                            <a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
+                                class="uk-button uk-button-primary uk-button-small uk-width-1-2"
+                                uk-icon="icon: upload">団委員研修所の課題をアップロード</a>
                         @endif
                     @else
-                        <a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
-                            class="uk-button uk-button-primary uk-button-small uk-width-1-2"
-                            uk-icon="icon: upload">団委員研修所の課題をアップロード</a>
-                    @endif
-                @else
-                    @if ($entryInfo->assignment_sc == 'up')
-                        <span class="uk-text-default">アップロード完了</span>
-                        <a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf"
-                            class="uk-button uk-button-primary uk-button-small"><span uk-icon="file-text"></span>確認</a>
-                        @unless ($entryInfo->trainer_sc_name)
-                            <a href="#modal-delete-assignment-sc" uk-toggle
-                                class="uk-link uk-button uk-button-danger uk-button-small"><span
-                                    uk-icon="trash"></span>削除</a>
+                        @if ($entryInfo->assignment_sc == 'up')
+                            <span class="uk-text-default">アップロード完了</span>
+                            <a href="/storage/assignment/sc/{{ $entryInfo->uuid }}.pdf"
+                                class="uk-button uk-button-primary uk-button-small"><span uk-icon="file-text"></span>確認</a>
+                            @unless ($entryInfo->trainer_sc_name)
+                                <a href="#modal-delete-assignment-sc" uk-toggle
+                                    class="uk-link uk-button uk-button-danger uk-button-small"><span
+                                        uk-icon="trash"></span>削除</a>
+                            @else
+                                <button class="uk-button uk-button-default uk-button-small" disabled
+                                    uk-tooltip="トレーナー認定が完了した後は課題の削除ができません。"><span uk-icon="trash"></span>削除</button>
+                            @endunless
+                            <br>
+                            @if ($entryInfo->trainer_sc_checked_at)
+                                <span class="uk-text-success">トレーナー認定済み {{ $entryInfo->trainer_sc_name }}</span>
+                            @else
+                                <span class="uk-text-danger"><span uk-icon="comment"></span>トレーナー未認定(認定をお待ちください)</span>
+                            @endif
                         @else
-                            <button class="uk-button uk-button-default uk-button-small" disabled
-                                uk-tooltip="トレーナー認定が完了した後は課題の削除ができません。"><span uk-icon="trash"></span>削除</button>
-                        @endunless
-                        <br>
-                        @if ($entryInfo->trainer_sc_checked_at)
-                            <span class="uk-text-success">トレーナー認定済み {{ $entryInfo->trainer_sc_name }}</span>
-                        @else
-                            <span class="uk-text-danger"><span uk-icon="comment"></span>トレーナー未認定(認定をお待ちください)</span>
+                            <a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
+                                class="uk-button uk-button-primary uk-button-small uk-width-1-2"
+                                uk-icon="icon: upload">スカウトコースの課題をアップロード</a>
                         @endif
-                    @else
-                        <a href="/user/upload/?uuid={{ $entryInfo->uuid }}&q=sc"
-                            class="uk-button uk-button-primary uk-button-small uk-width-1-2"
-                            uk-icon="icon: upload">スカウトコースの課題をアップロード</a>
                     @endif
-                @endif
-            </td>
-        </tr>
+                </td>
+            </tr>
+        @endunless
         @unless (isset($entryInfo->danken))
             <tr>
                 <th>課程別研修課題</th>

@@ -107,6 +107,7 @@
                                 <span uk-icon="commenting" class="uk-text-danger"></span>
                             @endif
                         </a>
+                        <span class="uk-text-small"> {{ $entryInfo->entry_info->bvs_exception ? 'ビーバー特例' : '' }}</span>
                         </td>
                         <td>
                             @if ($entryInfo->face_picture)
@@ -117,24 +118,28 @@
                         <td>{{ $entryInfo->entry_info->district }}</td>
                         <td>{{ $entryInfo->entry_info->dan }}</td>
                         <td>
-                            @if ($entryInfo->entry_info->danken)
-                                団研{{ $entryInfo->entry_info->danken }}<br>
-                                @if ($entryInfo->entry_info->assignment_danken)
-                                    <span class=" uk-text-success">課題済</span>
-                                @else
-                                    <span class=" uk-text-danger">未提出</span>
+                            @unless ($entryInfo->entry_info->bvs_exception)
+                                @if ($entryInfo->entry_info->danken)
+                                    団研{{ $entryInfo->entry_info->danken }}<br>
+                                    @if ($entryInfo->entry_info->assignment_danken)
+                                        <span class=" uk-text-success">課題済</span>
+                                    @else
+                                        <span class=" uk-text-danger">未提出</span>
+                                    @endif
+                                @elseif ($entryInfo->entry_info->sc_number !== 'done')
+                                    {{ $entryInfo->entry_info->sc_number }}期<br>
+                                    @if ($entryInfo->entry_info->assignment_sc)
+                                        <span class=" uk-text-success">課題済</span>
+                                    @else
+                                        <span class=" uk-text-danger">未提出</span>
+                                    @endif
+                                @elseif($entryInfo->entry_info->sc_number_done)
+                                    <span
+                                        class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)</span>
                                 @endif
-                            @elseif ($entryInfo->entry_info->sc_number !== 'done')
-                                {{ $entryInfo->entry_info->sc_number }}期<br>
-                                @if ($entryInfo->entry_info->assignment_sc)
-                                    <span class=" uk-text-success">課題済</span>
-                                @else
-                                    <span class=" uk-text-danger">未提出</span>
-                                @endif
-                            @elseif($entryInfo->entry_info->sc_number_done)
-                                <span
-                                    class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}<br>(修了済み)</span>
-                            @endif
+                            @else
+                                <span class="uk-text-small">ビーバー特例</span>
+                            @endunless
                         </td>
                         <td>
                             @unless ($entryInfo->entry_info->danken)

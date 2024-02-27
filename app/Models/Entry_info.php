@@ -137,6 +137,7 @@ class Entry_info extends Model
         'assignment_danken',
         'cancel',
         'cancel_div',
+        'bvs_exception',
     ];
 
     /**
@@ -217,6 +218,7 @@ class Entry_info extends Model
         'cancel' => 'string',
         'cancel_div' => 'string',
         'create_id' => 'string',
+        'bvs_exception' => 'string',
     ];
 
     /**
@@ -228,6 +230,7 @@ class Entry_info extends Model
     {
         return [
             'sc_number' => 'required_without:danken',
+            'sc_number' => 'required_unless:bvs_exception,bvs_exception',
             'division_number' => 'required_without:danken',
             'furigana' => 'required',
             'gender' => 'required',
@@ -269,6 +272,7 @@ class Entry_info extends Model
 
     public static $messages = [
         'sc_number.required_without' => 'スカウトコースの期数を選択してください',
+        'sc_number.required_unless' => 'スカウトコースの期数を選択してください',
         'sc_number.required' => 'スカウトコースの期数を選択してください',
         'sc_number_done.required' => 'スカウトコースを修了済みの場合は期数を入力してください',
         'division_number.required' => '課程研修別の期数を選択してください',
@@ -291,7 +295,9 @@ class Entry_info extends Model
         'scout_camp.required' => 'スカウトキャンプ研修会の修了年月日を入力してください',
         'bs_basic_course.required' => 'ボーイスカウト講習会の修了年月日を入力してください',
         'service_hist1_role.required' => '奉仕歴(1)の役務を入力してください',
+        'service_hist1_role.required_unless' => '奉仕歴(1)の役務を入力してください',
         'service_hist1_term.required' => '奉仕歴(1)の奉仕期間を入力してください',
+        'service_hist1_term.required_unless'=>'奉仕歴(1)の奉仕期間を入力してください',
         'emer_name.required' => '緊急連絡先の氏名を入力してください',
         'emer_relation.required' => '緊急連絡先の続柄を入力してください',
         'emer_phone.required' => '緊急連絡先の日中連絡が取れる電話番号を入力してください',

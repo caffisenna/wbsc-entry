@@ -20,6 +20,7 @@ class CreateEntryInfosTable extends Migration
             $table->string('sc_number')->nullable();                // スカウトコースX期
             $table->string('sc_number_done')->nullable();           // 修了済みスカウトコースX期
             $table->string('division_number')->nullable();   // 課程別X期
+            $table->string('bvs_exception')->nullable();    // ビーバー課程特例
             $table->string('danken')->nullable();   // 団研
             $table->string('furigana');
             $table->string('gender');

@@ -47,7 +47,9 @@
                 <tr>
                     <td>課程別研修の回数</td>
                     <td>
-                        <select name="division_number" class="form-control custom-select uk-form-width-small">
+
+                        <select id="division_number" name="division_number"
+                            class="form-control custom-select uk-form-width-small">
                             <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>
                                 選択してください
                             </option>
@@ -65,6 +67,10 @@
                             <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
                             {{-- その他対応 --}}
                         </select>
+
+                        <p class="uk-text-default" id="bvs_exception">
+                            {!! Form::checkbox('bvs_exception', 'bvs_exception', false, ['class' => 'uk-checkbox']) !!}ビーバー課程特例 <a href="#modal-bvs_exception" uk-toggle><span
+                                    uk-icon="icon: question"></span></p>
                         @error('division_number')
                             <div class="error text-danger">{{ $message }}</div>
                         @enderror
@@ -648,6 +654,48 @@
         } else {
             healthMemoCheckbox.disabled = false; // id=health_memo_cbを有効化
         }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var divisionSelect = document.getElementById("division_number");
+        var bvsExceptionCheckbox = document.querySelector("#bvs_exception input[type='checkbox']");
+        var scSelect = document.getElementById("sc_select");
+        var myTextbox = document.getElementById("myTextbox");
+
+        function toggleBvsExceptionVisibility() {
+            if (divisionSelect.value.includes("BVS")) {
+                bvsExceptionCheckbox.parentNode.style.display = "block";
+            } else {
+                bvsExceptionCheckbox.parentNode.style.display = "none";
+                bvsExceptionCheckbox.checked = false; // Uncheck checkbox when hiding
+                resetScSelectAndTextbox(); // Reset select and textbox when hiding
+            }
+        }
+
+        function resetScSelectAndTextbox() {
+            scSelect.selectedIndex = 0; // Reset select to the first option
+            myTextbox.value = ""; // Reset textbox value
+        }
+
+        function handleDivisionChange() {
+            toggleBvsExceptionVisibility();
+            if (!divisionSelect.value.includes("BVS")) {
+                resetScSelectAndTextbox();
+            }
+        }
+
+        divisionSelect.addEventListener("change", handleDivisionChange);
+
+        bvsExceptionCheckbox.addEventListener("change", function() {
+            if (bvsExceptionCheckbox.checked) {
+                resetScSelectAndTextbox();
+            }
+        });
+
+        // Initial check on page load
+        toggleBvsExceptionVisibility();
     });
 </script>
 
