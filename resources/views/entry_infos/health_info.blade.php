@@ -160,7 +160,7 @@
                         ) !!}
                     </div>
                     <div class="form-controls uk-margin">
-                        <h3>アレルゲン接種後の家庭での対応</h3>
+                        <h3>アレルゲンに対する家庭での対応</h3>
                         {!! Form::textarea(
                             'usual_response_to_reaction',
                             $user->health_info && $user->health_info->usual_response_to_reaction
