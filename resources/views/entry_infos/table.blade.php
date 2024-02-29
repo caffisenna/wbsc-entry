@@ -187,18 +187,20 @@
                     </td>
                 </tr>
             @else
-                <tr>
-                    <th>参加認定(スカウトコース)</th>
-                    <td>
-                        @if ($entryInfo->sc_accepted_at)
-                            参加認定 {{ $entryInfo->sc_accepted_at }}
-                        @elseif($entryInfo->sc_rejected_at)
-                            <span class="uk-text-danger">参加否認</span> {{ $entryInfo->sc_rejected_at }}
-                        @else
-                            <span class="uk-text-danger"><span uk-icon="comment"></span>未認定(認定をお待ちください)</span>
-                        @endif
-                    </td>
-                </tr>
+                @unless ($entryInfo->bvs_exception == 'on')
+                    <tr>
+                        <th>参加認定(スカウトコース)</th>
+                        <td>
+                            @if ($entryInfo->sc_accepted_at)
+                                参加認定 {{ $entryInfo->sc_accepted_at }}
+                            @elseif($entryInfo->sc_rejected_at)
+                                <span class="uk-text-danger">参加否認</span> {{ $entryInfo->sc_rejected_at }}
+                            @else
+                                <span class="uk-text-danger"><span uk-icon="comment"></span>未認定(認定をお待ちください)</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endunless
             @endif
 
             @unless ($entryInfo->danken)
