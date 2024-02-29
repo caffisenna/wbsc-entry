@@ -67,12 +67,7 @@
     <div id="modal-bvs_exception" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
             <h3 class="uk-modal-title">ビーバー課程特例について</h3>
-            以下の条件に該当する場合、ビーバー課程の特例を認める
-            <ul>
-                <li>dsokfsdfklj</li>
-                <li>dsokfsdfklj</li>
-                <li>dsokfsdfklj</li>
-            </ul>
+            ビーバー課程特例を適用する場合は必ず地区コミッショナーの許諾を得てください。
             <p class="uk-text-right">
                 <button class="uk-button uk-button-primary uk-modal-close" type="button">閉じる</button>
             </p>
