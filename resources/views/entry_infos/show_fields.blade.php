@@ -6,21 +6,23 @@
                 <td>東京第{{ $entryInfo->danken }}期</td>
             </tr>
         @else
-            <tr>
-                <th>スカウトコースの期数</td>
-                <td>
-                    @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
-                        スカウトコース{{ $entryInfo->sc_number }}期
-                    @elseif($entryInfo->sc_number_done)
-                        スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
-                    @endif
-                </td>
-            </tr>
+            @unless ($entryInfo->bvs_exception)
+                <tr>
+                    <th>スカウトコースの期数</td>
+                    <td>
+                        @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
+                            スカウトコース{{ $entryInfo->sc_number }}期
+                        @elseif($entryInfo->sc_number_done)
+                            スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
+                        @endif
+                    </td>
+                </tr>
+            @endunless
             <tr>
                 <th>課程別研修の回数</th>
                 <td>
                     @unless ($entryInfo->division_number == 'etc')
-                        {{ $entryInfo->division_number }}
+                        {{ $entryInfo->division_number }} {{ $entryInfo->bvs_exception ? '(ビーバー課程特例)' : '' }}
                     @else
                         それ以外
                     @endunless

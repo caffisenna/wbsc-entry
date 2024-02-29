@@ -20,6 +20,7 @@
                                 <option value="done" @if (old('sc_number') == 'done' || $entryInfo->sc_number == 'done') selected @endif>履修済み</option>
                             @else
                                 <option value="done" @if (old('sc_number') == 'done') selected @endif>履修済み</option>
+                                </option>
                             @endisset
                         </select>
                         @error('sc_number')
@@ -51,13 +52,14 @@
                         <select id="division_number" name="division_number"
                             class="form-control custom-select uk-form-width-small">
                             <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>
-                                選択してください
-                            </option>
-                            @foreach ($divisionlists as $divisionlist)
-                                <option value="{{ $divisionlist }}" @if (
-                                    (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) ||
-                                        old('division_number') == $divisionlist) selected @endif>
-                                    {{ $divisionlist }}回</option>
+                                選択してください</option>
+
+                            @foreach ($divisionlists as $division)
+                                <option value="{{ $division }}" @if (
+                                    (isset($division) && isset($entryInfo->division_number) && $division == $entryInfo->division_number) ||
+                                        old('division_number') == $division) selected @endif>
+                                    {{ $division }}回
+                                </option>
                             @endforeach
 
                             {{-- その他対応 --}}
@@ -67,10 +69,12 @@
                             <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
                             {{-- その他対応 --}}
                         </select>
+                        <div id="bvs_exception">
+                            {{-- <input type="checkbox" name="bvs_exception" id="bvs_exception_cb"> --}}
+                            {!! Form::checkbox('bvs_exception', 'on', $entryInfo->bvs_exception == 'on', ['class' => 'uk-checkbox',
+                            'id'=>'bvs_exception_cb']) !!}ビーバー課程特例
+                        </div>
 
-                        <p class="uk-text-default" id="bvs_exception">
-                            {!! Form::checkbox('bvs_exception', 'bvs_exception', false, ['class' => 'uk-checkbox']) !!}ビーバー課程特例 <a href="#modal-bvs_exception" uk-toggle><span
-                                    uk-icon="icon: question"></span></p>
                         @error('division_number')
                             <div class="error text-danger">{{ $message }}</div>
                         @enderror
@@ -137,7 +141,7 @@
             </td>
         </tr>
         <tr>
-            <td>登録番号<br><span class="uk-text-danger uk-text-small">2023年度より登録番号が11桁に変わっています</td>
+            <td>登録番号<br><span class="uk-text-danger uk-text-small">2023年4月から登録番号が11桁に変わっています</td>
             <td>{!! Form::text('bs_id', null, [
                 'class' => 'form-control uk-form-width-large',
                 'placeholder' => '団に確認し11桁の登録番号を入力してください',
@@ -698,6 +702,30 @@
         toggleBvsExceptionVisibility();
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // チェックボックスの要素を取得
+        var bvsExceptionCheckbox = document.getElementById("bvs_exception_cb");
+
+        // チェックボックスがクリックされたらダイアログを表示
+        bvsExceptionCheckbox.onclick = function() {
+            if (bvsExceptionCheckbox.checked) {
+                showDialog(); // チェックされた場合、ダイアログを表示
+            }
+        };
+
+        // ダイアログを表示する関数
+        function showDialog() {
+            // メッセージを表示
+            var message = "「ビーバー課程特例」に参加するには条件があります。必ず確認の上申込をしてください。";
+
+            // ダイアログボックスを表示
+            window.alert(message);
+        }
+    });
+</script>
+
 
 <script type="text/javascript">
     window.onbeforeunload = function(e) {

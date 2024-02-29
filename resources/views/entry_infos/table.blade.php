@@ -19,16 +19,18 @@
                 <td>東京第{{ $entryInfo->danken }}期</td>
             </tr>
         @else
-            <tr>
-                <th>スカウトコース期数</th>
-                <td>
-                    @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
-                        スカウトコース{{ $entryInfo->sc_number }}期
-                    @elseif($entryInfo->sc_number_done)
-                        スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
-                    @endif
-                </td>
-            </tr>
+            @unless ($entryInfo->bvs_exception)
+                <tr>
+                    <th>スカウトコース期数</th>
+                    <td>
+                        @if ($entryInfo->sc_number && !$entryInfo->sc_number_done == 'done')
+                            スカウトコース{{ $entryInfo->sc_number }}期
+                        @elseif($entryInfo->sc_number_done)
+                            スカウトコース{{ $entryInfo->sc_number_done }} (修了済み)
+                        @endif
+                    </td>
+                </tr>
+            @endunless
             <tr>
                 <th>課程別回数</th>
                 <td>

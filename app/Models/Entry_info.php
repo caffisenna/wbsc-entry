@@ -230,7 +230,7 @@ class Entry_info extends Model
     {
         return [
             'sc_number' => 'required_without:danken',
-            'sc_number' => 'required_unless:bvs_exception,bvs_exception',
+            'sc_number' => 'required_unless:bvs_exception,on',
             'division_number' => 'required_without:danken',
             'furigana' => 'required',
             'gender' => 'required',
