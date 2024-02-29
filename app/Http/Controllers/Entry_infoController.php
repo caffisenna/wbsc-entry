@@ -324,7 +324,8 @@ class Entry_infoController extends AppBaseController
 
     public function pdf()
     {
-        $entryInfo = User::where('id', Auth::id())->with('entry_info')->first();
+        $entryInfo = User::where('id', Auth::id())->with('entry_info')
+            ->with('entry_info')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');

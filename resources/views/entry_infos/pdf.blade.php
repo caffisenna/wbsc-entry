@@ -161,8 +161,20 @@
             <tr>
                 <td>健康</td>
                 <td>
-                    【治療中の病気】{{ $entryInfo->entry_info->health_illness }}<br>
-                    【健康上の不安】{{ $entryInfo->entry_info->health_memo }}
+                    【食物アレルギー】{{ $entryInfo->health_info->treating_disease }}<br>
+                    【直近3ヶ月の健康状態】{{ $entryInfo->health_info->health_status_last_3_months }}<br>
+                    【最近の体調】{{ $entryInfo->health_info->recent_health_status }}<br>
+                    【医師からの注意】{{ $entryInfo->health_info->doctor_advice }}<br>
+                    【medical_history】{{ $entryInfo->health_info->doctor_advice }}<br>
+                </td>
+            </tr>
+            <tr>
+                <td>アレルギー</td>
+                <td>
+                    【食物アレルギー】{{ $entryInfo->health_info->food_allergies }}<br>
+                    【アレルゲン】{{ $entryInfo->health_info->allergen }}<br>
+                    【摂取するとどうなるか】{{ $entryInfo->health_info->reaction_to_allergen }}<br>
+                    【家庭での対応】{{ $entryInfo->health_info->usual_response_to_reaction }}<br>
                 </td>
             </tr>
         </tbody>
