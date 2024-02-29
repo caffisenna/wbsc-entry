@@ -142,6 +142,11 @@ class Entry_infoController extends AppBaseController
             }
         }
 
+        // ビーバー課程特例処理
+        if($input['bvs_exception'] == 'on'){
+            $input['sc_number'] = null;
+        }
+
 
         $entryInfo = $this->entryInfoRepository->create($input);
 
