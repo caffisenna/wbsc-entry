@@ -163,9 +163,9 @@
                 <td>
                     【食物アレルギー】{{ $entryInfo->health_info->treating_disease }}<br>
                     【直近3ヶ月の健康状態】{{ $entryInfo->health_info->health_status_last_3_months }}<br>
-                    【最近の体調】{{ $entryInfo->health_info->recent_health_status }}<br>
-                    【医師からの注意】{{ $entryInfo->health_info->doctor_advice }}<br>
-                    【medical_history】{{ $entryInfo->health_info->doctor_advice }}<br>
+                    【最近の体調】{{ $entryInfo->health_info->recent_health_status == 1 ? '特に異常なし' : $entryInfo->health_info->recent_health_status }}<br>
+                    【医師からの注意】{{ $entryInfo->health_info->doctor_advice == 1 ? '特になし' : $entryInfo->health_info->doctor_advice }}<br>
+                    【特記事項】{{ $entryInfo->health_info->medical_history == 1 ? '特になし' : $entryInfo->health_info->medical_history }}<br>
                 </td>
             </tr>
             <tr>
