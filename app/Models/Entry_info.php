@@ -259,7 +259,7 @@ class Entry_info extends Model
                     return request('sc_number') !== 'done' || request('division_number') === 'etc';
                 }),
             ],
-            'scout_camp' => 'required',
+            'scout_camp' => 'required_unless:bvs_exception,on',
             'bs_basic_course' => 'required',
             'service_hist1_role' => "required_unless:troop_role,スカウト",
             'service_hist1_term' => "required_unless:troop_role,スカウト",

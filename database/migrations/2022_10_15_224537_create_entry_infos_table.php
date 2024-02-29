@@ -39,7 +39,7 @@ class CreateEntryInfosTable extends Migration
             $table->string('emer_phone', 20)->nullable();
             $table->string('district_role')->nullable();
             $table->string('prefecture_role')->nullable();
-            $table->string('scout_camp');               // スカキャン
+            $table->string('scout_camp')->nullable();   // スカキャン
             $table->string('bs_basic_course');          // BS講習会
             $table->string('wb_basic1_category')->nullable();   // 研修所履歴
             $table->string('wb_basic1_number')->nullable();
