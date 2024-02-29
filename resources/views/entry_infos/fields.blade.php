@@ -71,8 +71,11 @@
                         </select>
                         <div id="bvs_exception">
                             {{-- <input type="checkbox" name="bvs_exception" id="bvs_exception_cb"> --}}
-                            {!! Form::checkbox('bvs_exception', 'on', $entryInfo->bvs_exception == 'on', ['class' => 'uk-checkbox',
-                            'id'=>'bvs_exception_cb']) !!}ビーバー課程特例
+                            {!! Form::checkbox('bvs_exception', 'on', isset($entryInfo) && $entryInfo->bvs_exception == 'on', [
+                                'class' => 'uk-checkbox',
+                                'id' => 'bvs_exception_cb',
+                            ]) !!}ビーバー課程特例
+
                         </div>
 
                         @error('division_number')
