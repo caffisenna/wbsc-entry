@@ -19,7 +19,7 @@
                 <td>東京第{{ $entryInfo->danken }}期</td>
             </tr>
         @else
-            @unless ($entryInfo->bvs_exception)
+            @unless ($entryInfo->bvs_exception == 'on')
                 <tr>
                     <th>スカウトコース期数</th>
                     <td>
