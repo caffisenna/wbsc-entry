@@ -38,7 +38,7 @@
                         それ以外
                     @elseif ($entryInfo->division_number)
                         {{ $entryInfo->division_number }}回
-                        {{ $entryInfo->bvs_exception ? '(ビーバー特例)' : '' }}
+                        {{ $entryInfo->bvs_exception == 'on' ? '(ビーバー特例)' : '' }}
                     @endif
                 </td>
             </tr>

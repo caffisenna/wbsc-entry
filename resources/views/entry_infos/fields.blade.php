@@ -71,6 +71,7 @@
                         </select>
                         <div id="bvs_exception">
                             {{-- <input type="checkbox" name="bvs_exception" id="bvs_exception_cb"> --}}
+                            {!! Form::hidden('bvs_exception', 'off') !!}
                             {!! Form::checkbox('bvs_exception', 'on', isset($entryInfo) && $entryInfo->bvs_exception == 'on', [
                                 'class' => 'uk-checkbox',
                                 'id' => 'bvs_exception_cb',
