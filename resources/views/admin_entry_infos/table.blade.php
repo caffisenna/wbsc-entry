@@ -118,7 +118,7 @@
                         <td>{{ $entryInfo->entry_info->district }}</td>
                         <td>{{ $entryInfo->entry_info->dan }}</td>
                         <td>
-                            @unless ($entryInfo->entry_info->bvs_exception)
+                            @unless ($entryInfo->entry_info->bvs_exception == 'on')
                                 @if ($entryInfo->entry_info->danken)
                                     団研{{ $entryInfo->entry_info->danken }}<br>
                                     @if ($entryInfo->entry_info->assignment_danken)
