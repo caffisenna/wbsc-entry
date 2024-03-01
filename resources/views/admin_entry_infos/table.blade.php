@@ -107,7 +107,7 @@
                                 <span uk-icon="commenting" class="uk-text-danger"></span>
                             @endif
                         </a>
-                        <span class="uk-text-small"> {{ $entryInfo->entry_info->bvs_exception ? 'ビーバー特例' : '' }}</span>
+                        <span class="uk-text-small"> {{ $entryInfo->entry_info->bvs_exception == 'on' ? 'ビーバー特例' : '' }}</span>
                         </td>
                         <td>
                             @if ($entryInfo->face_picture)
