@@ -199,8 +199,6 @@ class Entry_info extends Model
         'service_hist4_term' => 'string',
         'service_hist5_role' => 'string',
         'service_hist5_term' => 'string',
-        'health_illness' => 'string',
-        'health_memo' => 'string',
         'uuid' => 'string',
         'gm_checked_at' => 'date',
         'commi_checked_at' => 'date',
@@ -263,8 +261,6 @@ class Entry_info extends Model
             'bs_basic_course' => 'required',
             'service_hist1_role' => "required_unless:troop_role,スカウト",
             'service_hist1_term' => "required_unless:troop_role,スカウト",
-            'health_illness_none' => 'required_if:health_illness,null',
-            'health_memo_none' => 'required_if:health_memo,null',
             'sc_over_deadline' => 'string|in:false',
             'div_over_deadline' => 'string|in:false',
         ];
@@ -301,8 +297,6 @@ class Entry_info extends Model
         'emer_name.required' => '緊急連絡先の氏名を入力してください',
         'emer_relation.required' => '緊急連絡先の続柄を入力してください',
         'emer_phone.required' => '緊急連絡先の日中連絡が取れる電話番号を入力してください',
-        'health_illness_none.required_if' => '治療中の病気など、申告事項が無い場合は「特になし」をチェックしてください',
-        'health_memo_none.required_if' => '食品アレルギーなどの申告事項が無い場合は「特になし」をチェックしてください',
         'sc_over_deadline.in' => '選択したスカウトコースは申込期限を越えたため、申し込みできません。',
         'div_over_deadline.in' => '選択した課程別研修は申込期限を越えたため、申し込みできません。',
     ];
