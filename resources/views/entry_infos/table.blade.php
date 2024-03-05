@@ -54,7 +54,7 @@
                 @endif
             </td>
         </tr>
-        @unless ($entryInfo->bvs_exception)
+        @unless ($entryInfo->bvs_exception == 'on')
             <tr>
                 <th>
                     {{ $entryInfo->danken ? '課題提出' : 'スカウトコース課題' }}
