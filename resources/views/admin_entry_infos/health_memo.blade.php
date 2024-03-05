@@ -55,7 +55,8 @@
                                     <dl class="uk-description-list uk-description-list-divider">
                                         @if ($entryinfo->treating_disease)
                                             <dt>治療中の病気</dt>
-                                            <dd>{{ $entryinfo->treating_disease }}</dd>
+                                            <dd>{{ $entryinfo->treating_disease == 1 ? '特になし' : $entryinfo->treating_disease }}
+                                            </dd>
                                         @endif
                                         @if ($entryinfo->carried_medications)
                                             <dt>携行持薬</dt>
