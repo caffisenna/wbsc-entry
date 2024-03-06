@@ -48,7 +48,7 @@
 
                         @unless ($entryInfo->entry_info->division_number == 'etc')
                             課程別研修: {{ $entryInfo->entry_info->division_number }}
-                            {{ $entryInfo->entry_info->bvs_exception ? '(ビーバー課程特例)' : '' }}
+                            {{ $entryInfo->entry_info->bvs_exception == 'on' ? '(ビーバー課程特例)' : '' }}
                         @else
                             課程別研修: それ以外
                         @endunless
