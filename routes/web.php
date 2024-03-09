@@ -53,6 +53,10 @@ Route::get('/howto_commi', function () {
     return view('howto_commi');     // 地区コミ
 });
 
+Route::get('/updates', function () {
+    return view('updates');     // 地区コミ
+});
+
 Auth::routes();
 
 Route::get('/email/verify', function () {

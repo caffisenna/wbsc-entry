@@ -1,4 +1,5 @@
 {{-- 認証されてなければサイドメニューを表示しない --}}
+<a href="{{ url('/updates') }}"><span uk-icon="icon: info"></span>お知らせ</a>
 @auth
     {{-- 一般ユーザー --}}
     @unless (Auth::user()->is_admin || Auth::user()->is_ais || Auth::user()->is_commi || Auth::user()->is_course_staff)
