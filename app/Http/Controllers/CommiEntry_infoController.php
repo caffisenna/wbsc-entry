@@ -13,6 +13,7 @@ use Response;
 use Auth;
 use Ramsey\Uuid\Uuid;
 use App\Models\User;
+use App\Models\GmAddress;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CommiChecked;
 use App\Mail\TrainerRequest;
@@ -96,7 +97,11 @@ class CommiEntry_infoController extends AppBaseController
             return redirect(route('admin_entryInfos.index'));
         }
 
-        return view('admin_entry_infos.show')->with('entryInfo', $entryInfo);
+        // 通知メールCC送信先取得
+        $gm_email = GmAddress::where('uuid', $entryInfo->entry_info->uuid)->first();
+
+        // return view('admin_entry_infos.show')->with('entryInfo', $entryInfo);
+        return view('admin_entry_infos.show', compact('entryInfo', 'gm_email'));
     }
 
     /**
