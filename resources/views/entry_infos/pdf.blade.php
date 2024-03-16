@@ -3,7 +3,7 @@
 <head>
     <title>pdf output</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="{{ url('/uikit/uikit.min.css') }}" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/uikit/uikit.min.css') }}" media="all">
     <style>
         @font-face {
             font-family: migmix;
@@ -20,7 +20,7 @@
 
 <body>
 
-    <div><img src="{{ url('/images/woggle.png') }}" class="uk-align-left" style="height:80px;"></div>
+    <div><img src="{{ asset('/images/woggle.png') }}" class="uk-align-left" style="height:80px;"></div>
     <div class="uk-text-center">
         <p class="uk-text-large">指導者研修参加申込書</p>
     </div>
