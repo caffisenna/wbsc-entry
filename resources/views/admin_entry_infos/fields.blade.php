@@ -15,6 +15,7 @@
                     onchange="checkSelection()">
                     <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
                     </option>
+                    <option value=""></option>
                     @foreach ($courselists as $courselist)
                         <option value="{{ $courselist->number }}" @if (
                             (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) ||
@@ -51,24 +52,33 @@
         <tr>
             <td>課程別研修の回数</td>
             <td>
-                <select name="division_number" class="form-control custom-select uk-form-width-small"
+                <select name="division_number" class="form-control custom-select uk-form-width-medium"
                     id="division_number" onchange="checkSelection()">
                     <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>選択してください
                     </option>
+                    <option value=""></option>
                     @foreach ($divisionlists as $divisionlist)
                         <option value="{{ $divisionlist }}" @if (
                             (isset($divisionlist) && isset($entryInfo->division_number) && $divisionlist == $entryInfo->division_number) ||
                                 old('division_number') == $divisionlist) selected @endif>
-                            {{ $divisionlist }}回</option>
+                            {{ $divisionlist }}回
+                        </option>
                     @endforeach
-
                     {{-- その他対応 --}}
                     @php
-                        $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
+                        $selectedValue = isset($entryInfo->division_number)
+                            ? $entryInfo->division_number
+                            : old('division_number');
                     @endphp
                     <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
                     {{-- その他対応 --}}
+                    {!! Form::hidden('bvs_exception', 'off') !!}
+                    {!! Form::checkbox('bvs_exception', 'on', isset($entryInfo) && $entryInfo->bvs_exception == 'on', [
+                        'class' => 'uk-checkbox',
+                        'id' => 'bvs_exception_cb',
+                    ]) !!}ビーバー課程特例
                 </select>
+
                 @error('division_number')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -114,7 +124,7 @@
             <td>生年月日</td>
             <td>
                 {{-- {!! Form::date('birthday', null, ['class' => 'form-control', 'min'=>'1947-01-01', 'max'=>'2004-12-31']) !!} --}}
-                {!! Form::selectRange('bd_year', 1942, 2004, null, [
+                {!! Form::selectRange('bd_year', 1942, 2005, null, [
                     'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '年',
                 ]) !!}
@@ -135,7 +145,9 @@
             <td>登録番号</td>
             <td>{!! Form::text('bs_id', null, [
                 'class' => 'form-control uk-form-width-small',
-                'placeholder' => '登録証を確認し10桁の登録番号を入力してください',
+                'placeholder' => '登録証を確認し11桁の登録番号を入力してください',
+                'pattern' => '[0-9]{1,11}', // 半角整数で最大11桁
+                'oninput' => "this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11)", // 半角整数以外の文字を削除し、最大11桁に制限
             ]) !!}
                 @error('bs_id')
                     <div class="error text-danger">{{ $message }}</div>
@@ -445,16 +457,6 @@
         @endfor
 
         <tr>
-            <td>現在治療中の病気(病名などをご記入ください)</td>
-            <td>{!! Form::textarea('health_illness', null, ['class' => 'form-control']) !!}</td>
-        </tr>
-
-        <tr>
-            <td>健康上で不安なことなど特記事項をご記入ください</td>
-            <td>{!! Form::textarea('health_memo', null, ['class' => 'form-control']) !!}</td>
-        </tr>
-
-        <tr>
             <td>団承認</td>
             <td>
                 年月日: {!! Form::text('gm_checked_at', null, ['class' => 'form-control', 'placeholder' => 'YYYY-mm-dd hh:mm:ss']) !!}<br>
@@ -514,73 +516,10 @@
         <tr>
             <td>欠席情報</td>
             <td>
-                SC&団研: {!! Form::text('cancel', null, ['class' => 'form-control']) !!}<br>
-                課程別: {!! Form::text('cancel_div', null, ['class' => 'form-control']) !!}
+                SC&団研: {!! Form::text('cancel', null, ['class' => 'form-control', 'placeholder' => '欠席理由を簡潔に入力']) !!}<br>
+                課程別: {!! Form::text('cancel_div', null, ['class' => 'form-control', 'placeholder' => '欠席理由を簡潔に入力']) !!}
             </td>
         </tr>
 
     </table>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        initializeElements();
-        checkSelection(); // Check selection conditions on page load
-    });
-
-    function initializeElements() {
-        // Initialize sc_number
-        var scNumberSelect = document.getElementById("sc_number");
-        scNumberSelect.selectedIndex = 1;  // Select index 1 (Done)
-
-        // Initialize division_number
-        var divisionNumberSelect = document.getElementById("division_number");
-        setOptionByValue(divisionNumberSelect, "danken");  // Select the desired option by value
-
-        // Initialize danken input
-        var dankenInput = document.getElementById("danken");
-        if (dankenInput.value === "") {
-            dankenInput.value = "";  // Initialize if danken is empty
-        } else {
-            // If danken has a value, reset sc_number and division_number selections
-            scNumberSelect.selectedIndex = 0;  // Select index 0 (default)
-            divisionNumberSelect.selectedIndex = 0;  // Select index 0 (default)
-        }
-    }
-
-    function setOptionByValue(selectElement, value) {
-        for (var i = 0; i < selectElement.options.length; i++) {
-            if (selectElement.options[i].value === value) {
-                selectElement.selectedIndex = i;
-                break;
-            }
-        }
-    }
-
-    function checkSelection() {
-        var scNumberValue = document.getElementById("sc_number").value;
-
-        // Check sc_number selection
-        if (scNumberValue === "done") {
-            document.getElementById("textboxContainer").style.display = "block";
-        } else {
-            document.getElementById("textboxContainer").style.display = "none";
-        }
-
-        // Check danken input
-        checkInput();
-    }
-
-    function checkInput() {
-        var scNumberValue = document.getElementById("sc_number").value;
-        var divisionNumberValue = document.getElementById("division_number").value;
-        var dankenInput = document.getElementById("danken");
-
-        // Check sc_number or division_number input
-        if ((scNumberValue !== "" || divisionNumberValue !== "") && dankenInput.value !== "") {
-            // If danken has a value and either sc_number or division_number is selected, reset them
-            document.getElementById("sc_number").selectedIndex = 0;
-            document.getElementById("division_number").selectedIndex = 0;
-        }
-    }
-</script>
