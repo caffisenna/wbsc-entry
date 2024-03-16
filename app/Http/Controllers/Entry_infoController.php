@@ -170,7 +170,7 @@ class Entry_infoController extends AppBaseController
                         "課程別研修: " . $input['division_number'] . "回 (トータル: $div_count 人)\n";
                 }
 
-                $message .= "団研: $danken_count 人)\n";
+                $message .= "団研: $danken_count 人\n";
 
                 $slack->send($message);
             }
