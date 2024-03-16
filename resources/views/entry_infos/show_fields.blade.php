@@ -6,7 +6,7 @@
                 <td>東京第{{ $entryInfo->danken }}期</td>
             </tr>
         @else
-            @unless ($entryInfo->bvs_exception)
+            @if ($entryInfo->sc_number || $entryInfo->sc_number_done)
                 <tr>
                     <th>スカウトコースの期数</td>
                     <td>
@@ -17,12 +17,12 @@
                         @endif
                     </td>
                 </tr>
-            @endunless
+            @endif
             <tr>
                 <th>課程別研修の回数</th>
                 <td>
                     @unless ($entryInfo->division_number == 'etc')
-                        {{ $entryInfo->division_number }} {{ $entryInfo->bvs_exception ? '(ビーバー課程特例)' : '' }}
+                        {{ $entryInfo->division_number }} {{ $entryInfo->bvs_exception == 'on' ? '(ビーバー課程特例)' : '' }}
                     @else
                         それ以外
                     @endunless
@@ -96,14 +96,16 @@
         @endif
 
         <tr>
-            <th>スカウトキャンプ研修会</th>
-            <td>{{ $entryInfo->scout_camp }}</td>
-        </tr>
-
-        <tr>
             <th>ボーイスカウト講習会</th>
             <td>{{ $entryInfo->bs_basic_course }}</td>
         </tr>
+
+        @if ($entryInfo->scout_camp)
+            <tr>
+                <th>スカウトキャンプ研修会</th>
+                <td>{{ $entryInfo->scout_camp }}</td>
+            </tr>
+        @endif
 
         @for ($i = 1; $i <= 3; $i++)
             @if (isset($entryInfo->{"wb_basic{$i}_category"}))

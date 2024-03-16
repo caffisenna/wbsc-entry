@@ -10,6 +10,7 @@
                             onchange="toggleTextbox()">
                             <option disabled style='display:none;' @if (empty($courselist->number)) selected @endif>選択してください
                             </option>
+                            <option value=""></option>
                             @foreach ($courselists as $courselist)
                                 <option value="{{ $courselist->number }}" @if (
                                     (isset($courselist->number) && isset($entryInfo->sc_number) && $courselist->number == $entryInfo->sc_number) ||
@@ -23,6 +24,7 @@
                                 </option>
                             @endisset
                         </select>
+                        <p class="uk-text-warning"><span uk-icon="icon: info"></span>ビーバー課程特例で申し込む場合はスカウトコースは選択しないでください。</p>
                         @error('sc_number')
                             <div class="error text-danger">{{ $message }}</div>
                         @enderror
@@ -53,7 +55,7 @@
                             class="form-control custom-select uk-form-width-small">
                             <option disabled style='display:none;' @if (empty($divisionlist)) selected @endif>
                                 選択してください</option>
-
+                            <option value=""></option>
                             @foreach ($divisionlists as $division)
                                 <option value="{{ $division }}" @if (
                                     (isset($division) && isset($entryInfo->division_number) && $division == $entryInfo->division_number) ||
@@ -64,7 +66,9 @@
 
                             {{-- その他対応 --}}
                             @php
-                                $selectedValue = isset($entryInfo->division_number) ? $entryInfo->division_number : old('division_number');
+                                $selectedValue = isset($entryInfo->division_number)
+                                    ? $entryInfo->division_number
+                                    : old('division_number');
                             @endphp
                             <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
                             {{-- その他対応 --}}
@@ -72,10 +76,18 @@
                         <div id="bvs_exception">
                             {{-- <input type="checkbox" name="bvs_exception" id="bvs_exception_cb"> --}}
                             {!! Form::hidden('bvs_exception', 'off') !!}
-                            {!! Form::checkbox('bvs_exception', 'on', isset($entryInfo) && $entryInfo->bvs_exception == 'on', [
-                                'class' => 'uk-checkbox',
-                                'id' => 'bvs_exception_cb',
-                            ]) !!}ビーバー課程特例
+                            {!! Form::checkbox(
+                                'bvs_exception',
+                                'on',
+                                old('bvs_exception', isset($entryInfo) && $entryInfo->bvs_exception == 'on') == 'on',
+                                // false,
+                                [
+                                    'class' => 'uk-checkbox',
+                                    'id' => 'bvs_exception_cb',
+                                ],
+                            ) !!}ビーバー課程特例
+
+
 
                         </div>
 
@@ -128,7 +140,7 @@
         <tr>
             <td>生年月日</td>
             <td>
-                {!! Form::selectRange('bd_year', 1942, 2004, null, [
+                {!! Form::selectRange('bd_year', 1942, 2005, null, [
                     'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '年',
                 ]) !!}年{!! Form::selectrange('bd_month', 1, 12, null, [
@@ -341,24 +353,24 @@
         </tr>
 
         <tr>
-            <td>スカウトキャンプ研修会</td>
-            <td>{!! Form::text('scout_camp', null, [
-                'class' => 'form-control uk-form-width-medium',
-                'placeholder' => '例:2023/3/6(修了年月日)',
-            ]) !!}
-                @error('scout_camp')
-                    <div class="error text-danger">{{ $message }}</div>
-                @enderror
-            </td>
-        </tr>
-
-        <tr>
             <td>ボーイスカウト講習会</td>
             <td>{!! Form::text('bs_basic_course', null, [
                 'class' => 'form-control uk-form-width-medium',
                 'placeholder' => '例:2020/5/14(修了年月日)',
             ]) !!}
                 @error('bs_basic_course')
+                    <div class="error text-danger">{{ $message }}</div>
+                @enderror
+            </td>
+        </tr>
+
+        <tr>
+            <td>スカウトキャンプ研修会</td>
+            <td>{!! Form::text('scout_camp', null, [
+                'class' => 'form-control uk-form-width-medium',
+                'placeholder' => '例:2023/3/6(修了年月日)',
+            ]) !!}
+                @error('scout_camp')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
             </td>
@@ -678,14 +690,14 @@
             } else {
                 bvsExceptionCheckbox.parentNode.style.display = "none";
                 bvsExceptionCheckbox.checked = false; // Uncheck checkbox when hiding
-                resetScSelectAndTextbox(); // Reset select and textbox when hiding
+                // resetScSelectAndTextbox(); // Reset select and textbox when hiding
             }
         }
 
-        function resetScSelectAndTextbox() {
-            scSelect.selectedIndex = 0; // Reset select to the first option
-            myTextbox.value = ""; // Reset textbox value
-        }
+        // function resetScSelectAndTextbox() {
+        //     scSelect.selectedIndex = 0; // Reset select to the first option
+        //     myTextbox.value = ""; // Reset textbox value
+        // }
 
         function handleDivisionChange() {
             toggleBvsExceptionVisibility();

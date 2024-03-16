@@ -128,24 +128,10 @@ class Entry_infoController extends AppBaseController
             }
         }
 
-        // 病気項目の処理
-        if (isset($input['health_illness_none'])) {
-            if ($input['health_illness_none']) {
-                $input['health_illness'] = '特になし';
-            }
-        }
-
-        // アレルギー項目の処理
-        if (isset($input['health_memo_none'])) {
-            if ($input['health_memo_none']) {
-                $input['health_memo'] = '特になし';
-            }
-        }
-
         // ビーバー課程特例処理
-        if($input['bvs_exception'] == 'on'){
-            $input['sc_number'] = null;
-        }
+        // if($input['bvs_exception'] == 'on'){
+        //     $input['sc_number'] = null;
+        // }
 
 
         $entryInfo = $this->entryInfoRepository->create($input);
@@ -277,24 +263,10 @@ class Entry_infoController extends AppBaseController
             return redirect(route('entryInfos.index'));
         }
 
-        // 病気項目の処理
-        if (isset($request['health_illness_none'])) {
-            if ($request['health_illness_none'] == 'true' && $request['health_illness'] == '') {
-                $request['health_illness'] = '特になし';
-            }
-        }
-
-        // アレルギー項目の処理
-        if (isset($request['health_memo_none'])) {
-            if ($request['health_memo_none'] == 'true' && $request['health_memo'] == '') {
-                $request['health_memo'] = '特になし';
-            }
-        }
-
         // ビーバー課程特例処理
-        if($request['bvs_exception'] == 'on'){
-            $request['sc_number'] = null;
-        }
+        // if($request['bvs_exception'] == 'on'){
+        //     $request['sc_number'] = null;
+        // }
 
         $entryInfo = $this->entryInfoRepository->update($request->all(), $id);
 
