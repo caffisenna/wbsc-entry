@@ -41,8 +41,6 @@ use Illuminate\Validation\Rule;
  * @property string $wb_adv1_date
  * @property string $service_hist1_role
  * @property string $service_hist1_term
- * @property string $health_illness
- * @property string $health_memo
  * @property string $commi_checked_at
  * @property string $ais_checked_at
  * @property string $gm_checked_at
@@ -118,8 +116,6 @@ class Entry_info extends Model
         'service_hist4_term',
         'service_hist5_role',
         'service_hist5_term',
-        'health_illness',
-        'health_memo',
         'uuid',
         'gm_name',
         'gm_checked_at',
@@ -289,6 +285,7 @@ class Entry_info extends Model
         'zip.digits' => '郵便番号は7桁の半角整数で入力してください',
         'address.required' => '住所を入力してください',
         'scout_camp.required' => 'スカウトキャンプ研修会の修了年月日を入力してください',
+        'scout_camp.required_unless'=>'スカウトキャンプ研修会の修了年月日を入力してください',
         'bs_basic_course.required' => 'ボーイスカウト講習会の修了年月日を入力してください',
         'service_hist1_role.required' => '奉仕歴(1)の役務を入力してください',
         'service_hist1_role.required_unless' => '奉仕歴(1)の役務を入力してください',
