@@ -74,20 +74,10 @@
                             {{-- その他対応 --}}
                         </select>
                         <div id="bvs_exception">
-                            {{-- <input type="checkbox" name="bvs_exception" id="bvs_exception_cb"> --}}
-                            {!! Form::hidden('bvs_exception', 'off') !!}
-                            {!! Form::checkbox(
-                                'bvs_exception',
-                                'on',
-                                old('bvs_exception', isset($entryInfo) && $entryInfo->bvs_exception == 'on') == 'on',
-                                // false,
-                                [
-                                    'class' => 'uk-checkbox',
-                                    'id' => 'bvs_exception_cb',
-                                ],
-                            ) !!}ビーバー課程特例
-
-
+                            <input type="hidden" name="bvs_exception" value="off">
+                            <input type="checkbox" name="bvs_exception" id="bvs_exception_cb" class="uk-checkbox"
+                                value="on"
+                                {{ old('bvs_exception') == 'on' || (isset($entryInfo) && $entryInfo->bvs_exception == 'on') ? 'checked' : '' }}>ビーバー課程特例
 
                         </div>
 
