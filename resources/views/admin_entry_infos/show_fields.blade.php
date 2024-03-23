@@ -1,19 +1,22 @@
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         @unless ($entryInfo->entry_info->danken)
-            <tr>
-                <th>スカウトコースの期数</th>
-                @if ($entryInfo->entry_info->sc_number == 'done')
-                    <td><span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}(修了済み)</span></td>
-                @else
-                    <td>{{ $entryInfo->entry_info->sc_number }}期</td>
-                @endif
-            </tr>
+            @unless ($entryInfo->entry_info->bvs_exception == 'on')
+                <tr>
+                    <th>スカウトコースの期数</th>
+                    @if ($entryInfo->entry_info->sc_number == 'done')
+                        <td><span class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}(修了済み)</span></td>
+                    @else
+                        <td>{{ $entryInfo->entry_info->sc_number }}期</td>
+                    @endif
+                </tr>
+            @endunless
             <tr>
                 <th>課程別研修の回数</th>
                 <td>
                     @unless ($entryInfo->entry_info->division_number == 'etc')
                         {{ $entryInfo->entry_info->division_number }}回
+                        {{ $entryInfo->entry_info->bvs_exception == 'on' ? '(ビーバー課程特例)' : '' }}
                     @else
                         それ以外
                     @endunless
@@ -24,6 +27,7 @@
                 <th>団委員研修所の期数</th>
                 <td>東京第{{ $entryInfo->entry_info->danken }}期</td>
             </tr>
+
         @endunless
 
         <tr>
@@ -102,13 +106,13 @@
         @endif
 
         <tr>
-            <th>スカウトキャンプ研修会</th>
-            <td>{{ $entryInfo->entry_info->scout_camp }}</td>
+            <th>ボーイスカウト講習会</th>
+            <td>{{ $entryInfo->entry_info->bs_basic_course }}</td>
         </tr>
 
         <tr>
-            <th>ボーイスカウト講習会</th>
-            <td>{{ $entryInfo->entry_info->bs_basic_course }}</td>
+            <th>スカウトキャンプ研修会</th>
+            <td>{{ $entryInfo->entry_info->scout_camp }}</td>
         </tr>
 
         @for ($i = 1; $i <= 3; $i++)
@@ -311,7 +315,7 @@
         </tr>
         @unless ($entryInfo->entry_info->danken)
             <tr>
-                <td>課程別研修課題</td>
+                <th>課程別研修課題</th>
                 <td>
                     @if (File::exists(storage_path('app/public/assignment/division/') . $entryInfo->entry_info->uuid . '.pdf'))
                         <a href="{{ url('/storage/assignment/division/') . '/' . $entryInfo->entry_info->uuid . '.pdf' }}"

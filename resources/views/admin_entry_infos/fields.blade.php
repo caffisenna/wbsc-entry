@@ -1,9 +1,4 @@
 <script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
-<style>
-    .hidden {
-        display: none;
-    }
-</style>
 
 <input type="hidden" name="create_id" value="{{ $user->id }}">
 <div class="table-responsive">
@@ -72,11 +67,9 @@
                     @endphp
                     <option value="etc" {{ $selectedValue == 'etc' ? 'selected' : '' }}>それ以外</option>
                     {{-- その他対応 --}}
-                    {!! Form::hidden('bvs_exception', 'off') !!}
-                    {!! Form::checkbox('bvs_exception', 'on', isset($entryInfo) && $entryInfo->bvs_exception == 'on', [
-                        'class' => 'uk-checkbox',
-                        'id' => 'bvs_exception_cb',
-                    ]) !!}ビーバー課程特例
+                    <input type="hidden" name="bvs_exception" value="off">
+                    <input type="checkbox" name="bvs_exception" id="bvs_exception_cb" class="uk-checkbox" value="on"
+                        {{ old('bvs_exception') == 'on' || (isset($entryInfo) && $entryInfo->bvs_exception == 'on') ? 'checked' : '' }}>ビーバー課程特例
                 </select>
 
                 @error('division_number')
@@ -250,7 +243,7 @@
             ) !!}
                 <br>
                 {!! Form::text('district', null, [
-                    'class' => 'form-control uk-form-width-small',
+                    'class' => 'form-control uk-form-width-midium',
                     'placeholder' => '東連以外は地区名を入力',
                     'id' => 'district-non-tokyo',
                 ]) !!}
@@ -261,7 +254,7 @@
         </tr>
         <tr>
             <td>団</td>
-            <td>{!! Form::text('dan', null, ['class' => 'form-control uk-form-width-small', 'placeholder' => '例:渋谷14']) !!}
+            <td>{!! Form::text('dan', null, ['class' => 'form-control uk-form-width-small', 'placeholder' => '例:渋谷第14団']) !!}
                 @error('dan')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
@@ -310,7 +303,7 @@
                 ],
                 null,
                 [
-                    'class' => 'form-control custom-select uk-form-width-small',
+                    'class' => 'form-control custom-select uk-form-width-midium',
                 ],
             ) !!}
                 @error('troop_role')
@@ -406,6 +399,8 @@
         <tr>
             <td>スカウトキャンプ研修会</td>
             <td>{!! Form::text('scout_camp', null, ['class' => 'form-control', 'placeholder' => '修了年月日を入力してください']) !!}
+                <br>
+                <span class="uk-text-small">「ビーバー課程特例」の参加者は入力不要です</span>
                 @error('scout_camp')
                     <div class="error text-danger">{{ $message }}</div>
                 @enderror
