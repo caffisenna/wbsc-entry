@@ -67,7 +67,7 @@
                             @if ($entryInfo->entry_info->bvs_exception == 'on')
                                 <br><span class="uk-text-small uk-text-warning">BVS特例</span>
                             @endif
-                            <br>{{ $entryInfo->entry_info->trainer_division_name }}
+                            <br>
                             {!! $entryInfo->entry_info->trainer_division_name
                                 ? "<span class='uk-text-success uk-text-small'>課題認定OK</span>"
                                 : "<span class='uk-text-danger uk-text-small'>課題未認定" !!}
@@ -77,7 +77,7 @@
                         {{-- 団研 --}}
                         @if ($entryInfo->entry_info->danken)
                             団研{{ $entryInfo->entry_info->danken }}<br>
-                            @isset($entryInfo->entry_info->danken_division_name)
+                            @isset($entryInfo->entry_info->trainer_danken_name)
                                 <span class="uk-text-success uk-text-small">課題認定OK</span>
                             @else
                                 <span class="uk-text-danger uk-text-small">課題未認定</span>
