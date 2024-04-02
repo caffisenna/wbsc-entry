@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="uk-form-controls uk-margin-top">
-                        <h3>課程別のキャンセル理由</h3>
+                        <h3>課程別研修のキャンセル理由</h3>
                         <input type="text" name="cancel_div" class="uk-input" placeholder="課程別のキャンセル理由"
                             value="@if ($entryInfo->cancel_div) {{ $entryInfo->cancel_div }} @endif">
                     </div>
