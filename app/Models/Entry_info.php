@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
+use App\Models\HealthInfo;
 use Illuminate\Validation\Rule;
 
 /**
@@ -285,12 +286,12 @@ class Entry_info extends Model
         'zip.digits' => '郵便番号は7桁の半角整数で入力してください',
         'address.required' => '住所を入力してください',
         'scout_camp.required' => 'スカウトキャンプ研修会の修了年月日を入力してください',
-        'scout_camp.required_unless'=>'スカウトキャンプ研修会の修了年月日を入力してください',
+        'scout_camp.required_unless' => 'スカウトキャンプ研修会の修了年月日を入力してください',
         'bs_basic_course.required' => 'ボーイスカウト講習会の修了年月日を入力してください',
         'service_hist1_role.required' => '奉仕歴(1)の役務を入力してください',
         'service_hist1_role.required_unless' => '奉仕歴(1)の役務を入力してください',
         'service_hist1_term.required' => '奉仕歴(1)の奉仕期間を入力してください',
-        'service_hist1_term.required_unless'=>'奉仕歴(1)の奉仕期間を入力してください',
+        'service_hist1_term.required_unless' => '奉仕歴(1)の奉仕期間を入力してください',
         'emer_name.required' => '緊急連絡先の氏名を入力してください',
         'emer_relation.required' => '緊急連絡先の続柄を入力してください',
         'emer_phone.required' => '緊急連絡先の日中連絡が取れる電話番号を入力してください',
@@ -302,5 +303,10 @@ class Entry_info extends Model
     {
         // return $this->hasOne(user::class);
         return $this->belongsTo(user::class);
+    }
+
+    public function health_info()
+    {
+        return $this->hasOne(HealthInfo::class, 'user_id', 'user_id');
     }
 }
