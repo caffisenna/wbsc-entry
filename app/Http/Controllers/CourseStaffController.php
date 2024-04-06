@@ -51,7 +51,9 @@ class CourseStaffController extends AppBaseController
             }
         })->with(['entry_info' => function ($query) {
             $query->orderBy('order', 'asc');
-        }])->get();
+        }])
+            ->with('health_info') // 健康情報取得
+            ->get();
 
         // 平均年齢計算
         function calculateAge($birthdate)
@@ -92,7 +94,7 @@ class CourseStaffController extends AppBaseController
     public function show($id)
     {
         // $entryInfo = User::where('id', $id)->with('entry_info')->first();
-        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with(['user', 'health_info'])->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -100,7 +102,7 @@ class CourseStaffController extends AppBaseController
             return redirect(route('course_staff.index'));
         }
 
-        return view('course_staff.show')->with('entryInfo', $entryInfo);
+        return view('course_staff.show', compact(['entryInfo']));
     }
 
     public function pdf(Request $request)
@@ -169,8 +171,6 @@ class CourseStaffController extends AppBaseController
                 '研修歴(研)',
                 '研修歴(実)',
                 '奉仕歴',
-                '治療中',
-                '健康メモ'
             ];
         } else {
             $headings = [
@@ -194,8 +194,6 @@ class CourseStaffController extends AppBaseController
                 '研修歴(研)',
                 '研修歴(実)',
                 '奉仕歴',
-                '治療中',
-                '健康メモ'
             ];
         }
 
@@ -215,14 +213,14 @@ class CourseStaffController extends AppBaseController
             // postの時はDB更新処理
 
             // ユーザーを取得
-            $user = Entry_info::where('uuid',$request['uuid'])->with('user')->firstOrFail();
+            $user = Entry_info::where('uuid', $request['uuid'])->with('user')->firstOrFail();
 
             // 値をセット
-            if(isset($request['cancel_sc'])){
+            if (isset($request['cancel_sc'])) {
                 $user->cancel = $request['cancel_sc'];
             }
 
-            if(isset($request['cancel_div'])){
+            if (isset($request['cancel_div'])) {
                 $user->cancel_div = $request['cancel_div'];
             }
 
