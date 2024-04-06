@@ -577,8 +577,6 @@ class AdminEntry_infoController extends AppBaseController
                 '研修歴(研)',
                 '研修歴(実)',
                 '奉仕歴',
-                '治療中',
-                '健康メモ'
             ];
         } else {
             $headings = [
@@ -602,8 +600,6 @@ class AdminEntry_infoController extends AppBaseController
                 '研修歴(研)',
                 '研修歴(実)',
                 '奉仕歴',
-                '治療中',
-                '健康メモ'
             ];
         }
 
