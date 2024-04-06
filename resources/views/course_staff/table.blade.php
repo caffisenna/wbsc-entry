@@ -5,10 +5,10 @@
                 <th>氏名</th>
                 <th>写真</th>
                 <th>参加</th>
+                <th>参加認定</th>
                 <th>年齢</th>
                 <th>研修歴</th>
-                <th>健康</th>
-                <th>申込書</th>
+                <th>食物アレルギー</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +64,15 @@
                             @endif
                         </td>
                         <td>
+                            {{-- 参加認定 --}}
+                            {!! $entryInfo->entry_info->sc_accepted_at ? 'SC<span class="uk-text-success">〇</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->sc_rejected_at ? 'SC<span class="uk-text-danger">×</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->div_accepted_at ? '課程別<span class="uk-text-success">〇</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->div_rejected_at ? '課程別<span class="uk-text-danger">×</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->danken_accepted_at ? '団研<span class="uk-text-success">〇</span>' : '' !!}
+                            {!! $entryInfo->entry_info->danken_rejected_at ? '団研<span class="uk-text-danger">×</span>' : '' !!}
+                        </td>
+                        <td>
                             {{ $age }}歳
                         </td>
                         <td>
@@ -74,18 +83,7 @@
                             @endif
                         </td>
                         <td>
-                            @unless ($entryInfo->entry_info->health_memo == '特になし' || $entryInfo->entry_info->health_illness == '特になし')
-                                <span class="uk-text-danger uk-text-small">健康情報あり</span>
-                            @else
-                            @endunless
-                        </td>
-                        <td>
-                            <div class='btn-group'>
-                                <a href="{{ route('course_staff_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
-                                    class='btn btn-default'>
-                                    <span uk-icon="download"></span>PDF
-                                </a>
-                            </div>
+                            {!! $entryInfo->health_info->food_allergies == '食物アレルギーがある' ? '<span class="uk-text-danger">あり</span>' : '' !!}
                         </td>
                     </tr>
                 @endif
