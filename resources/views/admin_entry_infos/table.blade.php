@@ -76,6 +76,7 @@
                     <th>団</th>
                     <th>SC/団研</th>
                     <th>課程別</th>
+                    <th>参加認定</th>
                     <th>団委員長</th>
                     <th>トレーナー認定</th>
                     <th>地区コミ</th>
@@ -154,6 +155,15 @@
                                     <span class=" uk-text-danger">未提出</span>
                                 @endif
                             @endunless
+                        </td>
+                        <td>
+                            {{-- 参加認定 --}}
+                            {!! $entryInfo->entry_info->sc_accepted_at ? 'SC<span class="uk-text-success">〇</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->sc_rejected_at ? 'SC<span class="uk-text-danger">×</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->div_accepted_at ? '課程別<span class="uk-text-success">〇</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->div_rejected_at ? '課程別<span class="uk-text-danger">×</span><br>' : '' !!}
+                            {!! $entryInfo->entry_info->danken_accepted_at ? '団研<span class="uk-text-success">〇</span>' : '' !!}
+                            {!! $entryInfo->entry_info->danken_rejected_at ? '団研<span class="uk-text-danger">×</span>' : '' !!}
                         </td>
                         <td>
                             @if (isset($entryInfo->entry_info->gm_checked_at))
