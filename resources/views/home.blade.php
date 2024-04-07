@@ -36,9 +36,17 @@
                                     <td><a href="{{ route('multi_pdf', ['q' => $val->sc_number, 'assignment' => 'true', 'cat' => 'sc']) }}"
                                             class=""><span uk-icon="download"></span>課題</a>
                                     </td>
-                                    <td><a href="{{ route('dl_face_pictures', ['cat' => 'sc', 'number' => $val->sc_number]) }}"><span
-                                                uk-icon="download"></span>顔写真</a></td>
-                                    <td><a href="#"><span uk-icon="download"></span>健康情報</a></td>
+                                    <td>
+                                        @if (Auth::user()->is_ais == null)
+                                            <a href="{{ route('dl_face_pictures', ['cat' => 'sc', 'number' => $val->sc_number]) }}"><span
+                                                    uk-icon="download"></span>顔写真</a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (Auth::user()->is_ais == null)
+                                            <a href="#"><span uk-icon="download"></span>健康情報</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endunless
                         @endif
