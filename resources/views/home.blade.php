@@ -84,8 +84,13 @@
                                 <td><a href="{{ route('multi_pdf', ['q' => $val->division_number, 'assignment' => 'true', 'cat' => 'division']) }}"
                                         class="" onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                             uk-icon="download"></span>課題</a></td>
-                                <td><a href="{{ route('dl_face_pictures', ['cat' => 'div', 'number' => $val->division_number]) }}"><span
-                                            uk-icon="download"></span>顔写真</a></td>
+                                <td>
+                                    @if (Auth::user()->is_ais == null)
+                                        <a
+                                            href="{{ route('dl_face_pictures', ['cat' => 'div', 'number' => $val->division_number]) }}"><span
+                                                uk-icon="download"></span>顔写真</a>
+                                    @endif
+                                </td>
                             </tr>
                         @endunless
                     @endforeach
