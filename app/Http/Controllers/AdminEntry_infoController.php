@@ -1148,4 +1148,260 @@ class AdminEntry_infoController extends AppBaseController
             }
         }
     }
+
+    // public function dl_face_pictures(Request $request)
+    // {
+    //     // 顔写真の一括DL
+    //     $input = $request->all();
+    //     $cat = $input['cat'];
+
+
+    //     switch ($cat) {
+    //         case 'sc':
+    //             $number = $input['number'];
+    //             $users = Entry_info::where('sc_number', $number)->with('user')->get();
+    //             $pictures = [];
+
+    //             // ランダムな一時作業フォルダを生成する
+    //             $temp_folder = storage_path('app/public/temp/' . uniqid());
+    //             if (!is_dir($temp_folder)) {
+    //                 mkdir($temp_folder, 0755, true);
+    //             }
+
+    //             foreach ($users as $user) {
+    //                 $pictures = []; // ユーザーごとに画像ファイルをリセットする
+
+    //                 // 各ユーザーに関連付けられた画像ファイルを取得
+    //                 $pictures[] = $user->user->face_picture;
+
+    //                 // 一時作業フォルダに画像ファイルをコピーしてリネームする
+    //                 foreach ($pictures as $picture) {
+    //                     $source = storage_path('app/public/picture/' . $picture);
+    //                     $destination = $temp_folder . '/' . $picture;
+    //                     if (file_exists($source)) {
+    //                         copy($source, $destination);
+    //                         // コピーしたファイルをリネームする
+    //                         $new_destination = $temp_folder . '/' . $user->district . '_' . $user->dan . '_' . $user->user->name . '.jpg'; // 新しいファイル名を指定
+    //                         rename($destination, $new_destination);
+    //                     } else {
+    //                         // ファイルが存在しない場合は無視する
+    //                         continue;
+    //                     }
+    //                 }
+    //             }
+
+    //             // 一時作業フォルダをzip圧縮してダウンロードする
+    //             $zip_file = 'SC' . $number . '期_顔写真.zip';
+    //             $zip_path = storage_path('app/public/' . $zip_file);
+    //             $zip = new ZipArchive;
+    //             if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+    //                 $files = new \RecursiveIteratorIterator(
+    //                     new \RecursiveDirectoryIterator($temp_folder)
+    //                 );
+    //                 foreach ($files as $name => $file) {
+    //                     if (!$file->isDir()) {
+    //                         $filePath = $file->getRealPath();
+    //                         $relativePath = substr($filePath, strlen($temp_folder) + 1);
+    //                         $zip->addFile($filePath, $relativePath);
+    //                     }
+    //                 }
+    //                 $zip->close();
+
+    //                 // ダウンロードを実行する
+    //                 if (file_exists($zip_path)) {
+    //                     $response = response()->download($zip_path)->deleteFileAfterSend(true);
+    //                     // 一時作業フォルダを削除する
+    //                     File::deleteDirectory($temp_folder);
+    //                     return $response;
+    //                 } else {
+    //                     // zipファイルが存在しない場合は適切なエラー処理を行う
+    //                     File::deleteDirectory($temp_folder);
+    //                     return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
+    //                 }
+    //             } else {
+    //                 // zipファイルの生成に失敗した場合は適切なエラー処理を行う
+    //                 File::deleteDirectory($temp_folder);
+    //                 return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
+    //             }
+
+    //             break;
+
+    //         case 'div':
+    //             $number = $input['number'];
+    //             $users = Entry_info::where('division_number', $number)->with('user')->get();
+    //             $pictures = [];
+
+    //             // ランダムな一時作業フォルダを生成する
+    //             $temp_folder = storage_path('app/public/temp/' . uniqid());
+    //             if (!is_dir($temp_folder)) {
+    //                 mkdir($temp_folder, 0755, true);
+    //             }
+
+    //             foreach ($users as $user) {
+    //                 $pictures = []; // ユーザーごとに画像ファイルをリセットする
+
+    //                 // 各ユーザーに関連付けられた画像ファイルを取得
+    //                 $pictures[] = $user->user->face_picture;
+
+    //                 // 一時作業フォルダに画像ファイルをコピーしてリネームする
+    //                 foreach ($pictures as $picture) {
+    //                     $source = storage_path('app/public/picture/' . $picture);
+    //                     $destination = $temp_folder . '/' . $picture;
+    //                     if (file_exists($source)) {
+    //                         copy($source, $destination);
+    //                         // コピーしたファイルをリネームする
+    //                         $new_destination = $temp_folder . '/' . $user->district . '_' . $user->dan . '_' . $user->user->name . '.jpg'; // 新しいファイル名を指定
+    //                         rename($destination, $new_destination);
+    //                     } else {
+    //                         // ファイルが存在しない場合は無視する
+    //                         continue;
+    //                     }
+    //                 }
+    //             }
+
+    //             // 一時作業フォルダをzip圧縮してダウンロードする
+    //             $zip_file = '課程別' . $number . '回_顔写真.zip';
+    //             $zip_path = storage_path('app/public/' . $zip_file);
+    //             $zip = new ZipArchive;
+    //             if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+    //                 $files = new \RecursiveIteratorIterator(
+    //                     new \RecursiveDirectoryIterator($temp_folder)
+    //                 );
+    //                 foreach ($files as $name => $file) {
+    //                     if (!$file->isDir()) {
+    //                         $filePath = $file->getRealPath();
+    //                         $relativePath = substr($filePath, strlen($temp_folder) + 1);
+    //                         $zip->addFile($filePath, $relativePath);
+    //                     }
+    //                 }
+    //                 $zip->close();
+
+    //                 // ダウンロードを実行する
+    //                 if (file_exists($zip_path)) {
+    //                     $response = response()->download($zip_path)->deleteFileAfterSend(true);
+    //                     // 一時作業フォルダを削除する
+    //                     File::deleteDirectory($temp_folder);
+    //                     return $response;
+    //                 } else {
+    //                     // zipファイルが存在しない場合は適切なエラー処理を行う
+    //                     File::deleteDirectory($temp_folder);
+    //                     return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
+    //                 }
+    //             } else {
+    //                 // zipファイルの生成に失敗した場合は適切なエラー処理を行う
+    //                 File::deleteDirectory($temp_folder);
+    //                 return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
+    //             }
+    //             break;
+    //         case 'div':
+    //             dd('danken');
+    //             break;
+    //         default:
+    //             # code...
+    //             break;
+    //     }
+    // }
+    public function dl_face_pictures(Request $request)
+    {
+        $input = $request->all();
+        $cat = $input['cat'];
+
+        switch ($cat) {
+            case 'sc':
+                return $this->downloadByScNumber($input['number']);
+            case 'div':
+                return $this->downloadByDivisionNumber($input['number']);
+            case 'danken':
+                return $this->downloadByDanken($input['number']);
+            default:
+                // 未定義のcatの場合の処理
+                return redirect()->back()->with('error', '無効なパラメータが指定されました。');
+        }
+    }
+
+    private function downloadByScNumber($number)
+    {
+        $users = Entry_info::where('sc_number', $number)->with('user')->get();
+        $tempFolder = $this->createTempFolder();
+        $this->copyAndRenameFiles($users, $tempFolder);
+        $zipFile = $this->createZipFile($tempFolder, 'SC' . $number . '期_顔写真.zip');
+        return $this->downloadAndCleanup($zipFile, $tempFolder);
+    }
+
+    private function downloadByDivisionNumber($number)
+    {
+        $users = Entry_info::where('division_number', $number)->with('user')->get();
+        $tempFolder = $this->createTempFolder();
+        $this->copyAndRenameFiles($users, $tempFolder);
+        $zipFile = $this->createZipFile($tempFolder, '課程別' . $number . '回_顔写真.zip');
+        return $this->downloadAndCleanup($zipFile, $tempFolder);
+    }
+
+    private function downloadByDanken($number)
+    {
+        $users = Entry_info::whereNotNull('danken')->with('user')->get();
+        $tempFolder = $this->createTempFolder();
+        $this->copyAndRenameFiles($users, $tempFolder);
+        $zipFile = $this->createZipFile($tempFolder, '団研' . $number . '_顔写真.zip');
+        return $this->downloadAndCleanup($zipFile, $tempFolder);
+    }
+
+    private function createTempFolder()
+    {
+        $tempFolder = storage_path('app/public/temp/' . uniqid());
+        if (!is_dir($tempFolder)) {
+            mkdir($tempFolder, 0755, true);
+        }
+        return $tempFolder;
+    }
+
+    private function copyAndRenameFiles($users, $tempFolder)
+    {
+        foreach ($users as $user) {
+            $pictures = [$user->user->face_picture];
+            foreach ($pictures as $picture) {
+                $source = storage_path('app/public/picture/' . $picture);
+                $destination = $tempFolder . '/' . $picture;
+                if (file_exists($source)) {
+                    copy($source, $destination);
+                    $newDestination = $tempFolder . '/' . $user->district . '_' . $user->dan . '_' . $user->user->name . '.jpg';
+                    rename($destination, $newDestination);
+                }
+            }
+        }
+    }
+
+    private function createZipFile($tempFolder, $zipFileName)
+    {
+        $zipPath = storage_path('app/public/' . $zipFileName);
+        $zip = new ZipArchive;
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($tempFolder)
+            );
+            foreach ($files as $name => $file) {
+                if (!$file->isDir()) {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen($tempFolder) + 1);
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+            $zip->close();
+            return $zipPath;
+        } else {
+            return null;
+        }
+    }
+
+    private function downloadAndCleanup($zipPath, $tempFolder)
+    {
+        if ($zipPath && file_exists($zipPath)) {
+            $response = response()->download($zipPath)->deleteFileAfterSend(true);
+            File::deleteDirectory($tempFolder);
+            return $response;
+        } else {
+            File::deleteDirectory($tempFolder);
+            return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
+        }
+    }
 }
