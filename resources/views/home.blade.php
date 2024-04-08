@@ -16,8 +16,10 @@
                         <th>一覧DL</th>
                         <th>申込書DL</th>
                         <th>課題DL</th>
-                        <th>顔写真</th>
-                        <th>健康情報</th>
+                        @if (Auth::user()->is_ais == null)
+                            <th>顔写真</th>
+                            <th>健康情報</th>
+                        @endif
                     </tr>
                     @foreach ($count as $val)
                         @if (isset($val->sc_number))
@@ -61,7 +63,9 @@
                         <th>一覧DL</th>
                         <th>申込書DL</th>
                         <th>課題DL</th>
-                        <th>顔写真</th>
+                        @if (Auth::user()->is_ais == null)
+                            <th>顔写真</th>
+                        @endif
                     </tr>
                     @foreach ($div_count as $val)
                         @unless ($val->division_number == null)
@@ -105,7 +109,9 @@
                             <th>一覧DL</th>
                             <th>申込書DL</th>
                             <th>課題DL</th>
-                            <th>顔写真</th>
+                            @if (Auth::user()->is_ais == null)
+                                <th>顔写真</th>
+                            @endif
                         </tr>
                         @foreach ($danken_count as $val)
                             <tr>
