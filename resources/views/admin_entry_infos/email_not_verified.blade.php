@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
+
 @section('content')
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -116,4 +118,8 @@
 
 
     </div>
+    <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#entryInfos-table');
+    </script>
 @endsection
