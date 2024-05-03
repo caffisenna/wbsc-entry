@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.min.css') }}">
 <div class="card-body p-0">
     <div class="table-responsive">
         <table class="table" id="add_users-table">
@@ -7,7 +8,7 @@
                     <th>Email</th>
                     <th>種別</th>
                     <th>password</th>
-                    <th colspan="3">Action</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,3 +47,8 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/dataTables.min.js') }}"></script>
+<script>
+    let table = new DataTable('#add_users-table');
+</script>
