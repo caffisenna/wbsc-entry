@@ -923,7 +923,7 @@ class AdminEntry_infoController extends AppBaseController
 
 
             // 名前+flashメッセージを返して戻る
-            Flash::success($user->name . 'さん 参加認定をしました');
+            Flash::success($user->name . 'さん 修了認定をしました');
 
             return back();
         }
