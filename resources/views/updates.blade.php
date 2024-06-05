@@ -4,6 +4,8 @@
     <div class="container">
         <h2>更新情報</h2>
         <ul class="uk-list uk-list-bullet">
+            <li><span class="uk-text-small uk-text-bold">2024/06/05</span><br>
+                障害対応のため6月1日〜4日の期間でAISESのサービスを停止しました。</li>
             <li><span class="uk-text-small uk-text-bold">2024/04/06</span><br>
                 地区AIS委員会と地区コミッショナー画面で参加認定のステータスを表示するように修正を行いました。</li>
             <li><span class="uk-text-small uk-text-bold">2024/03/16</span><br>
