@@ -367,7 +367,7 @@ class AdminEntry_infoController extends AppBaseController
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('division_number', $q)->where('district', Auth::user()->is_ais);
+                        $query->where('division_number', $q)->where('district', Auth::user()->is_ais)->whereNotNull('div_accepted_at');
                     }
                 )->with('entry_info')->get();
             } else {
@@ -376,7 +376,7 @@ class AdminEntry_infoController extends AppBaseController
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('division_number', $q);
+                        $query->where('division_number', $q)->whereNotNull('div_accepted_at');
                     }
                 )->with('entry_info')->get();
             }
@@ -387,7 +387,7 @@ class AdminEntry_infoController extends AppBaseController
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q)->where('district', Auth::user()->is_ais);
+                        $query->where('sc_number', $q)->where('district', Auth::user()->is_ais)->whereNotNull('sc_accepted_at');
                     }
                 )->with('entry_info')->get();
             } else {
@@ -396,7 +396,7 @@ class AdminEntry_infoController extends AppBaseController
                     'entry_info',
                     function ($query) {
                         $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q);
+                        $query->where('sc_number', $q)->whereNotNull('sc_accepted_at');
                     }
                 )->with('entry_info')->get();
             }
@@ -406,7 +406,7 @@ class AdminEntry_infoController extends AppBaseController
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
-                        $query->whereNotNull('danken')->where('district', Auth::user()->is_ais);
+                        $query->whereNotNull('danken')->where('district', Auth::user()->is_ais)->whereNotNull('danken_accepted_at');
                     }
                 )->with('entry_info')->get();
             } else {
@@ -414,13 +414,17 @@ class AdminEntry_infoController extends AppBaseController
                 $entryInfos = User::wherehas(
                     'entry_info',
                     function ($query) {
-                        $query->whereNotNull('danken');
+                        $query->whereNotNull('danken')->whereNotNull('danken_accepted_at');
                     }
                 )->with('entry_info')->get();
             }
         }
 
 
+        if ($entryInfos->count() == 0) {
+            flash::error('対象の申込がありません。もしくは参加認定前のため、一括ダウンロードができません。');
+            return back();
+        }
 
         // 一時ディレクトリを作成する
         $tmpDirName = 'tmp_' . Str::random(8);
@@ -429,13 +433,24 @@ class AdminEntry_infoController extends AppBaseController
         if ($request['assignment'] == 'false') {
             // 個別の申込書を生成
             foreach ($entryInfos as $entryInfo) {
+                // 取れている
                 $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
                 $pdf->setPaper('A4');
                 $pdf = $pdf->output(); // PDF生成
-                if (isset($entryInfo->entry_info->sc_number)) {
-                    $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
-                } elseif ($entryInfo->entry_info->danken) {
-                    $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name; // ファイル名
+
+                switch ($_REQUEST['cat']) {
+                    case 'sc':
+                        $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        break;
+                    case 'division':
+                        $fname = $entryInfo->entry_info->division_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        break;
+                    case 'danken':
+                        $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        break;
+                    default:
+                        # code...
+                        break;
                 }
                 $fname = str_replace(' ', '_', $fname); // ファイル名のスペースを_に置換
                 Storage::put($tmpDirName . "/" . $fname . '.pdf', $pdf);
@@ -444,10 +459,20 @@ class AdminEntry_infoController extends AppBaseController
             // 課題の一括DL
             foreach ($entryInfos as $entryInfo) {
                 $uuid = $entryInfo->entry_info->uuid;
-                if (isset($entryInfo->entry_info->sc_number)) {
-                    $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
-                } elseif ($entryInfo->entry_info->danken) {
-                    $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name . " 課題"; // ファイル名
+
+                switch ($_REQUEST['cat']) {
+                    case 'sc':
+                        $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        break;
+                    case 'division':
+                        $fname = $entryInfo->entry_info->division_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        break;
+                    case 'danken':
+                        $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        break;
+                    default:
+                        # code...
+                        break;
                 }
                 $fname = str_replace(' ', '_', $fname) . '.pdf'; // ファイル名のスペースを_に置換
                 if ($_REQUEST['cat'] == 'division') {
@@ -464,11 +489,29 @@ class AdminEntry_infoController extends AppBaseController
         }
 
         // zip生成
-        if ($request['assignment'] == 'false') {
-            $zipFileName = "sc_entry_all.zip";
-        } elseif ($request['assignment'] == 'true') {
-            $zipFileName = "sc_assignment_all.zip";
+        switch ($_REQUEST['cat']) {
+            case 'sc':
+                $prefix = $entryInfo->entry_info->sc_number;
+                break;
+            case 'division':
+                $prefix = $entryInfo->entry_info->division_number;
+                break;
+            case 'danken':
+                $prefix = "団研 ";
+                break;
+            default:
+                # code...
+                break;
         }
+
+        if ($request['assignment'] == 'false') {
+            $fName = "申込書.zip";
+        } elseif ($request['assignment'] == 'true') {
+            $fName = "課題研修.zip";
+        }
+
+        $zipFileName = $prefix . $fName;
+
         $zipFilePath = storage_path('app/' . $zipFileName);
         $zip = new ZipArchive();
         if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
@@ -524,9 +567,9 @@ class AdminEntry_infoController extends AppBaseController
     {
         if (isset($request->sc)) { // 一覧表からSC番号が指定されたとき
             if (Auth::user()->is_ais) {
-                $data = Entry_info::with('user')->where('sc_number', $request->sc)->where('district', Auth::user()->is_ais)->get();
+                $data = Entry_info::with('user')->where('sc_number', $request->sc)->where('district', Auth::user()->is_ais)->with('health_info')->get();
             } else {
-                $data = Entry_info::with('user')->where('sc_number', $request->sc)->get();
+                $data = Entry_info::with('user')->where('sc_number', $request->sc)->with('health_info')->get();
             }
         } elseif (isset($request->division)) { // 一覧表からSC番号が指定されたとき
             if (Auth::user()->is_ais) {
@@ -536,9 +579,9 @@ class AdminEntry_infoController extends AppBaseController
             }
         } elseif (isset($request->cat) && $request->cat == 'danken') { // 一覧表から団研が指定されたとき
             if (Auth::user()->is_ais) {
-                $data = Entry_info::with('user')->whereNotNull('danken')->where('district', Auth::user()->is_ais)->get();
+                $data = Entry_info::with('user')->whereNotNull('danken')->where('district', Auth::user()->is_ais)->with('health_info')->get();
             } else {
-                $data = Entry_info::with('user')->whereNotNull('danken')->get();
+                $data = Entry_info::with('user')->whereNotNull('danken')->with('health_info')->get();
             }
         } elseif ($_REQUEST['q'] == 'all') { // or 全件取得
             $data = Entry_info::with('user')->get();
@@ -600,6 +643,15 @@ class AdminEntry_infoController extends AppBaseController
                 '研修歴(研)',
                 '研修歴(実)',
                 '奉仕歴',
+                '現在治療中の病気',
+                '直近3ヶ月の健康状態',
+                '最近の体調',
+                '医師からの注意',
+                '特記事項・過去の傷病等',
+                '食物アレルギー',
+                'アレルゲン',
+                'アレルゲンを摂取するとどうなるか',
+                'アレルゲンに対する家庭での対応',
             ];
         }
 
@@ -943,25 +995,12 @@ class AdminEntry_infoController extends AppBaseController
 
     public function health_memo(Request $request)
     {
-        // if ($request['sc_number']) {
-        //     $entryinfos = Entry_info::where('sc_number', $request['sc_number'])
-        //         ->where(function ($query) {
-        //             $query->where('health_illness', '<>', '特になし');
-        //             $query->orWhere('health_memo', '<>', '特になし');
-        //         })
-        //         ->with('user')->get();
-        // } else {
-        //     $entryinfos = Entry_info::where('health_illness', '<>', '特になし')
-        //         ->orWhere('health_memo', '<>', '特になし')->with('user')->get();
-        // }
-
         $entryinfos = HealthInfo::where(function ($query) {
-            $query->whereNotNull('treating_disease')
-                ->orWhereNotNull('carried_medications')
+            $query->where('treating_disease', '<>', 1)
                 ->orWhere('health_status_last_3_months', '病気のため休んだ')
-                ->orWhereNotNull('recent_health_status')
-                ->orWhereNotNull('doctor_advice')
-                ->orWhereNotNull('medical_history')
+                ->orWhere('recent_health_status', '<>', 1)
+                ->orWhere('doctor_advice', '<>', 1)
+                ->orWhere('medical_history', '<>', 1)
                 ->orWhere('food_allergies', '食物アレルギーがある');
         })
             // SC指定の場合のみ
@@ -1149,158 +1188,6 @@ class AdminEntry_infoController extends AppBaseController
         }
     }
 
-    // public function dl_face_pictures(Request $request)
-    // {
-    //     // 顔写真の一括DL
-    //     $input = $request->all();
-    //     $cat = $input['cat'];
-
-
-    //     switch ($cat) {
-    //         case 'sc':
-    //             $number = $input['number'];
-    //             $users = Entry_info::where('sc_number', $number)->with('user')->get();
-    //             $pictures = [];
-
-    //             // ランダムな一時作業フォルダを生成する
-    //             $temp_folder = storage_path('app/public/temp/' . uniqid());
-    //             if (!is_dir($temp_folder)) {
-    //                 mkdir($temp_folder, 0755, true);
-    //             }
-
-    //             foreach ($users as $user) {
-    //                 $pictures = []; // ユーザーごとに画像ファイルをリセットする
-
-    //                 // 各ユーザーに関連付けられた画像ファイルを取得
-    //                 $pictures[] = $user->user->face_picture;
-
-    //                 // 一時作業フォルダに画像ファイルをコピーしてリネームする
-    //                 foreach ($pictures as $picture) {
-    //                     $source = storage_path('app/public/picture/' . $picture);
-    //                     $destination = $temp_folder . '/' . $picture;
-    //                     if (file_exists($source)) {
-    //                         copy($source, $destination);
-    //                         // コピーしたファイルをリネームする
-    //                         $new_destination = $temp_folder . '/' . $user->district . '_' . $user->dan . '_' . $user->user->name . '.jpg'; // 新しいファイル名を指定
-    //                         rename($destination, $new_destination);
-    //                     } else {
-    //                         // ファイルが存在しない場合は無視する
-    //                         continue;
-    //                     }
-    //                 }
-    //             }
-
-    //             // 一時作業フォルダをzip圧縮してダウンロードする
-    //             $zip_file = 'SC' . $number . '期_顔写真.zip';
-    //             $zip_path = storage_path('app/public/' . $zip_file);
-    //             $zip = new ZipArchive;
-    //             if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-    //                 $files = new \RecursiveIteratorIterator(
-    //                     new \RecursiveDirectoryIterator($temp_folder)
-    //                 );
-    //                 foreach ($files as $name => $file) {
-    //                     if (!$file->isDir()) {
-    //                         $filePath = $file->getRealPath();
-    //                         $relativePath = substr($filePath, strlen($temp_folder) + 1);
-    //                         $zip->addFile($filePath, $relativePath);
-    //                     }
-    //                 }
-    //                 $zip->close();
-
-    //                 // ダウンロードを実行する
-    //                 if (file_exists($zip_path)) {
-    //                     $response = response()->download($zip_path)->deleteFileAfterSend(true);
-    //                     // 一時作業フォルダを削除する
-    //                     File::deleteDirectory($temp_folder);
-    //                     return $response;
-    //                 } else {
-    //                     // zipファイルが存在しない場合は適切なエラー処理を行う
-    //                     File::deleteDirectory($temp_folder);
-    //                     return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
-    //                 }
-    //             } else {
-    //                 // zipファイルの生成に失敗した場合は適切なエラー処理を行う
-    //                 File::deleteDirectory($temp_folder);
-    //                 return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
-    //             }
-
-    //             break;
-
-    //         case 'div':
-    //             $number = $input['number'];
-    //             $users = Entry_info::where('division_number', $number)->with('user')->get();
-    //             $pictures = [];
-
-    //             // ランダムな一時作業フォルダを生成する
-    //             $temp_folder = storage_path('app/public/temp/' . uniqid());
-    //             if (!is_dir($temp_folder)) {
-    //                 mkdir($temp_folder, 0755, true);
-    //             }
-
-    //             foreach ($users as $user) {
-    //                 $pictures = []; // ユーザーごとに画像ファイルをリセットする
-
-    //                 // 各ユーザーに関連付けられた画像ファイルを取得
-    //                 $pictures[] = $user->user->face_picture;
-
-    //                 // 一時作業フォルダに画像ファイルをコピーしてリネームする
-    //                 foreach ($pictures as $picture) {
-    //                     $source = storage_path('app/public/picture/' . $picture);
-    //                     $destination = $temp_folder . '/' . $picture;
-    //                     if (file_exists($source)) {
-    //                         copy($source, $destination);
-    //                         // コピーしたファイルをリネームする
-    //                         $new_destination = $temp_folder . '/' . $user->district . '_' . $user->dan . '_' . $user->user->name . '.jpg'; // 新しいファイル名を指定
-    //                         rename($destination, $new_destination);
-    //                     } else {
-    //                         // ファイルが存在しない場合は無視する
-    //                         continue;
-    //                     }
-    //                 }
-    //             }
-
-    //             // 一時作業フォルダをzip圧縮してダウンロードする
-    //             $zip_file = '課程別' . $number . '回_顔写真.zip';
-    //             $zip_path = storage_path('app/public/' . $zip_file);
-    //             $zip = new ZipArchive;
-    //             if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-    //                 $files = new \RecursiveIteratorIterator(
-    //                     new \RecursiveDirectoryIterator($temp_folder)
-    //                 );
-    //                 foreach ($files as $name => $file) {
-    //                     if (!$file->isDir()) {
-    //                         $filePath = $file->getRealPath();
-    //                         $relativePath = substr($filePath, strlen($temp_folder) + 1);
-    //                         $zip->addFile($filePath, $relativePath);
-    //                     }
-    //                 }
-    //                 $zip->close();
-
-    //                 // ダウンロードを実行する
-    //                 if (file_exists($zip_path)) {
-    //                     $response = response()->download($zip_path)->deleteFileAfterSend(true);
-    //                     // 一時作業フォルダを削除する
-    //                     File::deleteDirectory($temp_folder);
-    //                     return $response;
-    //                 } else {
-    //                     // zipファイルが存在しない場合は適切なエラー処理を行う
-    //                     File::deleteDirectory($temp_folder);
-    //                     return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
-    //                 }
-    //             } else {
-    //                 // zipファイルの生成に失敗した場合は適切なエラー処理を行う
-    //                 File::deleteDirectory($temp_folder);
-    //                 return redirect()->back()->with('error', 'zipファイルの生成に失敗しました。');
-    //             }
-    //             break;
-    //         case 'div':
-    //             dd('danken');
-    //             break;
-    //         default:
-    //             # code...
-    //             break;
-    //     }
-    // }
     public function dl_face_pictures(Request $request)
     {
         $input = $request->all();
