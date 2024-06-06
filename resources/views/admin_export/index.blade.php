@@ -39,7 +39,9 @@
                 <td>{{ $val->bs_basic_course }}</td>
                 <td>{{ $val->scout_camp }}</td>
                 <td>
-                    {{ $val->wb_basic1_category }} {{ $val->wb_basic1_number }} {{ $val->wb_basic1_date }}
+                    @if ($val->wb_basic1_category)
+                        {{ $val->wb_basic1_category }} {{ $val->wb_basic1_number }} {{ $val->wb_basic1_date }}
+                    @endif
                     @if ($val->wb_basic2_category)
                         <br>{{ $val->wb_basic2_category }} {{ $val->wb_basic2_number }} {{ $val->wb_basic2_date }}
                     @endif
@@ -48,7 +50,9 @@
                     @endif
                 </td>
                 <td>
-                    {{ $val->wb_adv1_category }} {{ $val->wb_adv1_number }} {{ $val->wb_adv1_date }}
+                    @if ($val->wb_adv1_category)
+                        {{ $val->wb_adv1_category }} {{ $val->wb_adv1_number }} {{ $val->wb_adv1_date }}
+                    @endif
                     @if ($val->wb_adv2_category)
                         <br>{{ $val->wb_adv2_category }} {{ $val->wb_adv2_number }} {{ $val->wb_adv2_date }}
                     @endif
@@ -71,6 +75,18 @@
                         <br>{{ $val->service_hist5_role }} {{ $val->service_hist5_term }}
                     @endif
                 </td>
+                <td> {{ $val->health_info->treating_disease == '1' ? '特になし' : $val->health_info->treating_disease }}
+                </td>
+                <td> {{ $val->health_info->health_status_last_3_months }} </td>
+                <td> {{ $val->health_info->recent_health_status == '1' ? '特に異常なし' : $val->health_info->recent_health_status }}
+                </td>
+                <td> {{ $val->health_info->doctor_advice == '1' ? '特になし' : $val->health_info->doctor_advice }} </td>
+                <td> {{ $val->health_info->medical_history == '1' ? '特になし' : $val->health_info->medical_history }}
+                </td>
+                <td> {{ $val->health_info->food_allergies }} </td>
+                <td> {{ $val->health_info->allergen }} </td>
+                <td> {{ $val->health_info->reaction_to_allergen }} </td>
+                <td> {{ $val->health_info->usual_response_to_reaction }} </td>
             </tr>
         @endforeach
     </tbody>
