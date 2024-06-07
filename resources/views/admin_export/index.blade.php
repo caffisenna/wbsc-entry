@@ -2,7 +2,7 @@
     <thead>
         <tr>
             @foreach ($headings as $head)
-                <th>{{ $head }}6</th>
+                <th>{{ $head }}7</th>
             @endforeach
         </tr>
     </thead>
