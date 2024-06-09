@@ -1,22 +1,21 @@
 # AISES 指導者研修申込システム　
 
-## Dev environments
+## Develop environments
 
 ### Framework
 [Laravel]('https://github.com/laravel/framework)
 
 ### Language:
-PHP 8.2.1 (cli) (built: Jan 13 2023 10:42:44) (NTS)<br>
-Copyright (c) The PHP Group<br>
-Zend Engine v4.2.1, Copyright (c) Zend Technologies<br>
-    with Zend OPcache v8.2.1, Copyright (c), by Zend Technologies
+PHP 8.2.19 (cli) (built: May  7 2024 14:19:14) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.2.19, Copyright (c) Zend Technologies
+    with Zend OPcache v8.2.19, Copyright (c), by Zend Technologies
 
 ### RDBMS
-Server version: 8.0.31-0ubuntu0.20.04.2 (Ubuntu)
+mysql  Ver 8.0.37 for macos14.2 on arm64 (Source distribution)
 
-### Homestead
-* Homestead v14.2.0
-* Settler v13.0.0
+### Laravel Valet
+Laravel Valet 4.6.1
 
 ## System Requirements
 1. PHP ver8.2 or later
@@ -29,12 +28,15 @@ Server version: 8.0.31-0ubuntu0.20.04.2 (Ubuntu)
 2. run `composer install`
 
 ## Documentation
-No docs avaliable.
+No documents avaliable.
 
 ## Contributor
 - PM: 平田恭一
 - User Guide Editor: 谷道龍彦
 - 東京連盟事務局: 竹内奈穂子 小松泰子
-- Coder: taichi.tadano@gmail.com
+- Coder: 只野太一 taichi.tadano@gmail.com
 
 ## Disclaimer
+- 本システムを利用することで発生する不具合、損害、損失等について、開発者及びボーイスカウト東京連盟は一切の責任を負いません。利用者は自己責任において本システムを利用してください。
+- 本システムに関するサポートは提供されません。バグの修正や機能追加等の対応も行われない場合があります。
+- ボーイスカウト東京連盟以外の第三者が本システムを利用する場合、その結果について開発者及びボーイスカウト東京連盟は一切の責任を負いません。
