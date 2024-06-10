@@ -75,18 +75,69 @@
                         <br>{{ $val->service_hist5_role }} {{ $val->service_hist5_term }}
                     @endif
                 </td>
-                <td> {{ $val->health_info->treating_disease == '1' ? '特になし' : $val->health_info->treating_disease }}
+                <td>
+                    @if (isset($val->health_info->treating_disease))
+                        {{ $val->health_info->treating_disease == '1' ? '特になし' : $val->health_info->treating_disease }}
+                    @else
+                        未入力
+                    @endif
                 </td>
-                <td> {{ $val->health_info->health_status_last_3_months }} </td>
-                <td> {{ $val->health_info->recent_health_status == '1' ? '特に異常なし' : $val->health_info->recent_health_status }}
+                <td>
+                    @if (isset($val->health_info->health_status_last_3_months))
+                        {{ $val->health_info->health_status_last_3_months }}
+                    @else
+                        未入力
+                    @endif
                 </td>
-                <td> {{ $val->health_info->doctor_advice == '1' ? '特になし' : $val->health_info->doctor_advice }} </td>
-                <td> {{ $val->health_info->medical_history == '1' ? '特になし' : $val->health_info->medical_history }}
+                <td>
+                    @if (isset($val->health_info->recent_health_status))
+                        {{ $val->health_info->recent_health_status == '1' ? '特に異常なし' : $val->health_info->recent_health_status }}
+                    @else
+                        未入力
+                    @endif
                 </td>
-                <td> {{ $val->health_info->food_allergies }} </td>
-                <td> {{ $val->health_info->allergen }} </td>
-                <td> {{ $val->health_info->reaction_to_allergen }} </td>
-                <td> {{ $val->health_info->usual_response_to_reaction }} </td>
+                <td>
+                    @if (isset($val->health_info->doctor_advice))
+                        {{ $val->health_info->doctor_advice == '1' ? '特になし' : $val->health_info->doctor_advice }}
+                    @else
+                        未入力
+                    @endif
+                </td>
+                <td>
+                    @if (isset($val->health_info->medical_history))
+                        {{ $val->health_info->medical_history == '1' ? '特になし' : $val->health_info->medical_history }}
+                    @else
+                        未入力
+                    @endif
+                </td>
+                <td>
+                    @if (isset($val->health_info->food_allergies))
+                        {{ $val->health_info->food_allergies }}
+                    @else
+                        未入力
+                    @endif
+                </td>
+                <td>
+                    @if (isset($val->health_info->allergen))
+                        {{ $val->health_info->allergen }}
+                    @else
+                        未入力
+                    @endif
+                </td>
+                <td>
+                    @if (isset($val->health_info->reaction_to_allergen))
+                        {{ $val->health_info->reaction_to_allergen }}
+                    @else
+                        未入力
+                    @endif
+                </td>
+                <td>
+                    @if (isset($val->health_info->usual_response_to_reaction))
+                        {{ $val->health_info->usual_response_to_reaction }}
+                    @else
+                        未入力
+                    @endif
+                </td>
             </tr>
         @endforeach
     </tbody>
