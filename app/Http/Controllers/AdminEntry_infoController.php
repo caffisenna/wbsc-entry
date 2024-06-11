@@ -338,6 +338,7 @@ class AdminEntry_infoController extends AppBaseController
             return redirect(route('admin_entryInfos.index'));
         }
 
+        $entryInfo->health_info()->delete(); // 健康情報のcascade削除
         $this->entryInfoRepository->delete($id);
 
         Flash::success($entryInfo->user->name . 'の申込情報を削除しました');
