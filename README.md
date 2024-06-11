@@ -64,5 +64,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-本ソフトウェアはボーイスカウト東京連盟AIS委員会の委託により作成されました。
+本システムはボーイスカウト東京連盟AIS委員会の委託により作成されました。
 著作権はボーイスカウト東京連盟に帰属しています。
