@@ -224,8 +224,13 @@ class Entry_info extends Model
     public static function rules()
     {
         return [
-            'sc_number' => 'required_without:danken',
-            'sc_number' => 'required_unless:bvs_exception,on',
+            // 'sc_number' => 'required_without:danken',
+            // 'sc_number' => 'required_unless:bvs_exception,on',
+            'sc_number' => [
+                Rule::requiredIf(function () {
+                    return request('danken') === null && request('bvs_exception') !== 'on';
+                }),
+            ],
             'division_number' => 'required_without:danken',
             'furigana' => 'required',
             'gender' => 'required',
@@ -264,9 +269,9 @@ class Entry_info extends Model
     }
 
     public static $messages = [
-        'sc_number.required_without' => 'スカウトコースの期数を選択してください',
-        'sc_number.required_unless' => 'スカウトコースの期数を選択してください',
-        'sc_number.required' => 'スカウトコースの期数を選択してください',
+        // 'sc_number.required_without' => 'スカウトコースの期数を選択してください',
+        // 'sc_number.required_unless' => 'スカウトコースの期数を選択してください',
+        'sc_number.required' => 'スカウトコースの期数を選択してください3',
         'sc_number_done.required' => 'スカウトコースを修了済みの場合は期数を入力してください',
         'division_number.required' => '課程研修別の期数を選択してください',
         'division_number.required_without' => '課程研修別の期数を選択してください',
