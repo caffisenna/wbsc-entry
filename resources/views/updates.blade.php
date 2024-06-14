@@ -4,6 +4,8 @@
     <div class="container">
         <h2>更新情報</h2>
         <ul class="uk-list uk-list-bullet">
+            <li><span class="uk-text-small uk-text-bold">2024/06/15</span><br>
+                団委員研修所に申し込む際、「スカウトコースを選択してください」とエラーメッセージが表示される不具合を解消しました。</li>
             <li><span class="uk-text-small uk-text-bold">2024/06/09</span><br>
                 <a
                     href="https://drive.google.com/file/d/1uCx6kkW5r1GNwHIme8xZ5QgPTTvURrGZ/view?usp=sharing">参加者マニュアル</a>を更新しました。
