@@ -25,10 +25,18 @@
             <form method="POST" action="{{ route('commi_comment_post') }}">
                 @csrf
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="form-stacked-text">副申請書の内容(上限800文字程度)</label>
+                    <label class="uk-form-label" for="form-stacked-text">副申請書の内容(上限400文字程度)</label>
                     <div class="uk-form-controls">
-                        <textarea name="comment" cols="30" rows="10" class="uk-textarea">@if ($userinfo->additional_comment){{ $userinfo->additional_comment }}@endif</textarea>
+                        <textarea id="comment" name="comment" cols="30" rows="10" class="uk-textarea">
+@if ($userinfo->additional_comment)
+{{ $userinfo->additional_comment }}
+@endif
+</textarea>
                         {{-- <input class="uk-input" id="form-stacked-text" type="text" name="name" required> --}}
+                        <div id="char-count">0 / 400</div>
+                        <div class="progress">
+                            <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -41,4 +49,55 @@
         </div>
 
     </div>
+
+    <style>
+        .progress {
+            position: relative;
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #4caf50;
+            border-radius: 5px;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .progress-bar.over-limit {
+            background-color: #f44336;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('comment');
+            const charCount = document.getElementById('char-count');
+            const progressBar = document.getElementById('progress-bar');
+            const maxChars = 400;
+
+            textarea.addEventListener('input', function () {
+                let currentLength = textarea.value.length;
+
+                // If the current length exceeds maxChars, truncate the input
+                if (currentLength > maxChars) {
+                    textarea.value = textarea.value.substring(0, maxChars);
+                    currentLength = maxChars;
+                }
+
+                charCount.textContent = `${currentLength} / ${maxChars}`;
+                const percentage = (currentLength / maxChars) * 100;
+                progressBar.style.width = `${percentage}%`;
+
+                // Update progress bar color based on character limit
+                if (currentLength > maxChars) {
+                    progressBar.classList.add('over-limit');
+                } else {
+                    progressBar.classList.remove('over-limit');
+                }
+            });
+        });
+    </script>
 @endsection
