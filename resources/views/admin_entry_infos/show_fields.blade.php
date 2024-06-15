@@ -159,15 +159,6 @@
             </td>
         </tr>
 
-        <tr>
-            <th>現在治療中の病気</th>
-            <td>{{ $entryInfo->entry_info->health_illness }}</td>
-        </tr>
-
-        <tr>
-            <th>健康上で不安なことなど</th>
-            <td>{{ $entryInfo->entry_info->health_memo }}</td>
-        </tr>
         @if (Auth::user()->is_admin)
             <tr>
                 <th><span class="uk-text-danger">団承認取消</th>
@@ -326,88 +317,19 @@
                 </td>
             </tr>
         @endunless
-        @if ($entryInfo->entry_info->additional_comment)
-            <tr>
-                <th>副申請書</th>
-                <td>{{ $entryInfo->entry_info->additional_comment }}</td>
-            </tr>
-        @endif
+
+        <tr>
+            <th>副申請書</th>
+            <td>
+                @if (isset($entryInfo->entry_info->additional_comment))
+                    {{ $entryInfo->entry_info->additional_comment }}
+                @else
+                    <span class="uk-text-default">入力なし</span>
+                @endif
+            </td>
+        </tr>
+
         @if (Auth::user()->is_admin && Auth::user()->is_staff == null)
-            @unless ($entryInfo->entry_info->danken)
-                @unless ($entryInfo->entry_info->sc_number == 'done')
-                    {{-- <tr>
-                        <th>参加認定(SC)</th>
-                        <td>
-                            @if (empty($entryInfo->entry_info->sc_accepted_at) && empty($entryInfo->entry_info->sc_rejected_at))
-                                <a href="{{ url('admin/accept?cat=sc&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                    class="uk-button uk-button-primary"
-                                    onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加を承認しますか?')">スカウトコース<br>参加承認</a>
-                                <a href="{{ url('admin/accept?cat=sc&flag=reject') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                    class="uk-button uk-button-danger"
-                                    onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加を否認しますか?')">スカウトコース<br>参加否認</a>
-                            @else
-                                @isset($entryInfo->entry_info->sc_accepted_at)
-                                    {{ $entryInfo->entry_info->sc_accepted_at }} 参加承認済み
-                                @endisset
-                                @isset($entryInfo->entry_info->sc_rejected_at)
-                                    {{ $entryInfo->entry_info->sc_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
-                                @endisset
-                                <a href="{{ url('admin/accept?cat=sc&revert=true') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                    class="uk-button uk-button-danger"
-                                    onclick="return confirm('{{ $entryInfo->name }}さんのスカウトコースの参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
-                            @endif
-                        </td>
-                    </tr> --}}
-                @endunless
-                {{-- <tr>
-                    <th>参加認定(課程別)</th>
-                    <td>
-                        @if (empty($entryInfo->entry_info->div_accepted_at) && empty($entryInfo->entry_info->div_rejected_at))
-                            <a href="{{ url('admin/accept?cat=div&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                class="uk-button uk-button-primary"
-                                onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加を承認しますか?')">課程別研修参<br>加承認</a>
-                            <a href="{{ url('admin/accept?cat=div&flag=reject') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                class="uk-button uk-button-danger"
-                                onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加を否認しますか?')">課程別研修<br>参加否認</a>
-                        @else
-                            @isset($entryInfo->entry_info->div_accepted_at)
-                                {{ $entryInfo->entry_info->div_accepted_at }} 参加承認済み
-                            @endisset
-                            @isset($entryInfo->entry_info->div_rejected_at)
-                                {{ $entryInfo->entry_info->div_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
-                            @endisset
-                            <a href="{{ url('admin/accept?cat=div&revert=true') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                class="uk-button uk-button-danger"
-                                onclick="return confirm('{{ $entryInfo->name }}さんの課程別研修の参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
-                        @endif
-                    </td>
-                </tr> --}}
-            @else
-                {{-- <tr> --}}
-                {{-- 団研参加認定 --}}
-                {{-- <th>参加認定</th>
-                    <td>
-                        @if (empty($entryInfo->entry_info->danken_accepted_at) && empty($entryInfo->entry_info->danken_rejected_at))
-                            <a href="{{ url('admin/accept?cat=danken&flag=accept') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                class="uk-button uk-button-primary"
-                                onclick="return confirm('{{ $entryInfo->name }}さんの団委員研修所の参加を承認しますか?')">団委員研修所<br>参加承認</a>
-                            <a href="{{ url('admin/accept?cat=danken&flag=reject') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                class="uk-button uk-button-danger"
-                                onclick="return confirm('{{ $entryInfo->name }}さんの団委員研修所の参加を否認しますか?')">団委員研修所<br>参加否認</a>
-                        @else
-                            @isset($entryInfo->entry_info->danken_accepted_at)
-                                {{ $entryInfo->entry_info->danken_accepted_at }} 参加承認済み
-                            @endisset
-                            @isset($entryInfo->entry_info->danken_rejected_at)
-                                {{ $entryInfo->entry_info->danken_rejected_at }} <span class="uk-text-danger">参加否認済み</span>
-                            @endisset
-                            <a href="{{ url('admin/accept?cat=danken&revert=true') }}&uuid={{ $entryInfo->entry_info->uuid }}"
-                                class="uk-button uk-button-danger"
-                                onclick="return confirm('{{ $entryInfo->name }}さんの団委員研修所の参加承認・否認を初期化しますか?')">参加承認・否認クリアー</a>
-                        @endif
-                    </td>
-                </tr> --}}
-            @endunless
             <tr>
                 <th>地区コミ機能</th>
                 <td>
@@ -466,5 +388,53 @@
             </tr>
         @endif
 
+    </table>
+
+    <h3>健康情報</h3>
+    <table class="uk-table uk-table-striped uk-table-responsive">
+        <tr>
+            <th>現在治療中の病気</th>
+            <td>{{ $entryInfo->health_info->treating_disease == 1 ? '特になし' : $entryInfo->health_info->treating_disease }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>直近3ヶ月の健康状態</th>
+            <td>{{ $entryInfo->health_info->health_status_last_3_months }}</td>
+        </tr>
+
+        <tr>
+            <th>最近の体調</th>
+            <td>{{ $entryInfo->health_info->recent_health_status == 1 ? '特に異常なし' : $entryInfo->health_info->recent_health_status }}
+            </td>
+        </tr>
+        <tr>
+            <th>医師からの注意</th>
+            <td>{{ $entryInfo->health_info->doctor_advice == 1 ? '特になし' : $entryInfo->health_info->doctor_advice }}
+            </td>
+        </tr>
+        <tr>
+            <th>特記事項・過去の傷病等</th>
+            <td>{{ $entryInfo->health_info->medical_history == 1 ? '特になし' : $entryInfo->health_info->medical_history }}
+            </td>
+        </tr>
+        <tr>
+            <th>食物アレルギー</th>
+            <td>{{ $entryInfo->health_info->food_allergies }}</td>
+        </tr>
+        <tr>
+            <th>アレルゲン</th>
+            <td>{{ $entryInfo->health_info->allergen == null ? '入力なし' : $entryInfo->health_info->allergen }}</td>
+        </tr>
+        <tr>
+            <th>アレルゲンを摂取するとどうなるか</th>
+            <td>{{ $entryInfo->health_info->reaction_to_allergen == null ? '入力なし' : $entryInfo->health_info->reaction_to_allergen }}
+            </td>
+        </tr>
+        <tr>
+            <th>アレルゲンに対する家庭での対応</th>
+            <td>{{ $entryInfo->health_info->usual_response_to_reaction == null ? '入力なし' : $entryInfo->health_info->usual_response_to_reaction }}
+            </td>
+        </tr>
     </table>
 </div>

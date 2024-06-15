@@ -89,7 +89,7 @@ class CommiEntry_infoController extends AppBaseController
      */
     public function show($id)
     {
-        $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        $entryInfo = User::where('id', $id)->with('entry_info')->with('health_info')->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -100,7 +100,6 @@ class CommiEntry_infoController extends AppBaseController
         // 通知メールCC送信先取得
         $gm_email = GmAddress::where('uuid', $entryInfo->entry_info->uuid)->first();
 
-        // return view('admin_entry_infos.show')->with('entryInfo', $entryInfo);
         return view('admin_entry_infos.show', compact('entryInfo', 'gm_email'));
     }
 
