@@ -224,37 +224,44 @@
                 <td>{{ $entryInfo->additional_comment }}</td>
             </tr>
         @endif
-        <tr>
-            <th>健康情報</th>
-            <td>
-                【治療中の病気】
-                {{ $entryInfo->health_info->treating_disease == '1' ? '特になし' : $entryInfo->health_info->treating_disease }}
-                <br>
-                【携行持薬】
-                {{ $entryInfo->health_info->carried_medications == '' ? 'なし' : $entryInfo->health_info->carried_medications }}
-                <br>
-                【直近3ヶ月の健康】 {{ $entryInfo->health_info->health_status_last_3_months }}
-                <br>
-                【最近の体調】
-                {{ $entryInfo->health_info->recent_health_status == '1' ? '特に問題はなかった' : $entryInfo->health_info->recent_health_status }}
-                <br>
-                【医師の助言】 {{ $entryInfo->health_info->doctor_advice == '1' ? '特になし' : '' }}
-                <br>
-                【特記事項】 {{ $entryInfo->health_info->medical_history == '1' ? '特になし' : '' }}
-            </td>
-        </tr>
-        <tr>
-            <th>アレルギー情報</th>
-            <td>
-                【食物アレルギー】{{ $entryInfo->health_info->food_allergies == '' ? 'なし' : $entryInfo->health_info->food_allergies }}
-                <br>
-                【アレルゲン】{{ $entryInfo->health_info->allergen == '' ? 'なし' : $entryInfo->health_info->allergen }}
-                <br>
-                【摂取するとどうなるか】{{ $entryInfo->health_info->reaction_to_allergen == '' ? 'なし' : $entryInfo->health_info->reaction_to_allergen }}
-                <br>
-                【家庭での対応】{{ $entryInfo->health_info->usual_response_to_reaction == '' ? 'なし' : $entryInfo->health_info->usual_response_to_reaction }}
-            </td>
-        </tr>
+        @if (isset($entryInfo->health_info))
+            <tr>
+                <th>健康情報</th>
+                <td>
+                    【治療中の病気】
+                    {{ $entryInfo->health_info->treating_disease == '1' ? '特になし' : $entryInfo->health_info->treating_disease }}
+                    <br>
+                    【携行持薬】
+                    {{ $entryInfo->health_info->carried_medications == '' ? 'なし' : $entryInfo->health_info->carried_medications }}
+                    <br>
+                    【直近3ヶ月の健康】 {{ $entryInfo->health_info->health_status_last_3_months }}
+                    <br>
+                    【最近の体調】
+                    {{ $entryInfo->health_info->recent_health_status == '1' ? '特に問題はなかった' : $entryInfo->health_info->recent_health_status }}
+                    <br>
+                    【医師の助言】 {{ $entryInfo->health_info->doctor_advice == '1' ? '特になし' : '' }}
+                    <br>
+                    【特記事項】 {{ $entryInfo->health_info->medical_history == '1' ? '特になし' : '' }}
+                </td>
+            </tr>
+            <tr>
+                <th>アレルギー情報</th>
+                <td>
+                    【食物アレルギー】{{ $entryInfo->health_info->food_allergies == '' ? 'なし' : $entryInfo->health_info->food_allergies }}
+                    <br>
+                    【アレルゲン】{{ $entryInfo->health_info->allergen == '' ? 'なし' : $entryInfo->health_info->allergen }}
+                    <br>
+                    【摂取するとどうなるか】{{ $entryInfo->health_info->reaction_to_allergen == '' ? 'なし' : $entryInfo->health_info->reaction_to_allergen }}
+                    <br>
+                    【家庭での対応】{{ $entryInfo->health_info->usual_response_to_reaction == '' ? 'なし' : $entryInfo->health_info->usual_response_to_reaction }}
+                </td>
+            </tr>
+        @else
+            <tr>
+                <th>健康情報</th>
+                <td><span class="uk-text-danger">未入力</span></td>
+            </tr>
+        @endif
         <tr>
             <th>キャンセル</th>
             <td><a href="{{ route('cancel', ['uuid' => $entryInfo->uuid]) }}"
