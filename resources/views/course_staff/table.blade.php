@@ -83,7 +83,11 @@
                             @endif
                         </td>
                         <td>
-                            {!! $entryInfo->health_info->food_allergies == '食物アレルギーがある' ? '<span class="uk-text-danger">あり</span>' : '' !!}
+                            @if (isset($entryInfo->health_info))
+                                {!! $entryInfo->health_info->food_allergies == '食物アレルギーがある'
+                                    ? '<span class="uk-text-danger">あり</span>'
+                                    : '' !!}
+                            @endif
                         </td>
                     </tr>
                 @endif
