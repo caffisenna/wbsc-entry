@@ -390,51 +390,56 @@
 
     </table>
 
-    <h3>健康情報</h3>
-    <table class="uk-table uk-table-striped uk-table-responsive">
-        <tr>
-            <th>現在治療中の病気</th>
-            <td>{{ $entryInfo->health_info->treating_disease == 1 ? '特になし' : $entryInfo->health_info->treating_disease }}
-            </td>
-        </tr>
+    @if (isset($entryInfo->health_info))
+        <h3>健康情報</h3>
+        <table class="uk-table uk-table-striped uk-table-responsive">
+            <tr>
+                <th>現在治療中の病気</th>
+                <td>{{ $entryInfo->health_info->treating_disease == 1 ? '特になし' : $entryInfo->health_info->treating_disease }}
+                </td>
+            </tr>
 
-        <tr>
-            <th>直近3ヶ月の健康状態</th>
-            <td>{{ $entryInfo->health_info->health_status_last_3_months }}</td>
-        </tr>
+            <tr>
+                <th>直近3ヶ月の健康状態</th>
+                <td>{{ $entryInfo->health_info->health_status_last_3_months }}</td>
+            </tr>
 
-        <tr>
-            <th>最近の体調</th>
-            <td>{{ $entryInfo->health_info->recent_health_status == 1 ? '特に異常なし' : $entryInfo->health_info->recent_health_status }}
-            </td>
-        </tr>
-        <tr>
-            <th>医師からの注意</th>
-            <td>{{ $entryInfo->health_info->doctor_advice == 1 ? '特になし' : $entryInfo->health_info->doctor_advice }}
-            </td>
-        </tr>
-        <tr>
-            <th>特記事項・過去の傷病等</th>
-            <td>{{ $entryInfo->health_info->medical_history == 1 ? '特になし' : $entryInfo->health_info->medical_history }}
-            </td>
-        </tr>
-        <tr>
-            <th>食物アレルギー</th>
-            <td>{{ $entryInfo->health_info->food_allergies }}</td>
-        </tr>
-        <tr>
-            <th>アレルゲン</th>
-            <td>{{ $entryInfo->health_info->allergen == null ? '入力なし' : $entryInfo->health_info->allergen }}</td>
-        </tr>
-        <tr>
-            <th>アレルゲンを摂取するとどうなるか</th>
-            <td>{{ $entryInfo->health_info->reaction_to_allergen == null ? '入力なし' : $entryInfo->health_info->reaction_to_allergen }}
-            </td>
-        </tr>
-        <tr>
-            <th>アレルゲンに対する家庭での対応</th>
-            <td>{{ $entryInfo->health_info->usual_response_to_reaction == null ? '入力なし' : $entryInfo->health_info->usual_response_to_reaction }}
-            </td>
-        </tr>
-    </table>
+            <tr>
+                <th>最近の体調</th>
+                <td>{{ $entryInfo->health_info->recent_health_status == 1 ? '特に異常なし' : $entryInfo->health_info->recent_health_status }}
+                </td>
+            </tr>
+            <tr>
+                <th>医師からの注意</th>
+                <td>{{ $entryInfo->health_info->doctor_advice == 1 ? '特になし' : $entryInfo->health_info->doctor_advice }}
+                </td>
+            </tr>
+            <tr>
+                <th>特記事項・過去の傷病等</th>
+                <td>{{ $entryInfo->health_info->medical_history == 1 ? '特になし' : $entryInfo->health_info->medical_history }}
+                </td>
+            </tr>
+            <tr>
+                <th>食物アレルギー</th>
+                <td>{{ $entryInfo->health_info->food_allergies }}</td>
+            </tr>
+            <tr>
+                <th>アレルゲン</th>
+                <td>{{ $entryInfo->health_info->allergen == null ? '入力なし' : $entryInfo->health_info->allergen }}</td>
+            </tr>
+            <tr>
+                <th>アレルゲンを摂取するとどうなるか</th>
+                <td>{{ $entryInfo->health_info->reaction_to_allergen == null ? '入力なし' : $entryInfo->health_info->reaction_to_allergen }}
+                </td>
+            </tr>
+            <tr>
+                <th>アレルゲンに対する家庭での対応</th>
+                <td>{{ $entryInfo->health_info->usual_response_to_reaction == null ? '入力なし' : $entryInfo->health_info->usual_response_to_reaction }}
+                </td>
+            </tr>
+        </table>
+    @else
+        <h3>健康情報</h3>
+        <span class="uk-text-warning">健康情報が未入力のため表示できません</span>
+    @endif
 </div>
