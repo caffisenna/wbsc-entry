@@ -12,14 +12,14 @@ Zend Engine v4.2.19, Copyright (c) Zend Technologies
     with Zend OPcache v8.2.19, Copyright (c), by Zend Technologies
 
 ### RDBMS
-mysql  Ver 8.0.37 for macos14.2 on arm64 (Source distribution)
+mysql  Ver 8.0.37 for macos14.5 on arm64 (Source distribution)
 
 ### Laravel Valet
-Laravel Valet 4.6.1
+[Laravel Valet]('https://laravel.com/docs/11.x/valet') 4.6.1
 
 ## System Requirements
 1. PHP ver8.2 or later
-2. composer
+2. [composer]('https://getcomposer.org/)
 3. RDBMS (MySQL8 or later)
 
 
@@ -38,13 +38,14 @@ No documents avaliable.
 
 ## Disclaimer
 - 本システムを利用することで発生する不具合、損害、損失等について、開発者及びボーイスカウト東京連盟は一切の責任を負いません。利用者は自己責任において本システムを利用してください。
+- 本システムは事前の告知なく仕様などが変更される場合があります。
 - 本システムに関するサポートは提供されません。バグの修正や機能追加等の対応も行われない場合があります。
 - ボーイスカウト東京連盟以外の第三者が本システムを利用する場合、その結果について開発者及びボーイスカウト東京連盟は一切の責任を負いません。
 
 
 ## MIT License
 
-Copyright (c) 2023 ボーイスカウト東京連盟
+Copyright (c) 2023 [ボーイスカウト東京連盟]('https://scout.tokyo')
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
