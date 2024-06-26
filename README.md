@@ -34,12 +34,14 @@ No documents avaliable.
 - PM: 平田恭一
 - User Guide Editor: 谷道龍彦
 - 東京連盟事務局: 竹内奈穂子 小松泰子
-- Coder: 只野太一 taichi.tadano@gmail.com
+- Coder: [只野太一 @caffisenna]('https://github.com/caffisenna/')
+- AWS Manager: [jomtech]('https://github.com/jomtech)
+- Issue creator: [Radish-TR]('https://github.com/caffisenna/wbsc-entry/issues/106')
 
 ## Disclaimer
 - 本システムを利用することで発生する不具合、損害、損失等について、開発者及びボーイスカウト東京連盟は一切の責任を負いません。利用者は自己責任において本システムを利用してください。
 - 本システムは事前の告知なく仕様などが変更される場合があります。
-- 本システムに関するサポートは提供されません。バグの修正や機能追加等の対応も行われない場合があります。
+- 本システムに関するサポート及び質問に対する回答は提供されません。バグの修正や機能追加等の対応も行われない場合があります。
 - ボーイスカウト東京連盟以外の第三者が本システムを利用する場合、その結果について開発者及びボーイスカウト東京連盟は一切の責任を負いません。
 
 
