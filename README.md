@@ -82,6 +82,9 @@ mysql  Ver 8.0.37 for macos14.5 on arm64 (Source distribution)
 1. `git clone git@github.com:caffisenna/wbsc-entry.git`
 2. run `composer install`
 
+- course_lists、danken_lists、division_listsにレコードが必要です。適当なダミーデータをtinker等で挿入してください
+- userテーブルでは `is_admin` を `1` とすると管理者になります
+
 ## Documentation
 No documents avaliable.
 
