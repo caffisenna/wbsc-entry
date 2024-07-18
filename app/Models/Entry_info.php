@@ -271,7 +271,7 @@ class Entry_info extends Model
     public static $messages = [
         // 'sc_number.required_without' => 'スカウトコースの期数を選択してください',
         // 'sc_number.required_unless' => 'スカウトコースの期数を選択してください',
-        'sc_number.required' => 'スカウトコースの期数を選択してください3',
+        'sc_number.required' => 'スカウトコースの期数を選択してください',
         'sc_number_done.required' => 'スカウトコースを修了済みの場合は期数を入力してください',
         'division_number.required' => '課程研修別の期数を選択してください',
         'division_number.required_without' => '課程研修別の期数を選択してください',
