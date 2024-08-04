@@ -48,13 +48,13 @@
             </tr>
             <tr>
                 <th>役務</th>
-                <td>{{ $userinfo->troop }} {{ $userinfo->troop_role }}</td>
+                <td>{{ $userinfo->troop == '団' ? '' : $userinfo->troop }} {{ $userinfo->troop_role }}</td>
             </tr>
             <tr>
                 <th>参加コース</th>
                 <td>
-                    @if ($userinfo->danken == 'true')
-                        団委員研修所
+                    @if ($userinfo->danken != null)
+                        団委員研修所 第{{ $userinfo->danken }}期
                     @else
                         @if ($userinfo->sc_number == 'done')
                             <span class="uk-text-warning">スカウトコース {{ $userinfo->sc_number_done }} (修了済み)</span><br>
@@ -233,7 +233,8 @@
                             </div>
                         </div>
                         <h3><span uk-icon="icon: mail"></span>控えのメールを受け取る</h3>
-                        <span class="uk-text-small">参加者に通知されるメールを控えとして受信を希望する方は、以下のフォームにメールアドレスを入力してください。(団承認、参加確定の際にメールをお送りします。)</span>
+                        <span
+                            class="uk-text-small">参加者に通知されるメールを控えとして受信を希望する方は、以下のフォームにメールアドレスを入力してください。(団承認、参加確定の際にメールをお送りします。)</span>
                         <div class="uk-margin">
                             <label class="uk-form-label" for="form-stacked-text">メールアドレス</label>
                             <div class="uk-form-controls">

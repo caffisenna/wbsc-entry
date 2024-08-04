@@ -4,6 +4,9 @@
     <div class="container">
         <h2>更新情報</h2>
         <ul class="uk-list uk-list-bullet">
+            <li><span class="uk-text-small uk-text-bold">2024/08/04</span><br>
+                団委員長による参加承認画面で、参加者が団委員研修所に参加する場合、参加コースが正しく表示されない不具合を解消しました。(スカウトコースと課程別研修が表示されていた)
+            </li>
             <li><span class="uk-text-small uk-text-bold">2024/06/19</span><br>
                 AIS委員長の権限で閲覧したとき、健康情報が未入力だと500 Server Errorが発生していた不具合を解消しました。
             </li>
