@@ -69,7 +69,8 @@
 
         <tr>
             <th>所属隊・役務</th>
-            <td>{{ $entryInfo->entry_info->troop }} {{ $entryInfo->entry_info->troop_role }}</td>
+            <td>{{ $entryInfo->entry_info->troop == '団' ? '' : $entryInfo->entry_info->troop }}
+                {{ $entryInfo->entry_info->troop_role }}</td>
         </tr>
 
         <tr>
