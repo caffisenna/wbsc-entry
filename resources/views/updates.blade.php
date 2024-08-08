@@ -4,6 +4,9 @@
     <div class="container">
         <h2>更新情報</h2>
         <ul class="uk-list uk-list-bullet">
+            <li><span class="uk-text-small uk-text-bold">2024/08/08</span><br>
+                トレーナー認定画面で団委員研修所の課題認定後の表示の不具合を解消しました。
+            </li>
             <li><span class="uk-text-small uk-text-bold">2024/08/04</span><br>
                 団委員長による参加承認画面で、参加者が団委員研修所に参加する場合、参加コースが正しく表示されない不具合を解消しました。(スカウトコースと課程別研修が表示されていた)
             </li>
