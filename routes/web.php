@@ -131,6 +131,9 @@ Route::middleware('verified')->group(function () {
         // 以下2行 地区内優先順位ソート
         Route::get('/priority', [CommiEntry_infoController::class, 'priority'])->name('priority');
         Route::post('/priority_sortable', [CommiEntry_infoController::class, 'priority_sortable'])->name('priority_sortable');
+
+        // 参加費納入状況
+        Route::get('/payment', [CommiEntry_infoController::class, 'payment'])->name('payment');
     });
 
     // コーススタッフ用

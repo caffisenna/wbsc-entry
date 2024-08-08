@@ -143,6 +143,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('payment') }}"
+                class="nav-link {{ Request::is('/commi_entryInfos.payment') ? 'active' : '' }}">
+                <p><span uk-icon="info"></span>参加費納入状況</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ url('/howto_commi') }}" class="nav-link {{ Request::is('/howto_commi') ? 'active' : '' }}">
                 <p><span uk-icon="file-text"></span>使い方ガイド</p>
             </a>

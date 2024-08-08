@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="uk-table uk-table-divider uk-table-small" id="entryInfos-table">
+    <table class="uk-table uk-table-divider uk-table-small uk-table-responsive" id="entryInfos-table">
         <thead>
             <tr>
                 <th>氏名</th>
@@ -112,7 +112,7 @@
                     <td>
                         <div class='btn-group'>
                             <a href="{{ route('commi_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
-                                class='btn btn-default'>
+                                class='uk-button uk-button-small'>
                                 <span uk-icon="download"></span>PDF
                             </a>
                         </div>

@@ -324,4 +324,17 @@ class CommiEntry_infoController extends AppBaseController
 
         return response('Update Successfully.', 200);
     }
+
+    public function payment(Request $request)
+    {
+        // 参加費納入状況
+        $users = User::whereHas('entry_info', function ($query) {
+            $query->where('district', Auth::user()->is_commi);
+        })->with(['entry_info' => function ($query) {
+            $query->orderBy('order', 'asc');
+        }])->get();
+
+        return view('commi_entry_infos.payment_status')
+            ->with(compact('users'));
+    }
 }
