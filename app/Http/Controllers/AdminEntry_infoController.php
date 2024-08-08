@@ -144,23 +144,9 @@ class AdminEntry_infoController extends AppBaseController
                 // リストから取得
                 $course_info = division_list::where('division', $alphabetPart)->where('number', $numberPart)->first();
             }
-        } elseif ($request['danken'] == 'danken') {
-            // 団研申込者を抽出
-            if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $query->where('danken', '<>', NULL)->where('district', Auth::user()->is_ais);
-                    }
-                )->with('entry_info')->get();
-            } else {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $query->where('danken', '<>', NULL);
-                    }
-                )->with('entry_info')->get();
-            }
+        } elseif ($request['danken'] == 'true') {
+            // 団研コース情報を取得
+            $course_info = DankenLists::first();
             $request['cat'] = 'danken';
         }
 

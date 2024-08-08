@@ -5,6 +5,9 @@
         <h2>更新情報</h2>
         <ul class="uk-list uk-list-bullet">
             <li><span class="uk-text-small uk-text-bold">2024/08/08</span><br>
+                管理者、地区AIS委員長の管理画面で団委員研修所の申込期限が表示されない不具合を解消しました。
+            </li>
+            <li><span class="uk-text-small uk-text-bold">2024/08/08</span><br>
                 トレーナー認定画面で団委員研修所の課題認定後の表示の不具合を解消しました。
             </li>
             <li><span class="uk-text-small uk-text-bold">2024/08/04</span><br>
