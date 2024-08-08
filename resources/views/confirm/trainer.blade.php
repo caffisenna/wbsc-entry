@@ -79,21 +79,33 @@
                         スカウトコース
                     @endif
                 </th>
-                @if (isset($userinfo->trainer_sc_checked_at))
-                    <td><span class="uk-text-success">認定済み</span></td>
-                @else
-                    <td><a href="#modal-confirm-assignment-sc" uk-toggle class="uk-button uk-button-primary">認定する</a></td>
-                @endif
-                @if (isset($userinfo->trainer_sc_checked_at))
-                    <td>{{ $userinfo->trainer_sc_checked_at->format('Y-m-d') }}</td>
-                @else
-                    <td>---</td>
-                @endif
-                @if (isset($userinfo->trainer_sc_name))
-                    <td>{{ $userinfo->trainer_sc_name }}</td>
-                @else
-                    <td>---</td>
-                @endif
+                @php
+                    $isDanken = !empty($userinfo->danken);
+                    $checkedAt = $isDanken
+                        ? $userinfo->trainer_danken_checked_at ?? null
+                        : $userinfo->trainer_sc_checked_at ?? null;
+                    $trainerName = $isDanken
+                        ? $userinfo->trainer_danken_name ?? null
+                        : $userinfo->trainer_sc_name ?? null;
+                @endphp
+
+                <td>
+                    @if ($checkedAt)
+                        <span class="uk-text-success">認定済み</span>
+                    @else
+                        <a href="#modal-confirm-assignment-sc" uk-toggle class="uk-button uk-button-primary">認定する</a>
+                    @endif
+                </td>
+
+                <td>
+                    {{ $checkedAt ? $checkedAt->format('Y-m-d') : '---' }}
+                </td>
+
+                <td>
+                    {{ $trainerName ?? '---' }}
+                </td>
+
+
                 <td>
                     @if (File::exists(storage_path('app/public/assignment/sc/') . $userinfo->uuid . '.pdf'))
                         <a href="{{ url("/storage/assignment/sc/$userinfo->uuid" . '.pdf') }}" target="_blank"><span

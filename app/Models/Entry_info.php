@@ -204,6 +204,8 @@ class Entry_info extends Model
         'trainer_sc_name' => 'string',
         'trainer_division_checked_at' => 'date',
         'trainer_division_name' => 'string',
+        'trainer_danken_checked_at' => 'date',
+        'trainer_danken_name' => 'string',
         'order' => 'string',
         'sc_over_deadline' => 'string',
         'div_over_deadline' => 'string',
