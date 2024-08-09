@@ -4,6 +4,9 @@
     <div class="container">
         <h2>更新情報</h2>
         <ul class="uk-list uk-list-bullet">
+            <li><span class="uk-text-small uk-text-bold">2024/08/09</span><br>
+                コーススタッフのアカウントで団委員研修所の参加者一覧を出力した際のExcelファイルのカラムずれを解消しました。
+            </li>
             <li><span class="uk-text-small uk-text-bold">2024/08/08</span><br>
                 地区コミッショナーのメニューに「参加費納入状況」を追加しました。
             </li>
