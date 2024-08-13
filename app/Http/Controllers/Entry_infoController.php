@@ -85,8 +85,13 @@ class Entry_infoController extends AppBaseController
 
         // 団研
         $danken = DankenLists::where('deadline', '>', now())->first();
-        if ($request->cat == 'danken') {
-            $danken->cat = 'danken';
+        if ($danken) {
+            if ($request->cat == 'danken') {
+                $danken->cat = 'danken';
+            }
+        } else {
+            flash::error('申込可能な団委員研修所がありません');
+            return back();
         }
 
 
