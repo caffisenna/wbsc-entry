@@ -38,10 +38,10 @@
                             @if (empty($member->danken_accepted_at) && empty($member->danken_rejected_at))
                                 <a href="{{ route('accept', ['cat' => 'danken', 'flag' => 'accept', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-primary"
-                                    onclick="return confirm('{{ $member->user->name }}さんのスカウトコースの参加を承認しますか?')">承認</a>
+                                    onclick="return confirm('{{ $member->user->name }}さんの団委員研修所の参加を承認しますか?')">承認</a>
                                 <a href="{{ route('accept', ['cat' => 'danken', 'flag' => 'reject', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-danger"
-                                    onclick="return confirm('{{ $member->user->name }}さんのスカウトコースの参加を否認しますか?')">否認</a>
+                                    onclick="return confirm('{{ $member->user->name }}さんの団委員研修所の参加を否認しますか?')">否認</a>
                             @else
                                 @isset($member->danken_accepted_at)
                                     {{ $member->danken_accepted_at }} 参加承認済み
@@ -51,7 +51,7 @@
                                 @endisset
                                 <a href="{{ route('accept', ['cat' => 'danken', 'revert' => 'true', 'uuid' => $member->uuid]) }}"
                                     class="uk-button uk-button-danger"
-                                    onclick="return confirm('{{ $member->user->name }}さんのスカウトコースの参加承認・否認を初期化しますか?')">承認・否認クリアー</a>
+                                    onclick="return confirm('{{ $member->user->name }}さんの団委員研修所の参加承認・否認を初期化しますか?')">承認・否認クリアー</a>
                             @endif
                         </td>
                         <td>{{ $member->district }} {{ $member->dan }}<br>
