@@ -64,9 +64,13 @@
     <ul class="uk-list">
         <li><a class="uk-button uk-button-large uk-button-primary uk-width-1-2"
                 href="{{ route('entryInfos.create') }}">スカウトコース / 課程別研修に申込</a></li>
-        @if ($danken->number)
-            <li><a class="uk-button uk-button-large uk-button-primary uk-width-1-2"
+        @if ($danken)
+            <li><a class="uk-button uk-button-large uk-button-primary uk-width-1-2 disabled"
                     href="{{ route('entryInfos.create') }}?cat=danken">団委員研修所(東京第{{ $danken->number }}期)に申込</a></li>
+        @else
+            <li>
+                <p class="uk-text-warning">申込可能な団委員研修所はありません</p>
+            </li>
         @endif
     </ul>
     @endif

@@ -45,7 +45,8 @@ class Entry_infoController extends AppBaseController
     public function index(Request $request)
     {
         $entryInfo = Entry_info::where('user_id', Auth::user()->id)->with('user')->first();
-        $danken = DankenLists::firstorFail();
+        // $danken = DankenLists::firstorFail();
+        $danken = DankenLists::where('deadline', '>', now())->first();
         $healthInfo = HealthInfo::where('user_id', Auth::user()->id)->first();
 
         return view('entry_infos.index')
@@ -90,10 +91,9 @@ class Entry_infoController extends AppBaseController
                 $danken->cat = 'danken';
             }
         } else {
-            flash::error('申込可能な団委員研修所がありません');
-            return back();
+            // flash::error('申込可能な団委員研修所がありません');
+            // return back();
         }
-
 
         return view('entry_infos.create', compact('courselists', 'divisionlists', 'danken'));
     }
