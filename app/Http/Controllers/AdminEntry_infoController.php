@@ -706,6 +706,9 @@ class AdminEntry_infoController extends AppBaseController
             } elseif ($request['cat'] == 'div') {
                 $entryinfo->div_fee_checked_at = now();
                 $category = '課程別研修';
+            } elseif ($request['cat'] == 'danken') {
+                $entryinfo->danken_fee_checked_at = now();
+                $category = '団委員研修所';
             }
             $entryinfo->save();
 
