@@ -32,7 +32,7 @@
                     @if (isset($entryInfo->entry_info->cancel) || isset($entryInfo->entry_info->cancel_div))
                         <span class="uk-text-danger">[欠]</span>
                     @endif
-                    <a href="{{ route('commi_entryInfos.show', [$entryInfo->id]) }}">{{ $entryInfo->name }}</a>
+                    <a href="{{ route('commi_entryInfos.show', [$entryInfo->entry_info->uuid]) }}">{{ $entryInfo->name }}</a>
                     @if ($entryInfo->entry_info->additional_comment)
                         <span uk-icon="comment" class="uk-text-danger"></span>
                     @endif
@@ -102,16 +102,16 @@
                         @if (isset($entryInfo->entry_info->commi_checked_at))
                             {{ $entryInfo->entry_info->commi_checked_at->format('Y-m-d') }}
                         @else
-                            <a href="{{ route('commi_check', ['id' => $entryInfo->entry_info->id]) }}"
+                            <a href="{{ route('commi_check', ['id' => $entryInfo->entry_info->uuid]) }}"
                                 class=" uk-button uk-button-primary uk-button-small"
                                 onclick="return confirm('{{ $entryInfo->name }}さんを推薦しますか?')">推薦</a>
                         @endif
                     </td>
-                    <td><a href="{{ route('commi_comment', ['id' => $entryInfo->id]) }}"
+                    <td><a href="{{ route('commi_comment', ['id' => $entryInfo->entry_info->uuid]) }}"
                             class="uk-button uk-button-small uk-button-primary">副申請書</a></td>
                     <td>
                         <div class='btn-group'>
-                            <a href="{{ route('commi_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
+                            <a href="{{ route('commi_pdf', ['id' => $entryInfo->entry_info->uuid]) }}"
                                 class='uk-button uk-button-small'>
                                 <span uk-icon="download"></span>PDF
                             </a>

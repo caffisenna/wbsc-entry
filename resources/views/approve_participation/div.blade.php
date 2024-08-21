@@ -33,7 +33,7 @@
                     @endphp
                     <tr class="">
                         <td>{{ $total_number }}</td>
-                        <td><a href="{{ route('admin_entryInfos.show', $member->user_id) }}">{{ $member->user->name }}</a>
+                        <td><a href="{{ route('admin_entryInfos.show', $member->uuid) }}">{{ $member->user->name }}</a>
                             ({{ $age }}才)
                             <br>
                             @if (empty($member->div_accepted_at) && empty($member->div_rejected_at))

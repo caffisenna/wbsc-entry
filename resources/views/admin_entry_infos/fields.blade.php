@@ -1,6 +1,6 @@
 <script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
 
-<input type="hidden" name="create_id" value="{{ $user->id }}">
+<input type="hidden" name="create_id" value="{{ $entryInfo->user->id }}">
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
@@ -89,11 +89,11 @@
         </tr>
         <tr>
             <td>お名前</td>
-            <td>{{ $user->name }}</td>
+            <td>{{ $entryInfo->user->name }}</td>
         </tr>
         <tr>
             <td>Email</td>
-            <td>{{ $user->email }}</td>
+            <td>{{ $entryInfo->user->email }}</td>
         </tr>
         <tr>
             <td>ふりがな</td>

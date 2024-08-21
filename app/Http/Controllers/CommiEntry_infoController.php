@@ -89,16 +89,18 @@ class CommiEntry_infoController extends AppBaseController
      */
     public function show($id)
     {
-        $entryInfo = User::where('id', $id)->with('entry_info')->with('health_info')->first();
+        // $entryInfo = User::where('id', $id)->with('entry_info')->with('health_info')->first();
+        $entryInfo = Entry_info::where('uuid',$id)->with('user')->with('health_info')->first();
+        // dd($entryInfo);
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
 
-            return redirect(route('admin_entryInfos.index'));
+            return redirect(route('commi_entryInfos.index'));
         }
 
         // 通知メールCC送信先取得
-        $gm_email = GmAddress::where('uuid', $entryInfo->entry_info->uuid)->first();
+        $gm_email = GmAddress::where('uuid', $id)->first();
 
         return view('admin_entry_infos.show', compact('entryInfo', 'gm_email'));
     }
@@ -178,10 +180,11 @@ class CommiEntry_infoController extends AppBaseController
     public function pdf(Request $request)
     {
         $id = $request['id'];
-        $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        // $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        $entryInfo = Entry_info::where('uuid',$id)->with('user')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
-        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->entry_info->district . ' ' . $entryInfo->name . '.pdf';
+        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->district . ' ' . $entryInfo->user->name . '.pdf';
         // $pdf->setPaper('A4');
         return $pdf->download($filename);
         // return $pdf->stream();
@@ -191,24 +194,21 @@ class CommiEntry_infoController extends AppBaseController
     {
         // 地区コミのチェック機能
         $id = $request['id'];
-        $entryInfo = Entry_info::where('id', $id)->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
         $entryInfo->commi_checked_at = now();
         $entryInfo->save();
 
-        // 氏名取得
-        $user = User::where('id', $entryInfo->user_id)->first();
-
         // 確認メール送信
-        $sendto = $user->email;
-        Mail::to($sendto)->queue(new CommiChecked($user->name)); // メールをqueueで送信
+        $sendto = $entryInfo->user->email;
+        Mail::to($sendto)->queue(new CommiChecked($entryInfo->user->name)); // メールをqueueで送信
 
         // slack通知
         $slack = new SlackPost();
-        $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区コミ推薦が行われました');
+        $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $entryInfo->user->name . ' さんの地区コミ推薦が行われました');
 
 
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name . 'さん 地区コミのチェックをしました');
+        Flash::success($entryInfo->user->name . 'さん 地区コミのチェックをしました');
 
         return back();
     }
@@ -272,7 +272,7 @@ class CommiEntry_infoController extends AppBaseController
     public function commi_comment(Request $request)
     {
         $id = $request['id'];
-        $userinfo = Entry_info::where('user_id', $id)->with('user')->firstOrFail();
+        $userinfo = Entry_info::where('uuid', $id)->with('user')->firstOrFail();
 
         return view('commi_entry_infos.commi_comment')->with('userinfo', $userinfo);
     }

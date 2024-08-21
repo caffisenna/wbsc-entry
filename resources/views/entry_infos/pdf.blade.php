@@ -28,8 +28,8 @@
 
     <p class="uk-text-right uk-text-small">
         東京連盟書式<br>
-        データ入力日時:{{ $entryInfo->entry_info->updated_at }}<br>
-        申込番号:{{ $entryInfo->entry_info->id }}
+        データ入力日時:{{ $entryInfo->updated_at }}<br>
+        申込番号:{{ $entryInfo->id }}
     </p>
 
     <table class="uk-table uk-table-striped uk-table-small uk-text-small uk-table-justify">
@@ -37,18 +37,18 @@
             <tr>
                 <td>申込コース</td>
                 <td>
-                    @if ($entryInfo->entry_info->danken)
-                        団委員研修所 東京第 {{ $entryInfo->entry_info->danken }} 期
+                    @if ($entryInfo->danken)
+                        団委員研修所 東京第 {{ $entryInfo->danken }} 期
                     @else
-                        @if (isset($entryInfo->entry_info->sc_number))
-                            スカウトコース: {{ $entryInfo->entry_info->sc_number }}<br>
-                        @elseif(isset($entryInfo->entry_info->sc_number_done))
-                            スカウトコース: {{ $entryInfo->entry_info->sc_number_done }}(修了済み)<br>
+                        @if (isset($entryInfo->sc_number))
+                            スカウトコース: {{ $entryInfo->sc_number }} 期<br>
+                        @elseif(isset($entryInfo->sc_number_done))
+                            スカウトコース: {{ $entryInfo->sc_number_done }}(修了済み)<br>
                         @endif
 
-                        @unless ($entryInfo->entry_info->division_number == 'etc')
-                            課程別研修: {{ $entryInfo->entry_info->division_number }}
-                            {{ $entryInfo->entry_info->bvs_exception == 'on' ? '(ビーバー課程特例)' : '' }}
+                        @unless ($entryInfo->division_number == 'etc')
+                            課程別研修: {{ $entryInfo->division_number }} 回
+                            {{ $entryInfo->bvs_exception == 'on' ? '(ビーバー課程特例)' : '' }}
                         @else
                             課程別研修: それ以外
                         @endunless
@@ -58,90 +58,95 @@
             <tr>
                 <td>基本情報</td>
                 <td>
-                    @if ($entryInfo->face_picture)
-                        <img src="{{ url('/storage/picture/') }}{{ '/' . $entryInfo->face_picture }}" width="100px">
+                    @if ($entryInfo->user->face_picture)
+                        <img src="{{ url('/storage/picture/') }}{{ '/' . $entryInfo->user->face_picture }}"
+                            width="100px">
                     @endif
-                    {{ $entryInfo->name }}({{ $entryInfo->entry_info->furigana }})
-                    {{ $entryInfo->entry_info->gender }} 【登録番号:】 {{ $entryInfo->entry_info->bs_id }}
+                    {{ $entryInfo->user->name }}({{ $entryInfo->furigana }})
+                    {{ $entryInfo->gender }} 【登録番号:】 {{ $entryInfo->bs_id }}
                 </td>
             </tr>
             <tr>
                 <td>所属・役務</td>
-                <td>{{ $entryInfo->entry_info->prefecture }}連盟 {{ $entryInfo->entry_info->district }}地区
-                    {{ $entryInfo->entry_info->dan }} {{ $entryInfo->entry_info->troop }}
-                    {{ $entryInfo->entry_info->troop_role }}
+                <td>{{ $entryInfo->prefecture }}連盟 {{ $entryInfo->district }}地区
+                    {{ $entryInfo->dan }} {{ $entryInfo->troop }}
+                    {{ $entryInfo->troop_role }}
                 </td>
             </tr>
             <tr>
                 <td>生年月日</td>
                 <td>
-                    {{ $entryInfo->entry_info->birthday->format('Y年m月d日') }}
-                    ({{ \Carbon\Carbon::parse($entryInfo->entry_info->birthday)->age }}才)
+                    {{ $entryInfo->birthday->format('Y年m月d日') }}
+                    ({{ \Carbon\Carbon::parse($entryInfo->birthday)->age }}才)
                 </td>
             </tr>
             <tr>
                 <td>住所</td>
-                <td>〒{{ $entryInfo->entry_info->zip }} {{ $entryInfo->entry_info->address }}</td>
+                <td>〒{{ $entryInfo->zip }} {{ $entryInfo->address }}</td>
             </tr>
             <tr>
                 <td>本人連絡先</td>
-                <td>【ケータイ:】 {{ $entryInfo->entry_info->cell_phone }} 【email:】 {{ $entryInfo->email }}
+                <td>【ケータイ:】 {{ $entryInfo->cell_phone }} 【email:】 {{ $entryInfo->user->email }}
                 </td>
             </tr>
             <tr>
                 <td>緊急連絡先</td>
-                <td>【氏名:】 {{ $entryInfo->entry_info->emer_name }}({{ $entryInfo->entry_info->emer_relation }})<br>
-                    【連絡先】 {{ $entryInfo->entry_info->emer_phone }}
+                <td>【氏名:】 {{ $entryInfo->emer_name }}({{ $entryInfo->emer_relation }})<br>
+                    【連絡先】 {{ $entryInfo->emer_phone }}
                 </td>
             </tr>
             <tr>
                 <td>地区・県連役務</td>
                 <td>
-                    【地区】 {{ $entryInfo->entry_info->district_role }} 【県連】
-                    {{ $entryInfo->entry_info->prefecture_role }}
+                    @if ($entryInfo->district_role)
+                        【地区】 {{ $entryInfo->district_role }}
+                    @endif
+                    @if ($entryInfo->prefecture_role)
+                        【県連】 {{ $entryInfo->prefecture_role }}
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>承認と確認</td>
                 <td>
-                    @if (isset($entryInfo->entry_info->gm_checked_at))
-                        【団:】 {{ $entryInfo->entry_info->gm_checked_at->format('Y年m月d日') }}
+                    @if (isset($entryInfo->gm_checked_at))
+                        【団:】 {{ $entryInfo->gm_checked_at->format('Y年m月d日') }}
                     @endif
-                    @if (isset($entryInfo->entry_info->commi_checked_at))
-                        【地区コミ:】 {{ $entryInfo->entry_info->commi_checked_at->format('Y年m月d日') }}
+                    @if (isset($entryInfo->commi_checked_at))
+                        【地区コミ:】 {{ $entryInfo->commi_checked_at->format('Y年m月d日') }}
                     @endif
-                    @if (isset($entryInfo->entry_info->ais_checked_at))
-                        【AIS:】 {{ $entryInfo->entry_info->ais_checked_at->format('Y年m月d日') }}
+                    @if (isset($entryInfo->ais_checked_at))
+                        【AIS:】 {{ $entryInfo->ais_checked_at->format('Y年m月d日') }}
                     @endif
                 </td>
             </tr>
             <tr>
                 <td>研修歴</td>
                 <td>
-                    ボーイスカウト講習会:{{ $entryInfo->entry_info->bs_basic_course }}<br>
-                    スカウトキャンプ研修会:{{ $entryInfo->entry_info->scout_camp }}<br>
+                    ボーイスカウト講習会:{{ $entryInfo->bs_basic_course }}<br>
+                    スカウトキャンプ研修会:{{ $entryInfo->scout_camp }}<br>
 
                     {{-- 研修所 --}}
                     @for ($i = 1; $i <= 3; $i++)
-                        @if (isset($entryInfo->entry_info->{"wb_basic{$i}_category"}))
-                            WB研修所{{ $entryInfo->entry_info->{"wb_basic{$i}_category"} }}課程
-                            {{ $entryInfo->entry_info->{"wb_basic{$i}_number"} }}
-                            @if (mb_strpos($entryInfo->entry_info->{"wb_basic{$i}_number"}, '期') == false)
+                        @if (isset($entryInfo->{"wb_basic{$i}_category"}))
+                            WB研修所{{ $entryInfo->{"wb_basic{$i}_category"} }}課程
+                            {{ $entryInfo->{"wb_basic{$i}_number"} }}
+                            @if (mb_strpos($entryInfo->{"wb_basic{$i}_number"}, '期') == false)
                                 期
                             @endif
-                            ({{ $entryInfo->entry_info->{"wb_basic{$i}_date"} }}修了)<br>
+                            ({{ $entryInfo->{"wb_basic{$i}_date"} }}修了)<br>
                         @endif
                     @endfor
 
                     {{-- 実修所 --}}
                     @for ($i = 1; $i <= 3; $i++)
-                        @if (isset($entryInfo->entry_info->{"wb_adv{$i}_category"}))
-                            WB実修所{{ $entryInfo->entry_info->{"wb_adv{$i}_category"} }}課程
-                            {{ $entryInfo->entry_info->{"wb_adv{$i}_number"} }}
-                            @if (mb_strpos($entryInfo->entry_info->{"wb_adv{$i}_number"}, '期') == false)
+                        @if (isset($entryInfo->{"wb_adv{$i}_category"}))
+                            WB実修所{{ $entryInfo->{"wb_adv{$i}_category"} }}課程
+                            {{ $entryInfo->{"wb_adv{$i}_number"} }}
+                            @if (mb_strpos($entryInfo->{"wb_adv{$i}_number"}, '期') == false)
                                 期
                             @endif
-                            ({{ $entryInfo->entry_info->{"wb_adv{$i}_date"} }}修了)<br>
+                            ({{ $entryInfo->{"wb_adv{$i}_date"} }}修了)<br>
                         @endif
                     @endfor
 
@@ -151,9 +156,9 @@
                 <td>奉仕歴</td>
                 <td>
                     @for ($i = 1; $i <= 5; $i++)
-                        @if (isset($entryInfo->entry_info->{'service_hist' . $i . '_role'}))
-                            役務:{{ $entryInfo->entry_info->{'service_hist' . $i . '_role'} }}
-                            期間:{{ $entryInfo->entry_info->{'service_hist' . $i . '_term'} }}<br>
+                        @if (isset($entryInfo->{'service_hist' . $i . '_role'}))
+                            役務:{{ $entryInfo->{'service_hist' . $i . '_role'} }}
+                            期間:{{ $entryInfo->{'service_hist' . $i . '_term'} }}<br>
                         @endif
                     @endfor
                 </td>

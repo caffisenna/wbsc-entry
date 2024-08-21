@@ -102,7 +102,7 @@
                         @if (isset($entryInfo->entry_info->cancel) || isset($entryInfo->entry_info->cancel_div))
                             <span class="uk-text-danger">[欠]</span>
                         @endif
-                        <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}"
+                        <a href="{{ route('admin_entryInfos.show', [$entryInfo->entry_info->uuid]) }}"
                             class='uk-link'>{{ $entryInfo->name }}
                             @if ($entryInfo->entry_info->additional_comment)
                                 <span uk-icon="commenting" class="uk-text-danger"></span>
@@ -199,7 +199,7 @@
                             @if (isset($entryInfo->entry_info->ais_checked_at))
                                 {{ $entryInfo->entry_info->ais_checked_at->format('Y-m-d') }}
                             @else
-                                <a href="{{ route('ais_check', ['id' => $entryInfo->entry_info->id]) }}"
+                                <a href="{{ route('ais_check', ['id' => $entryInfo->entry_info->uuid]) }}"
                                     class=" uk-button uk-button-primary uk-button-small"
                                     onclick="return confirm('{{ $entryInfo->name }}さん 地区AIS委員長として確認OKですか?')">確認</a>
                             @endif
@@ -207,11 +207,11 @@
                         <td>
                             {!! Form::open(['route' => ['admin_entryInfos.destroy', $entryInfo->entry_info->id], 'method' => 'delete']) !!}
                             <div class='btn-group'>
-                                <a href="{{ route('admin_pdf', ['id' => $entryInfo->entry_info->user_id]) }}"
+                                <a href="{{ route('admin_pdf', ['id' => $entryInfo->entry_info->uuid]) }}"
                                     class='uk-button uk-button-default uk-button-small'>
                                     <span uk-icon="download"></span>PDF
                                 </a>
-                                <a href="{{ route('admin_entryInfos.edit', [$entryInfo->id]) }}"
+                                <a href="{{ route('admin_entryInfos.edit', [$entryInfo->entry_info->uuid]) }}"
                                     class='btn btn-default'>
                                     <i class="far fa-edit"></i>
                                 </a>

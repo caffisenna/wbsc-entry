@@ -226,7 +226,7 @@ class AdminEntry_infoController extends AppBaseController
      */
     public function show($id)
     {
-        $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
 
         if (empty($entryInfo)) {
             Flash::error('対象が見つかりません');
@@ -235,11 +235,11 @@ class AdminEntry_infoController extends AppBaseController
         }
 
         // logging
-        $user = $entryInfo->entry_info->district . '地区 ' . $entryInfo->name;
+        $user = $entryInfo->district . '地区 ' . $entryInfo->user->name;
         Log::channel('user_action')->info(Auth::user()->name . 'が ' . $user . 'の情報を表示しました');
 
         // 通知メールCC送信先取得
-        $gm_email = GmAddress::where('uuid', $entryInfo->entry_info->uuid)->first();
+        $gm_email = GmAddress::where('uuid', $entryInfo->uuid)->first();
 
         return view('admin_entry_infos.show', compact('entryInfo', 'gm_email'));
     }
@@ -253,8 +253,8 @@ class AdminEntry_infoController extends AppBaseController
      */
     public function edit($id)
     {
-        $entryInfo = Entry_info::where('user_id', $id)->first();
-        $user = User::where('id', $id)->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
+        // $user = User::where('id', $id)->first();
         // 生年月日分離
         $entryInfo->bd_year = $entryInfo->birthday->format('Y');
         $entryInfo->bd_month = $entryInfo->birthday->format('n');
@@ -275,9 +275,9 @@ class AdminEntry_infoController extends AppBaseController
             $divisionlists[] = $dl->division . $dl->number;
         }
 
-        return view('admin_entry_infos.edit')->with('entryInfo', $entryInfo)->with('user', $user)
-            ->with('courselists', $courselists)
-            ->with('divisionlists', $divisionlists);
+        return view('admin_entry_infos.edit')->with(compact('entryInfo'))
+            ->with(compact('courselists'))
+            ->with(compact('divisionlists'));
     }
 
     /**
@@ -335,11 +335,12 @@ class AdminEntry_infoController extends AppBaseController
     public function pdf(Request $request)
     {
         $id = $request['id'];
-        $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        // $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $pdf->setPaper('A4');
-        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->entry_info->district . ' ' . $entryInfo->name . '.pdf';
+        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->district . ' ' . $entryInfo->user->name . '.pdf';
         return $pdf->download($filename);
         // return $pdf->stream();
     }
@@ -527,25 +528,25 @@ class AdminEntry_infoController extends AppBaseController
     {
         // AIS委員会のチェック機能
         $id = $request['id'];
-        $entryInfo = Entry_info::where('id', $id)->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
         $entryInfo->ais_checked_at = now();
         $entryInfo->save();
 
         // 氏名取得
-        $user = User::where('id', $entryInfo->user_id)->first();
+        $name = $entryInfo->user->name;
 
         // 確認メール送信
-        $sendto = $user->email;
+        // $sendto = $user->email;
         // 2023/07/08 地区AIS委員長のチェック結果は参加者に通知しないように仕様変更
         // Mail::to($sendto)->queue(new AisChecked($user->name)); // メールをqueueで送信
 
 
         // 名前+flashメッセージを返して戻る
-        Flash::success($user->name . 'さん AIS委員会のチェックをしました');
+        Flash::success($entryInfo->user->name . 'さん AIS委員会のチェックをしました');
 
         // slack通知
         $slack = new SlackPost();
-        $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $user->name . ' さんの地区AIS委員長確認が完了しました');
+        $slack->send(':white_check_mark:' . $entryInfo->district . '地区 ' . $name . ' さんの地区AIS委員長確認が完了しました');
 
         return back();
     }
