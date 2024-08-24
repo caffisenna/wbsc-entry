@@ -31,15 +31,11 @@
         @endif
         <tr>
             <th>お名前</th>
-            <td>{{ Auth::user()->name }}</td>
+            <td>{{ Auth::user()->name }} ({{ $entryInfo->furigana }})</td>
         </tr>
         <tr>
             <th>Email</th>
             <td>{{ Auth::user()->email }}</td>
-        </tr>
-        <tr>
-            <th>ふりがな</th>
-            <td>{{ $entryInfo->furigana }}</td>
         </tr>
         <tr>
             <th>性別</th>

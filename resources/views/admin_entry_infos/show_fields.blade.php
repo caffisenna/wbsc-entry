@@ -32,7 +32,7 @@
 
         <tr>
             <th>お名前</th>
-            <td>{{ $entryInfo->name }} ({{ $entryInfo->furigana }})</td>
+            <td>{{ $entryInfo->user->name }} ({{ $entryInfo->furigana }})</td>
         </tr>
         <tr>
             <th>写真</th>
