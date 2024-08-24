@@ -34,7 +34,7 @@ class add_user extends Model
         'email' => 'required',
         'role' => 'required',
         'district' => 'required_unless:role,admin',
-        'password' => 'required'
+        // 'password' => 'required'
     ];
 
     public static  $messages = [
