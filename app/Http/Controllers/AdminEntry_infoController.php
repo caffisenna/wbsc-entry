@@ -1195,7 +1195,7 @@ class AdminEntry_infoController extends AppBaseController
 
     private function downloadByDanken()
     {
-        $users = Entry_info::whereNotNull('danken')->with('user')->get();
+        $users = Entry_info::whereNotNull('danken')->whereNotNull('danken_accepted_at')->with('user')->get();
         $tempFolder = $this->createTempFolder();
         $this->copyAndRenameFiles($users, $tempFolder);
         $zipFile = $this->createZipFile($tempFolder, '団研'  . '_顔写真.zip');
