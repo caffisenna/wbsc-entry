@@ -32,7 +32,7 @@
                     @endphp
                     <tr class="uk-text-small">
                         <td>{{ $total_number }}</td>
-                        <td><a href="{{ route('admin_entryInfos.show', $member->user_id) }}">{{ $member->user->name }}</a>
+                        <td><a href="{{ route('admin_entryInfos.show', $member->uuid) }}">{{ $member->user->name }}</a>
                             ({{ $age }}才)
                             <br>
                             @if (empty($member->sc_accepted_at) && empty($member->sc_rejected_at))
