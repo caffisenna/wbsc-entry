@@ -128,8 +128,10 @@
                                 <td><a href="{{ route('multi_pdf', ['q' => 'danken', 'assignment' => 'true', 'cat' => 'danken']) }}"
                                         class="" onclick="return confirm('課題を一括ダウンロードします。時間がかかるので連打しないでください')"><span
                                             uk-icon="download"></span>課題</a></td>
-                                <td><a href="{{ route('dl_face_pictures', ['cat' => 'danken']) }}"><span
-                                            uk-icon="download"></span>顔写真</a></td>
+                                @if (Auth::user()->is_ais == null)
+                                    <td><a href="{{ route('dl_face_pictures', ['cat' => 'danken']) }}"><span
+                                                uk-icon="download"></span>顔写真</a></td>
+                                @endif
                             </tr>
                         @endforeach
                     </table>
