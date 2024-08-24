@@ -1,6 +1,10 @@
 <script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
+@if ($user)
+    <input type="hidden" name="create_id" value="{{ $user->id }}">
+@else
+    <input type="hidden" name="create_id" value="{{ $entryInfo->user->id }}">
+@endif
 
-<input type="hidden" name="create_id" value="{{ $entryInfo->user->id }}">
 <div class="table-responsive">
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
@@ -89,11 +93,23 @@
         </tr>
         <tr>
             <td>お名前</td>
-            <td>{{ $entryInfo->user->name }}</td>
+            <td>
+                @if ($user)
+                    {{ $user->name }}
+                @else
+                    {{ $entryInfo->user->name }}
+                @endif
+            </td>
         </tr>
         <tr>
             <td>Email</td>
-            <td>{{ $entryInfo->user->email }}</td>
+            <td>
+                @if ($user)
+                    {{ $user->email }}
+                @else
+                    {{ $entryInfo->user->email }}
+                @endif
+            </td>
         </tr>
         <tr>
             <td>ふりがな</td>

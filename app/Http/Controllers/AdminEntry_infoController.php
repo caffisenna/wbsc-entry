@@ -162,7 +162,8 @@ class AdminEntry_infoController extends AppBaseController
      * @return Response
      */
     public function create(Request $request)
-    { // スカウトコース取得
+    {
+        // スカウトコース取得
         // SCはDBの取得結果がゼロでも問題ない
         $courselists = course_list::where('deadline', '>', now())->get();
 
@@ -181,18 +182,10 @@ class AdminEntry_infoController extends AppBaseController
 
         // 団研
         $danken = DankenLists::where('deadline', '>', now())->first();
-        // if ($request->cat == 'danken') {
-        //     $danken->cat = 'danken';
-        // }
 
         // 作成するユーザーデータ
         $id = $request->id;
-        // dd($id);
-        // $user = User::find($id)->first();
         $user = User::where('id', $id)->first();
-        // dd($user);
-
-
 
         return view('admin_entry_infos.create', compact('courselists', 'divisionlists', 'danken', 'user'));
     }
