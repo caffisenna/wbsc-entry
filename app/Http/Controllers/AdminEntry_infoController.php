@@ -351,60 +351,29 @@ class AdminEntry_infoController extends AppBaseController
         if ($_REQUEST['cat'] == 'division') {
             // 課程別研修 申込書地区別
             if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['q'];
-                        $query->where('division_number', $q)->where('district', Auth::user()->is_ais)->whereNotNull('div_accepted_at');
-                    }
-                )->with('entry_info')->get();
+                $entryInfos = Entry_info::where('division_number', $_REQUEST['q'])->where('district', Auth::user()->is_ais)->whereNotNull('div_accepted_at')->with('user')->get();
             } else {
                 // 申込書全部
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['q'];
-                        $query->where('division_number', $q)->whereNotNull('div_accepted_at');
-                    }
-                )->with('entry_info')->get();
+                $entryInfos = Entry_info::where('division_number', $_REQUEST['q'])->whereNotNull('div_accepted_at')->with('user')->get();
             }
         } elseif ($_REQUEST['cat'] == 'sc') {
             // スカウトコース 申込書地区別
             if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q)->where('district', Auth::user()->is_ais)->whereNotNull('sc_accepted_at');
-                    }
-                )->with('entry_info')->get();
+                $entryInfos = Entry_info::where('sc_number', $_REQUEST['q'])->where('district', Auth::user()->is_ais)->whereNotNull('sc_accepted_at')->with('user')->get();
             } else {
                 // 申込書全部
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q)->whereNotNull('sc_accepted_at');
-                    }
-                )->with('entry_info')->get();
+                $entryInfos = Entry_Info::where('sc_number', $_REQUEST['q'])
+                    ->whereNotNull('sc_accepted_at')
+                    ->with('user')
+                    ->get();
             }
         } elseif ($_REQUEST['cat'] == 'danken') {
             // 団研 申込書地区別
             if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $query->whereNotNull('danken')->where('district', Auth::user()->is_ais)->whereNotNull('danken_accepted_at');
-                    }
-                )->with('entry_info')->get();
+                $entryInfos = Entry_info::whereNotNull('danken')->where('district', Auth::user()->is_ais)->whereNotNull('danken_accepted_at')->with('user')->get();
             } else {
                 // 申込書全部
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $query->whereNotNull('danken')->whereNotNull('danken_accepted_at');
-                    }
-                )->with('entry_info')->get();
+                $entryInfos = Entry_info::whereNotNull('danken')->whereNotNull('danken_accepted_at')->with('user')->get();
             }
         }
 
@@ -428,13 +397,13 @@ class AdminEntry_infoController extends AppBaseController
 
                 switch ($_REQUEST['cat']) {
                     case 'sc':
-                        $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        $fname = $entryInfo->sc_number . " " . $entryInfo->district . " " . $entryInfo->user->name;
                         break;
                     case 'division':
-                        $fname = $entryInfo->entry_info->division_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        $fname = $entryInfo->division_number . " " . $entryInfo->district . " " . $entryInfo->user->name;
                         break;
                     case 'danken':
-                        $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        $fname = "団研 " . $entryInfo->district . " " . $entryInfo->user->name;
                         break;
                     default:
                         # code...
@@ -446,17 +415,17 @@ class AdminEntry_infoController extends AppBaseController
         } elseif ($request['assignment'] == 'true') {
             // 課題の一括DL
             foreach ($entryInfos as $entryInfo) {
-                $uuid = $entryInfo->entry_info->uuid;
+                $uuid = $entryInfo->uuid;
 
                 switch ($_REQUEST['cat']) {
                     case 'sc':
-                        $fname = $entryInfo->entry_info->sc_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        $fname = $entryInfo->sc_number . " " . $entryInfo->district . " " . $entryInfo->user->name;
                         break;
                     case 'division':
-                        $fname = $entryInfo->entry_info->division_number . " " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        $fname = $entryInfo->division_number . " " . $entryInfo->district . " " . $entryInfo->user->name;
                         break;
                     case 'danken':
-                        $fname = "団研 " . $entryInfo->entry_info->district . " " . $entryInfo->name;
+                        $fname = "団研 " . $entryInfo->district . " " . $entryInfo->user->name;
                         break;
                     default:
                         # code...
@@ -479,10 +448,10 @@ class AdminEntry_infoController extends AppBaseController
         // zip生成
         switch ($_REQUEST['cat']) {
             case 'sc':
-                $prefix = $entryInfo->entry_info->sc_number;
+                $prefix = $entryInfo->sc_number;
                 break;
             case 'division':
-                $prefix = $entryInfo->entry_info->division_number;
+                $prefix = $entryInfo->division_number;
                 break;
             case 'danken':
                 $prefix = "団研 ";
@@ -1199,7 +1168,7 @@ class AdminEntry_infoController extends AppBaseController
             case 'div':
                 return $this->downloadByDivisionNumber($input['number']);
             case 'danken':
-                return $this->downloadByDanken($input['number']);
+                return $this->downloadByDanken();
             default:
                 // 未定義のcatの場合の処理
                 return redirect()->back()->with('error', '無効なパラメータが指定されました。');
@@ -1224,12 +1193,12 @@ class AdminEntry_infoController extends AppBaseController
         return $this->downloadAndCleanup($zipFile, $tempFolder);
     }
 
-    private function downloadByDanken($number)
+    private function downloadByDanken()
     {
         $users = Entry_info::whereNotNull('danken')->with('user')->get();
         $tempFolder = $this->createTempFolder();
         $this->copyAndRenameFiles($users, $tempFolder);
-        $zipFile = $this->createZipFile($tempFolder, '団研' . $number . '_顔写真.zip');
+        $zipFile = $this->createZipFile($tempFolder, '団研'  . '_顔写真.zip');
         return $this->downloadAndCleanup($zipFile, $tempFolder);
     }
 
@@ -1249,7 +1218,8 @@ class AdminEntry_infoController extends AppBaseController
             foreach ($pictures as $picture) {
                 $source = storage_path('app/public/picture/' . $picture);
                 $destination = $tempFolder . '/' . $picture;
-                if (file_exists($source)) {
+                // 画像パスとファイル実態があるか確認してからcopy処理
+                if (file_exists($source) && is_file($source)) {
                     copy($source, $destination);
                     $newDestination = $tempFolder . '/' . $user->district . '_' . $user->dan . '_' . $user->user->name . '.jpg';
                     rename($destination, $newDestination);
