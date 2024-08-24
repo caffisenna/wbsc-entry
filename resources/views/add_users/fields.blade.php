@@ -124,7 +124,7 @@
         var selectedOption = selectbox.options[selectbox.selectedIndex].value;
 
         // 判定と表示の切り替え
-        textboxContainer.style.display = (selectedOption === "AIS" || selectedOption === "commi") ? "block" : "none";
+        textboxContainer.style.display = (selectedOption === "AIS" || selectedOption === "commi"|| selectedOption === "participant") ? "block" : "none";
         courseStaffContainer.style.display = (selectedOption === "course_staff") ? "block" : "none";
     }
 </script>

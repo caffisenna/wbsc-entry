@@ -27,11 +27,12 @@ class add_userController extends AppBaseController
     public function index(Request $request)
     {
         // $addUsers = $this->addUserRepository->paginate(10);
-        $addUsers = User::where('is_admin',  1)
-            ->orWhere('is_ais', '<>', null)
-            ->orWhere('is_commi', '<>', null)
-            ->orWhere('is_course_staff', '<>', null)
-            ->get();
+        // $addUsers = User::where('is_admin',  1)
+        //     ->orWhere('is_ais', '<>', null)
+        //     ->orWhere('is_commi', '<>', null)
+        //     ->orWhere('is_course_staff', '<>', null)
+        //     ->get();
+        $addUsers = User::get();
 
         foreach ($addUsers as $user) {
             if ($user->is_admin == 1) {
@@ -42,6 +43,8 @@ class add_userController extends AppBaseController
                 $user->role = "地区コミ " . $user->is_commi;
             }elseif ($user->is_course_staff !== null) {
                 $user->role = "コーススタッフ " . $user->is_course_staff;
+            }else{
+                $user->role = "参加者";
             }
         }
 
@@ -135,19 +138,22 @@ class add_userController extends AppBaseController
      */
     public function update($id, Updateadd_userRequest $request)
     {
-        $addUser = $this->addUserRepository->find($id);
+        // $addUser = $this->addUserRepository->find($id);
 
-        if (empty($addUser)) {
-            Flash::error('Add User not found');
+        // if (empty($addUser)) {
+        //     Flash::error('Add User not found');
 
-            return redirect(route('addUsers.index'));
-        }
+        //     return redirect(route('addUsers.index'));
+        // }
 
-        $addUser = $this->addUserRepository->update($request->all(), $id);
+        // $addUser = $this->addUserRepository->update($request->all(), $id);
+        $input = $request->all();
+        $user = User::where('id',$id)->first();
+        $user->update($input);
 
-        Flash::success('Add User updated successfully.');
+        Flash::success('ユーザー情報を更新しました');
 
-        return redirect(route('addUsers.index'));
+        return redirect(route('add_users.index'));
     }
 
     /**
