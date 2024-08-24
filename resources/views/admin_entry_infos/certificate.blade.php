@@ -85,7 +85,7 @@
                             @if (isset($_REQUEST['q']) || isset($_REQUEST['danken']))
                                 <td
                                     @if ($entryInfo->entry_info->cancel) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel }}" @endif>
-                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}" class='uk-link'>
+                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->entry_info->uuid]) }}" class='uk-link'>
                                         @if ($entryInfo->entry_info->cancel)
                                             <span class="uk-text-danger">[欠]</span>
                                         @endif
@@ -95,7 +95,7 @@
                             @elseif(isset($_REQUEST['div']))
                                 <td
                                     @if ($entryInfo->entry_info->cancel_div) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel_div }}" @endif>
-                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->id]) }}" class='uk-link'>
+                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->entry_info->uuid]) }}" class='uk-link'>
                                         @if ($entryInfo->entry_info->cancel_div)
                                             <span class="uk-text-danger">[欠]</span>
                                         @endif
