@@ -54,7 +54,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('addUsers*') ? 'active' : '' }}">
+                <a href="{{ route('add_users.index') }}" class="nav-link {{ Request::is('*add_users*') ? 'active' : '' }}">
                     {{-- <i class="nav-icon fas fa-user"></i> --}}
                     <p><span uk-icon="users"></span>アカウント管理</p>
                 </a>
