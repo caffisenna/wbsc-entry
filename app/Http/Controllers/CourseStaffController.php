@@ -108,10 +108,11 @@ class CourseStaffController extends AppBaseController
     public function pdf(Request $request)
     {
         $id = $request['id'];
-        $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        // $entryInfo = User::where('id', $id)->with('entry_info')->first();
+        $entryInfo = Entry_info::where('uuid',$id)->with('user')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
-        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->entry_info->district . ' ' . $entryInfo->name . '.pdf';
+        $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->district . ' ' . $entryInfo->user->name . '.pdf';
         // $pdf->setPaper('A4');
         return $pdf->download($filename);
         // return $pdf->stream();

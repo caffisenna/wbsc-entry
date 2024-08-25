@@ -2,7 +2,7 @@
     <table class="uk-table uk-table-divider uk-table-hover uk-table-striped">
         <tr>
             <th>申込書PDF</th>
-            <td><a href="{{ route('course_staff_pdf', ['id' => $entryInfo->user_id]) }}" class='btn btn-default'>
+            <td><a href="{{ route('course_staff_pdf', ['id' => $entryInfo->uuid]) }}" class='btn btn-default'>
                     <span uk-icon="download"></span>ダウンロード
                 </a></td>
         </tr>
