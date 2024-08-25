@@ -1,5 +1,5 @@
 <script src="{{ url('js/yubinbango.js') }}" charset="UTF-8"></script>
-@if ($user)
+@if (isset($user))
     <input type="hidden" name="create_id" value="{{ $user->id }}">
 @else
     <input type="hidden" name="create_id" value="{{ $entryInfo->user->id }}">
@@ -94,7 +94,7 @@
         <tr>
             <td>お名前</td>
             <td>
-                @if ($user)
+                @if (isset($user))
                     {{ $user->name }}
                 @else
                     {{ $entryInfo->user->name }}
@@ -104,7 +104,7 @@
         <tr>
             <td>Email</td>
             <td>
-                @if ($user)
+                @if (isset($user))
                     {{ $user->email }}
                 @else
                     {{ $entryInfo->user->email }}
