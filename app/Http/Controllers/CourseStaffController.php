@@ -37,6 +37,23 @@ class CourseStaffController extends AppBaseController
         $user = Auth::user();
         $q = $user->is_course_staff;
 
+        $districtOrder = [
+            '大都心',
+            'さくら',
+            '城東',
+            '山手',
+            'つばさ',
+            '世田谷',
+            'あすなろ',
+            '城北',
+            '練馬',
+            '多摩西',
+            '新多磨',
+            '南武蔵野',
+            '町田',
+            '北多摩'
+        ];
+
         $entryInfos = User::whereHas('entry_info', function ($query) use ($q) {
             if (substr($q, 0, 2) === 'SC') {
                 // $qの先頭2文字がSCならスカウトコース
@@ -50,10 +67,14 @@ class CourseStaffController extends AppBaseController
                 $query->where('division_number', $q);
             }
         })->with(['entry_info' => function ($query) {
-            $query->orderBy('order', 'asc');
+            $query->orderBy('district', 'asc');
         }])
             ->with('health_info') // 健康情報取得
-            ->get();
+            ->get()
+            ->sortBy(function ($user) use ($districtOrder) {
+                $district = $user->entry_info->district;
+                return array_search($district, $districtOrder);
+            });
 
         // 平均年齢計算
         function calculateAge($birthdate)
@@ -81,7 +102,12 @@ class CourseStaffController extends AppBaseController
             return $group->count();
         });
 
-        return view('course_staff.index', compact(['entryInfos', 'averageAge', 'genderCounts', 'troopCounts']));
+        // 地区別の個数を取得
+        $districtCounts = $entryInfos->groupBy('entry_info.district')->map(function ($group) {
+            return $group->count();
+        });
+
+        return view('course_staff.index', compact(['entryInfos', 'averageAge', 'genderCounts', 'troopCounts','districtCounts']));
     }
 
     /**
@@ -109,7 +135,7 @@ class CourseStaffController extends AppBaseController
     {
         $id = $request['id'];
         // $entryInfo = User::where('id', $id)->with('entry_info')->first();
-        $entryInfo = Entry_info::where('uuid',$id)->with('user')->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->district . ' ' . $entryInfo->user->name . '.pdf';

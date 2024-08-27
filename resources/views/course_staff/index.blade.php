@@ -16,21 +16,16 @@
 
                     <br>平均年齢 : {{ $averageAge }}歳<br>
                     <h3>所属内訳</h3>
-                    <table class="uk-table uk-table-divider uk-table-striped uk-table-small">
-                        <tr>
-                            <th class="uk-width-small">隊</th>
-                            <th class="">人数</th>
-                        </tr>
+                    @foreach (['ビーバー隊', 'カブ隊', 'ボーイ隊', 'ベンチャー隊', 'ローバー隊', '団'] as $troop)
+                        @if ($troopCounts->has($troop))
+                            {{ $troop }} : {{ $troopCounts[$troop] }}人 /
+                        @endif
+                    @endforeach
 
-                        @foreach (['ビーバー隊', 'カブ隊', 'ボーイ隊', 'ベンチャー隊', 'ローバー隊', '団'] as $troop)
-                            @if ($troopCounts->has($troop))
-                                <tr>
-                                    <td>{{ $troop }}</td>
-                                    <td>{{ $troopCounts[$troop] }}人</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </table>
+                    <h3>地区別内訳</h3>
+                    @foreach ($districtCounts as $key => $districtCount)
+                        {{ $key }} : {{ $districtCount }}名 /
+                    @endforeach
                 </div>
             </div>
         </div>
