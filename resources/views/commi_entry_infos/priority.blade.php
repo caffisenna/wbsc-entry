@@ -2,11 +2,10 @@
 
 @section('content')
     <section class="content-header">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css" />
-        <link rel="stylesheet" type="text/css"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css" /> --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.dataTables.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -40,44 +39,29 @@
                 <tbody id="tablecontents">
                     @foreach ($entryInfos as $entryInfo)
                         {{-- 申込情報がブランクなら無視 --}}
-                        @if (isset($entryInfo->entry_info))
-                            {{-- <tr class="row1"> --}}
-                            {{-- <td class="pl-3"><i class="fa fa-sort"> --}}
-                            {{-- <select name="priority-{{ $entryInfo->entry_info->id }}" class="form-control"
-                                        id="priority-{{ $entryInfo->entry_info->id }}"
-                                        onchange="updateSelectOptions('priority-{{ $entryInfo->entry_info->id }}')">
-                                        <option value=""></option>
-                                        @for ($key = 1; $key <= count($entryInfos); $key++)
-                                            <option value="{{ $key }}"
-                                                @if (old('entry_info') == $key) selected @endif>{{ $key }}
-                                            </option>
-                                        @endfor
-                                    </select> --}}
-
-                            {{-- </td> --}}
-                            <tr class="row1" data-id="{{ $entryInfo->entry_info->id }}">
+                        @if (isset($entryInfo))
+                            <tr class="row1" data-id="{{ $entryInfo->id }}">
                                 <td class="pl-3">
                                     <i class="fa fa-sort"></i>
-                                    <span class="uk-hidden">{{ $entryInfo->entry_info->order }}</span>
+                                    <span class="uk-hidden">{{ $entryInfo->order }}</span>
                                 </td>
                                 <td><a
-                                        href="{{ route('commi_entryInfos.show', [$entryInfo->id]) }}">{{ $entryInfo->name }}</a>
-                                    @if ($entryInfo->entry_info->additional_comment)
+                                        href="{{ route('commi_entryInfos.show', [$entryInfo->uuid]) }}">{{ $entryInfo->user->name }}</a>
+                                    @if ($entryInfo->additional_comment)
                                         <span uk-icon="comment" class="uk-text-danger"></span>
                                     @endif
                                     <br>
-                                    {{ $entryInfo->entry_info->dan }}
+                                    {{ $entryInfo->dan }}
                                 </td>
-                                <td>{{ $entryInfo->entry_info->troop }} {{ $entryInfo->entry_info->troop_role }}</td>
+                                <td>{{ $entryInfo->troop }} {{ $entryInfo->troop_role }}</td>
                                 <td>
-                                    @unless ($entryInfo->entry_info->sc_number == 'done')
-                                        {{ $entryInfo->entry_info->sc_number }}期<br>
+                                    @unless ($entryInfo->sc_number == 'done')
+                                        {{ $entryInfo->sc_number }}期<br>
                                     @else
-                                        <span
-                                            class="uk-text-warning">{{ $entryInfo->entry_info->sc_number_done }}期(済)</span><br>
+                                        <span class="uk-text-warning">{{ $entryInfo->sc_number_done }}期(済)</span><br>
                                     @endunless
-                                    @unless ($entryInfo->entry_info->division_number == 'etc')
-                                        {{ $entryInfo->entry_info->division_number }}回
+                                    @unless ($entryInfo->division_number == 'etc')
+                                        {{ $entryInfo->division_number }}回
                                     @else
                                         <span class="uk-text-warning">それ以外</span>
                                     @endunless
@@ -88,9 +72,9 @@
                 </tbody>
             </table>
         </div>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
 
         <script type="text/javascript">
             $(function() {

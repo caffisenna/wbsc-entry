@@ -39,15 +39,10 @@ class CommiEntry_infoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        // whereHas構文で子テーブルの条件で絞れる
-        $entryInfos = User::whereHas('entry_info', function ($query) {
-            $query->where('district', Auth::user()->is_commi);
-        })->with(['entry_info' => function ($query) {
-            $query->orderBy('order', 'asc');
-        }])->get();
+        $entryInfos = Entry_info::where('district', Auth::user()->is_commi)->with('user')->get();
 
         return view('commi_entry_infos.index')
-            ->with('entryInfos', $entryInfos);
+            ->with(compact('entryInfos'));
     }
 
     /**
@@ -90,7 +85,7 @@ class CommiEntry_infoController extends AppBaseController
     public function show($id)
     {
         // $entryInfo = User::where('id', $id)->with('entry_info')->with('health_info')->first();
-        $entryInfo = Entry_info::where('uuid',$id)->with('user')->with('health_info')->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->with('health_info')->first();
         // dd($entryInfo);
 
         if (empty($entryInfo)) {
@@ -181,7 +176,7 @@ class CommiEntry_infoController extends AppBaseController
     {
         $id = $request['id'];
         // $entryInfo = User::where('id', $id)->with('entry_info')->first();
-        $entryInfo = Entry_info::where('uuid',$id)->with('user')->first();
+        $entryInfo = Entry_info::where('uuid', $id)->with('user')->first();
 
         $pdf = \PDF::loadView('entry_infos.pdf', compact('entryInfo'));
         $filename = 'WB研修所・課程別研修申込書 ' . $entryInfo->district . ' ' . $entryInfo->user->name . '.pdf';
@@ -298,11 +293,12 @@ class CommiEntry_infoController extends AppBaseController
     public function priority(Request $request)
     {
         // whereHas構文で子テーブルの条件で絞れる
-        $entryInfos = User::whereHas('entry_info', function ($query) {
-            $query->where('district', Auth::user()->is_commi);
-        })->with(['entry_info' => function ($query) {
-            $query->orderBy('order', 'asc');
-        }])->get();
+        // $entryInfos = User::whereHas('entry_info', function ($query) {
+        //     $query->where('district', Auth::user()->is_commi);
+        // })->with(['entry_info' => function ($query) {
+        //     $query->orderBy('order', 'asc');
+        // }])->get();
+        $entryInfos = Entry_info::where('district', Auth::user()->is_commi)->with('user')->orderBy('order', 'asc')->get();
 
         return view('commi_entry_infos.priority')
             ->with('entryInfos', $entryInfos);
@@ -328,11 +324,7 @@ class CommiEntry_infoController extends AppBaseController
     public function payment(Request $request)
     {
         // 参加費納入状況
-        $users = User::whereHas('entry_info', function ($query) {
-            $query->where('district', Auth::user()->is_commi);
-        })->with(['entry_info' => function ($query) {
-            $query->orderBy('order', 'asc');
-        }])->get();
+        $users = Entry_info::where('district', Auth::user()->is_commi)->with('user')->orderBy('order', 'asc')->get();
 
         return view('commi_entry_infos.payment_status')
             ->with(compact('users'));

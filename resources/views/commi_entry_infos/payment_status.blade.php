@@ -30,19 +30,19 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr>
-                        <td>{{ $user->name }}
-                            @if ($user->entry_info->cancel !== null || $user->entry_info->cancel_div !== null)
+                        <td>{{ $user->user->name }}
+                            @if ($user->cancel !== null || $user->cancel_div !== null)
                                 <span class="uk-text-danger">[欠席]</span>
                             @endif
                             <br>
-                            <span class="uk-text-small">{{ $user->entry_info->dan }}</span>
+                            <span class="uk-text-small">{{ $user->dan }}</span>
                         </td>
                         <td>
-                            @if ($user->entry_info->sc_number !== null)
-                                @if ($user->entry_info->sc_number !== 'done')
-                                    SC{{ $user->entry_info->sc_number }}期:
-                                    @if ($user->entry_info->sc_fee_checked_at !== null)
-                                        {{ $user->entry_info->sc_fee_checked_at }}
+                            @if ($user->sc_number !== null)
+                                @if ($user->sc_number !== 'done')
+                                    SC{{ $user->sc_number }}期:
+                                    @if ($user->sc_fee_checked_at !== null)
+                                        {{ $user->sc_fee_checked_at }}
                                     @else
                                         <span class="uk-text-danger">未納</span>
                                     @endif
@@ -51,19 +51,19 @@
                                 @endif
                                 <br>
                             @endif
-                            @if ($user->entry_info->division_number !== null)
-                                {{ $user->entry_info->division_number }}回:
-                                @if ($user->entry_info->div_fee_checked_at !== null)
-                                    {{ $user->entry_info->div_fee_checked_at }}
+                            @if ($user->division_number !== null)
+                                {{ $user->division_number }}回:
+                                @if ($user->div_fee_checked_at !== null)
+                                    {{ $user->div_fee_checked_at }}
                                 @else
                                     <span class="uk-text-danger">未納</span>
                                 @endif
                                 <br>
                             @endif
-                            @if ($user->entry_info->danken !== null)
-                                団研{{ $user->entry_info->danken }}期:
-                                @if ($user->entry_info->danken_fee_checked_at !== null)
-                                    {{ $user->entry_info->danken_fee_checked_at }}
+                            @if ($user->danken !== null)
+                                団研{{ $user->danken }}期:
+                                @if ($user->danken_fee_checked_at !== null)
+                                    {{ $user->danken_fee_checked_at }}
                                 @else
                                     <span class="uk-text-danger">未納</span>
                                 @endif

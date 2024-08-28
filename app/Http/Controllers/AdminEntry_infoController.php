@@ -56,74 +56,53 @@ class AdminEntry_infoController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $districtOrder = [
+            '大都心',
+            'さくら',
+            '城東',
+            '山手',
+            'つばさ',
+            '世田谷',
+            'あすなろ',
+            '城北',
+            '練馬',
+            '多摩西',
+            '新多磨',
+            '南武蔵野',
+            '町田',
+            '北多摩'
+        ];
         if (isset($request['q'])) { // スカウトコース 期数抽出
             if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q)->where('district', Auth::user()->is_ais);
-                    }
-                )->with('entry_info')->get();
+                // 地区AIS委員
+                $entryInfos = Entry_info::where('sc_number', $_REQUEST['q'])->where('district', Auth::user()->is_ais)->with('user')->get();
             } else {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['q'];
-                        $query->where('sc_number', $q);
-                    }
-                )->with('entry_info')->get();
+                // 管理者
+                $entryInfos = Entry_info::where('sc_number', $_REQUEST['q'])->with('user')->get();
             }
         } elseif (isset($request['div'])) { // 課程別研修 回数抽出
             if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['div'];
-                        $query->where('division_number', $q)->where('district', Auth::user()->is_ais);
-                    }
-                )->with('entry_info')->get();
+                // 地区AIS委員
+                $entryInfos = Entry_info::where('division_number', $_REQUEST['div'])->where('district', Auth::user()->is_ais)->with('user')->get();
             } else {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $q = $_REQUEST['div'];
-                        $query->where('division_number', $q);
-                    }
-                )->with('entry_info')->get();
+                // 管理者
+                $entryInfos = Entry_info::where('division_number', $_REQUEST['div'])->with('user')->get();
             }
         } elseif (isset($request['danken'])) { // 団研抽出
             if (Auth::user()->is_ais) {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $query->whereNotNull('danken')->where('district', Auth::user()->is_ais);
-                    }
-                )->with('entry_info')->get();
+                // 地区AIS委員
+                $entryInfos = Entry_info::whereNotNull('danken')->where('district', Auth::user()->is_ais)->with('user')->get();
             } else {
-                $entryInfos = User::wherehas(
-                    'entry_info',
-                    function ($query) {
-                        $query->whereNotNull('danken');
-                    }
-                )->with('entry_info')->get();
+                // 管理者
+                $entryInfos = Entry_info::whereNotNull('danken')->with('user')->get();
             }
         } else {
             if (Auth::user()->is_ais) {
-                $entryInfos = User::with('entry_info')
-                    ->where('is_admin', 0)
-                    ->where('is_ais', NULL)
-                    ->where('is_commi', NULL)
-                    ->whereHas('entry_info', function ($query) {
-                        $query->where('district', Auth::user()->is_ais);
-                    })
-                    ->get();
+                // 地区AIS委員
+                $entryInfos = Entry_info::where('district', Auth::user()->is_ais)->with('user')->get();
             } else {
-                $entryInfos = User::with('entry_info')
-                    ->where('is_admin', 0)
-                    ->where('is_ais', NULL)
-                    ->where('is_commi', NULL)
-                    ->get();
+                // 管理者
+                $entryInfos = Entry_info::all();
             }
         }
 
@@ -150,8 +129,13 @@ class AdminEntry_infoController extends AppBaseController
             $request['cat'] = 'danken';
         }
 
+        // 地区別の個数を取得
+        $districtCounts = $entryInfos->groupBy('district')->map(function ($group) {
+            return $group->count();
+        });
+
         return view('admin_entry_infos.index')
-            ->with('entryInfos', $entryInfos)
+            ->with(compact(['entryInfos', 'districtCounts']))
             ->with(isset($course_info) ? compact('course_info') : [])
             ->with(compact('request'));
     }

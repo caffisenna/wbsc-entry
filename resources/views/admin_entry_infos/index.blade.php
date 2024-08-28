@@ -30,6 +30,10 @@
                     @endif
                 </div>
             </div>
+            <h3>地区別内訳</h3>
+            @foreach ($districtCounts as $key => $districtCount)
+                {{ $key }} : {{ $districtCount }}名 /
+            @endforeach
         </div>
     </section>
 
