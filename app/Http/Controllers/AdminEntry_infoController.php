@@ -102,7 +102,7 @@ class AdminEntry_infoController extends AppBaseController
                 $entryInfos = Entry_info::where('district', Auth::user()->is_ais)->with('user')->get();
             } else {
                 // 管理者
-                $entryInfos = Entry_info::all();
+                $entryInfos = Entry_info::with('user')->get();
             }
         }
 
