@@ -1,6 +1,8 @@
 {{-- 認証されてなければサイドメニューを表示しない --}}
-<a href="{{ url('/updates') }}" class="nav-link {{ Request::is('updates') ? 'active' : '' }}"><span
-        uk-icon="icon: info"></span>お知らせ</a>
+<p class="">
+    <a href="{{ url('/updates') }}" class="nav-link {{ Request::is('updates') ? 'active' : '' }}"><span
+            uk-icon="icon: info"></span>お知らせ</a>
+</p>
 @auth
     {{-- 一般ユーザー --}}
     @unless (Auth::user()->is_admin || Auth::user()->is_ais || Auth::user()->is_commi || Auth::user()->is_course_staff)
@@ -20,7 +22,8 @@
 
     {{-- 管理者 --}}
     @if (Auth::user()->is_admin)
-        <h3 class="uk-text-warning">管理者</h3>
+        {{-- <h3 class="uk-text-warning">基本機能</h3> --}}
+
         <li class="nav-item">
             <a href="{{ url('/home') }}" class="nav-link {{ Request::is('admin_entryInfos*') ? 'active' : '' }}">
                 <p><span uk-icon="list"></span>コース・課程別一覧</p>
@@ -69,63 +72,87 @@
                 </a>
             </li>
 
-            <h3 class="uk-text-warning">参加・修了認定</h3>
-            <li class="nav-item">
-                <a href="{{ route('approve_participation') }}"
-                    class="nav-link {{ Request::is('admin/approve_participation') ? 'active' : '' }}">
-                    <p><span uk-icon="bolt"></span>参加認定</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('certificate', ['list' => 'all']) }}"
-                    class="nav-link {{ Request::is('admin/certificate*') || str_contains(request()->fullUrl(), 'certificate=true') ? 'active' : '' }}">
-                    <p><span uk-icon="bolt"></span>修了認定</p>
-                </a>
-            </li>
+            <ul uk-accordion>
+                <li>
+                    <a class="uk-accordion-title" href>参加・修了認定</a>
+                    <div class="uk-accordion-content">
+                        <ul class="uk-list">
+                            <li class="nav-item">
+                                <a href="{{ route('approve_participation') }}"
+                                    class="nav-link {{ Request::is('admin/approve_participation') ? 'active' : '' }}">
+                                    <p><span uk-icon="bolt"></span>参加認定</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('certificate', ['list' => 'all']) }}"
+                                    class="nav-link {{ Request::is('admin/certificate*') || str_contains(request()->fullUrl(), 'certificate=true') ? 'active' : '' }}">
+                                    <p><span uk-icon="bolt"></span>修了認定</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
 
 
-            <h3 class="uk-text-warning">コース設定</h3>
-            <li class="nav-item">
-                <a href="{{ route('courseLists.index') }}"
-                    class="nav-link {{ Request::is('*courseLists*') ? 'active' : '' }}">
-                    <p><span uk-icon="cog"></span>スカウトコース</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('divisionLists.index') }}"
-                    class="nav-link {{ Request::is('*divisionLists*') ? 'active' : '' }}">
-                    <p><span uk-icon="cog"></span>課程別研修</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('dankenLists.index') }}"
-                    class="nav-link {{ Request::is('*dankenLists*') ? 'active' : '' }}">
-                    <p><span uk-icon="cog"></span>団研</p>
-                </a>
-            </li>
+            <ul uk-accordion>
+                <li>
+                    <a class="uk-accordion-title">コース設定</a>
+                    <div class="uk-accordion-content">
+                        <ul class="uk-list">
+                            <li class="nav-item">
+                                <a href="{{ route('courseLists.index') }}"
+                                    class="nav-link {{ Request::is('*courseLists*') ? 'active' : '' }}">
+                                    <p><span uk-icon="cog"></span>スカウトコース</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('divisionLists.index') }}"
+                                    class="nav-link {{ Request::is('*divisionLists*') ? 'active' : '' }}">
+                                    <p><span uk-icon="cog"></span>課程別研修</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dankenLists.index') }}"
+                                    class="nav-link {{ Request::is('*dankenLists*') ? 'active' : '' }}">
+                                    <p><span uk-icon="cog"></span>団委員研修所</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
 
-            <h3 class="uk-text-warning">事務局</h3>
-            <li class="nav-item">
-                <a href="{{ route('fee_check', ['cat' => 'sc']) }}"
-                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'sc' && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
-                    ">
-                    <p><span uk-icon="cart"></span>参加費確認(SC)</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('fee_check', ['cat' => 'div']) }}"
-                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'div' && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
-                    ">
-                    <p><span uk-icon="cart"></span>参加費確認(課程別)</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('fee_check', ['cat' => 'danken']) }}"
-                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'danken' && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
-                    ">
-                    <p><span uk-icon="cart"></span>参加費確認(団研)</p>
-                </a>
-            </li>
+            <ul uk-accordion>
+                <li>
+                    <a class="uk-accordion-title">参加費確認</a>
+                    <div class="uk-accordion-content">
+                        <ul class=" uk-list">
+                            <li class="nav-item">
+                                <a href="{{ route('fee_check', ['cat' => 'sc']) }}"
+                                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'sc' && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
+                                    ">
+                                    <p><span uk-icon="cart"></span>スカウトコース</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('fee_check', ['cat' => 'div']) }}"
+                                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'div' && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
+                                    ">
+                                    <p><span uk-icon="cart"></span>課程別研修</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('fee_check', ['cat' => 'danken']) }}"
+                                    class="nav-link {{ request()->has('cat') && request()->query('cat') === 'danken' && str_contains(request()->url(), 'fee_check') ? 'active' : '' }}
+                                    ">
+                                    <p><span uk-icon="cart"></span>団委員研修所</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         @endunless
     @endif
 
