@@ -1,70 +1,5 @@
-<link rel="stylesheet" type="text/css" href="{{ url('/datatables/jquery.dataTables.css') }}">
-<script type="text/javascript" charset="utf8" src="{{ url('/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ url('/datatables/dataTables.fixedHeader.min.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Setup - add a text input to each footer cell
-        $('#entryInfos-table thead tr')
-            .clone(true)
-            .addClass('filters')
-            .appendTo('#entryInfos-table thead');
+<link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.min.css') }}">
 
-        var table = $('#entryInfos-table').DataTable({
-            orderCellsTop: true,
-            fixedHeader: true,
-            initComplete: function() {
-                var api = this.api();
-
-                // For each column
-                api
-                    .columns()
-                    .eq(0)
-                    .each(function(colIdx) {
-                        // Set the header cell to contain the input element
-                        var cell = $('.filters th').eq(
-                            $(api.column(colIdx).header()).index()
-                        );
-                        var title = $(cell).text();
-                        $(cell).html('<input type="text" placeholder="' + title +
-                            '" style="width:60px" />');
-
-                        // On every keypress in this input
-                        $(
-                                'input',
-                                $('.filters th').eq($(api.column(colIdx).header()).index())
-                            )
-                            .off('keyup change')
-                            .on('keyup change', function(e) {
-                                e.stopPropagation();
-
-                                // Get the search value
-                                $(this).attr('title', $(this).val());
-                                var regexr =
-                                    '({search})'; //$(this).parents('th').find('select').val();
-
-                                var cursorPosition = this.selectionStart;
-                                // Search the column for that value
-                                api
-                                    .column(colIdx)
-                                    .search(
-                                        this.value != '' ?
-                                        regexr.replace('{search}', '(((' + this.value +
-                                            ')))') :
-                                        '',
-                                        this.value != '',
-                                        this.value == ''
-                                    )
-                                    .draw();
-
-                                $(this)
-                                    .focus()[0]
-                                    .setSelectionRange(cursorPosition, cursorPosition);
-                            });
-                    });
-            },
-        });
-    });
-</script>
 <div class="table-responsive">
     <div class="uk-overflow-auto">
         <table class="uk-table uk-table-striped" id="entryInfos-table">
@@ -94,8 +29,7 @@
                             <tr>
                         @endif
                         @if (isset($entryInfo->cancel) || isset($entryInfo->cancel_div))
-                            <td bgcolor="#ccc"
-                                uk-tooltip="{{ $entryInfo->cancel }}<br>{{ $entryInfo->cancel_div }}">
+                            <td bgcolor="#ccc" uk-tooltip="{{ $entryInfo->cancel }}<br>{{ $entryInfo->cancel_div }}">
                             @else
                             <td>
                         @endif
@@ -112,8 +46,8 @@
                         </td>
                         <td>
                             @if ($entryInfo->user->face_picture)
-                                <img src="{{ url('/storage/picture/') }}/{{ $entryInfo->user->face_picture }}" alt=""
-                                    width="50px" height="">
+                                <img src="{{ url('/storage/picture/') }}/{{ $entryInfo->user->face_picture }}"
+                                    alt="" width="50px" height="">
                             @endif
                         </td>
                         <td>{{ $entryInfo->district }}</td>
@@ -135,8 +69,7 @@
                                         <span class=" uk-text-danger">未提出</span>
                                     @endif
                                 @elseif($entryInfo->sc_number_done)
-                                    <span
-                                        class="uk-text-warning">{{ $entryInfo->sc_number_done }}<br>(修了済み)</span>
+                                    <span class="uk-text-warning">{{ $entryInfo->sc_number_done }}<br>(修了済み)</span>
                                 @endif
                             @else
                                 <span class="uk-text-small">ビーバー特例</span>
@@ -230,8 +163,7 @@
         </table>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#entryInfos-table').DataTable();
-    });
+<script src="{{ asset('js/dataTables.min.js') }}"></script>
+<script>
+    let table = new DataTable('#entryInfos-table');
 </script>
