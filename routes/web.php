@@ -53,10 +53,6 @@ Route::get('/howto_commi', function () {
     return view('howto_commi');     // 地区コミ
 });
 
-Route::get('/updates', function () {
-    return view('updates');     // 地区コミ
-});
-
 Auth::routes();
 
 Route::get('/email/verify', function () {
@@ -144,3 +140,6 @@ Route::middleware('verified')->group(function () {
         Route::match(['get', 'post'], '/cancel', [CourseStaffController::class, 'cancel'])->name('cancel'); // 参加キャンセル
     });
 });
+
+// お知らせ機能
+Route::resource('updates', App\Http\Controllers\UpdateController::class);

@@ -1,5 +1,6 @@
 {{-- 認証されてなければサイドメニューを表示しない --}}
-<a href="{{ url('/updates') }}"><span uk-icon="icon: info"></span>お知らせ</a>
+<a href="{{ url('/updates') }}" class="nav-link {{ Request::is('updates') ? 'active' : '' }}"><span
+        uk-icon="icon: info"></span>お知らせ</a>
 @auth
     {{-- 一般ユーザー --}}
     @unless (Auth::user()->is_admin || Auth::user()->is_ais || Auth::user()->is_commi || Auth::user()->is_course_staff)
@@ -35,7 +36,8 @@
         {{-- 地区AIS委員はエクスポートさせない --}}
         @unless (Auth::user()->is_ais)
             <li class="nav-item">
-                <a href="{{ route('admin_export') }}?q=all" class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
+                <a href="{{ route('admin_export') }}?q=all"
+                    class="nav-link {{ Request::is('admin_export*') ? 'active' : '' }}">
                     <p><span uk-icon="pull"></span>全件エクスポート</p>
                 </a>
             </li>
@@ -173,7 +175,8 @@
 @else
     <h3 class="uk-text-warning">使い方ガイド</h3>
     <li class="nav-item">
-        <a href="{{ url('/howto_gm') }}" class="nav-link {{ Request::is('/howto_gm') ? 'active' : '' }}" target="_blank">
+        <a href="{{ url('/howto_gm') }}" class="nav-link {{ Request::is('/howto_gm') ? 'active' : '' }}"
+            target="_blank">
             <p><span uk-icon="file-text"></span>団承認の仕方</p>
         </a>
     </li>
