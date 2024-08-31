@@ -21,7 +21,7 @@
         @include('flash::message')
 
         <div class="clearfix"></div>
-        <p class="uk-text-warning">管理者、地区AIS委員、地区コミッショナーのアカウントの管理フォーム</p>
+        <p class="uk-text-warning">システムに登録されている全ユーザーの登録と修正</p>
         <div class="card">
             @include('add_users.table')
         </div>
