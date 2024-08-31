@@ -74,7 +74,7 @@
 
             <ul uk-accordion>
                 <li>
-                    <a class="uk-accordion-title" href>参加・修了認定</a>
+                    <a class="uk-accordion-title" href><span uk-icon="icon: expand"></span>参加・修了認定</a>
                     <div class="uk-accordion-content">
                         <ul class="uk-list">
                             <li class="nav-item">
@@ -97,7 +97,7 @@
 
             <ul uk-accordion>
                 <li>
-                    <a class="uk-accordion-title">コース設定</a>
+                    <a class="uk-accordion-title"><span uk-icon="icon: expand"></span>コース設定</a>
                     <div class="uk-accordion-content">
                         <ul class="uk-list">
                             <li class="nav-item">
@@ -125,7 +125,7 @@
 
             <ul uk-accordion>
                 <li>
-                    <a class="uk-accordion-title">参加費確認</a>
+                    <a class="uk-accordion-title"><span uk-icon="icon: expand"></span>参加費確認</a>
                     <div class="uk-accordion-content">
                         <ul class=" uk-list">
                             <li class="nav-item">
