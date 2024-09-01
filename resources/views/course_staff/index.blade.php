@@ -7,7 +7,7 @@
                 <div class="col-sm-8">
                     <h1>申込状況 {{ Auth::user()->is_course_staff }}</h1>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     {{ now()->format('Y-m-d H:i') }}<br>
                     申込人数 : {{ $entryInfos->count() }}名 (
                     @foreach ($genderCounts as $key => $value)
