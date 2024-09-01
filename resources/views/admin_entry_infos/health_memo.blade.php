@@ -7,13 +7,15 @@
                 <div class="col-sm-10">
                     <h1>健康情報入力者</h1>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     {{-- フィルター用にSC期数を表示 --}}
                     <span uk-icon="database"></span>絞り込み:
                     @foreach ($uniqueScNumbers as $sc_number)
                         <a href="{{ route('health_memo', ['sc_number' => $sc_number]) }}"
                             class="uk-button uk-button-primary">SC{{ $sc_number }}期</a>
                     @endforeach
+                    <a href="{{ route('health_memo', ['danken' => 'danken']) }}"
+                        class="uk-button uk-button-primary">団研</a>
                 </div>
             </div>
         </div>
@@ -40,7 +42,7 @@
                                 $age = number_format($age, 1); // 少数第一位までフォーマット
                             @endphp
                             <tr>
-                                <td class="uk-table-expand">
+                                <td class="uk-table-shrink uk-text-nowrap">
                                     <a href="{{ route('admin_entryInfos.show', [$entryinfo->user_id]) }}"
                                         class="uk-link">{{ $entryinfo->user->name }}</a><br>
                                     SC{{ $entryinfo->entry_Info->sc_number }}期<br>
@@ -51,7 +53,7 @@
                                         {{ $entryinfo->entry_Info->troop_role }}
                                     </span>
                                 </td>
-                                <td>
+                                <td class="uk-table-expand">
                                     <dl class="uk-description-list uk-description-list-divider">
                                         @if ($entryinfo->treating_disease)
                                             <dt>治療中の病気</dt>
@@ -85,7 +87,7 @@
                                     </dl>
                                 </td>
 
-                                <td>
+                                <td class="uk-table-expand uk-text-nowrap">
                                     <dl class="uk-description-list uk-description-list-divider">
                                         <dt>アレルギーの有無</dt>
                                         <dd>{{ $entryinfo->food_allergies }}</dd>

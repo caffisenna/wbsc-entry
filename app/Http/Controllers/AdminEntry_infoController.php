@@ -949,10 +949,16 @@ class AdminEntry_infoController extends AppBaseController
                 ->orWhere('medical_history', '<>', 1)
                 ->orWhere('food_allergies', '食物アレルギーがある');
         })
-            // SC指定の場合のみ
+            // SC参加者の抽出
             ->when($request['sc_number'], function ($query) use ($request) {
                 $query->whereHas('entry_Info', function ($subQuery) use ($request) {
                     $subQuery->where('sc_number', $request['sc_number']);
+                });
+            })
+            // 団研参加者の抽出
+            ->when($request['danken'], function ($query) use ($request) {
+                $query->whereHas('entry_Info', function ($subQuery) use ($request) {
+                    $subQuery->whereNotNull('danken');
                 });
             })
             ->with(['user', 'entry_Info'])
