@@ -1,70 +1,5 @@
-<link rel="stylesheet" type="text/css" href="{{ url('/datatables/jquery.dataTables.css') }}">
-<script type="text/javascript" charset="utf8" src="{{ url('/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ url('/datatables/dataTables.fixedHeader.min.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Setup - add a text input to each footer cell
-        $('#entryInfos-table thead tr')
-            .clone(true)
-            .addClass('filters')
-            .appendTo('#entryInfos-table thead');
+<link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.min.css') }}">
 
-        var table = $('#entryInfos-table').DataTable({
-            orderCellsTop: true,
-            fixedHeader: true,
-            initComplete: function() {
-                var api = this.api();
-
-                // For each column
-                api
-                    .columns()
-                    .eq(0)
-                    .each(function(colIdx) {
-                        // Set the header cell to contain the input element
-                        var cell = $('.filters th').eq(
-                            $(api.column(colIdx).header()).index()
-                        );
-                        var title = $(cell).text();
-                        $(cell).html('<input type="text" placeholder="' + title +
-                            '" style="width:60px" />');
-
-                        // On every keypress in this input
-                        $(
-                                'input',
-                                $('.filters th').eq($(api.column(colIdx).header()).index())
-                            )
-                            .off('keyup change')
-                            .on('keyup change', function(e) {
-                                e.stopPropagation();
-
-                                // Get the search value
-                                $(this).attr('title', $(this).val());
-                                var regexr =
-                                    '({search})'; //$(this).parents('th').find('select').val();
-
-                                var cursorPosition = this.selectionStart;
-                                // Search the column for that value
-                                api
-                                    .column(colIdx)
-                                    .search(
-                                        this.value != '' ?
-                                        regexr.replace('{search}', '(((' + this.value +
-                                            ')))') :
-                                        '',
-                                        this.value != '',
-                                        this.value == ''
-                                    )
-                                    .draw();
-
-                                $(this)
-                                    .focus()[0]
-                                    .setSelectionRange(cursorPosition, cursorPosition);
-                            });
-                    });
-            },
-        });
-    });
-</script>
 <div class="table-responsive">
     <div class="uk-overflow-auto">
         <table class="uk-table" id="entryInfos-table">
@@ -80,41 +15,41 @@
             <tbody>
                 @foreach ($entryInfos as $entryInfo)
                     {{-- 申込情報がブランクなら無視 --}}
-                    @if (isset($entryInfo->entry_info))
+                    @if (isset($entryInfo))
                         <tr>
                             @if (isset($_REQUEST['q']) || isset($_REQUEST['danken']))
                                 <td
-                                    @if ($entryInfo->entry_info->cancel) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel }}" @endif>
-                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->entry_info->uuid]) }}" class='uk-link'>
-                                        @if ($entryInfo->entry_info->cancel)
+                                    @if ($entryInfo->cancel) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->cancel }}" @endif>
+                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->uuid]) }}" class='uk-link'>
+                                        @if ($entryInfo->cancel)
                                             <span class="uk-text-danger">[欠]</span>
                                         @endif
-                                        {{ $entryInfo->name }}
+                                        {{ $entryInfo->user->name }}
                                     </a>
                                 </td>
                             @elseif(isset($_REQUEST['div']))
                                 <td
-                                    @if ($entryInfo->entry_info->cancel_div) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->entry_info->cancel_div }}" @endif>
-                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->entry_info->uuid]) }}" class='uk-link'>
-                                        @if ($entryInfo->entry_info->cancel_div)
+                                    @if ($entryInfo->cancel_div) bgcolor="#ccc" uk-tooltip="{{ $entryInfo->cancel_div }}" @endif>
+                                    <a href="{{ route('admin_entryInfos.show', [$entryInfo->uuid]) }}" class='uk-link'>
+                                        @if ($entryInfo->cancel_div)
                                             <span class="uk-text-danger">[欠]</span>
                                         @endif
-                                        {{ $entryInfo->name }}
+                                        {{ $entryInfo->user->name }}
                                     </a>
                                 </td>
                             @endif
 
-                            <td>{{ $entryInfo->entry_info->district }}</td>
-                            <td>{{ $entryInfo->entry_info->dan }}</td>
+                            <td>{{ $entryInfo->district }}</td>
+                            <td>{{ $entryInfo->dan }}</td>
                             {{-- 認定がpass、ngが入っていなければボタンを表示 --}}
                             @unless (
-                                $entryInfo->entry_info->certification_sc ||
-                                    $entryInfo->entry_info->certification_div ||
-                                    $entryInfo->entry_info->certification_danken)
+                                $entryInfo->certification_sc ||
+                                    $entryInfo->certification_div ||
+                                    $entryInfo->certification_danken)
                                 <td>
                                     {{-- 地区AIS委員長はボタンを隠す --}}
                                     @if (Auth::user()->is_ais == null)
-                                        <a href="{{ route('certificate', ['status' => 'pass', 'uuid' => $entryInfo->entry_info->uuid, 'cat' => $request['cat']]) }}"
+                                        <a href="{{ route('certificate', ['status' => 'pass', 'uuid' => $entryInfo->uuid, 'cat' => $request['cat']]) }}"
                                             class='uk-button uk-button-primary uk-button-small'
                                             onclick="return confirm('{{ $entryInfo->name }}さんを認定しますか?')">
                                             <span uk-icon="check"></span>認定
@@ -124,7 +59,7 @@
                                 <td>
                                     {{-- 地区AIS委員長はボタンを隠す --}}
                                     @if (Auth::user()->is_ais == null)
-                                        <a href="{{ route('certificate', ['status' => 'ng', 'uuid' => $entryInfo->entry_info->uuid, 'cat' => $request['cat']]) }}"
+                                        <a href="{{ route('certificate', ['status' => 'ng', 'uuid' => $entryInfo->uuid, 'cat' => $request['cat']]) }}"
                                             class='uk-button uk-button-danger uk-button-small'
                                             onclick="return confirm('{{ $entryInfo->name }}さんを否認しますか?')">
                                             <span uk-icon="close"></span>非認定
@@ -133,22 +68,22 @@
                                 </td>
                             @else
                                 {{-- 認定結果を表示 --}}
-                                @if ($entryInfo->entry_info->certification_sc == 'pass')
+                                @if ($entryInfo->certification_sc == 'pass')
                                     <td><span class="uk-text-success">認定済み</span></td>
                                     <td></td>
-                                @elseif ($entryInfo->entry_info->certification_sc == 'ng')
+                                @elseif ($entryInfo->certification_sc == 'ng')
                                     <td><span class="uk-text-danger">否認済み</span></td>
                                     <td></td>
-                                @elseif ($entryInfo->entry_info->certification_div == 'pass')
+                                @elseif ($entryInfo->certification_div == 'pass')
                                     <td><span class="uk-text-success">認定済み</span></td>
                                     <td></td>
-                                @elseif ($entryInfo->entry_info->certification_div == 'ng')
+                                @elseif ($entryInfo->certification_div == 'ng')
                                     <td><span class="uk-text-danger">否認済み</span></td>
                                     <td></td>
-                                @elseif ($entryInfo->entry_info->certification_danken == 'pass')
+                                @elseif ($entryInfo->certification_danken == 'pass')
                                     <td><span class="uk-text-success">認定済み</span></td>
                                     <td></td>
-                                @elseif ($entryInfo->entry_info->certification_danken == 'ng')
+                                @elseif ($entryInfo->certification_danken == 'ng')
                                     <td><span class="uk-text-danger">否認済み</span></td>
                                     <td></td>
                                 @endif
@@ -160,8 +95,7 @@
         </table>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#entryInfos-table').DataTable();
-    });
+<script src="{{ asset('js/dataTables.min.js') }}"></script>
+<script>
+    let table = new DataTable('#entryInfos-table');
 </script>
