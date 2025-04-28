@@ -8,7 +8,7 @@
                     <h1>申込内容詳細</h1>
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-default float-right" href="{{ route('admin_entryInfos.index') }}">
+                    <a class="btn btn-default float-right" href="{{ route('commi_entryInfos.index') }}">
                         戻る
                     </a>
                 </div>

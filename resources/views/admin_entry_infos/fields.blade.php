@@ -133,7 +133,7 @@
             <td>生年月日</td>
             <td>
                 {{-- {!! Form::date('birthday', null, ['class' => 'form-control', 'min'=>'1947-01-01', 'max'=>'2004-12-31']) !!} --}}
-                {!! Form::selectRange('bd_year', 1942, 2005, null, [
+                {!! Form::selectRange('bd_year', 1942, 2008, null, [
                     'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '年',
                 ]) !!}

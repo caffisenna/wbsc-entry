@@ -78,7 +78,7 @@
                     <th>サポート</td>
                     <td>
                         使用方法などのお問い合わせは、各地区のAIS委員長までお願い致します。<br>
-                        システムに関する技術的なお問い合わせは <a href="mailto:{{ config('mail.from.address') }}">専用アドレス</a>
+                        システムに関する技術的なお問い合わせは <a href="mailto:wb-system-contact@scout.tokyo">専用アドレス</a>
                         にお送りください。
                     </td>
                 </tr>

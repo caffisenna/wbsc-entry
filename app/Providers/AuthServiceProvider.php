@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
                 ->line('AISESで申し込み手続きをするには、以下のボタンをクリックしてメール認証を完了してください。')
                 ->action('認証する', $url)
                 ->line('メール認証が完了したら、ユーザーマニュアルを参照の上、申込書を作成してください。')
-                ->line('もし、このメールにお心当たりが無い場合は、wb-system@scout.tokyo までご連絡ください。');
+                ->line('もし、このメールにお心当たりが無い場合は、wb-system-contact@scout.tokyo までご連絡ください。');
         });
 
         Gate::define('admin', function (\App\Models\User $user) {

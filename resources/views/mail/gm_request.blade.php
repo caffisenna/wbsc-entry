@@ -8,9 +8,9 @@
 <a href="{{ url('/confirm/gm?uuid=') }}{{ $uuid }}">{{ url('/confirm/gm?uuid=') }}{{ $uuid }}</a>にアクセスして参加承認を行ってください。<br>
 <p>ご参考: <a href="https://wbsc.scout.tokyo/howto_gm">団承認の仕方</a></p>
 
-<p>このメールにお心当たりが無い場合は、<a href="mailto:wb-system@scout.tokyo">wb-system@scout.tokyo</a>までご連絡ください。</p>
+<p>このメールにお心当たりが無い場合は、<a href="mailto:wb-system-contact@scout.tokyo">wb-system-contact@scout.tokyo</a>までご連絡ください。</p>
 <p></p>
 
 ----<br>
 <a href="{{ config('app.url') }}">ボーイスカウト東京連盟 指導者訓練 参加申込システム {{ config('app.name') }}</a><br>
-<a href="mailto:wb-system@scout.tokyo">wb-system@scout.tokyo</a>
+<a href="mailto:wb-system-contact@scout.tokyo">wb-system-contact@scout.tokyo</a>

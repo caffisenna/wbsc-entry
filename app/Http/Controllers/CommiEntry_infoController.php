@@ -97,7 +97,7 @@ class CommiEntry_infoController extends AppBaseController
         // 通知メールCC送信先取得
         $gm_email = GmAddress::where('uuid', $id)->first();
 
-        return view('admin_entry_infos.show', compact('entryInfo', 'gm_email'));
+        return view('commi_entry_infos.show', compact('entryInfo', 'gm_email'));
     }
 
     /**
@@ -282,9 +282,7 @@ class CommiEntry_infoController extends AppBaseController
 
         Flash::success($userinfo->user->name . 'さんの副申請書を作成しました。');
 
-        $entryInfos = User::whereHas('entry_info', function ($query) {
-            $query->where('district', Auth::user()->is_commi);
-        })->with('entry_info')->get();
+        $entryInfos = Entry_info::where('district', Auth::user()->is_commi)->with('user')->get();
 
         return view('commi_entry_infos.index')
             ->with('entryInfos', $entryInfos);

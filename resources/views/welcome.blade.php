@@ -125,7 +125,7 @@
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400">
                                 <ul class="uk-list">
-                                    <li><a href="https://drive.google.com/file/d/1rS_9yTpuq8VzABUeeVS8TyQLU8jabXqg/view?usp=sharing"
+                                    <li><a href="https://drive.google.com/file/d/1t9sIq9LrjQK051HdllZz1wYSwxssS-JJ/view?usp=drive_link"
                                             target="_blank">参加者マニュアル</a></li>
                                     <li><a href="{{ url('/howto_gm') }}">団委員長 編</a></li>
                                     <li><a href="{{ url('/howto_trainer') }}">トレーナー 編</a></li>

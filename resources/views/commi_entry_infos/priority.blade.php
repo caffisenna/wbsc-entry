@@ -74,7 +74,7 @@
         </div>
         <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/dataTables.min.js') }}"></script>
 
         <script type="text/javascript">
             $(function() {

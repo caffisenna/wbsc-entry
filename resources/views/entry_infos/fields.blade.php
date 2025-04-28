@@ -129,7 +129,7 @@
         <tr>
             <td>生年月日</td>
             <td>
-                {!! Form::selectRange('bd_year', 1942, 2005, null, [
+                {!! Form::selectRange('bd_year', 1942, 2008, null, [
                     'class' => 'form-control custom-select uk-form-width-small',
                     'placeholder' => '年',
                 ]) !!}年{!! Form::selectrange('bd_month', 1, 12, null, [
